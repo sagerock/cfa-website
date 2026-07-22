@@ -34,7 +34,7 @@ Innovation, the hallmark of CfA, has continued with the birth of multiple progra
 
 - **Kairos Institute,** launched in 2022 under the direction of Karine Munk Finser, serves those seeking professional development in art therapy, speech, emergency pedagogy, and trauma intervention (in collaboration with the Parzival School in Karlsruhe, Germany)
 
-(See “[program](https://centerforanthroposophy.org/programs/)” pages of our website for more complete descriptions and registration options.)
+(See “[program](/programs)” pages of our website for more complete descriptions and registration options.)
 
 The common thread throughout our programs is a long-standing commitment to collaboration: Collaboration between Antioch University New England and the Center for Anthroposophy for teacher education, between both institutions and our school partners, and among our programs. For example, in 2021 we designed our leadership program to include an Explorations component for those who needed it, and in 2022 we began requiring Building Bridges participants to take Explorations as the first phase of their program (unless they had completed the equivalent experience elsewhere). Likewise, our high school teacher education program offers an online supplement in conjunction with the weekend Explorations classes.
 
@@ -42,47 +42,28 @@ The old social patterns of mistrust, institutional self -interest, egotism, raci
 
 ## Enjoy a gallery of our early years in photographs!
 
-[
-
-](/images/7bada04d28-photo-album-227.jpg)[
-
-](/images/5025e1ac7d-photo-album-22.jpg)[
-
-](/images/ada5ba0123-photo-album-3.jpg)[
-
-](/images/01cc97f220-photo-album-247.jpg)[
-
-](/images/c9353fee35-photo-album-245.jpg)[
-
-](/images/14c2f66b67-photo-album-244.jpg)[
-
-](/images/a39621a727-photo-album-242.jpg)[
-
-](/images/d8ca8b9dd4-photo-album-241.jpg)[
-
-](/images/8cd0c23fa4-photo-album-239.jpg)[
-
-](/images/4e0ab5fb05-photo-album-237.jpg)[
-
-](/images/ec97d2ef7f-photo-album-236.jpg)[
-
-](/images/cb7eeb4220-photo-album-235.jpg)[
-
-](/images/33393ff5f6-photo-album-234.jpg)[
-
-](/images/de0c89e232-photo-album-233.jpg)[
-
-](/images/b8cf49c001-tok3101.jpg)[
-
-](/images/a3443293c6-photo-album-232.jpg)[
-
-](/images/afa1a65355-photo-album-231.jpg)[
-
-](/images/b3909dd313-photo-album-230.jpg)[
-
-](/images/107b34aefe-photo-album-229.jpg)[
-
-](/images/c1cf0f886d-photo-album-228.jpg)
+<div class="photo-grid">
+<img src="/images/7bada04d28-photo-album-227.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/5025e1ac7d-photo-album-22.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/ada5ba0123-photo-album-3.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/01cc97f220-photo-album-247.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/c9353fee35-photo-album-245.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/14c2f66b67-photo-album-244.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/a39621a727-photo-album-242.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/d8ca8b9dd4-photo-album-241.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/8cd0c23fa4-photo-album-239.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/4e0ab5fb05-photo-album-237.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/ec97d2ef7f-photo-album-236.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/cb7eeb4220-photo-album-235.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/33393ff5f6-photo-album-234.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/de0c89e232-photo-album-233.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/b8cf49c001-tok3101.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/a3443293c6-photo-album-232.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/afa1a65355-photo-album-231.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/b3909dd313-photo-album-230.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/107b34aefe-photo-album-229.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+<img src="/images/c1cf0f886d-photo-album-228.jpg" alt="Center for Anthroposophy, early years" loading="lazy" />
+</div>
 
 ### Get in touch with us
 
@@ -95,4 +76,5 @@ Have a question? [Contact us](/contact) and we’ll be in touch.
 - [YouTube](https://www.youtube.com/user/CenterforAnthropos/videos)
 
 - [Instagram](https://www.instagram.com/centerforanthroposophy/)
+
 [READ PAST NEWSLETTERS](/news)
