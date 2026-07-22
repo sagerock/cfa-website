@@ -6,6 +6,7 @@ const nav = [
   ['/faculty', 'Faculty'],
   ['/about', 'About'],
 ];
+const year = new Date().getFullYear();
 ---
 
 <html lang="en">
@@ -20,26 +21,103 @@ const nav = [
       Proof of concept — rebuilt from extracted content. The live site is
       <a href="https://centerforanthroposophy.org">centerforanthroposophy.org</a>
     </div>
+
     <header class="site-head">
-      <div class="wrap">
-        <a class="brand" href="/">Center for <span>Anthroposophy</span></a>
-        <nav class="nav">
+      <div class="wrap head-top">
+        <span>Waldorf teacher education · Wilton &amp; Keene, New Hampshire</span>
+        <span class="head-contact">
+          <a href="tel:+16036542566">603-654-2566</a>
+          <a href="mailto:office@centerforanthroposophy.org">office@centerforanthroposophy.org</a>
+        </span>
+      </div>
+      <div class="wrap head-main">
+        <a class="brand" href="/">
+          <svg class="brand-mark" viewBox="0 0 120 44" fill="none" aria-hidden="true">
+            <path
+              d="M8 22 C8 8 34 8 48 22 C62 36 88 36 96 22 C104 8 78 8 72 22 C66 36 40 36 26 22"
+              stroke="var(--green)"
+              stroke-width="2"
+              stroke-linecap="round"></path>
+          </svg>
+          <span class="brand-name">Center for <em>Anthroposophy</em></span>
+        </a>
+        <nav class="nav" aria-label="Main">
           {nav.map(([href, label]) => (
             <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>
           ))}
         </nav>
       </div>
     </header>
+
     <main>
       <slot />
     </main>
+
     <footer class="site-foot">
-      <div class="wrap">
-        <div>Center for Anthroposophy · Wilton &amp; Keene, New Hampshire</div>
-        <div>
-          Proof of concept: this entire site is generated from Markdown and JSON files in a git
-          repository — no WordPress, no page builder. Content extracted 2026-07-21 from the
-          <a href="https://centerforanthroposophy.org">live site</a>.
+      <div class="wrap foot-grid">
+        <div class="foot-col foot-brand">
+          <svg class="brand-mark" viewBox="0 0 120 44" fill="none" aria-hidden="true">
+            <path
+              d="M8 22 C8 8 34 8 48 22 C62 36 88 36 96 22 C104 8 78 8 72 22 C66 36 40 36 26 22"
+              stroke="var(--green)"
+              stroke-width="2"
+              stroke-linecap="round"></path>
+          </svg>
+          <p class="foot-mission">
+            Preparing Waldorf teachers through study, artistic work, and self-development —
+            since 1981.
+          </p>
+          <address>
+            Center for Anthroposophy<br />
+            PO Box 545, Wilton, NH 03086<br />
+            <a href="tel:+16036542566">603-654-2566</a><br />
+            <a href="mailto:office@centerforanthroposophy.org">office@centerforanthroposophy.org</a>
+          </address>
+        </div>
+
+        <div class="foot-col">
+          <h3 class="foot-tag">Programs</h3>
+          <ul>
+            <li><a href="/programs/explorations-online">Explorations Online</a></li>
+            <li><a href="/programs/building-bridges">Building Bridges</a></li>
+            <li><a href="/programs/waldorf-high-school">High School Teacher Education</a></li>
+            <li><a href="/programs/antioch-university">Antioch University Program</a></li>
+            <li><a href="/programs/kairos-institute">Kairos Institute</a></li>
+            <li><a href="/programs/mentor-training">Mentor Training</a></li>
+            <li><a href="/programs/renewal-courses">Renewal Courses</a></li>
+            <li><a href="/programs/waldorf-leadership-development">Leadership Development</a></li>
+          </ul>
+        </div>
+
+        <div class="foot-col">
+          <h3 class="foot-tag">About</h3>
+          <ul>
+            <li><a href="/about/about-the-center">About the Center</a></li>
+            <li><a href="/about/becoming-a-waldorf-teacher">Becoming a Waldorf Teacher</a></li>
+            <li><a href="/about/our-history">Our History</a></li>
+            <li><a href="/faculty">Faculty</a></li>
+            <li><a href="/about/board-and-administration">Board &amp; Administration</a></li>
+            <li><a href="/about/commitment-to-dei">Commitment to DEI</a></li>
+          </ul>
+        </div>
+
+        <div class="foot-col">
+          <h3 class="foot-tag">Visiting</h3>
+          <ul>
+            <li><a href="/programs/summer-housing-meals">Summer Housing &amp; Meals</a></li>
+            <li><a href="/programs/directions-keene">Directions — Keene, NH</a></li>
+            <li><a href="/about/goetheanum">The Goetheanum</a></li>
+            <li><a href="/about/rudolf-steiner">Rudolf Steiner</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <div class="wrap">
+          <span>© {year} Center for Anthroposophy</span>
+          <span>
+            Proof of concept — generated from Markdown &amp; JSON in
+            <a href="https://github.com/sagerock/cfa-website">a git repository</a>. No WordPress.
+          </span>
         </div>
       </div>
     </footer>

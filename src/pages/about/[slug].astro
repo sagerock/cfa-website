@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -12,12 +13,9 @@ const { Content } = await render(entry);
 ---
 
 <Base title={`${entry.data.navLabel} — Center for Anthroposophy`} current="/about">
+  <PageHeader eyebrow="About" title={entry.data.navLabel} />
   <article class="article">
     <div class="wrap">
-      <header>
-        <p class="eyebrow">About</p>
-        <h1>{entry.data.navLabel}</h1>
-      </header>
       <div class="prose">
         <Content />
       </div>

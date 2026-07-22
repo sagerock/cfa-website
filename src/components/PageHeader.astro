@@ -1,0 +1,12 @@
+---
+// Standard page opening: eyebrow + balanced title + optional lede.
+const { eyebrow = '', title, lede = '' } = Astro.props;
+---
+
+<header class="page-head">
+  <div class="wrap">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1>{title}</h1>
+    {lede && <p class="lede">{lede}</p>}
+  </div>
+</header>
