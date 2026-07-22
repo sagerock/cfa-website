@@ -8,9 +8,9 @@ order: 7
 
 ## Renewal Courses
 
-**Week-long, certificate earning professional development courses designed to nourish and inspire your body, soul, and spirit.
+Week-long, certificate earning professional development courses designed to nourish and inspire your body, soul, and spirit.
 
-**Deepen your relationship with Waldorf education and anthroposophy, through community connections and engagement with the arts.
+Deepen your relationship with Waldorf education and anthroposophy, through community connections and engagement with the arts.
 
 ## Welcome to Renewal
 
@@ -70,13 +70,13 @@ Tuition, Financial Aid, and Policies
 
 ##### Tuition
 
-**In-Person Renewal Courses
+**In-Person Renewal Courses**
 
 - Grades 1–5, Teaching Special Subject Classes, Movement Through the Grades: $950 + $25 materials and campus fee
 
 - Grades 6–8: $965 + $25 materials and campus fee
 
-**Online Renewal Courses
+**Online Renewal Courses**
 
 - Grades 1–5: $650
 
@@ -84,7 +84,7 @@ Tuition, Financial Aid, and Policies
 
 - Community Gatherings only $75
 
-**Group Discount
+**Group Discount**
 
 - Register 3 individuals from the same school or organization and receive a 10% discount off all three tuitions using the code: Ren26Help
 
@@ -92,7 +92,7 @@ Tuition, Financial Aid, and Policies
 
 - Enjoy both weeks of Renewal Courses and receive 10% off using the code: 2wksRC26
 
-**International Scholarships are available, please contact [karen@centerforanthroposophy.org](mailto:karen@centerforanthroposophy.org) to apply.
+International Scholarships are available, please contact [karen@centerforanthroposophy.org](mailto:karen@centerforanthroposophy.org) to apply.
 
 ##### Financial Aid
 
@@ -120,7 +120,7 @@ Director of Renewal
 
 Wilton, NH
 
-**[**Week 1: Renewal and Inspiration In-Person](https://centerforanthroposophy.org/programs/renewal-courses/renewal-week-1-in-person-courses/)
+[**Week 1: Renewal and Inspiration In-Person**](https://centerforanthroposophy.org/programs/renewal-courses/renewal-week-1-in-person-courses/)
 
 An immersive, community-centered experience with daily intellectual and artistic practice, movement, keynote lectures, community singing, and shared wholesome meals.
 
@@ -132,27 +132,20 @@ An immersive, community-centered experience with daily intellectual and artistic
 
 From Your Own Chosen Location
 
-**[**Week 2: Renewal and Inspiration Online](https://centerforanthroposophy.org/programs/renewal-courses//renewal-week-2-online-courses/)
+[**Week 2: Renewal and Inspiration Online**](https://centerforanthroposophy.org/programs/renewal-courses//renewal-week-2-online-courses/)
 
-**Global connection. Live learning: **Virtual, interactive Renewal Courses for Grades 1–8, offering global connection, pedagogical depth, and year-long access to resources.
+**Global connection. Live learning:** Virtual, interactive Renewal Courses for Grades 1–8, offering global connection, pedagogical depth, and year-long access to resources.
 
 [LEARN MORE & REGISTER](https://centerforanthroposophy.org/programs/renewal-courses/renewal-week-2-online-courses/)
 
-[
-
-](/images/9b335dddae-hands-crop-scaled.webp)[
-
-](/images/bd7d64ac81-renewal-2025-hand-gesture-crop.webp)[
-
-](/images/44290642bc-renewal-circle-1-copy-scaled.webp)[
-
-](/images/edf73e7bea-kris-smile-crop.webp)[
-
-](/images/2ee5412492-renewal-circle-3-copy.webp)[
-
-](/images/1a217880c2-renewal-circle-2-copy.webp)
-
-## Testimonies from our In-Person Participants
+<div class="photo-grid">
+<img src="/images/9b335dddae-hands-crop-scaled.webp" alt="" loading="lazy" />
+<img src="/images/bd7d64ac81-renewal-2025-hand-gesture-crop.webp" alt="" loading="lazy" />
+<img src="/images/44290642bc-renewal-circle-1-copy-scaled.webp" alt="" loading="lazy" />
+<img src="/images/edf73e7bea-kris-smile-crop.webp" alt="" loading="lazy" />
+<img src="/images/2ee5412492-renewal-circle-3-copy.webp" alt="" loading="lazy" />
+<img src="/images/1a217880c2-renewal-circle-2-copy.webp" alt="" loading="lazy" />
+</div>## Testimonies from our In-Person Participants
 
 "This Waldorf training was absolutely incredible—truly inspiring, deeply educational, and beautifully delivered. It was rich with wisdom and practical knowledge, and I felt fully supported throughout the experience. Every question I had was answered with care and depth, and I left with even more insight than I could have hoped for. I now feel renewed, inspired, and fully prepared to step into the fourth-grade year with confidence and clarity. With all the resources and guidance shared, this training has been a transformative and empowering experience. I’m so grateful for the opportunity."
 
@@ -216,8 +209,8 @@ Lodging is available at Franklin Peirce University nearby.
 
 - **Financial Aid** – Limited scholarships available, please contact program director using the contact form below.
 
-- **Cancellations – **Requests received at least 30 days before the registration deadline will result in a full refund, less $75 cancellation fee. No refunds will be granted if cancellation is received within 30 days of the program start date or while in session.
+- **Cancellations –** Requests received at least 30 days before the registration deadline will result in a full refund, less $75 cancellation fee. No refunds will be granted if cancellation is received within 30 days of the program start date or while in session.
 
 - **Financial Aid** – Limited scholarships available, please contact program director using the contact form above.
 
-- **Cancellations – **Requests received at least 30 days before the registration deadline will result in a full refund, less $75 cancellation fee. No refunds will be granted if cancellation is received within 30 days of the program start date or while in session.
+- **Cancellations –** Requests received at least 30 days before the registration deadline will result in a full refund, less $75 cancellation fee. No refunds will be granted if cancellation is received within 30 days of the program start date or while in session.

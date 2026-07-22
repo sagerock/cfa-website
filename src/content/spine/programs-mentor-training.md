@@ -82,25 +82,16 @@ As part of the program, participants will:
 
 - Develop and submit a final project tailored to their individual circumstances and professional context, demonstrating integration of their learning into practice.
 
-[
-
-](/images/8d680c913c-clapping.webp)[
-
-](/images/303d06a598-martina-tree-drawing-copy.webp)[
-
-](/images/be5f3ba552-drawing-in-pastel.webp)[
-
-](/images/e7bf51d474-mentor-training-students-in-class.webp)[
-
-](/images/dbf4ab9b72-mt-drawing-copy.webp)[
-
-](/images/55a239a0c9-giraffe1.webp)[
-
-](/images/bf23a39681-mentor-training-faculty.webp)[
-
-](/images/6da401df49-mentor-training-classroom-of-students.webp)
-
-## Interested to join in 2026?
+<div class="photo-grid">
+<img src="/images/8d680c913c-clapping.webp" alt="" loading="lazy" />
+<img src="/images/303d06a598-martina-tree-drawing-copy.webp" alt="" loading="lazy" />
+<img src="/images/be5f3ba552-drawing-in-pastel.webp" alt="" loading="lazy" />
+<img src="/images/e7bf51d474-mentor-training-students-in-class.webp" alt="" loading="lazy" />
+<img src="/images/dbf4ab9b72-mt-drawing-copy.webp" alt="" loading="lazy" />
+<img src="/images/55a239a0c9-giraffe1.webp" alt="" loading="lazy" />
+<img src="/images/bf23a39681-mentor-training-faculty.webp" alt="" loading="lazy" />
+<img src="/images/6da401df49-mentor-training-classroom-of-students.webp" alt="" loading="lazy" />
+</div>## Interested to join in 2026?
 
 [Program Registration](https://web.cvent.com/event/041b86d8-8cc4-47c5-9d7c-18fc70f76ca2/regProcessStep1:b7453440-5484-43f9-8e6e-0419a9855bc1)
 
@@ -112,7 +103,7 @@ Director of Mentor Training
 
 ## Contact Karen directly with questions about the program.
 
-**INQUIRE
+**INQUIRE**
 
 [Read Faculty Bios](https://centerforanthroposophy.org/about/faculty/#mentor)
 
@@ -120,19 +111,14 @@ Director of Mentor Training
 
 ![Mentor Training 2026 flier](/images/8a976045bd-mentor-training-ad-renewal-mag-75-by-475.webp)
 
-[
+<div class="photo-grid">
+<img src="/images/ef398a4b8a-clapping-squareup.webp" alt="" loading="lazy" />
+<img src="/images/d5bcbcf0fb-giraffe1-square.webp" alt="" loading="lazy" />
+<img src="/images/55372820f0-mentor-training-students-in-class-square.webp" alt="" loading="lazy" />
+<img src="/images/d476d169bc-vibrant-mentor-training-class-square.webp" alt="" loading="lazy" />
+</div>## Course Curriculum
 
-](/images/ef398a4b8a-clapping-squareup.webp)[
-
-](/images/d5bcbcf0fb-giraffe1-square.webp)[
-
-](/images/55372820f0-mentor-training-students-in-class-square.webp)[
-
-](/images/d476d169bc-vibrant-mentor-training-class-square.webp)
-
-## Course Curriculum
-
-**What you’ll explore
+**What you’ll explore**
 
 We’ll meet virtually once a month on Saturdays from 12:00-2:00 ET, 9:00-11:00 PT and for one week in-person during the summer, from June 28 – July 3, 2026
 
@@ -178,7 +164,7 @@ We’ll meet virtually once a month on Saturdays from 12:00-2:00 ET, 9:00-11:00 
 
 #### June 28 - July 3, 2026 In-Person
 
-**Presentations, Workshops, Artistic Engagement, and Working Groups on Circulating, Maintaining, and Growing in Correlation to Professional Development Practices
+Presentations, Workshops, Artistic Engagement, and Working Groups on Circulating, Maintaining, and Growing in Correlation to Professional Development Practices
 
 *with Carol Bärtges and Karen Atkinson*
 
@@ -232,7 +218,7 @@ For participants who are not currently teaching, please submit two letters of re
 
 Enrollment
 
-Given the high demand for this specialized professional development course and its interactive nature, enrollment places will be limited. ***Register now to secure your spot!
+Given the high demand for this specialized professional development course and its interactive nature, enrollment places will be limited. *Register now to secure your spot!
 
 Other Notes
 

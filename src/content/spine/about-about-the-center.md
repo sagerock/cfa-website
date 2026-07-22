@@ -8,7 +8,7 @@ order: 1
 
 ## Our Mission
 
-***The mission of Center for Anthroposophy (CfA) is to enkindle a flame in adults
+***The mission of Center for Anthroposophy (CfA) is to enkindle a flame in adults**
 
 - who resolve to raise today’s children and adolescents through Waldorf education; or
 
@@ -16,7 +16,7 @@ order: 1
 
 - who work pedagogically with the healing arts
 
-***so that they can forge new human capacities out of their practice of lifelong learning and research.
+*so that they can forge new human capacities out of their practice of lifelong learning and research.
 
 # What is Center for Anthroposophy?
 
@@ -48,7 +48,7 @@ CfA offers the following part-time adult education programs and courses for prof
 
 - support for individual research projects related to Waldorf pedagogy
 
-**Take a look at what we have to offer in part-time and summer courses for all those wishing to deepen their understanding of spiritual life and to further their own professional and personal development.
+Take a look at what we have to offer in part-time and summer courses for all those wishing to deepen their understanding of spiritual life and to further their own professional and personal development.
 
 Plus a beautiful summer campus, the option of vegetarian meals, and scholarship assistance.
 
@@ -116,13 +116,13 @@ Have a question? [Contact us](/contact) and we’ll be in touch.
 
 Stay up to date and read our extensive archive.
 
-**[Center & Periphery Newsletter —Spring 2026](/news/center-periphery-newsletter-spring-2026)
+[Center & Periphery Newsletter —Spring 2026](/news/center-periphery-newsletter-spring-2026)
 
 During this winter season at the Center for Anthroposophy (CfA), the directors of our seven programs––a record number!––are forming new courses and line-ups of faculty...
 
 [Read More](/news/center-periphery-newsletter-spring-2026)
 
-**[Center & Periphery Newsletter — Winter 2025-2026](/news/center-periphery-newsletter-winter-2025-2026)
+[Center & Periphery Newsletter — Winter 2025-2026](/news/center-periphery-newsletter-winter-2025-2026)
 
 During this winter season at the Center for Anthroposophy (CfA), the directors of our seven programs––a record number!––are forming new courses and line-ups of faculty...
 
@@ -134,7 +134,7 @@ During this winter season at the Center for Anthroposophy (CfA), the directors o
 
 [Read More](/news/center-periphery-newsletter-fall-2025)
 
-**[Center & Periphery Newsletter —Summer 2025](/news/center-periphery-newsletter-summer-2025)
+[Center & Periphery Newsletter —Summer 2025](/news/center-periphery-newsletter-summer-2025)
 
 During this winter season at the Center for Anthroposophy (CfA), the directors of our seven programs––a record number!––are forming new courses and line-ups of faculty...
 

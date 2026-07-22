@@ -42,13 +42,13 @@ Individual: $420
 
 Institution: $1,220
 
-### **[Register now to secure your spot in this transformative series!](https://cvent.me/Er24Kl)
+### [Register now to secure your spot in this transformative series!](https://cvent.me/Er24Kl)
 
 [SEE COURSE DESCRIPTIONS](https://courses.centerforanthroposophy.org/courses/explorations-online-2026-2027-fall-cohort)
 
 [REGISTER NOW!](https://courses.centerforanthroposophy.org/courses/starlight-rays-2026%E2%80%932027)
 
-[** VIEW / DOWNLOAD FLYER](/files/5181d9e478-high-school-online-series-2025-2026-r5.pdf)
+[ VIEW / DOWNLOAD FLYER](/files/5181d9e478-high-school-online-series-2025-2026-r5.pdf)
 
 ## Testimonials:
 
@@ -172,7 +172,7 @@ Eszter PigottHalton Waldorf School
 
 Starlight Rays is a thoughtfully put together and masterfully delivered seminar series that was very useful for me as a high school teacher. No matter what level of knowledge you have entering the virtual space, the subject field is made readily accessible to all and approached in an engaging way. I left all the sessions attended feeling like I added new tools to my toolbox to tackle the challenges both inside and out of the classroom.
 
-**RELATED COURSES
+**RELATED COURSES**
 
 ### Waldorf High School Teacher Education Program
 
@@ -188,7 +188,7 @@ All seminars take place online on Saturdays from 3:00 – 4:30 pm ET
 
 Staying Centered in the Whirlwind of Today’s Adolescents by David Barham
 
-by ***David Barham
+by *David Barham
 
 Adolescence is and always has been an extraordinarily complicated period of life. Even in the simplest of times, working with adolescents to help them find themselves and the meaning they so desperately seek is deeply challenging.
 
@@ -240,4 +240,4 @@ We are incredibly grateful to those faculty members who have carried this progra
 
 “While outside the whirling wind heaves and twists and roars,” (J.LePore/January 16, 2023), here in WHiSTEP, we are steadfastly keeping our eyes on the prize: providing true, human care to meet the true needs of our students, families, and communities, as well as our own battered selves.
 
-[**Click Here To Register](https://courses.centerforanthroposophy.org/courses/starlight-rays-2026%E2%80%932027)
+[Click Here To Register](https://courses.centerforanthroposophy.org/courses/starlight-rays-2026%E2%80%932027)

@@ -8,9 +8,9 @@ order: 5
 
 ### Healing in a World of Need
 
-**KAIROS LINKS
+**KAIROS LINKS**
 
-**Kairos Institute offers courses and programs for the general public and more immersive career oriented programs in artistic therapy and trauma pedagogy training.
+Kairos Institute offers courses and programs for the general public and more immersive career oriented programs in artistic therapy and trauma pedagogy training.
 
 Public Welcome
 
@@ -36,11 +36,11 @@ This module examines how catastrophes, such as floods, earthquakes, fires, and h
 
 #### Schedule
 
-**Friday, September 18, 2026
+**Friday, September 18, 2026**
 
 - 2:00 – 3:30 PM EST: “Major Incidents”
 
-**Saturday, September 19, 2026
+**Saturday, September 19, 2026**
 
 - 9:00-10:30 AM EST: “Pandemic Trauma”
 
@@ -50,7 +50,7 @@ This module examines how catastrophes, such as floods, earthquakes, fires, and h
 
 - 3:15-4:00 PM EST: Closing Plenary Session: 21:15 – 22:00
 
-**Bernd Ruf
+**Bernd Ruf**
 
 Presenter, Founder of Parzival School & Emergency Pedagogy
 
@@ -74,13 +74,13 @@ Kairos Celebratory Convocation *with Peter Selg*
 
 Sept 13, 2026, 1:30 PM EST
 
-**The Mystery of the Heart. Ita Wegman and Rudolf Steiner
+**The Mystery of the Heart. Ita Wegman and Rudolf Steiner**
 
 Overview of Kairos: 2026-27
 
 Fee: $30
 
-** Peter Selg
+**Peter Selg**
 
 Peter Selg studied medicine in Witten-Herdecke, Zurich, and Berlin and, until 2000, worked as the head physician of the juvenile psychiatry department of Herdecke Hospital in Germany.
 
@@ -88,25 +88,25 @@ Dr. Selg is director of the Ita Wegman Institute for Basic Research into Anthrop
 
 Understanding the Organic and Psychospiritual Basis of Mental Health from an Anthroposophic Perspective *with Dr. James Dyson*
 
-**Seminar 1: Mysteries of Embodiment. Two Streams of Incarnations
+**Seminar 1: Mysteries of Embodiment. Two Streams of Incarnations**
 
 Saturday, September 26, 2026
 
 3:00 – 5:00 PM EST
 
-**Seminar 2: Attachment Dynamics and Personality Structure
+**Seminar 2: Attachment Dynamics and Personality Structure**
 
 Saturday, October 24, 2026
 
 3:00 – 5:00 PM EST
 
-**Seminar 3: Organology – Planetary Qualities and the Ethers in Relation to the Threefold Nature of the Human Soul
+Seminar 3: Organology – Planetary Qualities and the Ethers in Relation to the Threefold Nature of the Human Soul
 
 Saturday, October 31, 2026
 
 3:00 – 5:00 PM EST
 
-**Seminar 4: Developmental and Spiritual Challenges of our Times. Understanding the Separation of the Three Soul Forces and Encountering the Guardian of the Threshold
+Seminar 4: Developmental and Spiritual Challenges of our Times. Understanding the Separation of the Three Soul Forces and Encountering the Guardian of the Threshold
 
 Saturday, November 7, 2026
 
@@ -114,7 +114,7 @@ Saturday, November 7, 2026
 
 Fee: $350 (4 Seminars, 2 hours each)
 
-**James Dyson, M.D.
+**James Dyson, M.D.**
 
 Dr. James A. Dyson first trained as a medical doctor in London University and went on to study anthroposophic medicine at Emerson College, Camphill Schools, Aberdeen and in hospitals in Germany. In 1979, he co-founded Park Attwood Clinic, a residential medical facility in the UK, where he practiced for 25 years. He also worked as a school doctor, both in mainstream Waldorf Schools and schools and communities for adults and children with special needs. In 2008, he completed a five-year program in Applied Psychosynthesis at the Institute of Psychosynthesis, London, for which he was later awarded a Masters’ degree in Psychosynthesis Psychology from Middlesex University.
 
@@ -122,27 +122,27 @@ James has lectured over several decades in a very wide range of international an
 
 The Bridge Lectures: Enthusiasm as Warmth to Counter the Cold of our Times Salutogenesis and the Power of Human Love *with Dr. Michaela Glöckler*
 
-**Seminar 1
+**Seminar 1**
 
 Sunday, January 24, 2027
 
 11:00 AM – 12:30 PM Seminar 2 1:30 – 3:00 PM EST
 
-**Seminar 2
+**Seminar 2**
 
-**Sunday, February 14, 2027
+**Sunday, February 14, 2027**
 
 11:00 AM – 12:30 PM Seminar 2 1:30 – 3:00 PM EST
 
-**Seminar 3
+**Seminar 3**
 
-**Sunday, February 21, 2027
+**Sunday, February 21, 2027**
 
 11:00 AM – 12:30 PM Seminar 2 1:30 – 3:00 PM EST
 
 Fee: $350 (6 Seminars, 1 1/2 hour each)
 
-**Dr. Michaela Glöckler, M.D.
+**Dr. Michaela Glöckler, M.D.**
 
 Michaela Glöckler, M.D., a graduate of the original Waldorf school in Stuttgart, Germany, studied history and German in Freiburg and Heidelberg and medicine in Tübingen and Marburg while engaging in her own study of anthroposophy. After further training as a pediatrician and adolescent physician at the Community Hospital in Herdecke and the University Hospital in Bochum, she launched her career as pediatrician as well as school doctor in a Waldorf school. From 1988 to 2016 she served as Head of the Medical Section at the Goetheanum (Dornach/Switzerland). These years included deep involvement in lecturing activities and the training of physicians (IPMT) at home and abroad. She is co-founder of the Alliance for Childhood and the European Alliance of Initiatives for Applied Anthroposophy/ELIANT ([www.eliant.eu](http://www.eliant.eu/)).
 
@@ -184,11 +184,11 @@ A renowned international faculty contributes to making Kairos a vibrant school o
 
 For questions and more info on our programs, contact Karine today!
 
-**Karine Munk Finser
+**Karine Munk Finser**
 
-**Director
+**Director**
 
-**INQUIRE
+**INQUIRE**
 
 [READ MORE KAIROS NEWS](/news/kairos-news)
 
@@ -212,16 +212,11 @@ February 8-13, 2025:
 
 Second Crisis intervention under the direction and guidance of Bernd Ruf, Alicia D’Urso, and Renaldo Nascimento Team Kairos will join Team California, who is leading this Los Angeles crisis intervention. We will offer our support to children in the community who are suffering from devastating loss, grief, and trauma after the destructive fires. Natalia Picasso from Team Kairos will submit a report after we return home. We hope to align our two Teams under Team USA for this critical crisis intervention.
 
-[
-
-](/images/eb561c5780-b7cc44fb-4694-4242-b51c-8425c8b6f9341105.jpeg)[
-
-](/images/828c522844-cafecbcd-8624-4d87-aebd-886a3f7cdb86.jpeg)[
-
-](/images/b06931f997-pxl20241029141528304.jpg)[
-
-](/images/10113faecd-d2068b54-eede-4ade-9975-0704dcc83a37.jpeg)
-
-[VIEW MORE PHOTOS](#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjQxODY0IiwidG9nZ2xlIjpmYWxzZX0%3D)
+<div class="photo-grid">
+<img src="/images/eb561c5780-b7cc44fb-4694-4242-b51c-8425c8b6f9341105.jpeg" alt="" loading="lazy" />
+<img src="/images/828c522844-cafecbcd-8624-4d87-aebd-886a3f7cdb86.jpeg" alt="" loading="lazy" />
+<img src="/images/b06931f997-pxl20241029141528304.jpg" alt="" loading="lazy" />
+<img src="/images/10113faecd-d2068b54-eede-4ade-9975-0704dcc83a37.jpeg" alt="" loading="lazy" />
+</div>[VIEW MORE PHOTOS](#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjQxODY0IiwidG9nZ2xlIjpmYWxzZX0%3D)
 
 [READ TEAM REPORT](/files/702fa2195f-ep-kairos-crisis-intervention-asheville-2024.pdf)

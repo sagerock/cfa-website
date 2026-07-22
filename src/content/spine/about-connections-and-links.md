@@ -66,11 +66,11 @@ CfA is affiliated with a number of local, regional and national organizations th
 
 ## Friends of Waldorf Education
 
-The association [**Friends of Waldorf Education](https://www.freunde-waldorf.de/en/) (Freunde der Erziehungskunst), based in Germany, supports initiatives worldwide striving to educate children in ways which will enable them to take active part in shaping the future. Founded in 1971, the Friends are dedicated to advancing Rudolf Steiner’s educational impulses worldwide and supporting all attempts to ensure freedom in education.
+The association [Friends of Waldorf Education](https://www.freunde-waldorf.de/en/) (Freunde der Erziehungskunst), based in Germany, supports initiatives worldwide striving to educate children in ways which will enable them to take active part in shaping the future. Founded in 1971, the Friends are dedicated to advancing Rudolf Steiner’s educational impulses worldwide and supporting all attempts to ensure freedom in education.
 
 The first Waldorf School opened in September 1919 in Stuttgart. Today there are some 12,500 Waldorf and Rudolf Steiner schools in 70 countries.
 
-**[For detailed listing of all Waldorf schools worldwide as of April 2024, please click on the image below:](/files/0f5a1966c6-waldorfworldlist2022.pdf)
+[For detailed listing of all Waldorf schools worldwide as of April 2024, please click on the image below:](/files/0f5a1966c6-waldorfworldlist2022.pdf)
 
 There are also 2,000 Waldorf Kindergartens, 600 remedial education institutions, over 100 teacher training centers for Waldorf Education, and a large number of social work institutions.
 

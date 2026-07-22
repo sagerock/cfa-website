@@ -66,9 +66,9 @@ As we approach the June 28, 2026 opening, we must submit room-and-board reservat
 
 - **Breakfast (daily):** scrambled eggs, turkey sausage, oatmeal, yogurt, hard-boiled eggs, fresh-cut fruit
 - **Snack (daily):** coffee, tea, granola bars, fresh fruit
-- **Day 1 lunch:** quinoa, grilled chicken, grilled veggie medley, meatless sausage skillet, caper salsa verde, tzatziki, mixed-green salad bar · **dinner:** gazpacho, caprese sandwich, salad bar
-- **Day 2 lunch:** pork carnitas, Spanish rice, black beans with sweet potato & corn, guacamole, salsa macha · **dinner:** chicken tortilla soup, veggie chili, salad bar
-- **Day 3 lunch:** jasmine rice, teriyaki chicken, teriyaki tofu, stir-fried veggies · **dinner:** miso soup, spring rolls, soba-noodle salad, salad bar
+- **Day 1 lunch:** quinoa, grilled chicken, grilled veggie medley, meatless sausage skillet, caper salsa verde, tzatziki, mixed-green salad bar ·**dinner:** gazpacho, caprese sandwich, salad bar
+- **Day 2 lunch:** pork carnitas, Spanish rice, black beans with sweet potato & corn, guacamole, salsa macha ·**dinner:** chicken tortilla soup, veggie chili, salad bar
+- **Day 3 lunch:** jasmine rice, teriyaki chicken, teriyaki tofu, stir-fried veggies ·**dinner:** miso soup, spring rolls, soba-noodle salad, salad bar
 
 ### Welcome letter from our hosts
 

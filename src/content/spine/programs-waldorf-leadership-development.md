@@ -16,7 +16,7 @@ order: 9
 
 Program Opening
 
-**Saturday, May 11, 2024, 3:00-4:15 ET, online
+**Saturday, May 11, 2024, 3:00-4:15 ET, online**
 
 Orientation with Program Coordinator, Karen Atkinson
 
@@ -24,9 +24,9 @@ Presentation on Agreements with Program Director, Torin Finser
 
 Summer Intensive
 
-**Monday, July 1 - Thursday, July 4, 2024, 1:00-5:00 ET, online, Monday, July 1, 2024
+Monday, July 1 - Thursday, July 4, 2024, 1:00-5:00 ET, online, Monday, July 1, 2024
 
-**Orientation with Program Coordinator, Karen Atkinson
+**Orientation with Program Coordinator, Karen Atkinson**
 
 Presentation on Agreements with Program Director, Torin Finser
 
@@ -40,13 +40,13 @@ We welcome participants from nearby California schools!
 
 Click Here for Program Details
 
-**First residency dates and times:
+**First residency dates and times:**
 
 September 18, 19, 20, 2026: 8:30 am – 5pm daily
 
 A second residency may be offered in 2027
 
-**Virtual sessions dates and times:
+**Virtual sessions dates and times:**
 
 Starts May 9, 2026: 12- 1:15 pm Pacific Time
 
@@ -54,7 +54,7 @@ Followed by a virtual residency June 30, July 1 and 2: 10 am – 2 pm PT
 
 Also 1- 2 Saturdays per month between September and March: 12 pm-1:15 pm PT
 
-**Tuition:
+**Tuition:**
 
 - 1st Residency portion only, $850
 
@@ -78,7 +78,7 @@ We begin Saturday, January 10, at 3:00-6:00 PM EST, with a welcome and an introd
 
 Classes will be recorded and available for 14 days.
 
-**Charles Andrade
+**Charles Andrade**
 
 ![Charles Andrade](/images/834877bce6-charles-andrade.jpg)
 
@@ -102,35 +102,35 @@ This highly-regarded **online and low-residency** Educational Leadership Program
 
 - Gathering Waters Charter School in Keene, NH – TBD – possibly Friday, April 23 – Tuesday, April 27, 2027
 
-**Please select your preferred location at registration.
+**Please select your preferred location at registration.**
 
 ### What you'll experience
 
 The program includes workshops, guided exercises, case studies, mentoring, and presentations in areas such as group dynamics, role clarity, communication, conflict resolution, navigating change efforts, strategic vs. tactical decision making, community development, and collaborative leadership among other topics brought by a stellar line-up of guest presenters.
 
-**Tuition for 2026-27 Cycle:
+**Tuition for 2026-27 Cycle:**
 
-- ** Full program: $2,650
+-  Full program: $2,650
 
-- ** Online only: $1,250 
+-  Online only: $1,250 
 
-**Group rates possible with three or more enrollments from the same school
+**Group rates possible with three or more enrollments from the same school**
 
 For new hires in schools who do not have a Waldorf background, we strongly encourage simultaneous registration for both our[Explorations](/programs/explorations-online) and WLD programs.
 
-**Certification
+**Certification**
 
-- ** Full Attendance** at all in-person residencies, along with a minimum of 80% participation in online sessions, is required to receive a **WLD Certificate** of Completion at the conclusion of the program.
+- **Full Attendance** at all in-person residencies, along with a minimum of 80% participation in online sessions, is required to receive a**WLD Certificate** of Completion at the conclusion of the program.
 
 - **Certification for International Students:** Participants attending 80% or more of online sessions – including Saturday seminars and the July three-day intensive – will receive a
 
 - **Certificate of Online Participation** from Center for Anthroposophy. Other participants, such as Board Members who are unable to attend in-person residencies, may request this certificate through our program leadership.
 
-**Our next WLD cohort begins virtually May 9, 2026, 3-4:15 ET.
+**Our next WLD cohort begins virtually May 9, 2026, 3-4:15 ET.**
 
 We do two Keene, NH residencies for each cohort, traditionally on Indigenous Weekend early October and then again at the end of April, both long weekends Friday eve to Tues noon.
 
-However, in the past two years we have started doing residencies at other sites as well: New Zealand, Mountain Phoenix in Wheat Ridge, CO, and in **March 27-30, 2026 at the Ocean School in Los Angeles.
+However, in the past two years we have started doing residencies at other sites as well: New Zealand, Mountain Phoenix in Wheat Ridge, CO, and in March 27-30, 2026 at the Ocean School in Los Angeles.
 
 If you think you might be able to host a residency at your school (15-18 student min) please contact Torin M Finser [torin@centerforanthroposophy.org](mailto:torin@centerforanthroposophy.org) for a conversation.
 
@@ -138,7 +138,7 @@ If you think you might be able to host a residency at your school (15-18 student
 
 Overview of Topics Covered in Presentations and Workshops
 
-**Leadership Development
+**Leadership Development**
 
 - Group dynamics and leadership styles
 
@@ -156,7 +156,7 @@ Overview of Topics Covered in Presentations and Workshops
 
 - workplace and social color and clay workshops
 
-**Finances
+**Finances**
 
 - Social finance
 
@@ -164,7 +164,7 @@ Overview of Topics Covered in Presentations and Workshops
 
 - Board work
 
-**HR
+**HR**
 
 - Rhythms of Administration and HR
 
@@ -186,7 +186,7 @@ mentoring/evaluation
 
 - Many exercises in eurythmy in the workplace
 
-**DEI
+**DEI**
 
 - Working with differences/inclusion
 
@@ -194,7 +194,7 @@ mentoring/evaluation
 
 - Facilitation
 
-**Conflict resolution
+**Conflict resolution**
 
 - Communication and conflict
 
@@ -204,7 +204,7 @@ mentoring/evaluation
 
 - Karmic considerations
 
-**Strategic Leadership
+**Strategic Leadership**
 
 - Tactical vs strategic leadership
 
@@ -218,7 +218,7 @@ mentoring/evaluation
 
 - Oversight, Accountability, and Responsibility
 
-**Communication
+**Communication**
 
 - Roadblocks to listening
 
@@ -228,11 +228,11 @@ mentoring/evaluation
 
 - Copper ball exercise in eurythmy social arts
 
-**Text:
+**Text:**
 
 *Organizational Integrity* by Torin Finser
 
-**Suggested Readings:
+**Suggested Readings:**
 
 *A Simpler Way* by Margaret Wheatley
 
@@ -250,7 +250,7 @@ Program Director
 
 ## Contact Karen Atkinson, Program Coordinator directly with questions about the program.
 
-**INQUIRE
+**INQUIRE**
 
 ## Who should attend
 
@@ -258,7 +258,7 @@ Program Director
 
 - **Experienced administrators** seeking renewal and further professional development.
 
-- **Past Explorations and Building Bridges program graduates **wishing to focus on Waldorf administration and leadership.
+- **Past Explorations and Building Bridges program graduates** wishing to focus on Waldorf administration and leadership.
 
 - **Pedagogical leaders**: school directors, faculty chair, college chair, section chairs, principal (public Waldorf), and committee chairs.
 
@@ -290,19 +290,19 @@ For schools interested in sending a delegation of 3 or more participants, please
 
 *Acceptance is on a first-come, first-served basis, and space is limited. We strongly suggest early registration. *
 
-**For more information and group discounts contact:
+**For more information and group discounts contact:**
 
 Karen Atkinson, Program Coordinator
 
 [email Karen](mailto:karen@centerforanthroposophy.org)
 
-**For registration assistance contact:
+**For registration assistance contact:**
 
 Milan Daler, Administrator
 
 [email Milan](mailto:milan@centerforanthroposophy.org)
 
-or call **(603) 654-2566
+or call (603) 654-2566
 
 Limited Financial Aid is available upon request. To inquire, please fill out and submit the form below.
 
@@ -326,11 +326,11 @@ Explorations takes up burning current topics along with contemplative studies an
 
 ![Center-for-Anthroposophy-Explorations-Flyer-2025-to-2026_8-5x11-2-pdf-04-16-2025_01_37_PM](/images/e8f2c377b6-center-for-anthroposophy-explorations-fl.png)
 
-**[DOWNLOAD THE EXPLORATIONS ONLINE POSTER](/files/79fb848b82-center-for-anthroposophy-explorations-flyer-2025-to-20268.5x)
+[DOWNLOAD THE EXPLORATIONS ONLINE POSTER](/files/79fb848b82-center-for-anthroposophy-explorations-flyer-2025-to-20268.5x)
 
 ![wld-pdf-10-30-2025_12_39_PM](/images/cd83e7bcd0-wld-pdf-10-30-20251239pm-rdz6wjjvmg9d2yc.png)
 
-**[DOWNLOAD THE WALDORF LEADERSHIP DEVELOPMENT POSTER](/files/858415c857-wld-25-26-pg-1-.pdf)
+[DOWNLOAD THE WALDORF LEADERSHIP DEVELOPMENT POSTER](/files/858415c857-wld-25-26-pg-1-.pdf)
 
 ## Program Leadership
 

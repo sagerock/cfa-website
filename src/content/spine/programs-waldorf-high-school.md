@@ -10,15 +10,15 @@ order: 3
 
 ### Become the Educator Adolescents Remember!
 
-**[Click Here To Learn About Our Upcoming Meet and Greet](/files/db2578c05a-february-meet-greet-high-school.pdf)
+[Click Here To Learn About Our Upcoming Meet and Greet](/files/db2578c05a-february-meet-greet-high-school.pdf)
 
-**We joyfully celebrate and honor your commitment to advancing Waldorf pedagogy with purpose. Apply now for an opportunity to attend the first summer residency in 2026 and 100% tuition-free!
+We joyfully celebrate and honor your commitment to advancing Waldorf pedagogy with purpose. Apply now for an opportunity to attend the first summer residency in 2026 and 100% tuition-free!
 
 [Explore](/programs/waldorf-high-school-teacher-education/tuition/)
 
 ## Where Pedagogy Meets Purpose
 
-**Over 230 high school teachers across North America and beyond have successfully completed our program, earning their Waldorf Teacher Credentials.
+Over 230 high school teachers across North America and beyond have successfully completed our program, earning their Waldorf Teacher Credentials.
 
 Since 1996, practicing and aspiring Waldorf high school teachers have turned to our Waldorf High School Teacher Education Program to deepen their understanding and mastery of this vocation and receive their Graduate-level teaching credentials.
 
@@ -78,15 +78,15 @@ With more than 150 AWSNA member Waldorf schools in North America (37 high school
 
 Application Process, Tuition, and Financial Aid
 
-**[Enrollment Process](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/enrollment-process/)
+[Enrollment Process](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/enrollment-process/)
 
 #### [TUITION](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/tuition/)
 
-**[Payment Plans](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/tuition/payment-plans/)
+[Payment Plans](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/tuition/payment-plans/)
 
-**[Tuition Assistance](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/tuition/tuition-assistance/)
+[Tuition Assistance](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/tuition/tuition-assistance/)
 
-**[Waldorf Fellowships](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/tuition/tuition-assistance/waldorf-fellowships/)
+[Waldorf Fellowships](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/tuition/tuition-assistance/waldorf-fellowships/)
 
 And when you’re ready…
 
@@ -114,9 +114,9 @@ Zoom Session: Tuesday November 12, 2024
 
 [REGISTER NOW!](mailto:david@centerforanthroposophy.org)
 
-Attend our Virtual* Open-House: Discover and Explore*** on *Wednesday May 6 from 6:00-6:45 PM EDT*** to discover how our unique program can deepen your study, mastery, and meet you at your path for class of 2028, beginning this summer 2026.
+Attend our Virtual Open-House: Discover and Explore on *Wednesday, May 6 from 6:00–6:45 PM EDT* to discover how our unique program can deepen your study, mastery, and meet you at your path for class of 2028, beginning this summer 2026.
 
-**Register: [HERE](https://lp.constantcontactpages.com/ev/reg/ybbcyf8)
+**Register: [HERE](https://lp.constantcontactpages.com/ev/reg/ybbcyf8)**
 
 ![Portrait of David Barham](/images/0ad3ab8b39-david-barham-portrait-300x300.webp)
 
@@ -130,17 +130,13 @@ Center for Anthroposophy, Executive Director
 
 Contact David directly with questions about the program.
 
-**Book your Clarity Call! Take the First Step toward teaching, with Clarity. In just one conversation, you’ll receive a clear, personalized breakdown of your tuition, funding options, and monthly plan—so you can move forward with confidence. Whether you’re deepening your path or changing direction, we’ll help you understand the transformational and financial pathway forward.
+Book your Clarity Call! Take the First Step toward teaching, with Clarity. In just one conversation, you’ll receive a clear, personalized breakdown of your tuition, funding options, and monthly plan—so you can move forward with confidence. Whether you’re deepening your path or changing direction, we’ll help you understand the transformational and financial pathway forward.
 
-[
-
-](/images/d03a05e741-dsc6564-square.webp)[
-
-](/images/b37112e181-hxtvhzpq-square.webp)[
-
-](/images/c6916f630b-dsc6561-square.webp)
-
-## Program Schedule for 2026 Cohort
+<div class="photo-grid">
+<img src="/images/d03a05e741-dsc6564-square.webp" alt="" loading="lazy" />
+<img src="/images/b37112e181-hxtvhzpq-square.webp" alt="" loading="lazy" />
+<img src="/images/c6916f630b-dsc6561-square.webp" alt="" loading="lazy" />
+</div>## Program Schedule for 2026 Cohort
 
 ### A vibrant low-residency program starting in July 2026
 
@@ -148,7 +144,7 @@ Curriculum Modules
 
 ### Module 1: Summer I (July 2026)
 
-##### **Two weeks in-person at scenic Southern New Hampshire
+##### Two weeks in-person at scenic Southern New Hampshire
 
 (July 11 – 26)
 
@@ -222,7 +218,7 @@ Includes one-week course in Waldorf Leadership Development (WLD) with Torin Fins
 
 ### Module 6: Research Project
 
-**In general, the research project should help the student form a more living relationship to the high school curriculum and the classroom. It should also allow one to undertake something new and original in one’s chosen field. In this respect the research project is more than just a report or a research paper.
+In general, the research project should help the student form a more living relationship to the high school curriculum and the classroom. It should also allow one to undertake something new and original in one’s chosen field. In this respect the research project is more than just a report or a research paper.
 
 ###### Components
 
@@ -272,7 +268,7 @@ The class felt like a pure learning experience. I learned a really incredible am
 
 I am aware that this journey has just begun, and I feel now like I have got a new pair of glasses to observe the outer world.
 
-**I feel now like I have got a new pair of glasses to observe the outer world. ** Marilia Trimboli, WHiSTEP Class of 2024
+**I feel now like I have got a new pair of glasses to observe the outer world.** Marilia Trimboli, WHiSTEP Class of 2024
 
 I feel my abilities to observe and to notice has been sharpened greatly and I now am noticing things I have seen thousands of times but that I had never really seen. Yesterday evening, I went outside, and my shadow was reflected onto a large maple tree out front. I found myself moving the shadow of my arms, tracing the shape of the tree from the top down into the roots. To see this expansion and contraction and the rhythm of the natural world brings such a sense of wholeness to the individual.
 

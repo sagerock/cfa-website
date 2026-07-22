@@ -8,7 +8,7 @@ order: 9
 
 ## A Sketch of His Life and Work
 
-**by: John Davy
+**by: John Davy**
 
 ![steiner-reitman-1915](/images/a0ddd89722-steiner-reitman-1915-223x300.jpg)
 
@@ -70,7 +70,7 @@ Steiner was therefore not concerned to bring old teachings in new forms, nor to 
 
 ###### A Brief Overview of Geo-Political background of Rudolf Steiner’s Life and Work by Maria Schindler
 
-**EUROPE:A Cosmic Picture **by Maria Schindler *New Knowledge Books, 1975*
+**EUROPE:A Cosmic Picture** by Maria Schindler *New Knowledge Books, 1975*
 
 **AUSTRIA**Pages 191-194
 
@@ -104,7 +104,7 @@ Among the English-speaking peoples were men who could see what was at work in th
 
 The threefold system offered hope of fulfillment to the three ideals of the French Revolution–Liberty, Equality and Fraternity. Because man speaks a certain language, goes to school, or represents a point of view, his life extends into the realm of the spirit where Freedom should reign. In living under the protection of the state, like his fellow-men, he partakes of the life of rights, where Equality can rule. As a producer and consumer, he is part of the economic life, which tends towards Brotherhood.
 
-Because of the tripartite nature of human existence, thoughts on these lines are like a rock on which a healthy social order can be based. Rudolf Steiner’s book, *The Threefold Commonwealth*,** was in the hands of the delegates at the Versailles conference. In innumerable lectures he had spoken of the need to turn to new impulses, strive for their realization and understand their world-wide significance. He fought for the future of humanity. If insight and the strength to make decisions failed, the whole human race would have to suffer.
+Because of the tripartite nature of human existence, thoughts on these lines are like a rock on which a healthy social order can be based. Rudolf Steiner’s book, *The Threefold Commonwealth*, was in the hands of the delegates at the Versailles conference. In innumerable lectures he had spoken of the need to turn to new impulses, strive for their realization and understand their world-wide significance. He fought for the future of humanity. If insight and the strength to make decisions failed, the whole human race would have to suffer.
 
 But no-one in political circles was sufficiently far-sighted to take up his suggestions and so create the foundations for reconstruction. The rejection of the proposals for a threefold social order determined the later history of the twentieth century.
 
@@ -112,9 +112,9 @@ When efforts to introduce it had failed, Rudolf Steiner said: “ The threefold 
 
 * Berlin, 1894. English translations, also as *The Philosophy of Freedom,* 1916 to 1970.
 
-** Rudolf Steiner Press, London
+**Rudolf Steiner Press, London**
 
-**SWITZERLAND **Pages 199-201
+**SWITZERLAND** Pages 199-201
 
 In this small, rocky country, whose population stands firmly on the ground, Rudolf Steiner spent the last twelve years of his life. During his early years in Austria he had planned, with thoughts of regal power, his book about human freedom. In Germany from 1889 to 1912 he had opened up the sources of the spirit to human striving. In Switzerland, he gave practical indications for a renewal of cultural life. His proposals for the threefold commonwealth date from these years.
 
@@ -148,7 +148,7 @@ The statue of the Representative of Humanity concerns all future earth developme
 
 * Rudolf Steiner before he died, designed a model for the New Goetheanum, to be built in concrete.
 
-**The statue now stands in the new Goetheanum.
+**The statue now stands in the new Goetheanum.**
 
 ### Get in touch with us
 
