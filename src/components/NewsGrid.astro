@@ -1,18 +1,23 @@
 ---
-const { posts } = Astro.props;
+// Accepts items: [{ post, articleCount }] — articleCount > 0 marks a newsletter edition.
+const { items } = Astro.props;
 const fmtDate = (d) =>
   new Date(d + 'T00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 ---
 <div class="news-grid">
-  {posts.map((post) => (
-    <a class="news-card" href={`/news/${post.data.slug}`}>
+  {items.map(({ post, articleCount }) => (
+    <a class={`news-card${articleCount ? ' is-edition' : ''}`} href={`/news/${post.data.slug}`}>
       {post.data.cover && (
         <span class="news-cover"><img src={post.data.cover} alt="" loading="lazy" /></span>
       )}
       <span class="news-body">
-        <time class="news-date">{fmtDate(post.data.date)}</time>
+        <span class="news-meta">
+          <time class="news-date">{fmtDate(post.data.date)}</time>
+          {articleCount > 0 && <span class="news-badge">Newsletter · {articleCount} articles</span>}
+        </span>
         <span class="news-title">{post.data.title}</span>
         {post.data.excerpt && <span class="news-excerpt">{post.data.excerpt}</span>}
+        {articleCount > 0 && <span class="news-open">Open this edition →</span>}
       </span>
     </a>
   ))}

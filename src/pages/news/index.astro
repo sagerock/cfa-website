@@ -3,22 +3,24 @@ import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import NewsGrid from '../../components/NewsGrid.astro';
 import { getCollection } from 'astro:content';
+import { indexPosts } from '../../data/newsHelpers.js';
 
 const PAGE_SIZE = 24;
-const posts = (await getCollection('posts')).sort((a, b) => b.data.date.localeCompare(a.data.date));
-const first = posts.slice(0, PAGE_SIZE);
-const totalPages = Math.ceil(posts.length / PAGE_SIZE);
+const items = indexPosts(await getCollection('posts'));
+const first = items.slice(0, PAGE_SIZE);
+const totalPages = Math.ceil(items.length / PAGE_SIZE);
+const editions = items.filter((i) => i.articleCount > 0).length;
 ---
 
 <Base title="News & Views — Center for Anthroposophy" current="/news">
   <PageHeader
     eyebrow="News & Views"
     title="News &amp; Views"
-    lede={`Newsletters, announcements, and reflections from the Center — ${posts.length} in the archive.`}
+    lede={`Announcements, reflections, and ${editions} editions of the Center & Periphery newsletter.`}
   />
   <section class="band">
     <div class="wrap">
-      <NewsGrid posts={first} />
+      <NewsGrid items={first} />
       {totalPages > 1 && (
         <nav class="pager" aria-label="Pagination">
           <span class="disabled">← Newer</span>

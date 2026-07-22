@@ -676,6 +676,14 @@ table.rates tr.total th, table.rates tr.total td { font-weight: 700; color: var(
 .news-cover img { width: 100%; height: 100%; object-fit: cover; }
 .news-body { display: flex; flex-direction: column; gap: 7px; padding: 15px 16px 18px; }
 .news-date { font-family: var(--sans); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--green-ink); }
+.news-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.news-badge {
+  font-family: var(--sans); font-size: 10.5px; font-weight: 600;
+  color: var(--paper); background: var(--green);
+  border-radius: 20px; padding: 2px 10px; white-space: nowrap;
+}
+.news-card.is-edition { border-color: var(--green); }
+.news-open { font-family: var(--sans); font-size: 12.5px; font-weight: 600; color: var(--green-ink); margin-top: 2px; }
 .news-title { font-size: 17.5px; line-height: 1.25; font-weight: 600; }
 .news-excerpt { font-size: 13.5px; line-height: 1.5; color: var(--soft);
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }

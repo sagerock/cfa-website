@@ -1,38 +1,13 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
+import { analyzeEditions } from '../../data/newsHelpers.js';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
-  const bySlug = Object.fromEntries(posts.map((p) => [p.data.slug, p]));
-
-  // An "edition" is a newsletter-style post that links out to several article posts.
-  const editions = {};
-  for (const p of posts) {
-    const links = [...(p.body || '').matchAll(/\[([^\]]+)\]\(\/news\/([a-z0-9-]+)\)/g)];
-    const seen = new Map();
-    for (const m of links) {
-      const label = m[1].trim(), slug = m[2];
-      if (slug === p.data.slug) continue;
-      if (!seen.has(slug) || (/read more/i.test(seen.get(slug)) && !/read more/i.test(label)))
-        seen.set(slug, label);
-    }
-    const isEdition = /newsletter|periphery/i.test(p.data.slug);
-    if (isEdition && seen.size >= 2) {
-      editions[p.data.slug] = {
-        slug: p.data.slug, title: p.data.title, date: p.data.date,
-        articles: [...seen].map(([slug, title]) => ({ slug, title: bySlug[slug]?.data.title || title })),
-      };
-    }
-  }
-  // Map each article to its most-recent edition.
-  const artEd = {};
-  for (const ed of Object.values(editions))
-    for (const a of ed.articles)
-      if (!artEd[a.slug] || ed.date > editions[artEd[a.slug]].date) artEd[a.slug] = ed.slug;
-
+  const { editions, memberOf } = analyzeEditions(posts);
   return posts.map((entry) => {
-    const edSlug = artEd[entry.data.slug];
+    const edSlug = memberOf[entry.data.slug];
     const edition = edSlug && edSlug !== entry.data.slug ? editions[edSlug] : null;
     return { params: { slug: entry.data.slug }, props: { entry, edition } };
   });

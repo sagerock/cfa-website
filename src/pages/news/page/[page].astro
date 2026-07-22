@@ -3,10 +3,11 @@ import Base from '../../../layouts/Base.astro';
 import PageHeader from '../../../components/PageHeader.astro';
 import NewsGrid from '../../../components/NewsGrid.astro';
 import { getCollection } from 'astro:content';
+import { indexPosts } from '../../../data/newsHelpers.js';
 
 export async function getStaticPaths({ paginate }) {
-  const posts = (await getCollection('posts')).sort((a, b) => b.data.date.localeCompare(a.data.date));
-  return paginate(posts, { pageSize: 24 });
+  const items = indexPosts(await getCollection('posts'));
+  return paginate(items, { pageSize: 24 });
 }
 
 const { page } = Astro.props;
@@ -17,7 +18,7 @@ const newer = page.currentPage === 2 ? '/news' : `/news/page/${page.currentPage 
   <PageHeader eyebrow="News & Views" title="News &amp; Views" />
   <section class="band">
     <div class="wrap">
-      <NewsGrid posts={page.data} />
+      <NewsGrid items={page.data} />
       <nav class="pager" aria-label="Pagination">
         {page.currentPage > 1 ? <a href={newer}>← Newer</a> : <span class="disabled">← Newer</span>}
         <span class="pager-count">Page {page.currentPage} of {page.lastPage}</span>
