@@ -1,14 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
-import { PROGRAM_GROUPS, RESIDENCY_GROUP, FACULTY_TAG } from '../data/programMeta.js';
+import { PROGRAM_GROUPS, RESIDENCY_GROUP } from '../data/programMeta.js';
 import facultyData from '../data/faculty.json';
 import coursesData from '../data/courses.json';
 
 const spine = await getCollection('spine');
 const bySlug = Object.fromEntries(spine.map((e) => [e.data.slug, e]));
-const facCount = (slug) =>
-  facultyData.faculty.filter((p) => p.programs.includes(FACULTY_TAG[slug])).length;
 const activeN = facultyData.faculty.filter((p) => p.active).length;
 ---
 
@@ -50,7 +48,6 @@ const activeN = facultyData.faculty.filter((p) => p.active).length;
                 <li>
                   <a href={`/programs/${s}`}>
                     <span>{bySlug[s]?.data.navLabel ?? s}</span>
-                    {facCount(s) > 0 && <span class="facn">{facCount(s)} faculty</span>}
                   </a>
                 </li>
               ))}
