@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
 import facultyData from '../data/faculty.json';
 import { TAG_LABEL } from '../data/programMeta.js';
 
@@ -15,22 +16,27 @@ const tags = Object.keys(TAG_LABEL).filter((t) => tagCounts[t]);
 
 const initials = (name) => {
   const parts = name.replace(/[^A-Za-z\s]/g, ' ').split(/\s+/).filter(Boolean);
-  return parts.length >= 2 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : (parts[0] || '–').slice(0, 2).toUpperCase();
+  return parts.length >= 2
+    ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+    : (parts[0] || '–').slice(0, 2).toUpperCase();
+};
+const excerpt = (b, n = 150) => {
+  if (!b) return '';
+  if (b.length <= n) return b;
+  const cut = b.slice(0, n);
+  return cut.slice(0, cut.lastIndexOf(' ')) + '…';
 };
 ---
 
 <Base title="Faculty — Center for Anthroposophy" current="/faculty">
+  <PageHeader
+    eyebrow="Faculty"
+    title="Our faculty"
+    lede="One roster, filtered by program. Choose a program to see who teaches in it; select any name to read their full biography."
+  />
+
   <section class="band">
     <div class="wrap">
-      <div class="shead">
-        <p class="eyebrow">Faculty</p>
-        <h2>One roster, filtered by program</h2>
-        <p>
-          Every program page links here with its filter pre-applied. Retired faculty stay on
-          file and surface only on request.
-        </p>
-      </div>
-
       <div class="filters">
         <button class="fbtn is-on" data-filter="all">All active<span class="ct">{activeN}</span></button>
         {tags.map((t) => (
@@ -38,45 +44,64 @@ const initials = (name) => {
         ))}
       </div>
       <div class="archrow">
-        Retired faculty kept in the database: <button id="archToggle" type="button">Show archived ({archN})</button>
+        Retired faculty kept on file: <button id="archToggle" type="button">Show archived ({archN})</button>
       </div>
       <p class="fcount" id="fcount"></p>
 
       <div class="fgrid">
-        {people.map((p) => (
-          <article class="fcard" data-programs={p.programs.join(' ')} data-active={p.active ? '1' : '0'}>
-            <div class="fhead">
-              <span class="avatar">
-                {p.photo?.startsWith('/images/') ? (
-                  <img src={p.photo} alt="" loading="lazy" width="44" height="44" />
-                ) : (
-                  initials(p.name)
-                )}
+        {people.map((p, i) => (
+          <button
+            class="fcard"
+            type="button"
+            data-programs={p.programs.join(' ')}
+            data-active={p.active ? '1' : '0'}
+            data-i={i}
+          >
+            <span class="avatar">
+              {p.photo?.startsWith('/images/')
+                ? <img src={p.photo} alt="" loading="lazy" width="60" height="60" />
+                : <span class="avatar-init">{initials(p.name)}</span>}
+            </span>
+            <span class="fmeta">
+              <span class="fname">{p.name}</span>
+              <span class="chips">
+                {p.active
+                  ? p.programs.slice(0, 3).map((t) => <span class="chip">{TAG_LABEL[t] ?? t}</span>)
+                  : <span class="chip arch">Archived</span>}
+                {p.active && p.programs.length > 3 && <span class="chip more">+{p.programs.length - 3}</span>}
               </span>
-              <h4 class="fname">{p.name}</h4>
-            </div>
-            <div class="chips">
-              {p.active ? (
-                p.programs.map((t) => <span class="chip">{TAG_LABEL[t] ?? t}</span>)
-              ) : (
-                <span class="chip arch">Archived</span>
-              )}
-            </div>
-            {p.bio && <p class="fbio">{p.bio}</p>}
-          </article>
+              {p.bio && <span class="fexcerpt">{excerpt(p.bio)}</span>}
+              {p.bio && <span class="fread">Read bio →</span>}
+            </span>
+          </button>
         ))}
       </div>
     </div>
   </section>
 
-  <script>
+  {/* Full-bio modal */}
+  <div id="bio-modal" class="modal" hidden aria-modal="true" role="dialog">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card" role="document">
+      <button class="modal-close" type="button" data-close aria-label="Close">×</button>
+      <div class="modal-head">
+        <span class="modal-photo" id="m-photo"></span>
+        <div>
+          <h2 id="m-name"></h2>
+          <div class="chips" id="m-chips"></div>
+        </div>
+      </div>
+      <p class="modal-bio" id="m-bio"></p>
+    </div>
+  </div>
+
+  <script is:inline define:vars={{ FAC: people, LABELS: TAG_LABEL }}>
     const cards = [...document.querySelectorAll('.fcard')];
     const btns = [...document.querySelectorAll('.fbtn')];
     const count = document.getElementById('fcount');
     const archToggle = document.getElementById('archToggle');
     const archN = cards.filter((c) => c.dataset.active === '0').length;
-    let filter = 'all';
-    let showArch = false;
+    let filter = 'all', showArch = false;
 
     function render() {
       let shown = 0;
@@ -100,9 +125,38 @@ const initials = (name) => {
     archToggle.addEventListener('click', () => {
       showArch = !showArch;
       archToggle.textContent = showArch ? 'Hide archived' : `Show archived (${archN})`;
-      if (filter !== 'all') setFilter('all');
-      else render();
+      if (filter !== 'all') setFilter('all'); else render();
     });
+
+    // Modal
+    const modal = document.getElementById('bio-modal');
+    const mPhoto = document.getElementById('m-photo');
+    const mName = document.getElementById('m-name');
+    const mChips = document.getElementById('m-chips');
+    const mBio = document.getElementById('m-bio');
+    function initials(name) {
+      const p = name.replace(/[^A-Za-z\s]/g, ' ').split(/\s+/).filter(Boolean);
+      return p.length >= 2 ? (p[0][0] + p[p.length - 1][0]).toUpperCase() : (p[0] || '–').slice(0, 2).toUpperCase();
+    }
+    function openBio(i) {
+      const p = FAC[i];
+      if (!p) return;
+      mPhoto.innerHTML = p.photo && p.photo.startsWith('/images/')
+        ? `<img src="${p.photo}" alt="${p.name}">`
+        : `<span class="avatar-init">${initials(p.name)}</span>`;
+      mName.textContent = p.name;
+      mChips.innerHTML = p.active
+        ? p.programs.map((t) => `<span class="chip">${LABELS[t] || t}</span>`).join('')
+        : '<span class="chip arch">Archived faculty</span>';
+      mBio.textContent = p.bio || 'Biography coming soon.';
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      modal.querySelector('.modal-close').focus();
+    }
+    function closeBio() { modal.hidden = true; document.body.style.overflow = ''; }
+    cards.forEach((c) => c.addEventListener('click', () => openBio(+c.dataset.i)));
+    modal.addEventListener('click', (e) => { if (e.target.hasAttribute('data-close')) closeBio(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) closeBio(); });
 
     setFilter(new URLSearchParams(location.search).get('program') || 'all');
   </script>
