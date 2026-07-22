@@ -1,0 +1,109 @@
+---
+import Base from '../layouts/Base.astro';
+import facultyData from '../data/faculty.json';
+import { TAG_LABEL } from '../data/programMeta.js';
+
+const people = [...facultyData.faculty].sort((a, b) =>
+  a.name.split(' ').pop().toLowerCase().localeCompare(b.name.split(' ').pop().toLowerCase())
+);
+const activeN = people.filter((p) => p.active).length;
+const archN = people.length - activeN;
+
+const tagCounts = {};
+for (const p of people) for (const t of p.programs) tagCounts[t] = (tagCounts[t] || 0) + 1;
+const tags = Object.keys(TAG_LABEL).filter((t) => tagCounts[t]);
+
+const initials = (name) => {
+  const parts = name.replace(/[^A-Za-z\s]/g, ' ').split(/\s+/).filter(Boolean);
+  return parts.length >= 2 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : (parts[0] || '–').slice(0, 2).toUpperCase();
+};
+---
+
+<Base title="Faculty — Center for Anthroposophy" current="/faculty">
+  <section class="band">
+    <div class="wrap">
+      <div class="shead">
+        <p class="eyebrow">Faculty</p>
+        <h2>One roster, filtered by program</h2>
+        <p>
+          Every program page links here with its filter pre-applied. Retired faculty stay on
+          file and surface only on request.
+        </p>
+      </div>
+
+      <div class="filters">
+        <button class="fbtn is-on" data-filter="all">All active<span class="ct">{activeN}</span></button>
+        {tags.map((t) => (
+          <button class="fbtn" data-filter={t}>{TAG_LABEL[t]}<span class="ct">{tagCounts[t]}</span></button>
+        ))}
+      </div>
+      <div class="archrow">
+        Retired faculty kept in the database: <button id="archToggle" type="button">Show archived ({archN})</button>
+      </div>
+      <p class="fcount" id="fcount"></p>
+
+      <div class="fgrid">
+        {people.map((p) => (
+          <article class="fcard" data-programs={p.programs.join(' ')} data-active={p.active ? '1' : '0'}>
+            <div class="fhead">
+              <span class="avatar">
+                {p.photo?.startsWith('/images/') ? (
+                  <img src={p.photo} alt="" loading="lazy" width="44" height="44" />
+                ) : (
+                  initials(p.name)
+                )}
+              </span>
+              <h4 class="fname">{p.name}</h4>
+            </div>
+            <div class="chips">
+              {p.active ? (
+                p.programs.map((t) => <span class="chip">{TAG_LABEL[t] ?? t}</span>)
+              ) : (
+                <span class="chip arch">Archived</span>
+              )}
+            </div>
+            {p.bio && <p class="fbio">{p.bio}</p>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const cards = [...document.querySelectorAll('.fcard')];
+    const btns = [...document.querySelectorAll('.fbtn')];
+    const count = document.getElementById('fcount');
+    const archToggle = document.getElementById('archToggle');
+    const archN = cards.filter((c) => c.dataset.active === '0').length;
+    let filter = 'all';
+    let showArch = false;
+
+    function render() {
+      let shown = 0;
+      for (const c of cards) {
+        const progs = (c.dataset.programs || '').split(' ').filter(Boolean);
+        const active = c.dataset.active === '1';
+        const vis = filter === 'all' ? active || showArch : progs.includes(filter);
+        c.hidden = !vis;
+        if (vis) shown++;
+      }
+      count.textContent =
+        `${shown} ${shown === 1 ? 'person' : 'people'} shown` +
+        (filter === 'all' ? (showArch ? ' — including archived' : ' — active faculty') : ' in this program');
+    }
+    function setFilter(f) {
+      filter = btns.some((b) => b.dataset.filter === f) ? f : 'all';
+      btns.forEach((b) => b.classList.toggle('is-on', b.dataset.filter === filter));
+      render();
+    }
+    btns.forEach((b) => b.addEventListener('click', () => setFilter(b.dataset.filter)));
+    archToggle.addEventListener('click', () => {
+      showArch = !showArch;
+      archToggle.textContent = showArch ? 'Hide archived' : `Show archived (${archN})`;
+      if (filter !== 'all') setFilter('all');
+      else render();
+    });
+
+    setFilter(new URLSearchParams(location.search).get('program') || 'all');
+  </script>
+</Base>

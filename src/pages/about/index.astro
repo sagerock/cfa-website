@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const pages = (await getCollection('spine', (e) => e.data.section === 'about')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+const people = pages.filter((p) => ['board-and-administration'].includes(p.data.slug));
+const resources = pages.filter((p) =>
+  ['connections-and-links', 'faculty-publications', 'goetheanum', 'rudolf-steiner'].includes(p.data.slug)
+);
+const core = pages.filter((p) => !people.includes(p) && !resources.includes(p));
+---
+
+<Base title="About — Center for Anthroposophy" current="/about">
+  <section class="band">
+    <div class="wrap">
+      <div class="shead">
+        <p class="eyebrow">About</p>
+        <h2>The Center, its people, and its roots</h2>
+      </div>
+      <div class="iagrid">
+        <div class="iagroup">
+          <h3 class="iatag">The Center</h3>
+          <ul>
+            {core.map((p) => (
+              <li><a href={`/about/${p.data.slug}`}><span>{p.data.navLabel}</span></a></li>
+            ))}
+          </ul>
+        </div>
+        <div class="iagroup">
+          <h3 class="iatag">People</h3>
+          <ul>
+            <li><a href="/faculty"><span>Faculty</span></a></li>
+            {people.map((p) => (
+              <li><a href={`/about/${p.data.slug}`}><span>{p.data.navLabel}</span></a></li>
+            ))}
+            <li><a href="/faculty?program=program-directors"><span>Program Directors</span></a></li>
+          </ul>
+        </div>
+        <div class="iagroup">
+          <h3 class="iatag">Resources</h3>
+          <ul>
+            {resources.map((p) => (
+              <li><a href={`/about/${p.data.slug}`}><span>{p.data.navLabel}</span></a></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

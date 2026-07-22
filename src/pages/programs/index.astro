@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import { PROGRAM_GROUPS, RESIDENCY_GROUP, FACULTY_TAG } from '../../data/programMeta.js';
+import facultyData from '../../data/faculty.json';
+
+const spine = await getCollection('spine');
+const bySlug = Object.fromEntries(spine.map((e) => [e.data.slug, e]));
+const facCount = (slug) =>
+  facultyData.faculty.filter((p) => p.programs.includes(FACULTY_TAG[slug])).length;
+const groups = [...PROGRAM_GROUPS, RESIDENCY_GROUP];
+---
+
+<Base title="Programs — Center for Anthroposophy" current="/programs">
+  <section class="band">
+    <div class="wrap">
+      <div class="shead">
+        <p class="eyebrow">Programs</p>
+        <h2>The whole of the Center, on one map</h2>
+        <p>Every program, one page each. Faculty counts are read live from the roster data.</p>
+      </div>
+      <div class="iagrid">
+        {groups.map((g) => (
+          <div class="iagroup">
+            <h3 class="iatag">{g.name}</h3>
+            <ul>
+              {g.slugs.map((s) => (
+                <li>
+                  <a href={`/programs/${s}`}>
+                    <span>{bySlug[s]?.data.navLabel ?? s}</span>
+                    {facCount(s) > 0 && <span class="facn">{facCount(s)} faculty</span>}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

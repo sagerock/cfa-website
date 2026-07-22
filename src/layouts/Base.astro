@@ -1,0 +1,47 @@
+---
+import '../styles/global.css';
+const { title = 'Center for Anthroposophy', current = '' } = Astro.props;
+const nav = [
+  ['/programs', 'Programs'],
+  ['/faculty', 'Faculty'],
+  ['/about', 'About'],
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="poc">
+      Proof of concept — rebuilt from extracted content. The live site is
+      <a href="https://centerforanthroposophy.org">centerforanthroposophy.org</a>
+    </div>
+    <header class="site-head">
+      <div class="wrap">
+        <a class="brand" href="/">Center for <span>Anthroposophy</span></a>
+        <nav class="nav">
+          {nav.map(([href, label]) => (
+            <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>
+          ))}
+        </nav>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-foot">
+      <div class="wrap">
+        <div>Center for Anthroposophy · Wilton &amp; Keene, New Hampshire</div>
+        <div>
+          Proof of concept: this entire site is generated from Markdown and JSON files in a git
+          repository — no WordPress, no page builder. Content extracted 2026-07-21 from the
+          <a href="https://centerforanthroposophy.org">live site</a>.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

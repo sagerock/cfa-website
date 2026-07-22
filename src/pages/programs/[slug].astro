@@ -1,0 +1,89 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+import { FACULTY_TAG } from '../../data/programMeta.js';
+import facultyData from '../../data/faculty.json';
+import coursesData from '../../data/courses.json';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('spine', (e) =>
+    ['programs', 'residency'].includes(e.data.section)
+  );
+  return pages.map((e) => ({ params: { slug: e.data.slug }, props: { entry: e } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const tag = FACULTY_TAG[entry.data.slug];
+const people = tag
+  ? facultyData.faculty.filter((p) => p.programs.includes(tag)).sort((a, b) =>
+      a.name.split(' ').pop().localeCompare(b.name.split(' ').pop())
+    )
+  : [];
+
+const isWHS = entry.data.slug === 'waldorf-high-school';
+const YEAR_NAME = { 1: 'First Year', 2: 'Second Year', 3: 'Third Year' };
+const years = isWHS
+  ? [1, 2, 3].map((y) => ({
+      y,
+      name: YEAR_NAME[y],
+      courses: coursesData.courses.filter((c) => c.year === y),
+    }))
+  : [];
+---
+
+<Base title={`${entry.data.navLabel} — Center for Anthroposophy`} current="/programs">
+  <article class="article">
+    <div class="wrap">
+      <header>
+        <p class="eyebrow">{entry.data.section === 'residency' ? 'Attending a Residency' : 'Program'}</p>
+        <h1>{entry.data.navLabel}</h1>
+      </header>
+      <div class="prose">
+        <Content />
+      </div>
+
+      {isWHS && (
+        <section class="band" id="catalog">
+          <div class="shead">
+            <p class="eyebrow">Course catalog</p>
+            <h2>{coursesData.courses.length} courses across three years</h2>
+          </div>
+          <div class="note">
+            Formerly 73 separate WordPress pages with no inbound links — now one data file,
+            rendered as a browsable catalog.
+          </div>
+          <div class="catalog">
+            {years.map(({ name, courses }) => (
+              <div>
+                <h3 class="yeartag">{name}<span class="ct">{courses.length}</span></h3>
+                {courses.map((c) => (
+                  <details class="course">
+                    <summary><span class="ccode">{c.code}</span><span class="csub">{c.subject}</span></summary>
+                    <div class="cbody"><p>{c.description.replace(/[#*>\[\]]/g, '').slice(0, 900)}</p></div>
+                  </details>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {people.length > 0 && (
+        <div class="fstrip">
+          <p class="eyebrow">Faculty</p>
+          <div class="row">
+            <span class="who">
+              {people.slice(0, 8).map((p) => p.name).join(' · ')}
+              {people.length > 8 ? ` · and ${people.length - 8} more` : ''}
+            </span>
+          </div>
+          <p style="margin-top:10px">
+            <a href={`/faculty?program=${tag}`}>See all {people.length} {entry.data.navLabel} faculty →</a>
+          </p>
+        </div>
+      )}
+    </div>
+  </article>
+</Base>
