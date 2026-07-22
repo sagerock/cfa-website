@@ -625,13 +625,14 @@ details.course[open] summary::before { content: '–'; }
 .tcard cite { display: block; margin-top: 12px; font-family: var(--sans); font-size: 12.5px; font-style: normal; color: var(--green-ink); }
 
 /* disclosure blocks inside prose (schedule / materials) */
-.prose details.disclosure { border: 1px solid var(--line); border-radius: 6px; padding: 0 16px; margin: 14px 0; background: var(--raised); }
+.prose details.disclosure { border: 1px solid var(--line); border-radius: 6px; padding: 0 20px 6px; margin: 14px 0; background: var(--raised); }
 .prose details.disclosure summary { cursor: pointer; font-family: var(--sans); font-size: 14px; font-weight: 600; color: var(--green-ink); padding: 13px 0; list-style: none; }
 .prose details.disclosure summary::-webkit-details-marker { display: none; }
 .prose details.disclosure summary::before { content: '+ '; }
 .prose details.disclosure[open] summary::before { content: '– '; }
 .prose details.disclosure[open] summary { border-bottom: 1px solid var(--line); }
-.prose details.disclosure ul { margin: 14px 0; }
+.prose details.disclosure ul { margin: 14px 0; padding-left: 22px; }
+.prose details.disclosure li { margin: 5px 0; padding-left: 2px; }
 .prose details.disclosure > p { margin-top: 14px; }
 
 /* ---- news / blog ---- */
