@@ -10,7 +10,7 @@ order: 3
 
 ### Become the Educator Adolescents Remember!
 
-**[Click Here To Learn About Our Upcoming Meet and Greet](https://centerforanthroposophy.org/wp-content/uploads/2025/02/February-Meet-Greet-High-School.pdf)**
+**[Click Here To Learn About Our Upcoming Meet and Greet](/files/db2578c05a-february-meet-greet-high-school.pdf)**
 
 **We joyfully celebrate and honor your commitment to advancing Waldorf pedagogy with purpose. Apply now for an opportunity to attend the first summer residency in 2026 and 100% tuition-free!**
 
@@ -60,7 +60,7 @@ Before You Attend, You'll Need
 
 - Some experience working with adolescents preferred
 
-- Preparatory foundational studies in anthroposophy and the arts* (available by signing up for CfA’s “Explorations” program [here](https://centerforanthroposophy.org/programs/explorations-online/))
+- Preparatory foundational studies in anthroposophy and the arts* (available by signing up for CfA’s “Explorations” program [here](/programs/explorations-online))
 
 - Experience in education and adolescent development
 
@@ -284,7 +284,7 @@ The research project includes these three components:
 
 RESIDENCY ROOM & BOARD INFORMATION
 
-](https://centerforanthroposophy.org/programs/summer-housing-meals/)
+](/programs/summer-housing-meals)
 
 ## What our students say
 

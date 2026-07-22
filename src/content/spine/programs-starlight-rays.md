@@ -12,7 +12,7 @@ Starlight Rays in Darkened Times: Seminars on Contemporary Topics
 
 ## Empower Yourself to Shape the Future of Waldorf Education
 
-This online series offers a rare opportunity for Waldorf high school teachers, administrators, staff members, and parents to come together and explore a fresh round of new “hot topics” with one another as well as share the latest current observations with seasoned colleagues from [CfA’s Waldorf High School Teacher Education Program (WHiSTEP)](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/).
+This online series offers a rare opportunity for Waldorf high school teachers, administrators, staff members, and parents to come together and explore a fresh round of new “hot topics” with one another as well as share the latest current observations with seasoned colleagues from [CfA’s Waldorf High School Teacher Education Program (WHiSTEP)](/programs/waldorf-high-school).
 
 Join us as we delve into critical issues facing Waldorf education today, such as:
 
@@ -44,7 +44,7 @@ Institution: $1,220
 
 !
 
-[ ](https://centerforanthroposophy.org/wp-content/uploads/2026/06/High-School-online-series-2026-2027.pdf)
+[ ](/files/e480d69063-high-school-online-series-2026-2027.pdf)
 
 ### **[Register now to secure your spot in this transformative series!](https://cvent.me/Er24Kl)**
 
@@ -64,7 +64,7 @@ REGISTER NOW!
 
 ** VIEW / DOWNLOAD FLYER
 
-](https://centerforanthroposophy.org/wp-content/uploads/2025/09/High-School-online-series-2025-2026-r5.pdf)
+](/files/5181d9e478-high-school-online-series-2025-2026-r5.pdf)
 
 ## Testimonials:
 

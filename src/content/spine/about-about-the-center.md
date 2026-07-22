@@ -58,43 +58,43 @@ Plus a beautiful summer campus, the option of vegetarian meals, and scholarship 
 
 Serve the growing Waldorf movement by becoming a skilled mentor of new teachers. Gain the skills needed to communicate with compassion and clarity in this low-residency training program.
 
-[ READ MORE / Register ](https://centerforanthroposophy.org/programs/mentor-training/)
+[ READ MORE / Register ](/programs/mentor-training)
 
 ## Explorations Online
 
 This anthroposophical foundational program fulfills entrance requirements for further Waldorf teacher education and a pathway to certification.
 
-[ READ MORE / Register ](https://centerforanthroposophy.org/programs/exploration-online/)
+[ READ MORE / Register ](/programs/explorations-online)
 
 ## Waldorf High School Teacher Education
 
 Earn graduate-level Waldorf teacher certification in a low-residency program. Choose among six academic disciplines while deepening your knowledge of teaching adolescents.
 
-[ READ MORE / Apply ](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/)
+[ READ MORE / Apply ](/programs/waldorf-high-school)
 
 ## Kairos Institute
 
 Kairos Institute offers training in Artistic Therapies. We are Cooperative members of iARTe, Medical Section, Goetheanum. Kairos Institute is an American site for training in Emergency Pedagogy: Traumatology with Bernd Ruf.
 
-[ READ MORE / Register ](https://centerforanthroposophy.org/programs/kairos-institute/)
+[ READ MORE / Register ](/programs/kairos-institute)
 
 ## Renewal Courses
 
 Enroll in a rejuvenating week-long professional development course and return to your school inspired by new ideas to share and put into practice.
 
-[ READ MORE / Register ](https://centerforanthroposophy.org/programs/renewal-courses/)
+[ READ MORE / Register ](/programs/renewal-courses)
 
 ## Waldorf Leadership Development
 
 Cultivate your capacity to serve as a leader in a Waldorf educational setting with this low-residency educational leadership program.
 
-[ READ MORE / Register ](https://centerforanthroposophy.org/programs/waldorf-administration-and-leadership-development-program/)
+[ READ MORE / Register ](/programs/waldorf-leadership-development)
 
 ## Building Bridgesto Waldorf Teacher Training
 
 A series of workshops for practicing teachers designed to introduce the anthroposophical foundations of Waldorf education.
 
-[ READ MORE / Register ](https://centerforanthroposophy.org/programs/building-bridges-to-waldorf-teacher-training-2/)
+[ READ MORE / Register ](/programs/building-bridges)
 
 ## Antioch University Waldorf Teacher Education Program
 

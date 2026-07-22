@@ -36,7 +36,7 @@ CfA is affiliated with a number of local, regional and national organizations th
 
 - [Association of Waldorf Schools of North America (AWSNA)](https://www.waldorfeducation.org/)
 
-- AWSNA’s [Teacher Education ](https://centerforanthroposophy.org/wp-content/uploads/2010/08/AWSNA_TEN_Flyer_Revised0217_v1b.pdf)Delegates (TED) Circle
+- AWSNA’s [Teacher Education ](/files/8689925a04-awsnatenflyerrevised0217v1b.pdf)Delegates (TED) Circle
 
 - [Hague Circle](https://www.waldorf-international.org/en/) (International Council for Waldorf Steiner Education)
 
@@ -70,11 +70,11 @@ The association [**Friends of Waldorf Education**](https://www.freunde-waldorf.d
 
 The first Waldorf School opened in September 1919 in Stuttgart. Today there are some 12,500 Waldorf and Rudolf Steiner schools in 70 countries.
 
-**[For detailed listing of all Waldorf schools worldwide as of April 2024, please click on the image below:](https://centerforanthroposophy.org/wp-content/uploads/2022/12/Waldorf_World_List_2022.pdf)**
+**[For detailed listing of all Waldorf schools worldwide as of April 2024, please click on the image below:](/files/0f5a1966c6-waldorfworldlist2022.pdf)**
 
 !
 
-[ ](https://centerforanthroposophy.org/wp-content/uploads/2024/12/Waldorf_World_List.pdf)
+[ ](/files/e1702bb3ad-waldorfworldlist.pdf)
 
 There are also 2,000 Waldorf Kindergartens, 600 remedial education institutions, over 100 teacher training centers for Waldorf Education, and a large number of social work institutions.
 

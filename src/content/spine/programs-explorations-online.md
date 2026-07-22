@@ -176,7 +176,7 @@ The readings are meant to serve as both a preparation for the weekend sessions a
 
 *Please read pages 203-215 (Appendices 2 -3)*
 
-[ Click here for the PDF flyer](https://centerforanthroposophy.org/wp-content/uploads/2025/03/Center-for-Anthroposophy-Explorations-Flyer-2025-to-2026_8.5x11-2.pdf)
+[ Click here for the PDF flyer](/files/79fb848b82-center-for-anthroposophy-explorations-flyer-2025-to-20268.5x)
 
 [
 

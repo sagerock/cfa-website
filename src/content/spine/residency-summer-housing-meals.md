@@ -132,13 +132,13 @@ Katherine C. Meyer, Head of School
 
 ### Please Read…
 
-[ Visitors Guidelines](https://centerforanthroposophy.org/wp-content/uploads/2025/06/HMS-Visitors-Guidelines-Poster-CFA-2.pdf)
+[ Visitors Guidelines](/files/be80879aa0-hms-visitors-guidelines-poster-cfa-2.pdf)
 
-[ From Farm to School by Douglas Gerwin](https://centerforanthroposophy.org/wp-content/uploads/2024/06/From-Farm-to-School-by-Douglas-Gerwin.pdf)
+[ From Farm to School by Douglas Gerwin](/files/e303a5b0ea-from-farm-to-school-by-douglas-gerwin.pdf)
 
-[ Welcome Letter from our Hosts](https://centerforanthroposophy.org/wp-content/uploads/2025/06/HOS-Letter-to-CFA-Participants_2025.pdf)
+[ Welcome Letter from our Hosts](/files/e753c7f6a5-hos-letter-to-cfa-participants2025.pdf)
 
-[ Frequently Asked Questions](https://centerforanthroposophy.org/wp-content/uploads/2025/06/FAQs-for-Waldorf-Residency-2025-1.pdf)
+[ Frequently Asked Questions](/files/9698f90970-faqs-for-waldorf-residency-2025-1.pdf)
 
 ### What is provided and what to bring:
 
@@ -172,7 +172,7 @@ Umbrella
 
 !
 
-[ ](https://centerforanthroposophy.org/wp-content/uploads/2024/05/HMS-Dorm-Floor-Plan2.pdf)
+[ ](/files/71d80031ed-hms-dorm-floor-plan2.pdf)
 
 Please click on the image above to access the full size pdf.
 
@@ -194,9 +194,9 @@ Floor plans for illustration only. Rooms will be assigned by CfA Housing Coordin
 
 !
 
-[ ](https://centerforanthroposophy.org/wp-content/uploads/2022/02/Childrens-Village-map.pdf)
+[ ](/files/1485c0ccf7-childrens-village-map.pdf)
 
-[Click to access an enlargable pdf](https://centerforanthroposophy.org/wp-content/uploads/2022/02/Childrens-Village-map.pdf).
+[Click to access an enlargable pdf](/files/1485c0ccf7-childrens-village-map.pdf).
 
 ##### There are two separate buildings at the Village:
 
@@ -236,13 +236,13 @@ MAKE YOUR RESERVATION HERE
 
 !
 
-[ ](https://centerforanthroposophy.org/wp-content/uploads/2026/01/July-2026-Meals-Calendar.pdf)Click the image for a printable PDF
+[ ](/files/c6f9831cd5-july-2026-meals-calendar.pdf)Click the image for a printable PDF
 
 ## Meal Times
 
 !
 
-[ ](https://centerforanthroposophy.org/wp-content/uploads/2026/01/2026-CFA-Meal-times-2.pdf)Click the image for a printable PDF
+[ ](/files/4c326381ec-2026-cfa-meal-times-2.pdf)Click the image for a printable PDF
 
 ## Off-Campus Housing
 

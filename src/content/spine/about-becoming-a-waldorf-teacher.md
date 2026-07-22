@@ -40,19 +40,19 @@ Rudolf Steiner
 
 A series of workshops for practicing teachers designed to introduce the anthroposophical foundations of Waldorf education.
 
-[ READ MORE / Register ](https://centerforanthroposophy.org/programs/building-bridges-to-waldorf-teacher-training-2/)
+[ READ MORE / Register ](/programs/building-bridges)
 
 ## Explorations Online
 
 This online foundational program fulfills entrance requirements for further teacher education and a pathway to certification.
 
-[ READ MORE / Register ](https://centerforanthroposophy.org/programs/exploration-online/)
+[ READ MORE / Register ](/programs/explorations-online)
 
 ## Waldorf High School Teacher Education
 
 Earn a graduate-level teacher certification with this low-residency program. Choose one of six academic disciplines while deepening your knowledge of teaching adolescence.
 
-[ READ MORE / Apply ](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/)
+[ READ MORE / Apply ](/programs/waldorf-high-school)
 
 ### Get in touch with us
 

@@ -286,4 +286,4 @@ VIEW MORE PHOTOS
 
 READ TEAM REPORT
 
-](https://centerforanthroposophy.org/wp-content/uploads/2024/11/EP-Kairos-crisis-intervention-Asheville-2024.pdf)
+](/files/702fa2195f-ep-kairos-crisis-intervention-asheville-2024.pdf)

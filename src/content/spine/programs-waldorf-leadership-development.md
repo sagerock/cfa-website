@@ -102,7 +102,7 @@ REGISTER FOR YUBA RIVER PROGRAM
 
 VIEW / DOWLOAD DETAILED FLIER
 
-](https://centerforanthroposophy.org/wp-content/uploads/2026/07/WLCD-2026-27-Yuba-River.pdf)
+](/files/7b93fbeb61-wlcd-2026-27-yuba-river.pdf)
 
 ## Enrolling now for the 2026-27 Cycle
 
@@ -132,7 +132,7 @@ The program includes workshops, guided exercises, case studies, mentoring, and p
 
 **Group rates possible with three or more enrollments from the same school**
 
-For new hires in schools who do not have a Waldorf background, we strongly encourage simultaneous registration for both our[Explorations](https://centerforanthroposophy.org/programs/explorations-online/) and WLD programs.
+For new hires in schools who do not have a Waldorf background, we strongly encourage simultaneous registration for both our[Explorations](/programs/explorations-online) and WLD programs.
 
 **Certification**
 
@@ -150,7 +150,7 @@ However, in the past two years we have started doing residencies at other sites 
 
 If you think you might be able to host a residency at your school (15-18 student min) please contact Torin M Finser [torin@centerforanthroposophy.org](mailto:torin@centerforanthroposophy.org) for a conversation.
 
-[ Download Topic Overview](https://centerforanthroposophy.org/wp-content/uploads/2025/10/wld.pdf)
+[ Download Topic Overview](/files/a2889fe220-wld.pdf)
 
 Overview of Topics Covered in Presentations and Workshops
 
@@ -296,7 +296,7 @@ Program Director
 
 #### Program Schedule May 2026 - April 2027
 
-[ Download Full schedule](https://centerforanthroposophy.org/wp-content/uploads/2026/04/WLCD-2026-27-Program-Schedule.docx.pdf)
+[ Download Full schedule](/files/15d92f9db2-wlcd-2026-27-program-schedule.docx.pdf)
 
 - Tuition
 
@@ -352,15 +352,15 @@ Explorations takes up burning current topics along with contemplative studies an
 
 ![Center-for-Anthroposophy-Explorations-Flyer-2025-to-2026_8-5x11-2-pdf-04-16-2025_01_37_PM](/images/e8f2c377b6-center-for-anthroposophy-explorations-fl.png)
 
-[ ](https://centerforanthroposophy.org/wp-content/uploads/2025/03/Center-for-Anthroposophy-Explorations-Flyer-2025-to-2026_8.5x11-2.pdf)
+[ ](/files/79fb848b82-center-for-anthroposophy-explorations-flyer-2025-to-20268.5x)
 
-**[DOWNLOAD THE EXPLORATIONS ONLINE POSTER](https://centerforanthroposophy.org/wp-content/uploads/2025/03/Center-for-Anthroposophy-Explorations-Flyer-2025-to-2026_8.5x11-2.pdf)**
+**[DOWNLOAD THE EXPLORATIONS ONLINE POSTER](/files/79fb848b82-center-for-anthroposophy-explorations-flyer-2025-to-20268.5x)**
 
 ![wld-pdf-10-30-2025_12_39_PM](/images/cd83e7bcd0-wld-pdf-10-30-20251239pm-rdz6wjjvmg9d2yc.png)
 
-[ ](https://centerforanthroposophy.org/wp-content/uploads/2025/10/wld.pdf)
+[ ](/files/a2889fe220-wld.pdf)
 
-**[DOWNLOAD THE WALDORF LEADERSHIP DEVELOPMENT POSTER](https://centerforanthroposophy.org/wp-content/uploads/2025/04/WLD-25-26-Pg-1-.pdf)**
+**[DOWNLOAD THE WALDORF LEADERSHIP DEVELOPMENT POSTER](/files/858415c857-wld-25-26-pg-1-.pdf)**
 
 ## Program Leadership
 

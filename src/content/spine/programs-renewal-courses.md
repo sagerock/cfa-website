@@ -124,7 +124,7 @@ REGISTER NOW!
 
 HOUSING & MEALS RESERVATIONS
 
-](https://centerforanthroposophy.org/programs/summer-housing-meals/)
+](/programs/summer-housing-meals)
 
 !
 

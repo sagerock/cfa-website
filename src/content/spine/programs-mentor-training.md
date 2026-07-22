@@ -126,7 +126,7 @@ Program Registration
 
 Summer Residency Room & Board
 
-](https://centerforanthroposophy.org/programs/summer-housing-meals/)
+](/programs/summer-housing-meals)
 
 !
 
@@ -150,7 +150,7 @@ Read Faculty Bios
 
 ![Mentor Training 2026 flier](/images/8a976045bd-mentor-training-ad-renewal-mag-75-by-475.webp)
 
-[ ](https://centerforanthroposophy.org/wp-content/uploads/2025/09/Mentor-training-AD-Renewal-Mag-7.5-by-4.75-1.pdf)
+[ ](/files/d4f4c11005-mentor-training-ad-renewal-mag-7.5-by-4.75-1.pdf)
 
 [
 

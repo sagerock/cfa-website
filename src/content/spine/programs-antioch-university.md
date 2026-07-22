@@ -22,7 +22,7 @@ To apply for Financial Aid through the Center for Anthroposophy (in addition to 
 
 **…and what does the future of education look like?** Standing on a 100-year foundation, Waldorf Education leads the way in differentiating between building skills and building capacities. When considering what students will need for the future, the curriculum is carefully considered and ever evolving to adapt to the world around us and take into consideration the whole human being.
 
-### Download our flyer [here](https://centerforanthroposophy.org/wp-content/uploads/2023/03/Waldorf-Flyer-1.pdf).
+### Download our flyer [here](/files/8ade08be8d-waldorf-flyer-1.pdf).
 
 !
 
@@ -32,7 +32,7 @@ To apply for Financial Aid through the Center for Anthroposophy (in addition to 
 
 - [Visit the Waldorf Programs Site](https://sites.google.com/antioch.edu/waldorf/home)
 
-- Join [Explorations Online](https://centerforanthroposophy.org/programs/exploration-online/)
+- Join [Explorations Online](/programs/explorations-online)
 
 - [Antioch Admissions Information](https://sites.google.com/antioch.edu/waldorf/admissions)
 
