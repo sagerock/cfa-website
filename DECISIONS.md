@@ -98,3 +98,27 @@ analytics land in the SAME database, so CfA owns both their leads and their traf
   admin/reporting view. Production → dedicated Supabase project ($10/mo) for true isolation.
 - Gotcha fixed: a 204 response must have a `null` body, not `""` (else the edge function
   500s after a successful insert).
+
+## 2026-07-22 — Move leads into the Email Marketing Tool (leads = real CfA contacts)
+Sage: "put the leads in the email tool — we have a ton of CfA leads in there already."
+Backend moved from the borrowed ai-engagement-hub to the **Email Marketing Tool** Supabase
+(`ckloewflialohuvixmvd`), where CfA is a real client (id `22500cd6-…`; 6,101 live contacts,
+13,090 in `cfa_consolidated_people`).
+- **Website leads now upsert into the live `contacts` table** via `public.cfa_website_lead()`
+  — a SECURITY DEFINER fn that only ever writes CfA's client_id, deduped on the existing
+  unique index `(email, client_id)`, and is **non-destructive**: fills blank names, keeps the
+  existing `source_code`, MERGES tags, latest message wins. New leads get `source_code='website'`
+  + tags `['website-inquiry', <program>]`; phone/message/program go in `intake_data`/`intake_summary`.
+- CfA runs **opt-out** (Sage: "no opt-in stuff, just unsubscribes; everybody's opting in") — so
+  website leads become full contacts like everyone else, just tagged. Purchase history
+  (`total_spent`/`order_count`) auto-attaches via the existing WooCommerce sync (email-deduped).
+- `cfa-contact` + `cfa-track` redeployed to this project; `cfa_page_events` table recreated here;
+  frontend `FN` base repointed (`src/data/site.js`). ai-engagement-hub cfa_ tables dropped;
+  its old functions are orphaned/unused (couldn't delete via MCP).
+- **Gotcha:** a SECURITY DEFINER fn with `set search_path=public` broke the contacts
+  unsubscribe-token trigger (uses `extensions.gen_random_bytes`); fix = `search_path=public, extensions`.
+- **Action for Sage:** move the `SENDGRID_API_KEY` secret to THIS project (it's on the old one) to
+  re-enable notification email. Leads still save without it (service role); only email is dormant.
+- Security: enabled RLS on 4 exposed Cvent tables in this project (was off → anon-readable).
+- Spam note: the contact endpoint is public and writes to production contacts (honeypot + email
+  validation only) — add rate-limit/Turnstile before real launch; junk is filterable by source_code='website'.

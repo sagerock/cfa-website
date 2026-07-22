@@ -1,7 +1,7 @@
-// Central config. The Supabase functions base for this PoC lives in a lightly-used
-// SageRock project under a cfa_-prefixed, RLS-locked schema; production would get a
-// dedicated project. Endpoints are public (validated server-side) so no key ships here.
-export const FN = 'https://dplaqxqnczmnxkuccsph.supabase.co/functions/v1';
+// Backend = the SageRock Email Marketing Tool Supabase, where CfA is already a client.
+// Website leads become real, deduped CfA contacts (tagged "website"); analytics land in a
+// cfa_-prefixed table. Endpoints are public (validated server-side) so no key ships here.
+export const FN = 'https://ckloewflialohuvixmvd.supabase.co/functions/v1';
 export const CONTACT_ENDPOINT = `${FN}/cfa-contact`;
 export const TRACK_ENDPOINT = `${FN}/cfa-track`;
 
