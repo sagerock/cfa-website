@@ -76,6 +76,15 @@ import { CONTACT, CONTACT_ENDPOINT, PROGRAM_OPTIONS } from '../data/site.js';
   </section>
 
   <script is:inline define:vars={{ endpoint: CONTACT_ENDPOINT }}>
+    // Pre-select the program if arriving from a program page (/contact?program=…)
+    try {
+      const p = new URLSearchParams(location.search).get('program');
+      if (p) {
+        const sel = document.getElementById('program');
+        const match = [...sel.options].find((o) => o.value === p);
+        if (match) sel.value = p;
+      }
+    } catch (e) {}
     const form = document.getElementById('contact-form');
     const btn = document.getElementById('submit-btn');
     const errBox = document.getElementById('form-error');
