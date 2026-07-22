@@ -9,24 +9,27 @@ export async function getStaticPaths() {
   return posts.map((entry) => {
     const edSlug = memberOf[entry.data.slug];
     const edition = edSlug && edSlug !== entry.data.slug ? editions[edSlug] : null;
-    return { params: { slug: entry.data.slug }, props: { entry, edition } };
+    // an edition cover opens at its first article — the sidebar carries the TOC
+    const redirectTo = editions[entry.data.slug]?.articles[0]?.slug ?? null;
+    return { params: { slug: entry.data.slug }, props: { entry, edition, redirectTo } };
   });
 }
 
-const { entry, edition } = Astro.props;
+const { entry, edition, redirectTo } = Astro.props;
 const { Content } = await render(entry);
 const fmtDate = (d) =>
   new Date(d + 'T00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 ---
 
 <Base title={`${entry.data.title} — Center for Anthroposophy`} current="/news">
+  {redirectTo && <meta http-equiv="refresh" content={`0;url=/news/${redirectTo}`} />}
   <article class="article">
     <div class="wrap">
       {edition ? (
         <div class="news-layout">
           <aside class="news-side">
             <p class="side-eyebrow">In this edition</p>
-            <a class="side-edition" href={`/news/${edition.slug}`}>{edition.title}</a>
+            <span class="side-edition">{edition.title}</span>
             <ul>
               {edition.articles.map((a) => (
                 <li class={a.slug === entry.data.slug ? 'current' : ''}>

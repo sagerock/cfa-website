@@ -5,8 +5,8 @@ const fmtDate = (d) =>
   new Date(d + 'T00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 ---
 <div class="news-grid">
-  {items.map(({ post, articleCount }) => (
-    <a class={`news-card${articleCount ? ' is-edition' : ''}`} href={`/news/${post.data.slug}`}>
+  {items.map(({ post, articleCount, firstArticle }) => (
+    <a class={`news-card${articleCount ? ' is-edition' : ''}`} href={`/news/${firstArticle ?? post.data.slug}`}>
       {post.data.cover && (
         <span class="news-cover"><img src={post.data.cover} alt="" loading="lazy" /></span>
       )}

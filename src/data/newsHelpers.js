@@ -47,8 +47,13 @@ export function indexPosts(posts) {
   return posts
     .filter((p) => !memberOf[p.data.slug])
     .sort((a, b) => b.data.date.localeCompare(a.data.date))
-    .map((post) => ({
-      post,
-      articleCount: editions[post.data.slug]?.articles.length ?? 0,
-    }));
+    .map((post) => {
+      const ed = editions[post.data.slug];
+      return {
+        post,
+        articleCount: ed?.articles.length ?? 0,
+        // open an edition at its first article (TOC order) — the sidebar takes it from there
+        firstArticle: ed?.articles[0]?.slug ?? null,
+      };
+    });
 }
