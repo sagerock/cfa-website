@@ -143,3 +143,14 @@ Closes the SageRock-marketing loop: tag ad links with `?utm_source=linkedin` and
 to the channel. Demo data seeded (110 pageviews across sources, 9 CTA, 3 leads — all
 @example.com / session_id `demo-%`, clearable). Seed gotcha: `random()` in a non-correlated
 `lateral` evaluates ONCE — use `id % N` into a weighted array for per-row variety.
+
+## 2026-07-22 — Bring the blog in-house (/news section)
+The About/Goetheanum "News & Views" and "Read All" linked back to WordPress; the content
+(273 posts, incl. the Center & Periphery newsletters) was already in the archive. Imported all
+273 as a `posts` collection with real publish dates (re-fetched from WP `date`), cleaned bodies,
+and 414 local images (35 MB). Routes: `/news` + `/news/page/[page]` (paginated, 24/pg) for the
+index, `/news/[slug]` for posts — kept on separate path segments to avoid the `[slug]`↔`[...page]`
+Astro route collision. Added News to nav. Restored newsletter TOCs: empty extraction links
+`[](wp-url)` relabeled from the target post's title; 1,392 cross-post links localized to
+`/news/<slug>`, 59 dead empties dropped — blog is now internally self-contained. 23 images
+failed to localize (still hotlink WP). Reusable prep in scratchpad prep_news.py.
