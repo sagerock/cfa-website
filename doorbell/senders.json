@@ -1,0 +1,23 @@
+{
+  "_readme": "Who may use the doorbell, what they may edit (glob paths), and who may approve. The agent reads this every cycle. Entries with enabled:false are documented examples, not live invitations. NOTE: this file and everything in doorbell/ are NEVER editable via the doorbell itself, for anyone — permission changes happen only in a direct session with Sage.",
+  "senders": {
+    "sage@sagerock.com": {
+      "enabled": true,
+      "name": "Sage Lewis (SageRock)",
+      "scope": ["**"],
+      "approve": true
+    },
+    "elsy@centerforanthroposophy.org": {
+      "enabled": false,
+      "name": "Elsy Ayoub — example: all content, self-approve",
+      "scope": ["src/content/**", "src/data/**"],
+      "approve": true
+    },
+    "karine@centerforanthroposophy.org": {
+      "enabled": false,
+      "name": "Karine Munk Finser — example: Kairos pages only, needs an approver",
+      "scope": ["src/content/spine/programs-kairos-institute.md"],
+      "approve": false
+    }
+  }
+}

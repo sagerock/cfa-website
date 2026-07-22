@@ -25,10 +25,13 @@ email → agent edits a branch → PR → Render preview URL → "YES" reply →
 ## Guardrails
 
 - **Draft-and-stage by construction**: no approval, no merge, no publish.
-- **Sender allowlist** (currently `sage@sagerock.com`) — expand in `AGENT.md` when
-  CfA folks join the pilot.
-- **Content-only scope**: pages and data (`src/content/`, `src/data/`). Layout, styles,
-  and code changes are declined and routed to a human.
+- **Per-sender permissions** (`senders.json`): each person gets their own editable
+  scope — from "all content" down to a single program's page — and their own
+  approval rights. Someone who can't self-approve gets their preview CC'd to an
+  approver, and only an approver's YES publishes.
+- **Self-modification is impossible by design**: no email, from anyone, can change
+  `senders.json`, the runbook, or site infrastructure. Permissions change only in a
+  direct working session with Sage.
 - **Full audit trail for free**: every change is a commit + PR with the request quoted
   and the requester named. Git history *is* the change log.
 - Doorbell replies are signed `— Claude (CfA site doorbell)`, never as a person.
