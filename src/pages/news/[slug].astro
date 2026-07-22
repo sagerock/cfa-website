@@ -4,10 +4,41 @@ import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
-  return posts.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+  const bySlug = Object.fromEntries(posts.map((p) => [p.data.slug, p]));
+
+  // An "edition" is a newsletter-style post that links out to several article posts.
+  const editions = {};
+  for (const p of posts) {
+    const links = [...(p.body || '').matchAll(/\[([^\]]+)\]\(\/news\/([a-z0-9-]+)\)/g)];
+    const seen = new Map();
+    for (const m of links) {
+      const label = m[1].trim(), slug = m[2];
+      if (slug === p.data.slug) continue;
+      if (!seen.has(slug) || (/read more/i.test(seen.get(slug)) && !/read more/i.test(label)))
+        seen.set(slug, label);
+    }
+    const isEdition = /newsletter|periphery/i.test(p.data.slug);
+    if (isEdition && seen.size >= 2) {
+      editions[p.data.slug] = {
+        slug: p.data.slug, title: p.data.title, date: p.data.date,
+        articles: [...seen].map(([slug, title]) => ({ slug, title: bySlug[slug]?.data.title || title })),
+      };
+    }
+  }
+  // Map each article to its most-recent edition.
+  const artEd = {};
+  for (const ed of Object.values(editions))
+    for (const a of ed.articles)
+      if (!artEd[a.slug] || ed.date > editions[artEd[a.slug]].date) artEd[a.slug] = ed.slug;
+
+  return posts.map((entry) => {
+    const edSlug = artEd[entry.data.slug];
+    const edition = edSlug && edSlug !== entry.data.slug ? editions[edSlug] : null;
+    return { params: { slug: entry.data.slug }, props: { entry, edition } };
+  });
 }
 
-const { entry } = Astro.props;
+const { entry, edition } = Astro.props;
 const { Content } = await render(entry);
 const fmtDate = (d) =>
   new Date(d + 'T00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
@@ -16,14 +47,40 @@ const fmtDate = (d) =>
 <Base title={`${entry.data.title} — Center for Anthroposophy`} current="/news">
   <article class="article">
     <div class="wrap">
-      <p class="backlink"><a href="/news">← All News &amp; Views</a></p>
-      <header class="post-head">
-        <time class="news-date">{fmtDate(entry.data.date)}</time>
-        <h1>{entry.data.title}</h1>
-      </header>
-      <div class="prose">
-        <Content />
-      </div>
+      {edition ? (
+        <div class="news-layout">
+          <aside class="news-side">
+            <p class="side-eyebrow">In this edition</p>
+            <a class="side-edition" href={`/news/${edition.slug}`}>{edition.title}</a>
+            <ul>
+              {edition.articles.map((a) => (
+                <li class={a.slug === entry.data.slug ? 'current' : ''}>
+                  {a.slug === entry.data.slug
+                    ? <span>{a.title}</span>
+                    : <a href={`/news/${a.slug}`}>{a.title}</a>}
+                </li>
+              ))}
+            </ul>
+            <a class="side-all" href="/news">← All News &amp; Views</a>
+          </aside>
+          <div class="news-main">
+            <header class="post-head">
+              <time class="news-date">{fmtDate(entry.data.date)}</time>
+              <h1>{entry.data.title}</h1>
+            </header>
+            <div class="prose"><Content /></div>
+          </div>
+        </div>
+      ) : (
+        <div class="news-single">
+          <p class="backlink"><a href="/news">← All News &amp; Views</a></p>
+          <header class="post-head">
+            <time class="news-date">{fmtDate(entry.data.date)}</time>
+            <h1>{entry.data.title}</h1>
+          </header>
+          <div class="prose"><Content /></div>
+        </div>
+      )}
     </div>
   </article>
 </Base>
