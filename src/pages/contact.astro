@@ -1,0 +1,120 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { CONTACT, CONTACT_ENDPOINT, PROGRAM_OPTIONS } from '../data/site.js';
+---
+
+<Base title="Request Information — Center for Anthroposophy" current="/contact">
+  <PageHeader
+    eyebrow="Get in touch"
+    title="Request information"
+    lede="Tell us a little about your interest in Waldorf teacher education, and we'll be in touch. There's no obligation."
+  />
+
+  <section class="band">
+    <div class="wrap contact-grid">
+      <aside class="contact-aside">
+        <p class="lede">
+          Whether you're just beginning to explore anthroposophy or ready to train as a Waldorf
+          teacher, we'd love to hear from you.
+        </p>
+        <div class="contact-facts">
+          <div class="row">
+            <span class="k">Call</span>
+            <a href={`tel:${CONTACT.phoneHref}`} data-track="contact-phone">{CONTACT.phone}</a>
+          </div>
+          <div class="row">
+            <span class="k">Email</span>
+            <a href={`mailto:${CONTACT.email}`} data-track="contact-email">{CONTACT.email}</a>
+          </div>
+          <div class="row">
+            <span class="k">Mail</span>
+            <address>Center for Anthroposophy<br />PO Box 545, Wilton, NH 03086</address>
+          </div>
+        </div>
+      </aside>
+
+      <div class="form-card">
+        <div id="form-error" class="form-error" hidden></div>
+        <form id="contact-form" novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="name">Name <span class="req">*</span></label>
+              <input id="name" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="email">Email <span class="req">*</span></label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" />
+            </div>
+            <div class="field">
+              <label for="program">I'm interested in</label>
+              <select id="program" name="program">
+                <option value="">Select a program…</option>
+                {PROGRAM_OPTIONS.map((p) => <option value={p}>{p}</option>)}
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="message">Your message</label>
+            <textarea id="message" name="message" placeholder="How can we help?"></textarea>
+          </div>
+          {/* Honeypot: hidden from people, catches bots. */}
+          <div class="hp" aria-hidden="true">
+            <label>Company<input name="company" tabindex="-1" autocomplete="off" /></label>
+          </div>
+          <button type="submit" class="form-submit" id="submit-btn">Send my request</button>
+          <p class="form-note">We'll never share your information. No obligation.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline define:vars={{ endpoint: CONTACT_ENDPOINT }}>
+    const form = document.getElementById('contact-form');
+    const btn = document.getElementById('submit-btn');
+    const errBox = document.getElementById('form-error');
+    let started = false;
+    form.addEventListener('input', () => {
+      if (!started) { started = true; if (window.__cfaTrack) window.__cfaTrack('form_start'); }
+    }, { once: false });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errBox.hidden = true;
+      const data = Object.fromEntries(new FormData(form).entries());
+      if (!data.name || !data.email || !String(data.email).includes('@')) {
+        errBox.textContent = 'Please add your name and a valid email address.';
+        errBox.hidden = false;
+        return;
+      }
+      data.source_path = location.pathname;
+      try { data.session_id = sessionStorage.getItem('cfa_sid') || ''; } catch (e) {}
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const out = await res.json();
+        if (out.ok) {
+          window.location.href = '/thank-you';
+          return;
+        }
+        errBox.textContent = out.error || 'Something went wrong. Please try again.';
+      } catch (err) {
+        errBox.textContent = 'We could not reach the server. Please try again, or email us directly.';
+      }
+      errBox.hidden = false;
+      btn.disabled = false;
+      btn.textContent = 'Send my request';
+    });
+  </script>
+</Base>

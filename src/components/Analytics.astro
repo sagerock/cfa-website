@@ -1,0 +1,40 @@
+---
+import { TRACK_ENDPOINT } from '../data/site.js';
+---
+{/* First-party, privacy-friendly analytics: no cookies, no third parties, no IP stored.
+    A random per-visit session id groups a single visit. Sends a pageview, and tracks
+    clicks on anything with [data-track]. Fire-and-forget; never blocks the page. */}
+<script is:inline define:vars={{ endpoint: TRACK_ENDPOINT }}>
+  (function () {
+    try {
+      var KEY = 'cfa_sid';
+      var sid = sessionStorage.getItem(KEY);
+      if (!sid) {
+        sid = (Date.now().toString(36) + Math.random().toString(36).slice(2, 10));
+        sessionStorage.setItem(KEY, sid);
+      }
+      function send(event, meta) {
+        var payload = JSON.stringify({
+          event: event,
+          path: location.pathname,
+          referrer: document.referrer || '',
+          session_id: sid,
+          meta: meta || null,
+        });
+        try {
+          if (navigator.sendBeacon) {
+            navigator.sendBeacon(endpoint, new Blob([payload], { type: 'application/json' }));
+          } else {
+            fetch(endpoint, { method: 'POST', headers: { 'content-type': 'application/json' }, body: payload, keepalive: true });
+          }
+        } catch (e) {}
+      }
+      send('pageview');
+      document.addEventListener('click', function (e) {
+        var el = e.target.closest('[data-track]');
+        if (el) send('cta_click', { label: el.getAttribute('data-track'), href: el.getAttribute('href') || null });
+      });
+      window.__cfaTrack = send;
+    } catch (e) {}
+  })();
+</script>

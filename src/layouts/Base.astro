@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import Analytics from '../components/Analytics.astro';
+import { CONTACT } from '../data/site.js';
 const { title = 'Center for Anthroposophy', current = '' } = Astro.props;
 const nav = [
   ['/programs', 'Programs'],
@@ -25,10 +27,9 @@ const year = new Date().getFullYear();
     <header class="site-head">
       <div class="wrap head-top">
         <span>Waldorf teacher education · Wilton &amp; Keene, New Hampshire</span>
-        <span class="head-contact">
-          <a href="tel:+16036542566">603-654-2566</a>
-          <a href="mailto:office@centerforanthroposophy.org">office@centerforanthroposophy.org</a>
-        </span>
+        <a class="head-phone" href={`tel:${CONTACT.phoneHref}`} data-track="header-phone">
+          {CONTACT.phone}
+        </a>
       </div>
       <div class="wrap head-main">
         <a class="brand" href="/">
@@ -41,11 +42,15 @@ const year = new Date().getFullYear();
           </svg>
           <span class="brand-name">Center for <em>Anthroposophy</em></span>
         </a>
-        <nav class="nav" aria-label="Main">
-          {nav.map(([href, label]) => (
-            <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>
-          ))}
-        </nav>
+        <div class="head-right">
+          <nav class="nav" aria-label="Main">
+            {nav.map(([href, label]) => (
+              <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>
+            ))}
+          </nav>
+          <a class="btn-contact" href="/contact" data-track="header-contact"
+             aria-current={current === '/contact' ? 'page' : undefined}>Request Info</a>
+        </div>
       </div>
     </header>
 
@@ -121,5 +126,6 @@ const year = new Date().getFullYear();
         </div>
       </div>
     </footer>
+    <Analytics />
   </body>
 </html>
