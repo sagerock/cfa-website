@@ -1,5 +1,5 @@
 {
-  "_readme": "Who may use the doorbell, what they may edit (glob paths), and who may approve. The agent reads this every cycle. Entries with enabled:false are documented examples, not live invitations. NOTE: this file and everything in doorbell/ are NEVER editable via the doorbell itself, for anyone — permission changes happen only in a direct session with Sage.",
+  "_readme": "Who may use the doorbell, what they may edit (glob paths), and who may approve. The agent reads this every cycle. Entries with enabled:false are staged, not live. POLICY (Sage, 2026-07-22): program directors self-approve within their own program's pages; Milan and Sage have full scope. NOTE: this file and everything in doorbell/ are NEVER editable via the doorbell itself, for anyone — permission changes happen only in a direct session with Sage.",
   "senders": {
     "sage@sagerock.com": {
       "enabled": true,
@@ -7,17 +7,35 @@
       "scope": ["**"],
       "approve": true
     },
-    "elsy@centerforanthroposophy.org": {
-      "enabled": false,
-      "name": "Elsy Ayoub — example: all content, self-approve",
-      "scope": ["src/content/**", "src/data/**"],
+    "sage@centerforanthroposophy.org": {
+      "enabled": true,
+      "name": "Sage Lewis (CfA address — same person)",
+      "scope": ["**"],
+      "approve": true
+    },
+    "milan@centerforanthroposophy.org": {
+      "enabled": true,
+      "name": "Milan Daler (CfA administration)",
+      "scope": ["**"],
       "approve": true
     },
     "karine@centerforanthroposophy.org": {
-      "enabled": false,
-      "name": "Karine Munk Finser — example: Kairos pages only, needs an approver",
+      "enabled": true,
+      "name": "Karine Munk Finser — Kairos Institute director",
       "scope": ["src/content/spine/programs-kairos-institute.md"],
-      "approve": false
+      "approve": true
+    },
+    "karen@centerforanthroposophy.org": {
+      "enabled": false,
+      "name": "Karen Atkinson — staged pending Sage confirming which program page(s) are hers (tagged in 5 programs)",
+      "scope": [],
+      "approve": true
+    },
+    "elsy@centerforanthroposophy.org": {
+      "enabled": false,
+      "name": "Elsy Ayoub — staged: all content, self-approve (flip on when invited)",
+      "scope": ["src/content/**", "src/data/**"],
+      "approve": true
     }
   }
 }
