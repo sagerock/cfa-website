@@ -1,0 +1,214 @@
+---
+import '../styles/global.css';
+import { FN } from '../data/site.js';
+const STATS_ENDPOINT = `${FN}/cfa-stats`;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Website Dashboard — Center for Anthroposophy</title>
+  </head>
+  <body class="dash">
+    <header class="dash-head">
+      <div class="wrap">
+        <div>
+          <p class="eyebrow">Center for Anthroposophy</p>
+          <h1>Website dashboard</h1>
+        </div>
+        <div class="dash-meta">
+          <span id="updated"></span>
+          <button id="refresh" type="button">Refresh</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap dash-main">
+      <div id="gate" class="gate" hidden>
+        <h2>Access token required</h2>
+        <p>Open this page with your access token in the address, e.g.<br />
+          <code>/dashboard#your-token</code></p>
+      </div>
+
+      <div id="error" class="dash-error" hidden></div>
+
+      <div id="content" hidden>
+        <section class="tiles" aria-label="Summary">
+          <div class="tile"><span class="t-label">Page views</span><span class="t-num" id="m-pageviews">–</span><span class="t-sub">last 90 days</span></div>
+          <div class="tile"><span class="t-label">Visits</span><span class="t-num" id="m-sessions">–</span><span class="t-sub">unique sessions</span></div>
+          <div class="tile"><span class="t-label">CTA clicks</span><span class="t-num" id="m-cta">–</span><span class="t-sub">Request Info &amp; more</span></div>
+          <div class="tile tile-accent"><span class="t-label">Leads captured</span><span class="t-num" id="m-leads">–</span><span class="t-sub" id="m-convrate">contacts from the site</span></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head"><h2>Page views — last 30 days</h2><span class="hint" id="chart-total"></span></div>
+          <figure class="chart-wrap"><div id="chart" class="chart" role="img" aria-label="Daily page views, last 30 days"></div></figure>
+          <div id="chart-empty" class="empty" hidden>No traffic recorded yet. Visit the site to generate data.</div>
+        </section>
+
+        <div class="two-col">
+          <section class="panel">
+            <div class="panel-head"><h2>Top pages</h2></div>
+            <ul class="ranklist" id="top-pages"></ul>
+            <div id="pages-empty" class="empty" hidden>No page views yet.</div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h2>Recent leads</h2></div>
+            <ul class="leadlist" id="recent-leads"></ul>
+            <div id="leads-empty" class="empty" hidden>No leads yet. Submissions from the contact form appear here.</div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <div id="tooltip" class="tooltip" hidden></div>
+
+    <script is:inline define:vars={{ endpoint: STATS_ENDPOINT }}>
+      const $ = (id) => document.getElementById(id);
+      const token = decodeURIComponent(location.hash.replace(/^#/, '').trim());
+      const fmt = (n) => (n ?? 0).toLocaleString('en-US');
+
+      function showError(msg) { const e = $('error'); e.textContent = msg; e.hidden = false; }
+
+      async function load() {
+        if (!token) { $('gate').hidden = false; return; }
+        try {
+          const res = await fetch(`${endpoint}?token=${encodeURIComponent(token)}`, { cache: 'no-store' });
+          if (res.status === 401) { $('gate').hidden = false; return; }
+          if (!res.ok) throw new Error('Request failed');
+          render(await res.json());
+        } catch (e) {
+          showError('Could not load the dashboard. Check your token and try again.');
+        }
+      }
+
+      function render(d) {
+        $('content').hidden = false;
+        $('error').hidden = true;
+        $('gate').hidden = true;
+        const t = d.totals || {};
+        $('m-pageviews').textContent = fmt(t.pageviews);
+        $('m-sessions').textContent = fmt(t.sessions);
+        $('m-cta').textContent = fmt(t.cta_clicks);
+        $('m-leads').textContent = fmt(t.leads);
+        const rate = t.sessions ? Math.round((t.leads / t.sessions) * 1000) / 10 : 0;
+        $('m-convrate').textContent = t.sessions ? `${rate}% of visits became a lead` : 'contacts from the site';
+        if (d.generated_at) $('updated').textContent = 'Updated ' + new Date(d.generated_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+
+        renderChart(d.daily || []);
+        renderTopPages(d.top_pages || []);
+        renderLeads(d.recent_leads || []);
+      }
+
+      function renderChart(daily) {
+        const total = daily.reduce((s, x) => s + (x.pageviews || 0), 0);
+        $('chart-total').textContent = total ? `${fmt(total)} views` : '';
+        if (!total) { $('chart').innerHTML = ''; $('chart-empty').hidden = false; return; }
+        $('chart-empty').hidden = true;
+        const max = Math.max(1, ...daily.map((x) => x.pageviews || 0));
+        const W = 100, H = 34, n = daily.length, gap = 0.6;
+        const bw = (W - gap * (n - 1)) / n;
+        let bars = '';
+        daily.forEach((x, i) => {
+          const v = x.pageviews || 0;
+          const h = v > 0 ? Math.max(0.8, (v / max) * (H - 4)) : 0;
+          const xx = i * (bw + gap);
+          bars += `<rect x="${xx.toFixed(2)}" y="${(H - h).toFixed(2)}" width="${bw.toFixed(2)}" height="${h.toFixed(2)}" rx="0.5" class="bar" data-day="${x.day}" data-v="${v}"></rect>`;
+        });
+        $('chart').innerHTML =
+          `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" class="chart-svg">
+             <line x1="0" y1="${H}" x2="${W}" y2="${H}" class="axis"></line>${bars}
+           </svg>
+           <div class="chart-axis"><span>${daily[0].day.slice(5)}</span><span>peak ${max}/day</span><span>${daily[n - 1].day.slice(5)}</span></div>`;
+        wireBarHover();
+      }
+
+      function wireBarHover() {
+        const tip = $('tooltip');
+        $('chart').querySelectorAll('.bar').forEach((b) => {
+          b.addEventListener('mouseenter', (e) => {
+            const r = b.getBoundingClientRect();
+            tip.innerHTML = `<b>${b.dataset.v}</b> view${b.dataset.v == 1 ? '' : 's'}<br>${new Date(b.dataset.day + 'T00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+            tip.hidden = false;
+            tip.style.left = r.left + r.width / 2 + 'px';
+            tip.style.top = r.top - 8 + 'px';
+          });
+          b.addEventListener('mouseleave', () => { tip.hidden = true; });
+        });
+      }
+
+      function renderTopPages(pages) {
+        if (!pages.length) { $('pages-empty').hidden = false; return; }
+        const max = Math.max(...pages.map((p) => p.views));
+        $('top-pages').innerHTML = pages.map((p) =>
+          `<li><span class="rl-label" title="${p.path}">${p.path}</span>
+             <span class="rl-bar"><span style="width:${(p.views / max) * 100}%"></span></span>
+             <span class="rl-num">${fmt(p.views)}</span></li>`).join('');
+      }
+
+      function renderLeads(leads) {
+        if (!leads.length) { $('leads-empty').hidden = false; return; }
+        $('recent-leads').innerHTML = leads.map((l) =>
+          `<li><span class="ld-name">${l.name || '(no name)'}</span>
+             <span class="ld-prog">${l.program || 'General inquiry'}</span>
+             <span class="ld-meta">${l.email} · ${new Date(l.at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span></li>`).join('');
+      }
+
+      $('refresh').addEventListener('click', load);
+      load();
+    </script>
+
+    <style>
+      body.dash { background: var(--paper); }
+      .dash-head { border-bottom: 1px solid var(--line); background: var(--raised); padding: 18px 0; }
+      .dash-head .wrap { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+      .dash-head h1 { font-size: 26px; margin-top: 2px; }
+      .dash-meta { display: flex; align-items: center; gap: 14px; font-family: var(--sans); font-size: 13px; color: var(--soft); }
+      #refresh { font: inherit; color: var(--green-ink); background: none; border: 1px solid var(--line); border-radius: 20px; padding: 5px 14px; cursor: pointer; }
+      #refresh:hover { border-color: var(--green); }
+      .dash-main { padding: 28px 24px 60px; }
+      .gate, .dash-error { font-family: var(--sans); background: var(--raised); border: 1px solid var(--line); border-radius: 6px; padding: 24px; }
+      .gate h2 { font-size: 18px; margin-bottom: 8px; } .gate code { background: var(--paper); padding: 2px 6px; border-radius: 3px; }
+      .dash-error { color: #a8324a; border-color: rgba(168,50,74,.3); }
+
+      .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px; }
+      @media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+      .tile { background: var(--raised); border: 1px solid var(--line); border-radius: 6px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; }
+      .tile-accent { border-color: var(--green); box-shadow: inset 0 0 0 1px var(--green); }
+      .t-label { font-family: var(--sans); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--soft); }
+      .t-num { font-family: var(--sans); font-size: 34px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; line-height: 1.1; }
+      .tile-accent .t-num { color: var(--green-ink); }
+      .t-sub { font-family: var(--sans); font-size: 12px; color: var(--soft); }
+
+      .panel { background: var(--raised); border: 1px solid var(--line); border-radius: 6px; padding: 18px 20px; margin-bottom: 18px; }
+      .panel-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+      .panel-head h2 { font-family: var(--sans); font-size: 13px; text-transform: uppercase; letter-spacing: .07em; color: var(--ink); }
+      .hint { font-family: var(--sans); font-size: 12.5px; color: var(--soft); font-variant-numeric: tabular-nums; }
+      .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+      @media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+
+      .chart-wrap { margin: 0; }
+      .chart-svg { width: 100%; height: 150px; display: block; }
+      .chart-svg .bar { fill: var(--green); transition: fill .12s; }
+      .chart-svg .bar:hover { fill: var(--gold); }
+      .chart-svg .axis { stroke: var(--line); stroke-width: .3; }
+      .chart-axis { display: flex; justify-content: space-between; font-family: var(--sans); font-size: 11.5px; color: var(--soft); margin-top: 6px; font-variant-numeric: tabular-nums; }
+      .empty { font-family: var(--sans); font-size: 13.5px; color: var(--soft); padding: 20px 0; text-align: center; }
+
+      .ranklist, .leadlist { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+      .ranklist li { display: grid; grid-template-columns: 1fr 70px auto; align-items: center; gap: 10px; font-family: var(--sans); font-size: 13px; }
+      .rl-label { color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .rl-bar { height: 6px; background: var(--chalk); border-radius: 4px; overflow: hidden; }
+      .rl-bar span { display: block; height: 100%; background: var(--green); }
+      .rl-num { color: var(--soft); font-variant-numeric: tabular-nums; text-align: right; }
+      .leadlist li { display: flex; flex-direction: column; gap: 2px; padding-bottom: 9px; border-bottom: 1px dotted var(--line); }
+      .ld-name { font-family: var(--sans); font-size: 14px; font-weight: 600; color: var(--ink); }
+      .ld-prog { font-family: var(--sans); font-size: 12.5px; color: var(--green-ink); }
+      .ld-meta { font-family: var(--sans); font-size: 12px; color: var(--soft); }
+
+      .tooltip { position: fixed; transform: translate(-50%, -100%); background: var(--ink); color: var(--paper); font-family: var(--sans); font-size: 12px; line-height: 1.35; padding: 6px 9px; border-radius: 4px; pointer-events: none; z-index: 50; text-align: center; white-space: nowrap; }
+    </style>
+  </body>
+</html>
