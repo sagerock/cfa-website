@@ -36,5 +36,3 @@ Most of all, we need to share our questions, discuss them with open-mindedness, 
 The Center for Anthroposophy will begin another cycle of its Waldorf Leadership Development program this spring: starting Saturday, 11 March 2023, for those new to Waldorf education and anthroposophy (option A); starting Saturday, 20 May 2023, for those with previous background (option B). Please ask yourself and those in your school if they might benefit from one or both options.
 
 Details of this low-residency/live online program are laid out our web page. [Click here](https://centerforanthroposophy.org/programs/waldorf-administration-and-leadership-development-program/).
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2023)

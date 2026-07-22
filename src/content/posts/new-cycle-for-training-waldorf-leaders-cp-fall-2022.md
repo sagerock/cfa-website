@@ -20,5 +20,3 @@ Torin Finser, director and original architect of this one-year program, launched
 We have ordered the best of New Hampshire’s fall foliage for this special weekend in Keene and look forward to welcoming participants from both independent and public Waldorf schools.
 
 [To learn more about this program, click here to visit the program’s webpage.](https://centerforanthroposophy.org/programs/waldorf-administration-and-leadership-development-program/)
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-fall-2022)

@@ -16,5 +16,3 @@ The Abbot Hill Alumni Association is excited to announce that this year’s annu
 After 20 years as the Executive Director of the Center for Anthroposophy and a quarter-century heading up the Waldorf High School Teacher Education Program (WHiSTEP), which he launched in 1996, Douglas is now progressively stepping down from these positions––and a joyous gathering to commemorate and honor his years of service is definitely in order.
 
 Please mark your calendars and plan to attend this gala event. Friends, colleagues, and alums from far and wide will be descending on the Big Room at High Mowing School, starting at 7:00 p.m., in order to fete Douglas, share memories, and offer best wishes. More details will be forthcoming soon, but for now, set you sights on July 2nd!
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2024)

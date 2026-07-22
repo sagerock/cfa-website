@@ -46,5 +46,3 @@ Sunday 23 (in Wilton, NH)
 Graduation of [*WHiSTEP*](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/) and [*Antioch Waldorf Program*](https://centerforanthroposophy.org/programs/antioch-university-waldorf-teacher-education-program/) trainees
 
 *
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-spring-2023)

@@ -2,51 +2,11 @@
 title: "Message from the Executive Director"
 slug: "message-from-the-executive-director-2"
 date: "2025-12-18"
-excerpt: "WINTER 2025-2026 In This Edition... The “Dramatic” Question: Cultural Appropriation or Cultural Appreciation? Read More » Keeping Ideals Intact: A Waldorf Teacher’s Forty-Year Perspective by David…"
-cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
+excerpt: "WINTER 2025-2026 Message from the Executive Director by David Barham, Executive Director Hard Times Ain’t Gonna Rule My Mind No More This course, over time called Study of Man or Foundations of Human…"
+cover: "/images/posts/17e3ea2791-davidbarhamportrait.webp"
 ---
 
-![Center & Periphery Logo](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)
-
 WINTER 2025-2026
-
-### In This Edition...
-
-**[The “Dramatic” Question: Cultural Appropriation or Cultural Appreciation?](/news/the-dramatic-question-cultural-appropriation-or-cultural-appreciation)**
-
-[Read More »](/news/the-dramatic-question-cultural-appropriation-or-cultural-appreciation)
-
-**[Keeping Ideals Intact: A Waldorf Teacher’s Forty-Year Perspective by David Sloan](/news/keeping-ideals-intact-a-waldorf-teachers-forty-year-perspective-by-david-sloan)**
-
-[Read More »](/news/keeping-ideals-intact-a-waldorf-teachers-forty-year-perspective-by-david-sloan)
-
-**[WHiSTEP: Meeting a Changing World with Courage and Humanity](/news/whistep-meeting-a-changing-world-with-courage-and-humanity)**
-
-[Read More »](/news/whistep-meeting-a-changing-world-with-courage-and-humanity)
-
-**[Interview Questions for John Reinhart ~ Antioch Alum & Waldorf High School Teacher](/news/interview-questions-for-john-reinhart-antioch-alum-waldorf-high-school-teacher)**
-
-[Read More »](/news/interview-questions-for-john-reinhart-antioch-alum-waldorf-high-school-teacher)
-
-### [The Birth of Camphill Academy Afrika:](/news/the-birth-of-camphill-academy-afrika)
-
-[Read More »](/news/the-birth-of-camphill-academy-afrika)
-
-### [Demystifying Differentiation](/news/demystifying-differentiation)
-
-[Read More »](/news/demystifying-differentiation)
-
-### [From Building Bridges](/news/from-building-bridges)
-
-[Read More »](/news/from-building-bridges)
-
-### [Karmic Leadership](/news/karmic-leadership)
-
-[Read More »](/news/karmic-leadership)
-
-### [Message from the Executive Director](/news/message-from-the-executive-director-2)
-
-[Read More »](/news/message-from-the-executive-director-2)
 
 # Message from the Executive Director
 
@@ -113,9 +73,3 @@ Keep cool, but care,
 [2] Gospel of St. Matthew 5:3-10
 
 [3] First Teacher’s Course: Anthropological Foundations; Rudolf Steiner, Translated by Margot Saar; © 2020
-
-Spring/Summer 2022
-
-## Sign up to receive our Center & Periphery Newsletter!
-
-You’ll receive the newsletter via e-mail.

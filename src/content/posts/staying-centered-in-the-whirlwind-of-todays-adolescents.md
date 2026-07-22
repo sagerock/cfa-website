@@ -59,5 +59,3 @@ In this context, we are excited to be welcoming new instructors into this progra
 We are incredibly grateful to those faculty members who have carried this program for so many decades and to those colleagues who are now stepping up to carry it forward. Its combination of self-transformation through the arts, deep study of the anthroposophical underpinnings of Waldorf education and human development, and subject seminars that give teachers the tools to teach their discipline in profound ways, is powerful. In this way, becoming a Waldorf high school teacher is both a vocational path and a way to find meaning in the madness.
 
 “While outside the whirling wind heaves and twists and roars,” (J.LePore/January 16, 2023), here in WHiSTEP, we are steadfastly keeping our eyes on the prize: providing true, human care to meet the true needs of our students, families, and communities, as well as our own battered selves.
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2023)

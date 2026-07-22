@@ -18,5 +18,3 @@ The Mentor Training Program is the result of over two years of research spearhea
 The Mentor Training Program emphasizes self-development, fostering relationships, heightened communication skills, and inclusivity. In the end, supporting schools that seek guidance for developing Waldorf educators constitutes a lasting contribution to the broader educational community. It is the goal of the program to carry, support, and inspire Waldorf education now and into the future.
 
 There’s still time this month to join and become a trained mentor! For more information, visit our website: [**Mentor Training Program**](https://centerforanthroposophy.org/programs/mentor-training/).
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2024)

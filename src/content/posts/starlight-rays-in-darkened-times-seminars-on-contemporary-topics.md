@@ -2,49 +2,9 @@
 title: "Starlight Rays in Darkened Times: Seminars on Contemporary Topics"
 slug: "starlight-rays-in-darkened-times-seminars-on-contemporary-topics"
 date: "2025-04-09"
-excerpt: "SPRING 2025 In This Edition... Deepen Your Connection with Waldorf Education and Anthroposophy Read More » Interview with Amber Rounds Read More » Rudolf Steiner and the Renewal of our Cultural Life…"
+excerpt: "Cedar Oliver teaches the Living Thinking course and leads the Chemistry & Physics subject seminar in our Waldorf High School Teacher Education Program (WHiSTEP). He was a recent presenter in our…"
 cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
 ---
-
-![Center & Periphery Logo](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)
-
-SPRING 2025
-
-### In This Edition...
-
-**[Deepen Your Connection with Waldorf Education and Anthroposophy](/news/deepen-our-connection-with-waldorf-education-and-anthroposophy)**
-
-[Read More »](/news/deepen-our-connection-with-waldorf-education-and-anthroposophy)
-
-### [Interview with Amber Rounds](/news/interview-with-amber-rounds)
-
-[Read More »](/news/interview-with-amber-rounds)
-
-**[Rudolf Steiner and the Renewal of our Cultural Life](/news/rudolf-steiner-and-the-renewal-of-our-cultural-life)**
-
-[Read More »](/news/rudolf-steiner-and-the-renewal-of-our-cultural-life)
-
-**[The Transformative Role of Mentoring in Waldorf Education](/news/the-transformative-role-of-mentoring-in-waldorf-education)**
-
-[Read More »](/news/the-transformative-role-of-mentoring-in-waldorf-education)
-
-**[Waldorf High School Teacher Education Program/WHiSTEP](/news/waldorf-high-school-teacher-education-program-whistep)**
-
-[Read More »](/news/waldorf-high-school-teacher-education-program-whistep)
-
-**[Starlight Rays in Darkened Times: Seminars on Contemporary Topics](/news/starlight-rays-in-darkened-times-seminars-on-contemporary-topics)**
-
-[Read More »](/news/starlight-rays-in-darkened-times-seminars-on-contemporary-topics)
-
-**[Temperament Considerations When Composing Communication to Parents](/news/temperament-considerations-when-composing-communication-to-parents)**
-
-[Read More »](/news/temperament-considerations-when-composing-communication-to-parents)
-
-**[February at Waldorf School of Baltimore: A Celebration of Black Joy, Pride, and Resilience](/news/february-at-waldorf-school-of-baltimore-a-celebration-of-black-joy-pride-and-resilience)**
-
-[Read More »](/news/february-at-waldorf-school-of-baltimore-a-celebration-of-black-joy-pride-and-resilience)
-
-# February at Waldorf School of Baltimore: A Celebration of Black Joy, Pride, and Resilience
 
 Cedar Oliver teaches the Living Thinking course and leads the Chemistry & Physics subject seminar in our Waldorf High School Teacher Education Program (WHiSTEP). He was a recent presenter in our online seminar series, Starlight Rays in Darkened Times. During his presentation on Generative Artificial Intelligence, entitled, *Intelligence, Artifice, and Education*, he summarized the contributions of each of the previous presenters. Struck by both the graciousness of his approach and the beautiful way he encapsulated each of the previous speakers, I wanted to share Cedar’s words with the C&P readers.
 
@@ -149,9 +109,3 @@ The 2025-2026 lineup is truly magnificent and we want to share this with as many
 [https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/starlight/](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/starlight/)
 
 [https://courses.centerforanthroposophy.org/courses/starlight-rays-25-26](https://courses.centerforanthroposophy.org/courses/starlight-rays-25-26)
-
-Spring/Summer 2022
-
-## Sign up to receive our Center & Periphery Newsletter!
-
-You’ll receive the newsletter via e-mail.

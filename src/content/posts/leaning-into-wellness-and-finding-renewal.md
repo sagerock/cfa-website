@@ -76,5 +76,3 @@ With all good wishes,
 *Karen Atkinson*
 
 *Director of Renewal *
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-spring-2023)

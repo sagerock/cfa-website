@@ -2,57 +2,9 @@
 title: "Message from the Executive Director"
 slug: "message-from-the-executive-director"
 date: "2025-09-29"
-excerpt: "FALL 2025 In This Edition... Message from the Executive Director Read More » Message from Torin Finser, Development Director Read More » Alumni Profiles from WHiSTEP Class of 2025 & Antioch Class of…"
-cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
+excerpt: "by David Barham, Executive Director On August 20, 1919, 106 years ago, Rudolf Steiner (1861-1925) opened his course for the men and women who would become the first teachers at the first Waldorf…"
+cover: "/images/posts/17e3ea2791-davidbarhamportrait.webp"
 ---
-
-![Center & Periphery Logo](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)
-
-FALL 2025
-
-### In This Edition...
-
-### [Message from the Executive Director](/news/message-from-the-executive-director)
-
-[Read More »](/news/message-from-the-executive-director)
-
-**[Message from Torin Finser, Development Director](/news/message-from-torin-finser-development-director)**
-
-[Read More »](/news/message-from-torin-finser-development-director)
-
-**[Alumni Profiles from WHiSTEP Class of 2025 & Antioch Class of 2025](/news/alumni-profiles-from-whistep-class-of-2025-antioch-class-of-2025)**
-
-[Read More »](/news/alumni-profiles-from-whistep-class-of-2025-antioch-class-of-2025)
-
-### [Tree of Life](/news/tree-of-life)
-
-[Read More »](/news/tree-of-life)
-
-### [Kairos: Healing in a World of Need](/news/kairos-healing-in-a-world-of-need)
-
-[Read More »](/news/kairos-healing-in-a-world-of-need)
-
-**[Wisdom into Practice: Mentor Training for Waldorf Educators](/news/wisdom-into-practice-mentor-training-for-waldorf-educators)**
-
-[Read More »](/news/wisdom-into-practice-mentor-training-for-waldorf-educators)
-
-**[David Sloan Keynote Introduction/Sunday, July 27, 2025](/news/david-sloan-keynote-introduction-sunday-july-27-2025)**
-
-[Read More »](/news/david-sloan-keynote-introduction-sunday-july-27-2025)
-
-### [Welcome Jacob Gerber & Nathan Wilcox](/news/welcome-jacob-gerber-nathan-wilcox)
-
-[Read More »](/news/welcome-jacob-gerber-nathan-wilcox)
-
-### [Interview with Sage Lewis](/news/interview-with-sage-lewis)
-
-[Read More »](/news/interview-with-sage-lewis)
-
-**[In Light of the Spirit: A New Anthology of Essays by John F. Gardner on Waldorf Education and Social Reform](/news/in-light-of-the-spirit-a-new-anthology-of-essays-by-john-f-gardner-on-waldorf-education-and-social-reform)**
-
-[Read More »](/news/in-light-of-the-spirit-a-new-anthology-of-essays-by-john-f-gardner-on-waldorf-education-and-social-reform)
-
-# In Light of the Spirit: A New Anthology of Essays by John F. Gardner on Waldorf Education and Social Reform
 
 *by David Barham, Executive Director*
 
@@ -103,9 +55,3 @@ Do read on!
 As always, please drop us a line and let us know what you think about Center & Periphery.
 
 Thank you & enjoy!
-
-Spring/Summer 2022
-
-## Sign up to receive our Center & Periphery Newsletter!
-
-You’ll receive the newsletter via e-mail.

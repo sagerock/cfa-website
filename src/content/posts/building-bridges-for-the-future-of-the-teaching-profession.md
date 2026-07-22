@@ -42,5 +42,3 @@ Finally, we know that for self-aware, inspired teaching, traditional “horizont
 **Recognize future becoming.**
 
 ** ––– *Rudolf Steiner***
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-spring-2023)

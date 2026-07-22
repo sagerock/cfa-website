@@ -70,5 +70,3 @@ Footnotes:
 [[2]](#_ftnref2) Steiner referred to this arrangement as “die Dreigliederung des sozialen Organismus*”,* which is most accurately translated as “the threefolding of the social organism”. On occasion he referred to the latter as “die soziale Ordnung”, which is best translated as “the social ordering” of society, a translation that still points to the active, dynamic nature of the relationship among the three social spheres. However, these German terms have frequently been translated more loosely as “the threefold social order”, a rendering that obscures the fundamentally living––that is to say, *organic*––nature of the relationship existing among these spheres.
 
 [[3]](#_ftnref3) According to a survey conducted by the Research Institute for Waldorf Education (RIWE), graduates from Waldorf high schools matriculated into 18 of the 20 different categories of North American colleges and universities. See *Survey of Waldorf Graduates, Phase II *(Research Institute for Waldorf Education, 2007).
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-fall-2022)

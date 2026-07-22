@@ -2,53 +2,11 @@
 title: "Interview Questions for John Reinhart ~ Antioch Alum & Waldorf High School Teacher"
 slug: "interview-questions-for-john-reinhart-antioch-alum-waldorf-high-school-teacher"
 date: "2025-12-18"
-excerpt: "WINTER 2025-2026 In This Edition... The “Dramatic” Question: Cultural Appropriation or Cultural Appreciation? Read More » Keeping Ideals Intact: A Waldorf Teacher’s Forty-Year Perspective by David…"
+excerpt: "WINTER 2025-2026 Interview Questions by David Barham John Reinhart is the current high school faculty chair at Maine Coast Waldorf School and teaches humanities in the high school. He was a former…"
 cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
 ---
 
-![Center & Periphery Logo](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)
-
 WINTER 2025-2026
-
-### In This Edition...
-
-**[The “Dramatic” Question: Cultural Appropriation or Cultural Appreciation?](/news/the-dramatic-question-cultural-appropriation-or-cultural-appreciation)**
-
-[Read More »](/news/the-dramatic-question-cultural-appropriation-or-cultural-appreciation)
-
-**[Keeping Ideals Intact: A Waldorf Teacher’s Forty-Year Perspective by David Sloan](/news/keeping-ideals-intact-a-waldorf-teachers-forty-year-perspective-by-david-sloan)**
-
-[Read More »](/news/keeping-ideals-intact-a-waldorf-teachers-forty-year-perspective-by-david-sloan)
-
-**[WHiSTEP: Meeting a Changing World with Courage and Humanity](/news/whistep-meeting-a-changing-world-with-courage-and-humanity)**
-
-[Read More »](/news/whistep-meeting-a-changing-world-with-courage-and-humanity)
-
-**[Interview Questions for John Reinhart ~ Antioch Alum & Waldorf High School Teacher](/news/interview-questions-for-john-reinhart-antioch-alum-waldorf-high-school-teacher)**
-
-[Read More »](/news/interview-questions-for-john-reinhart-antioch-alum-waldorf-high-school-teacher)
-
-### [The Birth of Camphill Academy Afrika:](/news/the-birth-of-camphill-academy-afrika)
-
-[Read More »](/news/the-birth-of-camphill-academy-afrika)
-
-### [Demystifying Differentiation](/news/demystifying-differentiation)
-
-[Read More »](/news/demystifying-differentiation)
-
-### [From Building Bridges](/news/from-building-bridges)
-
-[Read More »](/news/from-building-bridges)
-
-### [Karmic Leadership](/news/karmic-leadership)
-
-[Read More »](/news/karmic-leadership)
-
-### [Message from the Executive Director](/news/message-from-the-executive-director-2)
-
-[Read More »](/news/message-from-the-executive-director-2)
-
-# Message from the Executive Director
 
 * Interview Questions by David Barham*
 
@@ -119,9 +77,3 @@ All of my work in the classroom, with students, with parents, and with my cowork
 Your readers might be interested in this speech I presented at the Maine Coast Waldorf School’s Grandparents Day this year [https://www.mainecoastwaldorf.org/campus-life/news/news-feature/~board/community-news/post/grandparents-day-2025](https://www.mainecoastwaldorf.org/campus-life/news/news-feature/~board/community-news/post/grandparents-day-2025)
 
 Although not available as of yet, an essay I wrote called “I Light Children on Fire” won honorable mention at the Topsham Public Library’s Joy of the Pen contest and will be online here (eventually) [https://joyofthepen.topshamlibrary.org/](https://joyofthepen.topshamlibrary.org/)
-
-Spring/Summer 2022
-
-## Sign up to receive our Center & Periphery Newsletter!
-
-You’ll receive the newsletter via e-mail.

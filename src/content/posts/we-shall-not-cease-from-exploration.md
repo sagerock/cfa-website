@@ -36,5 +36,3 @@ Will be to arrive where we started
 And know the place for the first time.
 
 ~ T.S. Eliot,* Four Quartets *
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2023)

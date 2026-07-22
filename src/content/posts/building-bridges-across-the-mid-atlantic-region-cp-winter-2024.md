@@ -28,5 +28,3 @@ Florida cohort enjoys a moment in the sun
 As with our previous cohorts elsewhere in the country––this past year in Florida, before that in Sacramento, Denver, and Anchorage––we intend to offer Building Bridges only once in the Mid-Atlantic region. Early registration serves to confirm the start of this program. Details are available on CfA’s website; [click here](https://centerforanthroposophy.org/programs/building-bridges-to-waldorf-teacher-training-2/).
 
 Karine Munk Finser leads a painting classPaintings by Florida cohort
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2024)

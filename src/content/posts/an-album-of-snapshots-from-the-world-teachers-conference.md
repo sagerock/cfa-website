@@ -124,5 +124,3 @@ Plans for the current Goetheanum, a monumental edifice overlooking the village o
 ***Post Scriptum*: From Mighty Pulpit to Modest Podium**
 
 A sign of the times: that giant carved lecturer’s pulpit, which for decades dominated center stage of the Great Hall during conferences of this kind, was gone. In its place stood a simple slatted wooden lectern. At the end of the final lecture, to rippling laughter and a scattered round of applause, this modest podium was unceremoniously upended on its two rollers and, like a piece of luggage on wheelies, was steered to the side by a single stagehand to make way for the closing performance of eurythmy.
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-spring-2023)

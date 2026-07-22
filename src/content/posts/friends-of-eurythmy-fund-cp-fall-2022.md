@@ -20,5 +20,3 @@ To this end, we are establishing a new **Friends of Eurythmy Fund** to ensure th
 If you wish to recognize a currently practicing eurythmist, or have taken eurythmy classes from someone in the past, or wish to recognize a eurythmist who has retired or is now working from the other side, we invite you to make your gift to CfA in that person’s name. We will be honoring them all with a fresh resolve to permeate Waldorf schools throughout North America and beyond during the coming years with this new art form.
 
 [Secure donations to the eurythmy fund or CfAs other annual giving options can be made on the website of the Center for Anthroposophy by clicking here.](https://web.cvent.com/event/fe3e310f-685f-40d9-806e-04ff5e3cabd1/regProcessStep1)
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-fall-2022)

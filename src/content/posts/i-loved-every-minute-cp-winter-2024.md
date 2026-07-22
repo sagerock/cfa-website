@@ -24,5 +24,3 @@ With its online format, participants are able to join us from across North Ameri
 *“One of many positive aspects of these online seminars was meeting, chatting, and sharing heartfelt learning with others across many schools, positions, and perspectives all while striving to better understand Anthroposophy and Waldorf education. Their willingness to be candid, supportive, and open minded added great value to me, even while being on Zoom*.”
 
 The next cycle of Explorations (2024-2025) begins with a two-hour session on Saturday, **16 March 2024**, then continues twice a month on alternate Saturdays and Sundays. A new cohort of participants from around the world is forming, but there is room for more! Additional details about the program––including schedule of classes and the opportunity to register––can be found on the “Explorations” pages of our website ([click here](https://centerforanthroposophy.org/programs/exploration-online-2024-2025/)).
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2024)

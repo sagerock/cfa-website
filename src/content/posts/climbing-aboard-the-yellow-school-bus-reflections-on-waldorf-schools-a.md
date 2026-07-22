@@ -2,53 +2,9 @@
 title: "Climbing Aboard the Yellow School Bus: Reflections on Waldorf Schools and the “Deep Structure” of Schools"
 slug: "climbing-aboard-the-yellow-school-bus-reflections-on-waldorf-schools-and-the-deep-structure-of-schools"
 date: "2026-04-16"
-excerpt: "SPRING 2026 In This Edition... Message from the Executive Director Read More » Rachel Freierman: Cultivating The Relationships Between Child, Curriculum, & the Living World Read More » KARMIC…"
+excerpt: "Therapy and Traumatology: Schooling Courage By Liz Beaven, EdD Based on a presentation for Starlight Rays Waldorf education is now well into its second century with an established school culture and…"
 cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
 ---
-
-![Center & Periphery Logo](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)
-
-SPRING 2026
-
-### In This Edition...
-
-### [Message from the Executive Director](/news/message-from-the-executive-director-3)
-
-[Read More »](/news/message-from-the-executive-director-3)
-
-**[Rachel Freierman: Cultivating The Relationships Between Child, Curriculum, & the Living World](/news/rachel-freierman-cultivating-the-relationships-between-child-curriculum-the-living-world)**
-
-[Read More »](/news/rachel-freierman-cultivating-the-relationships-between-child-curriculum-the-living-world)
-
-**[KARMIC RECONCILIATION: CLEARING A PATH FOR DESTINY by Torin Finser](/news/karmic-reconciliation-clearing-a-path-for-destiny-by-torin-finser)**
-
-[Read More »](/news/karmic-reconciliation-clearing-a-path-for-destiny-by-torin-finser)
-
-**[Leadership and Community Development Residency in the Greater Bay Area of California!](/news/leadership-and-community-development-residency-in-the-greater-bay-area-of-california)**
-
-[Read More »](/news/leadership-and-community-development-residency-in-the-greater-bay-area-of-california)
-
-### [CFA Updates](/news/cfa-updates)
-
-[Read More »](/news/cfa-updates)
-
-**[A Message from Kairos: Therapy and Traumatology: Schooling Courage](/news/a-message-from-kairos)**
-
-[Read More »](/news/a-message-from-kairos)
-
-**[Climbing Aboard the Yellow School Bus: Reflections on Waldorf Schools and the “Deep Structure” of Schools](/news/climbing-aboard-the-yellow-school-bus-reflections-on-waldorf-schools-and-the-deep-structure-of-schools)**
-
-[Read More »](/news/climbing-aboard-the-yellow-school-bus-reflections-on-waldorf-schools-and-the-deep-structure-of-schools)
-
-**[Revisiting & Reconsidering Betty Staley’s Classic Models in the Light of our Modern Moment](/news/revisiting-reconsidering-betty-staleys-classic-models-in-the-light-of-our-modern-moment)**
-
-[Read More »](/news/revisiting-reconsidering-betty-staleys-classic-models-in-the-light-of-our-modern-moment)
-
-**[Drawbridge and Portcullis: Thresholds of Sleeping and Waking Consciousness](/news/drawbridge-and-portcullis-thresholds-of-sleeping-and-waking-consciousness)**
-
-[Read More »](/news/drawbridge-and-portcullis-thresholds-of-sleeping-and-waking-consciousness)
-
-# Drawbridge and Portcullis: Thresholds of Sleeping and Waking Consciousness
 
 ## **Therapy and Traumatology: Schooling Courage**
 
@@ -101,9 +57,3 @@ Tye, B. B. (1998). The Deep Structure of Schooling: What It Is and How It Works.
 Yang, Jin Lynn, NY Times, November 24, 2025. America’s children are unwell. Are schools part of the problem? [https://www.nytimes.com/2025/11/24/magazine/youth-mental-health-crisis-schools.html](https://www.nytimes.com/2025/11/24/magazine/youth-mental-health-crisis-schools.html)?
 
 [1] The Grammar of schools. Grammar/deep structure of schools, pull to the “norm” – Barbara Tye. Powerful force with something as deeply familiar and personal as school. Schools are slow to change; reforms tend to come and go.
-
-Spring/Summer 2022
-
-## Sign up to receive our Center & Periphery Newsletter!
-
-You’ll receive the newsletter via e-mail.

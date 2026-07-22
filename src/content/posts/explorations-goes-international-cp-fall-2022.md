@@ -20,5 +20,3 @@ One of our international participants commented:
 After a summer hiatus, the course is now back in full swing with an exciting line-up of presenters and presentations in store. The current cycle will end in February 2023, and a new round will start the following month—in March 2023. Registration will be available on our website later this fall.
 
 Explorations, a foundational-level course offering an introductory look at anthroposophy, engages participants in relevant and meaningful issues related to Waldorf education. Each class session includes at least 30 minutes of artistic activity––speech, pastel drawing, eurythmy, or singing. The course is designed primarily for parents, administrators, board members, and new teachers in public and independent Waldorf schools, as well as those teaching children at home.
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-fall-2022)

@@ -36,5 +36,3 @@ A work this big, this powerful, this important––reading the developing needs
 Eastern sunrise—or is it western sunset—across the silent fields of New Hampshire
 
 For details of WHiSTEP and its new format of streamlined courses and online seminars during the school year, [click here](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/).
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2024)

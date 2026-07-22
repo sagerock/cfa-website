@@ -76,5 +76,3 @@ We are looking forward to several studios and spring residencies, which were cre
 Please note: We will have a few spots reserved for those who join us from other art therapy trainings or who are wishing to join Kairos as prospective students. The spring and July residencies in Keene, New Hampshire, take place at the Gathering Waters Chartered Public School. For details, please contact [*karine@centerforanthroposophy.org*](mailto:karine@centerforanthroposophy.org).
 
 For more information, please [click here](https://centerforanthroposophy.org/programs/kairos-institute/).
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2024)

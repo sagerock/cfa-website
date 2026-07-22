@@ -64,5 +64,3 @@ Looking ahead to the summer of 2024, a new group of high school trainees is alre
 - Physics and chemistry
 
 For details, contact David Barham, Director of WHiSTEP at the Center for Anthroposophy: [david@centerforanthroposophy.org](mailto:david@centerforanthroposophy.org)
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-autumn-2023)

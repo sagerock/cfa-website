@@ -2,53 +2,9 @@
 title: "Rachel Freierman:  Cultivating The Relationships Between Child, Curriculum, & the Living World"
 slug: "rachel-freierman-cultivating-the-relationships-between-child-curriculum-the-living-world"
 date: "2026-04-16"
-excerpt: "SPRING 2026 In This Edition... Message from the Executive Director Read More » Rachel Freierman: Cultivating The Relationships Between Child, Curriculum, & the Living World Read More » KARMIC…"
-cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
+excerpt: "Written by David Barham It comes as no surprise that throughout high school, college, and now in adult leagues, Rachel is the goalie. A triple goalie- soccer, hockey, and lacrosse- Rachel embodies…"
+cover: "/images/posts/b11b449491-portraitofrachel.jpg"
 ---
-
-![Center & Periphery Logo](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)
-
-SPRING 2026
-
-### In This Edition...
-
-### [Message from the Executive Director](/news/message-from-the-executive-director-3)
-
-[Read More »](/news/message-from-the-executive-director-3)
-
-**[Rachel Freierman: Cultivating The Relationships Between Child, Curriculum, & the Living World](/news/rachel-freierman-cultivating-the-relationships-between-child-curriculum-the-living-world)**
-
-[Read More »](/news/rachel-freierman-cultivating-the-relationships-between-child-curriculum-the-living-world)
-
-**[KARMIC RECONCILIATION: CLEARING A PATH FOR DESTINY by Torin Finser](/news/karmic-reconciliation-clearing-a-path-for-destiny-by-torin-finser)**
-
-[Read More »](/news/karmic-reconciliation-clearing-a-path-for-destiny-by-torin-finser)
-
-**[Leadership and Community Development Residency in the Greater Bay Area of California!](/news/leadership-and-community-development-residency-in-the-greater-bay-area-of-california)**
-
-[Read More »](/news/leadership-and-community-development-residency-in-the-greater-bay-area-of-california)
-
-### [CFA Updates](/news/cfa-updates)
-
-[Read More »](/news/cfa-updates)
-
-**[A Message from Kairos: Therapy and Traumatology: Schooling Courage](/news/a-message-from-kairos)**
-
-[Read More »](/news/a-message-from-kairos)
-
-**[Climbing Aboard the Yellow School Bus: Reflections on Waldorf Schools and the “Deep Structure” of Schools](/news/climbing-aboard-the-yellow-school-bus-reflections-on-waldorf-schools-and-the-deep-structure-of-schools)**
-
-[Read More »](/news/climbing-aboard-the-yellow-school-bus-reflections-on-waldorf-schools-and-the-deep-structure-of-schools)
-
-**[Revisiting & Reconsidering Betty Staley’s Classic Models in the Light of our Modern Moment](/news/revisiting-reconsidering-betty-staleys-classic-models-in-the-light-of-our-modern-moment)**
-
-[Read More »](/news/revisiting-reconsidering-betty-staleys-classic-models-in-the-light-of-our-modern-moment)
-
-**[Drawbridge and Portcullis: Thresholds of Sleeping and Waking Consciousness](/news/drawbridge-and-portcullis-thresholds-of-sleeping-and-waking-consciousness)**
-
-[Read More »](/news/drawbridge-and-portcullis-thresholds-of-sleeping-and-waking-consciousness)
-
-# Drawbridge and Portcullis: Thresholds of Sleeping and Waking Consciousness
 
 *Written by David Barham *
 
@@ -77,9 +33,3 @@ Rachel completed their master’s thesis in August 2025, focusing on outdoor and
 Outside of school, Rachel continues to nurture their relationship with the natural world through hiking, artistic practice, and time spent outdoors, including serving as a ski patroller at Wildcat Ski Mountain—activities that replenish the well from which their teaching flows. Rachel continues to make art, including some of the most adorable, felted critters you have ever seen!
 
 Rachel’s work stands as a living example of how Waldorf education can take root in new soil, adapting thoughtfully without losing its essence. Through their dedication to environmental education, artistic practice, and community life, they help both children and adults remember that learning is, at its heart, a relationship with the living world.
-
-Spring/Summer 2022
-
-## Sign up to receive our Center & Periphery Newsletter!
-
-You’ll receive the newsletter via e-mail.

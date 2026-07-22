@@ -2,49 +2,9 @@
 title: "Waldorf High School Teacher Education Program/WHiSTEP"
 slug: "waldorf-high-school-teacher-education-program-whistep"
 date: "2025-04-09"
-excerpt: "SPRING 2025 In This Edition... Deepen Your Connection with Waldorf Education and Anthroposophy Read More » Interview with Amber Rounds Read More » Rudolf Steiner and the Renewal of our Cultural Life…"
+excerpt: "Written by David Barham When children come to the age of puberty, it is necessary to awaken within them an extraordinarily great interest in the world outside of themselves. Through the whole way in…"
 cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
 ---
-
-![Center & Periphery Logo](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)
-
-SPRING 2025
-
-### In This Edition...
-
-**[Deepen Your Connection with Waldorf Education and Anthroposophy](/news/deepen-our-connection-with-waldorf-education-and-anthroposophy)**
-
-[Read More »](/news/deepen-our-connection-with-waldorf-education-and-anthroposophy)
-
-### [Interview with Amber Rounds](/news/interview-with-amber-rounds)
-
-[Read More »](/news/interview-with-amber-rounds)
-
-**[Rudolf Steiner and the Renewal of our Cultural Life](/news/rudolf-steiner-and-the-renewal-of-our-cultural-life)**
-
-[Read More »](/news/rudolf-steiner-and-the-renewal-of-our-cultural-life)
-
-**[The Transformative Role of Mentoring in Waldorf Education](/news/the-transformative-role-of-mentoring-in-waldorf-education)**
-
-[Read More »](/news/the-transformative-role-of-mentoring-in-waldorf-education)
-
-**[Waldorf High School Teacher Education Program/WHiSTEP](/news/waldorf-high-school-teacher-education-program-whistep)**
-
-[Read More »](/news/waldorf-high-school-teacher-education-program-whistep)
-
-**[Starlight Rays in Darkened Times: Seminars on Contemporary Topics](/news/starlight-rays-in-darkened-times-seminars-on-contemporary-topics)**
-
-[Read More »](/news/starlight-rays-in-darkened-times-seminars-on-contemporary-topics)
-
-**[Temperament Considerations When Composing Communication to Parents](/news/temperament-considerations-when-composing-communication-to-parents)**
-
-[Read More »](/news/temperament-considerations-when-composing-communication-to-parents)
-
-**[February at Waldorf School of Baltimore: A Celebration of Black Joy, Pride, and Resilience](/news/february-at-waldorf-school-of-baltimore-a-celebration-of-black-joy-pride-and-resilience)**
-
-[Read More »](/news/february-at-waldorf-school-of-baltimore-a-celebration-of-black-joy-pride-and-resilience)
-
-# February at Waldorf School of Baltimore: A Celebration of Black Joy, Pride, and Resilience
 
 Written by David Barham
 
@@ -113,9 +73,3 @@ Additional scholarships & financial assistance are available as well.
 [https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/whistep/](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/whistep/)
 
 From David Sloan’s Drama II class, a lesson in the Planetary Types
-
-Spring/Summer 2022
-
-## Sign up to receive our Center & Periphery Newsletter!
-
-You’ll receive the newsletter via e-mail.

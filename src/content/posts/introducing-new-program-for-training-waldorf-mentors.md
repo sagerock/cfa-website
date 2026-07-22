@@ -22,5 +22,3 @@ Registration for this program opens on October 15! Because available spots will 
 Karen Atkinson
 
 Director of Mentor Training
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-autumn-2023)

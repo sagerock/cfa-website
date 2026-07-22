@@ -2,53 +2,11 @@
 title: "The Birth of Camphill Academy Afrika:"
 slug: "the-birth-of-camphill-academy-afrika"
 date: "2025-12-18"
-excerpt: "WINTER 2025-2026 In This Edition... The “Dramatic” Question: Cultural Appropriation or Cultural Appreciation? Read More » Keeping Ideals Intact: A Waldorf Teacher’s Forty-Year Perspective by David…"
+excerpt: "WINTER 2025-2026 Some readers may remember an article published in the Autumn 2023 edition of Center and Periphery describing my meeting with Janet Manoni from Tanzania during the April 2023 World…"
 cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
 ---
 
-![Center & Periphery Logo](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)
-
 WINTER 2025-2026
-
-### In This Edition...
-
-**[The “Dramatic” Question: Cultural Appropriation or Cultural Appreciation?](/news/the-dramatic-question-cultural-appropriation-or-cultural-appreciation)**
-
-[Read More »](/news/the-dramatic-question-cultural-appropriation-or-cultural-appreciation)
-
-**[Keeping Ideals Intact: A Waldorf Teacher’s Forty-Year Perspective by David Sloan](/news/keeping-ideals-intact-a-waldorf-teachers-forty-year-perspective-by-david-sloan)**
-
-[Read More »](/news/keeping-ideals-intact-a-waldorf-teachers-forty-year-perspective-by-david-sloan)
-
-**[WHiSTEP: Meeting a Changing World with Courage and Humanity](/news/whistep-meeting-a-changing-world-with-courage-and-humanity)**
-
-[Read More »](/news/whistep-meeting-a-changing-world-with-courage-and-humanity)
-
-**[Interview Questions for John Reinhart ~ Antioch Alum & Waldorf High School Teacher](/news/interview-questions-for-john-reinhart-antioch-alum-waldorf-high-school-teacher)**
-
-[Read More »](/news/interview-questions-for-john-reinhart-antioch-alum-waldorf-high-school-teacher)
-
-### [The Birth of Camphill Academy Afrika:](/news/the-birth-of-camphill-academy-afrika)
-
-[Read More »](/news/the-birth-of-camphill-academy-afrika)
-
-### [Demystifying Differentiation](/news/demystifying-differentiation)
-
-[Read More »](/news/demystifying-differentiation)
-
-### [From Building Bridges](/news/from-building-bridges)
-
-[Read More »](/news/from-building-bridges)
-
-### [Karmic Leadership](/news/karmic-leadership)
-
-[Read More »](/news/karmic-leadership)
-
-### [Message from the Executive Director](/news/message-from-the-executive-director-2)
-
-[Read More »](/news/message-from-the-executive-director-2)
-
-# Message from the Executive Director
 
 Some readers may remember an article published in the Autumn 2023 edition of Center and Periphery describing my meeting with Janet Manoni from Tanzania during the April 2023 World Teachers’ Conference**: **[Dar es Salaam, Tanzania: A Chance Encounter that Was Not by Chance](/news/dar-es-salaam-tanzania-a-chance-encounter-that-was-not-by-chance). As described in this article, following this fortuitous meeting I swiftly made a visit to Tanzania, and what I experienced there was nothing short of remarkable – local children from the village attending classes with children facing the challenges of living with spina bifida, cerebral palsy, and hydrocephalus. Through heartfelt conversations in which Janet shared her hopes and vision, the dream of founding a training for teachers who work with fully inclusive Waldorf classrooms in East Africa was born. It’s hard to believe that the stars were aligned such that since that meeting in April 2023, and my visit in August of the same year, a group of colleagues met to outline the vision and structure for a training program, and the first pilot module of the program known as Camphill Academy Afrika was held in August 2025 in Vikindu, Tanzania!
 
@@ -149,9 +107,3 @@ Since the first residency in August, participants and faculty have continued to 
 If you would like to support this program, you can do so by making a donation to the [Fonds für Heilpädagogik und Sozialtherapie Dornach](https://inclusivesocial.org/en/impressum-kontakt/) or the [Camphill Foundation ](https://camphillfoundation.org/)(US) for the benefit of “Camphill Academy Afrika”.
 
 *Carla Beebe Comey, on behalf of the Camphill Academy Afrika faculty*
-
-Spring/Summer 2022
-
-## Sign up to receive our Center & Periphery Newsletter!
-
-You’ll receive the newsletter via e-mail.

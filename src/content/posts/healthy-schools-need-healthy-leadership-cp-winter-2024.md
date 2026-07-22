@@ -20,5 +20,3 @@ Although much of the adult work is embedded in the general challenges of this ag
 In our experience, when a school sends a small team of participants to our Waldorf Leadership Development program, they return to their school with greater impact. To that end we offer a group discount for three or more participants coming from the same institution. But we also welcome single registrations from those serving in new or changing pedagogical or administrative roles. [Click here to see our website for more details.](https://centerforanthroposophy.org/programs/waldorf-administration-and-leadership-development-program/)
 
 The next cycle of this one-year program, mostly online, begins on **Saturday, 11 May 2024.**
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2024)

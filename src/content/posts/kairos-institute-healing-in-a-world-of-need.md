@@ -60,5 +60,3 @@ Flyer and spring schedule for this program are printed below. For more informati
 *Karine Munk Finser,* Director of the Kairos Institute ([karine@centerforanthroposophy.org](mailto:karine@centerforanthroposophy.org) ) and Director of TSHE at Antioch University New England ([kfinser@antioch.edu](mailto:kfinser@antioch.edu) )
 
 *Debbie Spitulnik,* Leader of Kairos Speech training ([dspitulnik@gmail.com](mailto:dspitulnik@gmail.com) )
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2023)

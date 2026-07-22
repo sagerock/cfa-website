@@ -80,5 +80,3 @@ with Mary Stewart Adams (Star Lore Historian) **
 - Bringing a Living Approach to Teaching Physical Sciences in Grades 6, 7, and 8 with Gary Banks
 
 Wrapping up with a speech eurythmy piece with Leonore Russell, Maria Ver Eecke (not in this photo), Carsten Callesen, and Debbie Spitulnik.
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-fall-2022)

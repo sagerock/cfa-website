@@ -2,55 +2,9 @@
 title: "In Light of the Spirit: A New Anthology of Essays by John F. Gardner on Waldorf Education and Social Reform"
 slug: "in-light-of-the-spirit-a-new-anthology-of-essays-by-john-f-gardner-on-waldorf-education-and-social-reform"
 date: "2025-09-29"
-excerpt: "FALL 2025 In This Edition... Message from the Executive Director Read More » Message from Torin Finser, Development Director Read More » Alumni Profiles from WHiSTEP Class of 2025 & Antioch Class of…"
-cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
+excerpt: "In Light of the Spirit: A New Anthology of Essays by John F. Gardner on Waldorf Education and Social Reform by Douglas Gerwin In the mid-1990s, around the time he launched an innovative training for…"
+cover: "/images/posts/793fd3e47c-johnfentressgardner767x1024.webp"
 ---
-
-![Center & Periphery Logo](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)
-
-FALL 2025
-
-### In This Edition...
-
-### [Message from the Executive Director](/news/message-from-the-executive-director)
-
-[Read More »](/news/message-from-the-executive-director)
-
-**[Message from Torin Finser, Development Director](/news/message-from-torin-finser-development-director)**
-
-[Read More »](/news/message-from-torin-finser-development-director)
-
-**[Alumni Profiles from WHiSTEP Class of 2025 & Antioch Class of 2025](/news/alumni-profiles-from-whistep-class-of-2025-antioch-class-of-2025)**
-
-[Read More »](/news/alumni-profiles-from-whistep-class-of-2025-antioch-class-of-2025)
-
-### [Tree of Life](/news/tree-of-life)
-
-[Read More »](/news/tree-of-life)
-
-### [Kairos: Healing in a World of Need](/news/kairos-healing-in-a-world-of-need)
-
-[Read More »](/news/kairos-healing-in-a-world-of-need)
-
-**[Wisdom into Practice: Mentor Training for Waldorf Educators](/news/wisdom-into-practice-mentor-training-for-waldorf-educators)**
-
-[Read More »](/news/wisdom-into-practice-mentor-training-for-waldorf-educators)
-
-**[David Sloan Keynote Introduction/Sunday, July 27, 2025](/news/david-sloan-keynote-introduction-sunday-july-27-2025)**
-
-[Read More »](/news/david-sloan-keynote-introduction-sunday-july-27-2025)
-
-### [Welcome Jacob Gerber & Nathan Wilcox](/news/welcome-jacob-gerber-nathan-wilcox)
-
-[Read More »](/news/welcome-jacob-gerber-nathan-wilcox)
-
-### [Interview with Sage Lewis](/news/interview-with-sage-lewis)
-
-[Read More »](/news/interview-with-sage-lewis)
-
-**[In Light of the Spirit: A New Anthology of Essays by John F. Gardner on Waldorf Education and Social Reform](/news/in-light-of-the-spirit-a-new-anthology-of-essays-by-john-f-gardner-on-waldorf-education-and-social-reform)**
-
-[Read More »](/news/in-light-of-the-spirit-a-new-anthology-of-essays-by-john-f-gardner-on-waldorf-education-and-social-reform)
 
 # In Light of the Spirit: A New Anthology of Essays by John F. Gardner on Waldorf Education and Social Reform
 
@@ -151,9 +105,3 @@ Lumberjack, farmer, gardener—author, speaker, advocate—teacher, mentor, coun
 Himself a graduate of the Waldorf school in Garden City, NY, Douglas Gerwin, Ph.D., is Executive Director of the Research Institute for Waldorf Education. A teacher of history, literature, German, music, and life science at the university and Waldorf high school level since 1983, he is author/editor of eleven books, as well as numerous articles and webinars, on Waldorf education and anthroposophy.
 
 [1] Just as a student of philosophy (in German, of *Philosophie*) is rightly called “a philosopher” (in German, *ein Philosoph*), so a student of anthroposophy (in German, of *Anthroposophie*) should rightly be called “an anthroposopher” (as is the case in German, *ein Anthroposoph*), rather than what is commonly translated into English as “an anthroposophist”. This latter misleading translation implies the existence of some kind of doctrine that should be called “anthroposophism” — as distinct from anthroposophy, which, like the term philosophy, simply denotes a disciplined form of enquiry. On this view, we can say that a materialist subscribes to the basic tenets of materialism, a spiritualist to the basic tenets of spiritualism, as so forth. Said briefly: to identify someone as an “-ist” of any philosophic pursuit implies an “-ism” or system of beliefs that the follower of this “-ism” is, so to speak, “-isting” — that is to say, accepting without serious challenge. This assumption directly contradicts what Rudolf Steiner would expect of any student who engages in a disciplined study of anthroposophy. Hence the choice of the term “anthroposopher”.
-
-Spring/Summer 2022
-
-## Sign up to receive our Center & Periphery Newsletter!
-
-You’ll receive the newsletter via e-mail.

@@ -25,5 +25,3 @@ For more information, email David Barham, Director of CfA’s Waldorf High Schoo
 ####
 
 #### [Register for Starlight Rays!](https://centerforanthroposophy.org/starlight/)
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-autumn-2023)

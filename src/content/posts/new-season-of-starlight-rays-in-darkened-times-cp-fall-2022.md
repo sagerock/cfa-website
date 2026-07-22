@@ -30,5 +30,3 @@ We do not have all the answers to what ails the world. But we are active explore
 We warmly welcome all who are passionate about meeting the true needs of the modern adolescent and high school community to join us on this adventure. We began on Saturday, September 10, 2022, and the seminars continue every other Saturday through February 25, 2023, from 3:00 pm to 4:30 pm Eastern Time. These seminars are not a teacher training, but a deepening. They can be seen as professional development, part of foundation studies, or simply as a chance to come together and wrestle with issues of the world.
 
 [For more information, click here or on the image.](https://centerforanthroposophy.org/event/starlight-rays-in-darkened-times-seminars-on-contemporary-topics-for-waldorf-high-school-teachers/2022-09-24/)
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-fall-2022)

@@ -138,5 +138,3 @@ Two separate week-long sessions will take place this coming summer. Participants
 ** * * * * ***
 
 For more information about summer Renewal Courses, and to register, visit our website: **[Renewal Courses 2024](https://centerforanthroposophy.org/programs/renewal-courses/)**
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2024)

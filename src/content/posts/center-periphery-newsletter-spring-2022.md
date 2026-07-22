@@ -135,7 +135,3 @@ The inaugural group of CfA’s new Waldorf Leadership Development completes its 
 ## [Building Bridges Both East and West](/news/building-bridges-both-east-and-west)
 
 After a year-long hiatus, CfA resumed its “Building Bridges” program this past September with a vibrant group of faculty and staff from the Northeast Woodland School in Conway, New Hampshire.
-
-## Sign up to receive our Center & Periphery Newsletter!
-
-You’ll receive the newsletter via email.

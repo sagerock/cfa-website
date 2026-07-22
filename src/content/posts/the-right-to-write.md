@@ -38,5 +38,3 @@ This approach to writing is based on the idea that what we do with our hands giv
 Comparative research remains to be undertaken, therefore, on the way a child’s higher mental powers are helped or hindered by the practice or avoidance of cursive handwriting, especially during the elementary grades. But we should not have to wait on large-scale or long-term studies to recognize the value to be gained from flowing cursive movements across a blank page, compared to the percussive staccato movements across a keyboard.
 
 *Put most simply: children have a right to write. *
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2023)

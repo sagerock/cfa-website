@@ -76,5 +76,3 @@ Sunday 23 (in Wilton, NH)
 *
 
 [Click here to visit the Calendar web page](https://centerforanthroposophy.org/calendar/).
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2023)

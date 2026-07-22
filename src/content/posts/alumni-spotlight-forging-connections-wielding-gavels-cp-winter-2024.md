@@ -32,5 +32,3 @@ Last month, at the annual conference of Alliance for Public Waldorf Education, C
 As both school administrator and auctioneer, Caleb is working to create connections and forge relationships that will lead to future opportunities. “It’s great to see what everyone is doing––what is working, what isn’t working, how can we use this information to keep improving in a creative way,” he says.
 
 In the end, he says, the guiding question for Waldorf schools will be: “How can we support and celebrate each other?”
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2024)

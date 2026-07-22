@@ -48,5 +48,3 @@ In closing, I will share a call to arms from Bayard Rustin, the great African Am
 **“*May we all find salvation in professions that heal.*”**
 
 **–––Shawn Colvin**
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-fall-2022)

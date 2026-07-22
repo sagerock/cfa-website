@@ -94,5 +94,3 @@ Saturday 27
 Sunday 28
 
 *– WHiSTEP/Antioch U. *Graduation (at Pine Hill)
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2024)

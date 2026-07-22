@@ -61,5 +61,3 @@ Research and Self Development (II) *with Torin Finser
 A registration deposit of $300 secures a place in this Building Bridges program. For details, contact Milan Daler, CfA’s Administrator, at [milan@centerforanthroposophy.org](mailto:milan@centerforanthroposophy.org).
 
 [For program details and registration, click here to visit the Building Bridges web page.](https://centerforanthroposophy.org/programs/building-bridges-to-waldorf-teacher-training-2/)
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-fall-2022)

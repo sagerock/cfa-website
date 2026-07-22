@@ -118,4 +118,3 @@ May – September 2023
 
 Continue reading…
 
-## Sign up to receive our Center & Periphery Newsletter!

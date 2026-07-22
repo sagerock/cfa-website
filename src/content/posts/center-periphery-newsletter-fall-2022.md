@@ -128,4 +128,3 @@ With a retrospective video, reflections by founding faculty, energetic dancing, 
 
 Teachers and trainees from the Waldorf Program at Antioch University New England converged on Chapel Hill, NC, to celebrate a wedding at the Emerson Waldorf School.
 
-## Sign up to receive our Center & Periphery Newsletter!

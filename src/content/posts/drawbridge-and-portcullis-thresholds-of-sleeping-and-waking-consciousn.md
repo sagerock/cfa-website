@@ -2,51 +2,9 @@
 title: "Drawbridge and Portcullis: Thresholds of Sleeping and Waking Consciousness"
 slug: "drawbridge-and-portcullis-thresholds-of-sleeping-and-waking-consciousness"
 date: "2026-04-16"
-excerpt: "SPRING 2026 In This Edition... Message from the Executive Director Read More » Rachel Freierman: Cultivating The Relationships Between Child, Curriculum, & the Living World Read More » KARMIC…"
+excerpt: "Drawbridge and Portcullis: Thresholds of Sleeping and Waking Consciousness By Douglas Gerwin [Originally published in 2025 as a collection of essays by members of the Pedagogical Section Council of…"
 cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
 ---
-
-![Center & Periphery Logo](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)
-
-SPRING 2026
-
-### In This Edition...
-
-### [Message from the Executive Director](/news/message-from-the-executive-director-3)
-
-[Read More »](/news/message-from-the-executive-director-3)
-
-**[Rachel Freierman: Cultivating The Relationships Between Child, Curriculum, & the Living World](/news/rachel-freierman-cultivating-the-relationships-between-child-curriculum-the-living-world)**
-
-[Read More »](/news/rachel-freierman-cultivating-the-relationships-between-child-curriculum-the-living-world)
-
-**[KARMIC RECONCILIATION: CLEARING A PATH FOR DESTINY by Torin Finser](/news/karmic-reconciliation-clearing-a-path-for-destiny-by-torin-finser)**
-
-[Read More »](/news/karmic-reconciliation-clearing-a-path-for-destiny-by-torin-finser)
-
-**[Leadership and Community Development Residency in the Greater Bay Area of California!](/news/leadership-and-community-development-residency-in-the-greater-bay-area-of-california)**
-
-[Read More »](/news/leadership-and-community-development-residency-in-the-greater-bay-area-of-california)
-
-### [CFA Updates](/news/cfa-updates)
-
-[Read More »](/news/cfa-updates)
-
-**[A Message from Kairos: Therapy and Traumatology: Schooling Courage](/news/a-message-from-kairos)**
-
-[Read More »](/news/a-message-from-kairos)
-
-**[Climbing Aboard the Yellow School Bus: Reflections on Waldorf Schools and the “Deep Structure” of Schools](/news/climbing-aboard-the-yellow-school-bus-reflections-on-waldorf-schools-and-the-deep-structure-of-schools)**
-
-[Read More »](/news/climbing-aboard-the-yellow-school-bus-reflections-on-waldorf-schools-and-the-deep-structure-of-schools)
-
-**[Revisiting & Reconsidering Betty Staley’s Classic Models in the Light of our Modern Moment](/news/revisiting-reconsidering-betty-staleys-classic-models-in-the-light-of-our-modern-moment)**
-
-[Read More »](/news/revisiting-reconsidering-betty-staleys-classic-models-in-the-light-of-our-modern-moment)
-
-**[Drawbridge and Portcullis: Thresholds of Sleeping and Waking Consciousness](/news/drawbridge-and-portcullis-thresholds-of-sleeping-and-waking-consciousness)**
-
-[Read More »](/news/drawbridge-and-portcullis-thresholds-of-sleeping-and-waking-consciousness)
 
 # Drawbridge and Portcullis: Thresholds of Sleeping and Waking Consciousness
 
@@ -85,9 +43,3 @@ As for the advent of dawning wakefulness, we need the warming mood of* courage *
 On days when something important is to happen to us we do not wake up exactly as we do on days that take their usual course –– only we do not notice it. Those who used to lead the life of peasants on the land –– such people knew about these things and did not like to be torn suddenly out of sleep, because when there is no gradual transition into the waking life of day one is wrested from such intimate experiences. Peasants say that on waking one should never look immediately at the window but away from it, so that while the light is still dim one can become aware of what is emerging from sleep . . . The more aware they become of that indefinite, half mystical influence which can radiate from sleep, the more clearly is their attention directed to their karma. (Rudolf Steiner, *Karmic Relations*, Volume VII, Lecture of 14 June 1924 in Breslau (London: Rudolf Steiner Press, 1973) p.117)
 
 In many cultural traditions, the transitional moments of twilight––dusk and dawn––are revered as a sacred or meditative time when the temporal and the earthly brush up against the eternal and the cosmic. As the sun falls asleep each evening beyond the curve of the western horizon, the vast planetary and starry realms of the spirit gradually come into view. But as the “rosy dawn”, accompanied by Venus the Morning Star, heralds the return in the east of the radiant daytime sun, the star-studded celestial firmament dissolves into a period of invisibility. In this precious twice-daily transition, we are granted a fleeting glimpse of dynamic realms normally inaccessible to direct experience.
-
-Spring/Summer 2022
-
-## Sign up to receive our Center & Periphery Newsletter!
-
-You’ll receive the newsletter via e-mail.

@@ -34,5 +34,3 @@ On behalf of the Center for Anthroposophy
 We invite you to make a secure and tax deductible contribution by clicking [here](https://centerforanthroposophy.org/make-a-donation/)
 
 or on the image below.
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-autumn-2023)

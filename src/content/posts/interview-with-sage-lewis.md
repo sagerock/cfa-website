@@ -2,57 +2,9 @@
 title: "Interview with Sage Lewis"
 slug: "interview-with-sage-lewis"
 date: "2025-09-29"
-excerpt: "FALL 2025 In This Edition... Message from the Executive Director Read More » Message from Torin Finser, Development Director Read More » Alumni Profiles from WHiSTEP Class of 2025 & Antioch Class of…"
+excerpt: "“I am Darth Vader, But Use my Anger to Help Homeless People.”: A Profile of Sage Lewis by David Barham When you sit down with Sage Lewis, you quickly sense that his life has unfolded like a symphony…"
 cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
 ---
-
-![Center & Periphery Logo](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)
-
-FALL 2025
-
-### In This Edition...
-
-### [Message from the Executive Director](/news/message-from-the-executive-director)
-
-[Read More »](/news/message-from-the-executive-director)
-
-**[Message from Torin Finser, Development Director](/news/message-from-torin-finser-development-director)**
-
-[Read More »](/news/message-from-torin-finser-development-director)
-
-**[Alumni Profiles from WHiSTEP Class of 2025 & Antioch Class of 2025](/news/alumni-profiles-from-whistep-class-of-2025-antioch-class-of-2025)**
-
-[Read More »](/news/alumni-profiles-from-whistep-class-of-2025-antioch-class-of-2025)
-
-### [Tree of Life](/news/tree-of-life)
-
-[Read More »](/news/tree-of-life)
-
-### [Kairos: Healing in a World of Need](/news/kairos-healing-in-a-world-of-need)
-
-[Read More »](/news/kairos-healing-in-a-world-of-need)
-
-**[Wisdom into Practice: Mentor Training for Waldorf Educators](/news/wisdom-into-practice-mentor-training-for-waldorf-educators)**
-
-[Read More »](/news/wisdom-into-practice-mentor-training-for-waldorf-educators)
-
-**[David Sloan Keynote Introduction/Sunday, July 27, 2025](/news/david-sloan-keynote-introduction-sunday-july-27-2025)**
-
-[Read More »](/news/david-sloan-keynote-introduction-sunday-july-27-2025)
-
-### [Welcome Jacob Gerber & Nathan Wilcox](/news/welcome-jacob-gerber-nathan-wilcox)
-
-[Read More »](/news/welcome-jacob-gerber-nathan-wilcox)
-
-### [Interview with Sage Lewis](/news/interview-with-sage-lewis)
-
-[Read More »](/news/interview-with-sage-lewis)
-
-**[In Light of the Spirit: A New Anthology of Essays by John F. Gardner on Waldorf Education and Social Reform](/news/in-light-of-the-spirit-a-new-anthology-of-essays-by-john-f-gardner-on-waldorf-education-and-social-reform)**
-
-[Read More »](/news/in-light-of-the-spirit-a-new-anthology-of-essays-by-john-f-gardner-on-waldorf-education-and-social-reform)
-
-# In Light of the Spirit: A New Anthology of Essays by John F. Gardner on Waldorf Education and Social Reform
 
 “I am Darth Vader, But Use my Anger to Help Homeless People.”:
 
@@ -77,9 +29,3 @@ Despite his many commitments, Sage keeps his spirit nourished. Recently, he has 
 For those who work with him at the Center for Anthroposophy, Sage is often the friendly, wildly competent person who solves technical problems in the background. But behind that quiet role is a man whose life has been anything but conventional and whose inner life is not always as placid as his tech-Buddha presence might imply. Sage speaks about how much anger he carries alongside his love of people, and how he is “angry that I am so angry.” But as David Byrne sings in *Life During Wartime*, “My chest is aching, burns like a furnace, The burning keeps me alive.”
 
 From music to marketing, from tents in Akron to law school classrooms, Sage Lewis has arrived at this conclusion: “I don’t believe the answer is to fight the machines. I believe the answer is to **become more fully human** and learn to **partner** with intelligence—human and artificial—in ways that create real community and real meaning.”
-
-Spring/Summer 2022
-
-## Sign up to receive our Center & Periphery Newsletter!
-
-You’ll receive the newsletter via e-mail.

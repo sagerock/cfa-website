@@ -23,5 +23,3 @@ Explorations Online is a foundational-level course offering a rich introduction 
 Each two-hour class includes at least 30 minutes of artistic activity – eurythmy, singing, pastel drawing, or speech and storytelling. In addition, a strong theme of self-development runs throughout the course. Students are given the opportunity to work with Rudolf Steiner’s Six Basic Exercises in a consistent and supportive way.
 
 The 2023-2024 cycle of Explorations is now closed to further enrollment, but a new cycle of this 10-month course will begin on **Saturday, March 16, 2024.** Registration will be available on the CfA website starting this fall, but early interest sign-up is available by clicking [here](https://centerforanthroposophy.org/programs/exploration-online/).
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-autumn-2023)

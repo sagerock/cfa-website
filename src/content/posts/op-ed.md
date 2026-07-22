@@ -95,7 +95,3 @@ Just a few years ago, we celebrated the 100th anniversary of the founding of the
 During the first 100 years of the international Waldorf movement, we had much to be proud of––a century of striving to meet the true physical, soul, and spiritual needs of individuals and the planet. And now, here we are, post 100-year anniversary, approaching post-Covid-19, ready to look ahead to prepare for the future, rather than look back to celebrate the past.
 
 [Read More](/news/keep-the-shakespeare-add-toni-morrison-david-barham)
-
-## Sign up to receive our Center & Periphery Newsletter!
-
-You’ll receive the newsletter via e-mail.

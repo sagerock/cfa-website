@@ -28,5 +28,3 @@ Many of the participants became friends and are now trusted colleagues who offer
 The WLD training prepared me to navigate both the smooth sailing and turbulent waters that come with leadership at any school. Through dynamic teaching, engaging with unique presenters and invaluable artistic engagement, WLD candidates develop the skills they need to thrive in the vast and vital sea of Waldorf education.
 
 The next cycle of this mostly online program will start with an orientation session on Saturday, **May 11, 2024, from 3:00 pm to 4:15 pm EDT**. [Click here our website for details about the registration.](https://centerforanthroposophy.org/programs/waldorf-administration-and-leadership-development-program/)
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-autumn-2023)

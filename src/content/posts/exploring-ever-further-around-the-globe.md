@@ -43,5 +43,3 @@ Each Explorations class session offers 30 minutes of artistic activity – euryt
 The 2023-2024 Explorations program, now launched, is well underway. However, this online program is offered every year; a new cycle will begin in March 2024. All are welcome!
 
 [For details of this program, visit our website by clicking here or the image below.](https://centerforanthroposophy.org/programs/exploration-online/)
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-spring-2023)

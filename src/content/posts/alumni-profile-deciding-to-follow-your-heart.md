@@ -39,5 +39,3 @@ Again, it was one of her children who guided her. “My daughter, who was finish
 Today, Ruth continues her work supporting people on their life’s journey, having taken her role as a teacher and a mentor to another level in what she calls “soul coaching.” Through her own brand of life design coaching, she is working to support people in their own threshold moments by helping them listen to their hearts and connect with their own brightest destinies.
 
 Contact Information: [ruth@rutholsoncoaching.com](mailto:ruth@rutholsoncoaching.com)
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-autumn-2023)

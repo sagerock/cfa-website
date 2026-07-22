@@ -90,5 +90,3 @@ Community Music and 4th of July Celebration
 **Everyone is Welcome! **
 
 Renewal Courses offer professional development opportunities for Waldorf teachers, administrators, parents, trustees, artists, and thinkers seeking to enrich their lives through anthroposophy. Week-long retreats consist of certificate-earning classes in grades teaching, school leadership, and a variety of courses in the arts designed to support independent and public Waldorf school communities. Led by a stellar line-up of instructors, Renewal Courses inspire innovative thinking and the opportunity to engage through the arts in a chosen educational field. I look forward to seeing you all this summer! [Click here to visit the Renewal Courses web page](https://centerforanthroposophy.org/programs/renewal-2023/).
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2023)

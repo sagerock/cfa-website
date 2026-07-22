@@ -38,5 +38,3 @@ Watercolor Exploration, from Nature and the Soul. Case Studies. Platonic Solids.
 **Emergency Pedagogy: Trauma and Spirituality with Bernd Ruf, followed by afternoon trauma preventative therapies.
 
 Kairos Institute is planning a second healing track starting in 2025, with a focus on Animal Therapy. Brian Jacques, who is presently writing his thesis on this topic, has been asked to lead this track.
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-autumn-2023)

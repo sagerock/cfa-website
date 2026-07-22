@@ -36,5 +36,3 @@ We truly believe the best days of Waldorf education and Waldorf high schools are
 ***
 
 **Living Thinking with Michael D’Aleo**
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-fall-2022)

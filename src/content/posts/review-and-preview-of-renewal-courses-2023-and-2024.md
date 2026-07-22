@@ -70,5 +70,3 @@ With good wishes for a wonderful year ahead,
 Karen Atkinson
 
 Director of Renewal Courses
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-autumn-2023)

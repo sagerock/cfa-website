@@ -2,53 +2,11 @@
 title: "Karmic Leadership"
 slug: "karmic-leadership"
 date: "2025-12-18"
-excerpt: "WINTER 2025-2026 In This Edition... The “Dramatic” Question: Cultural Appropriation or Cultural Appreciation? Read More » Keeping Ideals Intact: A Waldorf Teacher’s Forty-Year Perspective by David…"
-cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
+excerpt: "WINTER 2025-2026 by Torin M Finser In the context of current events in 2025, our collective images of leadership are perhaps more conflicted than ever. Yet this situation can also provide an…"
+cover: "/images/posts/814e688cf5-finsersmall.jpg"
 ---
 
-![Center & Periphery Logo](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)
-
 WINTER 2025-2026
-
-### In This Edition...
-
-**[The “Dramatic” Question: Cultural Appropriation or Cultural Appreciation?](/news/the-dramatic-question-cultural-appropriation-or-cultural-appreciation)**
-
-[Read More »](/news/the-dramatic-question-cultural-appropriation-or-cultural-appreciation)
-
-**[Keeping Ideals Intact: A Waldorf Teacher’s Forty-Year Perspective by David Sloan](/news/keeping-ideals-intact-a-waldorf-teachers-forty-year-perspective-by-david-sloan)**
-
-[Read More »](/news/keeping-ideals-intact-a-waldorf-teachers-forty-year-perspective-by-david-sloan)
-
-**[WHiSTEP: Meeting a Changing World with Courage and Humanity](/news/whistep-meeting-a-changing-world-with-courage-and-humanity)**
-
-[Read More »](/news/whistep-meeting-a-changing-world-with-courage-and-humanity)
-
-**[Interview Questions for John Reinhart ~ Antioch Alum & Waldorf High School Teacher](/news/interview-questions-for-john-reinhart-antioch-alum-waldorf-high-school-teacher)**
-
-[Read More »](/news/interview-questions-for-john-reinhart-antioch-alum-waldorf-high-school-teacher)
-
-### [The Birth of Camphill Academy Afrika:](/news/the-birth-of-camphill-academy-afrika)
-
-[Read More »](/news/the-birth-of-camphill-academy-afrika)
-
-### [Demystifying Differentiation](/news/demystifying-differentiation)
-
-[Read More »](/news/demystifying-differentiation)
-
-### [From Building Bridges](/news/from-building-bridges)
-
-[Read More »](/news/from-building-bridges)
-
-### [Karmic Leadership](/news/karmic-leadership)
-
-[Read More »](/news/karmic-leadership)
-
-### [Message from the Executive Director](/news/message-from-the-executive-director-2)
-
-[Read More »](/news/message-from-the-executive-director-2)
-
-# Message from the Executive Director
 
 *by Torin M Finser*
 
@@ -91,9 +49,3 @@ Originally published by AWSNA. *School Renewal*, Fall 2026
 ![Portrait of Torin Phinser](/images/posts/814e688cf5-finsersmall.jpg)
 
 **Torin M Finser**, PhD attended Waldorf Schools as a child, earned a BA from Bowdoin College (summa cum laude) and a MA from Adelphi University with a Waldorf certificate, and later earned his PhD in Leadership Development from Union College. A former class teacher, he has served as Waldorf Teacher Training Director and Education Dept Chair at Antioch University, General Secretary of the Anthroposophical Society, and founding member of CfA. He is the author of 16 books, including *Listening to our Teachers* published in 2024. Torin and his wife Karine have six children and nine grandchildren.
-
-Spring/Summer 2022
-
-## Sign up to receive our Center & Periphery Newsletter!
-
-You’ll receive the newsletter via e-mail.

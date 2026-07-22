@@ -20,5 +20,3 @@ In fellowship,
 Diana Tesni
 
 Chair of the Abbot Hill Alumni Group’s Leadership Team
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-autumn-2023)

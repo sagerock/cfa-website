@@ -34,5 +34,3 @@ I arrived in Dar es Salaam on Friday, September 8, and was given a tour of the s
 Janet and I wrapped up our work for the week by outlining some projects for the future, and then her family took me on a one-day safari so I could experience some of the wonders of their beautiful country. I left after ten days with a heart full of hope for the future and gratitude for what is being accomplished for these children.
 
 Feel free to contact me for more information about this thriving venture: [ccomey@antioch.edu](mailto:ccomey@antioch.edu)
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-autumn-2023)

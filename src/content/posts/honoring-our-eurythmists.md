@@ -56,5 +56,3 @@ Those who still wish to recognize a currently practicing eurythmist, or who have
 Secure donations can be made on CfA’s website by clicking [here](https://web.cvent.com/event/fe3e310f-685f-40d9-806e-04ff5e3cabd1/summary).
 
 We urge you to join in this effort to support the quality of the arts in teacher education!
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-winter-2023)

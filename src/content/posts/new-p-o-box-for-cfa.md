@@ -27,5 +27,3 @@ P.O. Box 15
 McMinnville, TN 37111 **
 
 Office phone number (603) 654-2566, and email address [info@centerforanthroposophy.org](mailto:info@centerforanthroposophy.org) remain unchanged, as do our “home bases” in New Hampshire for our fall and spring residencies in Keene, NH, and our summer programs in Wilton, NH.
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-autumn-2023)

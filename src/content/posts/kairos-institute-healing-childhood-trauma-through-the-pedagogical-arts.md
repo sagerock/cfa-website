@@ -62,5 +62,3 @@ At the end of our week together, the speech and drama students offered a perform
 **Accepting New Students until Summer 2023**
 
 Kairos is now accepting new students interested in joining us in Wilton, New Hampshire, this summer and who are dedicated to continue training online in the fall through classes and studios with Michaela Gloeckler, Patrick Stolfo, Torin Finser, Orland Bishop, Charles Andrade, Gleice da Silva, Debbie Spitulnik, Christine Burke, Dietrich von Bonin, and Karine Munk Finser. (Some classes and studios are reserved for Speech/Art Therapy students only.) Online classes and studios will resume in the fall/winter of 2023-2024, leading to a further short residency in the spring of 2024. The summer residency for 2024 will meet in early July, with no online classes during that week. No further students will be accepted into this initial cycle of the program after the July 2023 summer residency. [Click here for more information and to register.](https://centerforanthroposophy.org/programs/kairos-institute/)
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-spring-2023)

@@ -26,5 +26,3 @@ Warmly,
 *Chair, Abbot Hill Alumni Leadership Group:
 
 Bev Boyer, Betsi McGuigan, Robyne Plaga, Sam Wasko, Baruch Simon, Laura Beatty
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-spring-2023)

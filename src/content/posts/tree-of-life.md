@@ -2,57 +2,9 @@
 title: "Tree of Life"
 slug: "tree-of-life"
 date: "2025-09-29"
-excerpt: "FALL 2025 In This Edition... Message from the Executive Director Read More » Message from Torin Finser, Development Director Read More » Alumni Profiles from WHiSTEP Class of 2025 & Antioch Class of…"
+excerpt: "Diaan Tesni by Diana Tesni In June I completed a two year cycle as a class teacher at Meadowbrook Waldorf School in Rhode Island, where I led a group of children through the second and third grade…"
 cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
 ---
-
-![Center & Periphery Logo](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)
-
-FALL 2025
-
-### In This Edition...
-
-### [Message from the Executive Director](/news/message-from-the-executive-director)
-
-[Read More »](/news/message-from-the-executive-director)
-
-**[Message from Torin Finser, Development Director](/news/message-from-torin-finser-development-director)**
-
-[Read More »](/news/message-from-torin-finser-development-director)
-
-**[Alumni Profiles from WHiSTEP Class of 2025 & Antioch Class of 2025](/news/alumni-profiles-from-whistep-class-of-2025-antioch-class-of-2025)**
-
-[Read More »](/news/alumni-profiles-from-whistep-class-of-2025-antioch-class-of-2025)
-
-### [Tree of Life](/news/tree-of-life)
-
-[Read More »](/news/tree-of-life)
-
-### [Kairos: Healing in a World of Need](/news/kairos-healing-in-a-world-of-need)
-
-[Read More »](/news/kairos-healing-in-a-world-of-need)
-
-**[Wisdom into Practice: Mentor Training for Waldorf Educators](/news/wisdom-into-practice-mentor-training-for-waldorf-educators)**
-
-[Read More »](/news/wisdom-into-practice-mentor-training-for-waldorf-educators)
-
-**[David Sloan Keynote Introduction/Sunday, July 27, 2025](/news/david-sloan-keynote-introduction-sunday-july-27-2025)**
-
-[Read More »](/news/david-sloan-keynote-introduction-sunday-july-27-2025)
-
-### [Welcome Jacob Gerber & Nathan Wilcox](/news/welcome-jacob-gerber-nathan-wilcox)
-
-[Read More »](/news/welcome-jacob-gerber-nathan-wilcox)
-
-### [Interview with Sage Lewis](/news/interview-with-sage-lewis)
-
-[Read More »](/news/interview-with-sage-lewis)
-
-**[In Light of the Spirit: A New Anthology of Essays by John F. Gardner on Waldorf Education and Social Reform](/news/in-light-of-the-spirit-a-new-anthology-of-essays-by-john-f-gardner-on-waldorf-education-and-social-reform)**
-
-[Read More »](/news/in-light-of-the-spirit-a-new-anthology-of-essays-by-john-f-gardner-on-waldorf-education-and-social-reform)
-
-# In Light of the Spirit: A New Anthology of Essays by John F. Gardner on Waldorf Education and Social Reform
 
 Diaan Tesni
 
@@ -99,9 +51,3 @@ In the day-to-day busyness of teaching, it can be easy to get drawn away from ou
 I encourage them to step back and connect to their roots by asking the question “Why?” Why are you here? Why are you a Waldorf Teacher? “Why” connects us to our purpose. To craft an authentic Purpose Statement that answers this question “why?” we need to reach out into that living soil of ideas, inspiration, and spirit and tap into what wants to come into being from there.
 
 So to nurture this bridge, this connection between “roots and fruits,” I invite you to check in with that image of a tree that you imagined earlier. We can call this your “Why Tree” – it represents something that your subconscious is showing you about your purpose or your pattern or where you are today. May this centering image of a tree of life, which is often shown with branches and roots intertwined, refresh, nourish, and support your teaching work in the coming year.
-
-Spring/Summer 2022
-
-## Sign up to receive our Center & Periphery Newsletter!
-
-You’ll receive the newsletter via e-mail.

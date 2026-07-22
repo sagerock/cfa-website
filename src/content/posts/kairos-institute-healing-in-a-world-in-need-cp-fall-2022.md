@@ -84,5 +84,3 @@ with Karine Munk Finser**
 **Trauma Preventative Therapies with **
 
 **Connie Helms and Laura Geilen**
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-fall-2022)

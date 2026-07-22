@@ -91,5 +91,3 @@ Our new instructors joined returning faculty Paul Gierlach (History), Michael Ho
 Self-transformation awaits!
 
 WHiSTEP Teaching Faculty of Summer 2023
-
-[Center & Periphery Home >](/news/center-periphery-newsletter-autumn-2023)
