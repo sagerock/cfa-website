@@ -122,3 +122,13 @@ Backend moved from the borrowed ai-engagement-hub to the **Email Marketing Tool*
 - Security: enabled RLS on 4 exposed Cvent tables in this project (was off → anon-readable).
 - Spam note: the contact endpoint is public and writes to production contacts (honeypot + email
   validation only) — add rate-limit/Turnstile before real launch; junk is filterable by source_code='website'.
+
+## 2026-07-22 — Analytics/leads dashboard (/dashboard)
+One-screen owned-analytics view — the thing CfA needs but Google Analytics never gave them
+(they don't understand GA). Summary tiles (pageviews / visits / CTA clicks / leads + a
+visit→lead rate), a 30-day daily-traffic bar chart (single brand-green series, hover tooltips),
+top pages, and recent leads. Data via `public.cfa_dashboard_stats()` (jsonb, one call) behind a
+token-gated `cfa-stats` edge function; **lead emails are masked server-side** before leaving.
+Page is `noindex` + unlinked; the token lives only in the URL hash (viewer supplies it, never
+baked into the built page). PoC token is a constant in the cfa-stats function (rotate by
+redeploy); productionize with a per-user login. URL: `/dashboard#<token>`.
