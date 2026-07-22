@@ -10,19 +10,15 @@ order: 3
 
 ### Become the Educator Adolescents Remember!
 
-**[Click Here To Learn About Our Upcoming Meet and Greet](/files/db2578c05a-february-meet-greet-high-school.pdf)**
+**[Click Here To Learn About Our Upcoming Meet and Greet](/files/db2578c05a-february-meet-greet-high-school.pdf)
 
-**We joyfully celebrate and honor your commitment to advancing Waldorf pedagogy with purpose. Apply now for an opportunity to attend the first summer residency in 2026 and 100% tuition-free!**
+**We joyfully celebrate and honor your commitment to advancing Waldorf pedagogy with purpose. Apply now for an opportunity to attend the first summer residency in 2026 and 100% tuition-free!
 
-[
-
-Explore
-
-](/programs/waldorf-high-school-teacher-education/tuition/)
+[Explore](/programs/waldorf-high-school-teacher-education/tuition/)
 
 ## Where Pedagogy Meets Purpose
 
-**Over 230 high school teachers across North America and beyond have successfully completed our program, earning their Waldorf Teacher Credentials.**
+**Over 230 high school teachers across North America and beyond have successfully completed our program, earning their Waldorf Teacher Credentials.
 
 Since 1996, practicing and aspiring Waldorf high school teachers have turned to our Waldorf High School Teacher Education Program to deepen their understanding and mastery of this vocation and receive their Graduate-level teaching credentials.
 
@@ -32,19 +28,13 @@ This certificate is recognized by ASWNA and Waldorf high schools across the glob
 
 Experienced Instructors
 
-** **
-
 Our team of seasoned high school faculty draws upon the proven track record of Waldorf pedagogy and practices. At the same time, they adapt their courses each year to meet today’s changing societal environment and the needs of today’s teenagers.
 
 Low-Residency and Online Format
 
-** **
-
 As a part-time, graduate-level, low-residency program, WHiSTEP is held over three consecutive Julys. In addition to three summer intensives, trainees undertake two years of independent studies including a research project and internship in a Waldorf high school.
 
 Who Should Apply
-
-** **
 
 - High school teachers wishing to enrich their Waldorf preparation
 
@@ -53,8 +43,6 @@ Who Should Apply
 - Practicing educators
 
 Before You Attend, You'll Need
-
-** **
 
 - A University degree or equivalent diploma
 
@@ -67,8 +55,6 @@ Before You Attend, You'll Need
 *These foundational studies are prerequisite so that applicants come ready to engage in focused study pertaining specifically to the goals, challenges, and responsibilities of high school teachers
 
 As a Student, You'll Experience
-
-** **
 
 - Fundamental ideas of the threefold social organism that underlie Waldorf education
 
@@ -84,8 +70,6 @@ As a Student, You'll Experience
 
 Credentials and Career Outlook
 
-** **
-
 Upon successful completion of the program, you’ll receive a Certificate in Waldorf High School Teacher Education recognized at any Waldorf school around the world.
 
 Since its founding, CfA (including its high school program) has been a full member of the Association of Waldorf Schools of North America (AWSNA).
@@ -94,37 +78,23 @@ With more than 150 AWSNA member Waldorf schools in North America (37 high school
 
 Application Process, Tuition, and Financial Aid
 
-** **
-
-**[Enrollment Process](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/enrollment-process/)**
+**[Enrollment Process](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/enrollment-process/)
 
 #### [TUITION](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/tuition/)
 
-**[Payment Plans](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/tuition/payment-plans/)**
+**[Payment Plans](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/tuition/payment-plans/)
 
-**[Tuition Assistance](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/tuition/tuition-assistance/)**
+**[Tuition Assistance](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/tuition/tuition-assistance/)
 
-**[Waldorf Fellowships](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/tuition/tuition-assistance/waldorf-fellowships/)**
+**[Waldorf Fellowships](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/tuition/tuition-assistance/waldorf-fellowships/)
 
 And when you’re ready…
 
-[
+[APPLY HERE!](https://centerforanthroposophy.org/application-to-the-waldorf-high-school-teacher-education-program/)
 
-APPLY HERE!
+[APPLY HERE](/application-to-the-waldorf-high-school-teacher-education-program/)
 
-](https://centerforanthroposophy.org/application-to-the-waldorf-high-school-teacher-education-program/)
-
-[
-
-APPLY HERE
-
-](/application-to-the-waldorf-high-school-teacher-education-program/)
-
-[
-
-REGISTER FOR SUMMER RESIDENCY
-
-](https://courses.centerforanthroposophy.org/courses/whistep-intro-summer-residency-2025)
+[REGISTER FOR SUMMER RESIDENCY](https://courses.centerforanthroposophy.org/courses/whistep-intro-summer-residency-2025)
 
 Waldorf High School Teacher Education Program
 
@@ -132,11 +102,7 @@ Meet & Greet 2024
 
 Join David Barham, Director of the Center for Anthroposophy’s Waldorf High School Teacher Education program, to discover how this unique program deepens the understanding and mastery of high school teachers as they help prepare adolescents for life through their work in the curriculum, classroom and wider community.
 
-!
-
 READ MORE
-
-** **
 
 Program enrolls now for summer 2025 (class of 2027)!
 
@@ -146,19 +112,13 @@ Zoom Session: Tuesday November 12, 2024
 
 7:00-8:00 P.M. EDT
 
-[
-
-REGISTER NOW!
-
-](mailto:david@centerforanthroposophy.org)
+[REGISTER NOW!](mailto:david@centerforanthroposophy.org)
 
 Attend our Virtual* Open-House: Discover and Explore*** on *Wednesday May 6 from 6:00-6:45 PM EDT*** to discover how our unique program can deepen your study, mastery, and meet you at your path for class of 2028, beginning this summer 2026.
 
-**Register: [HERE](https://lp.constantcontactpages.com/ev/reg/ybbcyf8)**
+**Register: [HERE](https://lp.constantcontactpages.com/ev/reg/ybbcyf8)
 
 ![Portrait of David Barham](/images/0ad3ab8b39-david-barham-portrait-300x300.webp)
-
-[ ](#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjI0MDEzIiwidG9nZ2xlIjpmYWxzZX0%3D)
 
 David Barham
 
@@ -166,15 +126,11 @@ Waldorf High School Teacher Education Program, Director
 
 Center for Anthroposophy, Executive Director
 
-[
+[Read Faculty Bios](https://centerforanthroposophy.org/about/faculty/#highschool)
 
-Read Faculty Bios
+Contact David directly with questions about the program.
 
-](https://centerforanthroposophy.org/about/faculty/#highschool)
-
-****Contact David directly with questions about the program.
-
-**Book your Clarity Call! Take the First Step toward teaching, with Clarity. In just one conversation, you’ll receive a clear, personalized breakdown of your tuition, funding options, and monthly plan—so you can move forward with confidence. Whether you’re deepening your path or changing direction, we’ll help you understand the transformational and financial pathway forward.**
+**Book your Clarity Call! Take the First Step toward teaching, with Clarity. In just one conversation, you’ll receive a clear, personalized breakdown of your tuition, funding options, and monthly plan—so you can move forward with confidence. Whether you’re deepening your path or changing direction, we’ll help you understand the transformational and financial pathway forward.
 
 [
 
@@ -190,13 +146,11 @@ Read Faculty Bios
 
 Curriculum Modules
 
-** **
-
 ### Module 1: Summer I (July 2026)
 
 ##### **Two weeks in-person at scenic Southern New Hampshire
 
-(July 11 – 26)**
+(July 11 – 26)
 
 ###### with leading high school teachers in six specialized subjects:
 
@@ -268,7 +222,7 @@ Includes one-week course in Waldorf Leadership Development (WLD) with Torin Fins
 
 ### Module 6: Research Project
 
-**In general, the research project should help the student form a more living relationship to the high school curriculum and the classroom. It should also allow one to undertake something new and original in one’s chosen field. In this respect the research project is more than just a report or a research paper.**
+**In general, the research project should help the student form a more living relationship to the high school curriculum and the classroom. It should also allow one to undertake something new and original in one’s chosen field. In this respect the research project is more than just a report or a research paper.
 
 ###### Components
 
@@ -280,11 +234,7 @@ The research project includes these three components:
 
 - a written paper, complete with an annotated bibliography of all sources used
 
-[
-
-RESIDENCY ROOM & BOARD INFORMATION
-
-](/programs/summer-housing-meals)
+[RESIDENCY ROOM & BOARD INFORMATION](/programs/summer-housing-meals)
 
 ## What our students say
 
@@ -342,30 +292,20 @@ The instructor was clearly prepared but also flexible to the spontaneity of the 
 
 I appreciated the way the instructor was able to both keep us on track and let us derail and explore off the track when a question took us on an exploration. I also appreciated observing how he would, after a while, gently redirect us back onto the track.
 
-!
-
 **[The instructor kept] us on track and let us derail and explore off the track when a question took us on an exploration** (Human Development)
 
 I appreciated the space we gave this year to talking about making new curriculum decisions and the questions we need to consider in doing this. I feel better prepared to make these decisions moving forward.
-
-!
 
 **I appreciated the space...** Heather Lomason, WHiSTEP Class of 2023
 
 The instructor is a pro: practical and inspiring. He structures his classes in a way that requires students to bring their best. He brings great resources that teachers can use in their classrooms immediately.
 
-!
-
 **[The instructor] brings great resources that teachers can use in their classrooms immediately** (English)
 
 The instructor wove a tapestry of thinking feeling willing that provided an experiential gateway to the philosophy of Anthroposophy. Cedar has an amazing ability to bend time.
 
-!
-
 **...an experiential gateway to the philosophy of Anthroposophy** (Living Thinking)
 
 It was disorienting at times, but I feel I needed it to grow.
-
-!
 
 **I needed it to grow.** (Drama)

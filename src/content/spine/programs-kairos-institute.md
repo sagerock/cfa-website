@@ -8,11 +8,9 @@ order: 5
 
 ### Healing in a World of Need
 
-**KAIROS LINKS**
+**KAIROS LINKS
 
-****
-
-**Kairos Institute offers courses and programs for the general public and more immersive career oriented programs in artistic therapy and trauma pedagogy training.**
+**Kairos Institute offers courses and programs for the general public and more immersive career oriented programs in artistic therapy and trauma pedagogy training.
 
 Public Welcome
 
@@ -26,11 +24,7 @@ with Bernd Ruf
 
 Read Course Information
 
-** **
-
 Traumatology Module 7: Emergency Pedagogy: Addressing Major Natural and Human-made Disasters through Healing Communities and Animal-Assisted Therapy Interventions *with Bernd Ruf*
-
-** **
 
 Online
 
@@ -42,11 +36,11 @@ This module examines how catastrophes, such as floods, earthquakes, fires, and h
 
 #### Schedule
 
-**Friday, September 18, 2026**
+**Friday, September 18, 2026
 
 - 2:00 – 3:30 PM EST: “Major Incidents”
 
-**Saturday, September 19, 2026**
+**Saturday, September 19, 2026
 
 - 9:00-10:30 AM EST: “Pandemic Trauma”
 
@@ -56,9 +50,7 @@ This module examines how catastrophes, such as floods, earthquakes, fires, and h
 
 - 3:15-4:00 PM EST: Closing Plenary Session: 21:15 – 22:00
 
-**Bernd Ruf**
-
-!
+**Bernd Ruf
 
 Presenter, Founder of Parzival School & Emergency Pedagogy
 
@@ -70,8 +62,6 @@ Author of Educating Traumatized Children, Bernd Ruf is the founder of the worldw
 
 Free Introduction to 4-year Art Therapy Training
 
-** **
-
 Sunday September 6, 1:30 EDT
 
 Free online session
@@ -82,19 +72,15 @@ If you are interested in a vocational training in Art Therapy (painting, clay, a
 
 Kairos Celebratory Convocation *with Peter Selg*
 
-** **
-
 Sept 13, 2026, 1:30 PM EST
 
 **The Mystery of the Heart. Ita Wegman and Rudolf Steiner
 
-****Overview of Kairos: 2026-27**
+Overview of Kairos: 2026-27
 
 Fee: $30
 
-!
-
-** Peter Selg**
+** Peter Selg
 
 Peter Selg studied medicine in Witten-Herdecke, Zurich, and Berlin and, until 2000, worked as the head physician of the juvenile psychiatry department of Herdecke Hospital in Germany.
 
@@ -102,27 +88,25 @@ Dr. Selg is director of the Ita Wegman Institute for Basic Research into Anthrop
 
 Understanding the Organic and Psychospiritual Basis of Mental Health from an Anthroposophic Perspective *with Dr. James Dyson*
 
-** **
-
-**Seminar 1: Mysteries of Embodiment. Two Streams of Incarnations**
+**Seminar 1: Mysteries of Embodiment. Two Streams of Incarnations
 
 Saturday, September 26, 2026
 
 3:00 – 5:00 PM EST
 
-**Seminar 2: Attachment Dynamics and Personality Structure**
+**Seminar 2: Attachment Dynamics and Personality Structure
 
 Saturday, October 24, 2026
 
 3:00 – 5:00 PM EST
 
-**Seminar 3: Organology – Planetary Qualities and the Ethers in Relation to the Threefold Nature of the Human Soul**
+**Seminar 3: Organology – Planetary Qualities and the Ethers in Relation to the Threefold Nature of the Human Soul
 
 Saturday, October 31, 2026
 
 3:00 – 5:00 PM EST
 
-**Seminar 4: Developmental and Spiritual Challenges of our Times. Understanding the Separation of the Three Soul Forces and Encountering the Guardian of the Threshold**
+**Seminar 4: Developmental and Spiritual Challenges of our Times. Understanding the Separation of the Three Soul Forces and Encountering the Guardian of the Threshold
 
 Saturday, November 7, 2026
 
@@ -130,9 +114,7 @@ Saturday, November 7, 2026
 
 Fee: $350 (4 Seminars, 2 hours each)
 
-**James Dyson, M.D.**
-
-!
+**James Dyson, M.D.
 
 Dr. James A. Dyson first trained as a medical doctor in London University and went on to study anthroposophic medicine at Emerson College, Camphill Schools, Aberdeen and in hospitals in Germany. In 1979, he co-founded Park Attwood Clinic, a residential medical facility in the UK, where he practiced for 25 years. He also worked as a school doctor, both in mainstream Waldorf Schools and schools and communities for adults and children with special needs. In 2008, he completed a five-year program in Applied Psychosynthesis at the Institute of Psychosynthesis, London, for which he was later awarded a Masters’ degree in Psychosynthesis Psychology from Middlesex University.
 
@@ -140,9 +122,7 @@ James has lectured over several decades in a very wide range of international an
 
 The Bridge Lectures: Enthusiasm as Warmth to Counter the Cold of our Times Salutogenesis and the Power of Human Love *with Dr. Michaela Glöckler*
 
-** **
-
-**Seminar 1**
+**Seminar 1
 
 Sunday, January 24, 2027
 
@@ -162,9 +142,7 @@ Sunday, January 24, 2027
 
 Fee: $350 (6 Seminars, 1 1/2 hour each)
 
-**Dr. Michaela Glöckler, M.D.**
-
-!
+**Dr. Michaela Glöckler, M.D.
 
 Michaela Glöckler, M.D., a graduate of the original Waldorf school in Stuttgart, Germany, studied history and German in Freiburg and Heidelberg and medicine in Tübingen and Marburg while engaging in her own study of anthroposophy. After further training as a pediatrician and adolescent physician at the Community Hospital in Herdecke and the University Hospital in Bochum, she launched her career as pediatrician as well as school doctor in a Waldorf school. From 1988 to 2016 she served as Head of the Medical Section at the Goetheanum (Dornach/Switzerland). These years included deep involvement in lecturing activities and the training of physicians (IPMT) at home and abroad. She is co-founder of the Alliance for Childhood and the European Alliance of Initiatives for Applied Anthroposophy/ELIANT ([www.eliant.eu](http://www.eliant.eu/)).
 
@@ -176,25 +154,9 @@ Publications in English: *Guide to Child Health, The Dignity of the Young Child,
 
 IMMERSIVE PROGRAMS
 
-[
+[## Training in Art Therapy Students are trained in the Collot approach to painting therapy, developed by Liane Collot d'Herbois, with an emphasis on working with children, youth, and adults. The training prepares students for a healing encounter with the living qualities of color, which can directly harmonize soul processes. Grounded in anthroposophical medicine, painting therapy addresses the human organism’s innate capacity for self-healing. Through this training, therapists learn to strengthen and support the self-regulating forces that foster resilience. Learn more & REGISTER](/programs/kairos-institute/training-in-art-therapies/)
 
-## Training in Art Therapy
-
-Students are trained in the Collot approach to painting therapy, developed by Liane Collot d'Herbois, with an emphasis on working with children, youth, and adults. The training prepares students for a healing encounter with the living qualities of color, which can directly harmonize soul processes. Grounded in anthroposophical medicine, painting therapy addresses the human organism’s innate capacity for self-healing. Through this training, therapists learn to strengthen and support the self-regulating forces that foster resilience.
-
-Learn more & REGISTER
-
-](/programs/kairos-institute/training-in-art-therapies/)
-
-[
-
-## Training in Trauma Pedagogy and Healing Education
-
-Featuring training in Trauma Pedagogy under the guidance of Bernd Ruf and trained healing therapists.
-
-LEARN MORE & Register
-
-](/programs/kairos-institute/kairos-institute-emergency-pedagogy/)
+[## Training in Trauma Pedagogy and Healing Education Featuring training in Trauma Pedagogy under the guidance of Bernd Ruf and trained healing therapists. LEARN MORE & Register](/programs/kairos-institute/kairos-institute-emergency-pedagogy/)
 
 ## More about Kairos Institute
 
@@ -222,35 +184,19 @@ A renowned international faculty contributes to making Kairos a vibrant school o
 
 For questions and more info on our programs, contact Karine today!
 
-!
+**Karine Munk Finser
 
-**Karine Munk Finser**
-
-**Director**
+**Director
 
 **INQUIRE
 
-[
-
-READ MORE KAIROS NEWS
-
-](https://centerforanthroposophy.org/kairos-news/)
+[READ MORE KAIROS NEWS](https://centerforanthroposophy.org/kairos-news/)
 
 Donations are gratefully accepted to support the Kairos students scholarship fund.
 
-[
+[DONATE TO KAIROS](https://centerforanthroposophy.org/programs/kairos-institute-donate/)
 
-DONATE TO KAIROS
-
-](https://centerforanthroposophy.org/programs/kairos-institute-donate/)
-
-[
-
-TUITION INFORMATION
-
-](https://centerforanthroposophy.org/kairos/kairos-institute-tuition/)
-
-****
+[TUITION INFORMATION](https://centerforanthroposophy.org/kairos/kairos-institute-tuition/)
 
 ## Financial Aid
 
@@ -276,14 +222,6 @@ Second Crisis intervention under the direction and guidance of Bernd Ruf, Alicia
 
 ](/images/10113faecd-d2068b54-eede-4ade-9975-0704dcc83a37.jpeg)
 
-[
+[VIEW MORE PHOTOS](#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjQxODY0IiwidG9nZ2xlIjpmYWxzZX0%3D)
 
-VIEW MORE PHOTOS
-
-](#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjQxODY0IiwidG9nZ2xlIjpmYWxzZX0%3D)
-
-[
-
-READ TEAM REPORT
-
-](/files/702fa2195f-ep-kairos-crisis-intervention-asheville-2024.pdf)
+[READ TEAM REPORT](/files/702fa2195f-ep-kairos-crisis-intervention-asheville-2024.pdf)

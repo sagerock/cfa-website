@@ -6,7 +6,7 @@ slug: becoming-a-waldorf-teacher
 order: 2
 ---
 
-**Our programs encourage an environment of individual creativity and learning. Plus we offer a beautiful summer campus, the option of vegetarian meals, and scholarship assistance.**
+**Our programs encourage an environment of individual creativity and learning. Plus we offer a beautiful summer campus, the option of vegetarian meals, and scholarship assistance.
 
 - ***Becoming a Waldorf teacher requires a willingness to learn–and so to teach–in an entirely new way***. Rather than teaching students familiar answers, a Waldorf educator teaches them to ask unfamiliar questions. Instead of teaching from concepts to experiences or examples of these concepts–for instance, from rule of grammar to examples of the rule, or from a principle of physics to evidence of this principle in the lab–the Waldorf educator teaches the other way around: from experience to concept. Sometimes this approach is called the “discovery method” of teaching, or a “phenomena-based education”. This approach to teaching may take longer, but its results last a life time.
 
@@ -18,19 +18,19 @@ order: 2
 
 - ***Becoming a Waldorf teacher requires an ability not only to teach through the arts but to teach artistically*** so that each lesson is not only beautifully crafted but authentic. Most Waldorf classes are conducted without reference to a textbook, though students read widely in primary sources.
 
-- ***To become a Waldorf teacher requires a warm sense of humor.***
+- ***To become a Waldorf teacher requires a warm sense of humor.
 
 - ***To become a Waldorf teacher requires special training*** — first in Foundation Studies in Anthroposophy and the Arts; then in early childhood, elementary, or high school Waldorf teacher training; finally in ongoing Waldorf refresher courses.
 
-**Rudolf Steiner, the founder of Waldorf education, once told the original circle of 12 teachers who inaugurated the first Waldorf school in Stuttgart, Germany that there were four conditions to becoming a Waldorf teacher:**
+**Rudolf Steiner, the founder of Waldorf education, once told the original circle of 12 teachers who inaugurated the first Waldorf school in Stuttgart, Germany that there were four conditions to becoming a Waldorf teacher:
 
-- ***A Waldorf teacher must be a person of initiative***
+- ***A Waldorf teacher must be a person of initiative
 
-- ***A Waldorf teacher must be interested in every facet of life***
+- ***A Waldorf teacher must be interested in every facet of life
 
-- ***A Waldorf teacher must never compromise with untruth***
+- ***A Waldorf teacher must never compromise with untruth
 
-- ***A Waldorf teacher must always be fresh, never sour.***
+- ***A Waldorf teacher must always be fresh, never sour.
 
 Rudolf Steiner
 
@@ -56,26 +56,13 @@ Earn a graduate-level teacher certification with this low-residency program. Cho
 
 ### Get in touch with us
 
-Fill out the form and we’ll get back to you shortly.
-
-!
+Have a question? [Contact us](/contact) and we’ll be in touch.
 
 ## Other ways to connect with us
 
-- [ ** ](https://www.facebook.com/Renewal3)
+- [Facebook](https://www.facebook.com/Renewal3)
 
-- [ ** ](https://www.youtube.com/user/CenterforAnthropos/videos)
+- [YouTube](https://www.youtube.com/user/CenterforAnthropos/videos)
 
-- [ ** ](https://www.instagram.com/centerforanthroposophy/)
-
-!
-
-Sign up for Our Newsletter
-
-** **
-
-[
-
-READ PAST NEWSLETTERS**
-
-](/news/)
+- [Instagram](https://www.instagram.com/centerforanthroposophy/)
+[READ PAST NEWSLETTERS](https://centerforanthroposophy.org/news/)

@@ -6,7 +6,7 @@ slug: summer-housing-meals
 order: 1
 ---
 
-**Summer 2026 Housing & Meals Registration Is now officially closed for the season! Thank you for your patronage and we look forward to seeing you next year!!**
+**Summer 2026 Housing & Meals Registration Is now officially closed for the season! Thank you for your patronage and we look forward to seeing you next year!!
 
 #### Welcome to CfA / Antioch University summer programs.
 
@@ -16,27 +16,27 @@ order: 1
 
 #### *Please note that the Village Housing is only available for female students this summer.
 
-****There is no more on-campus housing available in Week 1 – Renewal / Mentor Training week** – Please [email the office](milan@centerforanthroposophy.org) for the list of nearby community housing options, or to be put on the waitlist.**
+There is no more on-campus housing available in Week 1 – Renewal / Mentor Training week** – Please [email the office](milan@centerforanthroposophy.org) for the list of nearby community housing options, or to be put on the waitlist.
 
 ##### PLEASE READ THIS IMPORTANT UPDATE:
 
-**As we are getting closer to our summer programs opening date of June 28, 2026, we need to submit our room and board reservations together with payment to our hosts – the High Mowing School.**
+**As we are getting closer to our summer programs opening date of June 28, 2026, we need to submit our room and board reservations together with payment to our hosts – the High Mowing School.
 
-**Therefore, those already invoiced and booked must secure their booking by submitting their payment in full no later than June 15, after which date all unpaid bookings will become null and void.**
+**Therefore, those already invoiced and booked must secure their booking by submitting their payment in full no later than June 15, after which date all unpaid bookings will become null and void.
 
-**We will, however, continue to accept new reservations / bookings all the way till June 27 but with credit cards only. No checks!**
+**We will, however, continue to accept new reservations / bookings all the way till June 27 but with credit cards only. No checks!
 
-****Dorm reservations will be closed on June 27th and all meals will need to be purchased upon arrival using the self checkout kiosk in the dining hall.****
+Dorm reservations will be closed on June 27th and all meals will need to be purchased upon arrival using the self checkout kiosk in the dining hall.
 
 #### High Mowing School Dorms & Meal Plan Rates per Program
 
-**Program Name**
+**Program Name
 
 MentoringRenewalKairosAntioch YR 3 & WHiSTEP (3 weeks) TSHE WHiSTEP (2 weeks)Antioch YR 1&2 (2 weeks)
 
 **Program Dates**June 28-July 3June 28-July 3July 5-10July 5-26July 5-26July 11-26July 11-27
 
-**Dorm Rooms**
+**Dorm Rooms
 
 Single$292.00$292.00$292.00$876.00$876.00$584.00$584.00
 
@@ -46,7 +46,7 @@ Triple$191.00$191.00$191.00$573.00$573.00$382.00$382.00
 
 **Village Housing* (Female Students Only)**$174.00$174.00$174.00$522.00$522.00$348.00$348.00
 
-**Meal Plans**
+**Meal Plans
 
 Breakfasts @ $12 $60.00$60.00$60.00$228.00$228.00$168.00$168.00
 
@@ -60,7 +60,7 @@ All meals$260.00$260.00$260.00$966.50$966.50$706.50$706.50
 
 ##### Sample High Mowing Kitchen Menu (Subject to Variations)
 
-**Day 1**
+**Day 1
 
 **Breakfast:** Scrambled eggs/ turkey sausage /Oatmeal/ yogurt/ hard boiled eggs/ fresh cut fruit
 
@@ -70,7 +70,7 @@ All meals$260.00$260.00$260.00$966.50$966.50$706.50$706.50
 
 **Dinner: **Gazpacho / caprese sandwich / Mixed green salad / salad bar toppings
 
-**Day 2**
+**Day 2
 
 **Breakfast:** Scrambled eggs/ turkey sausage /Oatmeal/ yogurt/ hard boiled eggs/ fresh cut fruit
 
@@ -80,7 +80,7 @@ All meals$260.00$260.00$260.00$966.50$966.50$706.50$706.50
 
 **Dinner: **Chicken tortilla soup / veggie chili / Mixed green salad / salad bar toppings
 
-**Day 3: **
+**Day 3: 
 
 **Breakfast:** Scrambled eggs/ turkey sausage /Oatmeal/ yogurt/ hard boiled eggs/ fresh cut fruit
 
@@ -90,13 +90,7 @@ All meals$260.00$260.00$260.00$966.50$966.50$706.50$706.50
 
 **Dinner: **Miso soup / spring rolls / Soba noodle salad / Mixed green salad / salad bar toppings
 
-[
-
-MAKE YOUR RESERVATION HERE
-
-](https://cvent.me/YaMM7z)
-
-!
+[MAKE YOUR RESERVATION HERE](https://cvent.me/YaMM7z)
 
 [
 
@@ -142,7 +136,7 @@ Katherine C. Meyer, Head of School
 
 ### What is provided and what to bring:
 
-**The dorm rooms include:**
+**The dorm rooms include:
 
 Bed and Desk
 
@@ -156,7 +150,7 @@ Bath towel (not to be used as a pool towel)
 
 Overhead light
 
-**Additional items you may wish to include when packing:**
+**Additional items you may wish to include when packing:
 
 Desk lamp
 
@@ -170,15 +164,11 @@ Sunscreen
 
 Umbrella
 
-!
-
-[ ](/files/71d80031ed-hms-dorm-floor-plan2.pdf)
-
 Please click on the image above to access the full size pdf.
 
 Floor plans for illustration only. Rooms will be assigned by CfA Housing Coordinator.
 
-**VILLAGE HOUSING Village Housing is located on the right side of the Pine Hill Drive directly across Abbot Hill Road from High Mowing’s driveway. (¼ mile / 5 minute walk to main building at High Mowing)**
+**VILLAGE HOUSING Village Housing is located on the right side of the Pine Hill Drive directly across Abbot Hill Road from High Mowing’s driveway. (¼ mile / 5 minute walk to main building at High Mowing)
 
 [
 
@@ -192,21 +182,13 @@ Floor plans for illustration only. Rooms will be assigned by CfA Housing Coordin
 
 ](/images/03091bbad5-village3669-300x225-1.jpg)
 
-!
-
-[ ](/files/1485c0ccf7-childrens-village-map.pdf)
-
 [Click to access an enlargable pdf](/files/1485c0ccf7-childrens-village-map.pdf).
 
 ##### There are two separate buildings at the Village:
 
-[
+[MAKE YOUR RESERVATION HERE](https://cvent.me/YaMM7z)
 
-MAKE YOUR RESERVATION HERE
-
-](https://cvent.me/YaMM7z)
-
-**Building #9:**
+**Building #9:
 
 - 14 spaces / 2 rooms each with one bunk bed (2 spaces each room) / 1 room with 2 bunk beds (4 spaces) / 1 room with 3 bunk beds (6 spaces)
 
@@ -218,7 +200,7 @@ MAKE YOUR RESERVATION HERE
 
 - Comfortable common sitting space, area with school desks & blackboar
 
-**Building #11:**
+**Building #11:
 
 - 12 spaces / 1 room with 2 twin beds (2 spaces) / 1 room with 2 bunk beds (4 spaces) / 1 room with 3 bunk beds (6 spaces)
 
@@ -234,15 +216,11 @@ MAKE YOUR RESERVATION HERE
 
 ## Meals Calendar
 
-!
-
-[ ](/files/c6f9831cd5-july-2026-meals-calendar.pdf)Click the image for a printable PDF
+Click the image for a printable PDF
 
 ## Meal Times
 
-!
-
-[ ](/files/4c326381ec-2026-cfa-meal-times-2.pdf)Click the image for a printable PDF
+Click the image for a printable PDF
 
 ## Off-Campus Housing
 

@@ -18,11 +18,7 @@ order: 6
 
 Bring the wisdom of your teaching experience into a new role of service. This certificate-earning, high level training program offers comprehensive preparation in pedagogical mentoring, coaching, and professional evaluation. Through a focus on best practices, fresh perspectives, and innovative approaches, the Mentor Training Program equips you to meet these essential responsibilities with confidence and insight. As a graduate of this program, you will be prepared to offer mentorship, professional development, guidance, and evaluative support to a wide network of schools seeking assistance for their new and developing Waldorf educators.
 
-!
-
 Program Overview
-
-** **
 
 This low-residency, certificate-earning program is designed for experienced teachers who wish to deepen their skills in pedagogical mentoring, coaching, and appraisal. Over the course of ten months, participants will engage in a comprehensive training that strengthens personal capacities and prepares them to better support practicing teachers in Waldorf schools today.
 
@@ -32,8 +28,6 @@ The program begins on Saturday, January 24, 2026, and concludes on Saturday, Nov
 
 Who should attend
 
-** **
-
 - Experienced Waldorf educators seeking to strengthen their skills in pedagogical inspiration, mentoring, coaching, and professional development.
 
 - Teachers and leaders interested in cultivating the capacities needed to serve as internal mentors within their faculty and beyond.
@@ -41,8 +35,6 @@ Who should attend
 - Seasoned Waldorf educators and pedagogical chairs ready to bring their knowledge and experience to a higher level in service of the future of Waldorf education.
 
 Benefits for Schools
-
-** **
 
 Support your school’s growth by meeting teachers’ needs through effective pedagogical mentoring—an economical and sustainable way to provide in-house mentoring.
 
@@ -56,8 +48,6 @@ Foster a culture of collaboration, collegiality, and continuous learning among y
 
 Benefits for Individuals
 
-** **
-
 - Cultivate your capacity and confidence to serve as a mentor, coach, evaluator, and a pedagogical leader
 
 - Learn practical strategies for observation, feedback, communication, and conflict navigation
@@ -69,8 +59,6 @@ Benefits for Individuals
 - Join an international community of committed Waldorf coaches and mentors in 2026
 
 Just Imagine
-
-** **
 
 As you complete this program:
 
@@ -85,8 +73,6 @@ As you complete this program:
 - Your own professional path unfolds into deeper service, pedagogical leadership, and meaning.
 
 Independent Project
-
-** **
 
 As part of the program, participants will:
 
@@ -116,21 +102,9 @@ As part of the program, participants will:
 
 ## Interested to join in 2026?
 
-[
+[Program Registration](https://web.cvent.com/event/041b86d8-8cc4-47c5-9d7c-18fc70f76ca2/regProcessStep1:b7453440-5484-43f9-8e6e-0419a9855bc1)
 
-Program Registration
-
-](https://web.cvent.com/event/041b86d8-8cc4-47c5-9d7c-18fc70f76ca2/regProcessStep1:b7453440-5484-43f9-8e6e-0419a9855bc1)
-
-[
-
-Summer Residency Room & Board
-
-](/programs/summer-housing-meals)
-
-!
-
-[ ](#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjI0MDEzIiwidG9nZ2xlIjpmYWxzZX0%3D)
+[Summer Residency Room & Board](/programs/summer-housing-meals)
 
 Karen Atkinson
 
@@ -140,17 +114,11 @@ Director of Mentor Training
 
 **INQUIRE
 
-[
-
-Read Faculty Bios
-
-](https://centerforanthroposophy.org/about/faculty/#mentor)
+[Read Faculty Bios](https://centerforanthroposophy.org/about/faculty/#mentor)
 
 #### Click the program flier below to download it
 
 ![Mentor Training 2026 flier](/images/8a976045bd-mentor-training-ad-renewal-mag-75-by-475.webp)
-
-[ ](/files/d4f4c11005-mentor-training-ad-renewal-mag-7.5-by-4.75-1.pdf)
 
 [
 
@@ -164,7 +132,7 @@ Read Faculty Bios
 
 ## Course Curriculum
 
-**What you’ll explore**
+**What you’ll explore
 
 We’ll meet virtually once a month on Saturdays from 12:00-2:00 ET, 9:00-11:00 PT and for one week in-person during the summer, from June 28 – July 3, 2026
 
@@ -210,7 +178,7 @@ We’ll meet virtually once a month on Saturdays from 12:00-2:00 ET, 9:00-11:00 
 
 #### June 28 - July 3, 2026 In-Person
 
-**Presentations, Workshops, Artistic Engagement, and Working Groups on Circulating, Maintaining, and Growing in Correlation to Professional Development Practices**
+**Presentations, Workshops, Artistic Engagement, and Working Groups on Circulating, Maintaining, and Growing in Correlation to Professional Development Practices
 
 *with Carol Bärtges and Karen Atkinson*
 
@@ -240,25 +208,17 @@ Participants will engage in a Workshop on the Karmic Impact of Serving as a Lead
 
 Tuition
 
-** **
-
 Tuition for the 10-month program is **$2,600**. This fee includes all online sessions, workshops, and the week-long in-person intensive. (Travel and lodging for the in-person residency are not included.)
 
 Receive a 10% discount when 2 or more individuals from the same school register together.
 
 Contact us to receive a discount code.
 
-[
-
-CONTACT FOR DISCOUNT CODE
-
-](#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjQyOTE4IiwidG9nZ2xlIjpmYWxzZX0%3D)
+[CONTACT FOR DISCOUNT CODE](#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjQyOTE4IiwidG9nZ2xlIjpmYWxzZX0%3D)
 
 **Note:** Canadian citizens may claim their currency exchange rate adjustment discount at registration checkout.
 
 Prerequisites
-
-** **
 
 - Participants must meet the following requirements to register for this training:
 
@@ -272,72 +232,30 @@ For participants who are not currently teaching, please submit two letters of re
 
 Enrollment
 
-** **
-
-Given the high demand for this specialized professional development course and its interactive nature, enrollment places will be limited. ***Register now to secure your spot!***
+Given the high demand for this specialized professional development course and its interactive nature, enrollment places will be limited. ***Register now to secure your spot!
 
 Other Notes
-
-** **
 
 - **Financial Aid** – Limited scholarships available, please contact the program director using the contact form.
 
 - **Cancellations** – Requests received at least 30 days before the registration deadline will result in a full refund, less $100 cancellation fee. No refunds will be granted if cancellation is received within 30 days of the program start date or while in session.
 
-!
-
 Mentor Training graduates, summer 2024
 
 ## Testimonies from our Students
 
-[
-
-"The Mentor Training gave me confidence to ask the relevant questions, even when I don’t have all the answers.”
-
-****
-
-](#)
+["The Mentor Training gave me confidence to ask the relevant questions, even when I don’t have all the answers.”](#)
 
 “The monthly meetings and pedagogy were essential. I left feeling more knowledgeable, confident, and able to guide with encouragement rather than direction.”
 
-****
-
-[
-
-“This course gave me clarity and confidence in my role as pedagogical director—so grateful!”
-
-****
-
-](#)
+[“This course gave me clarity and confidence in my role as pedagogical director—so grateful!”](#)
 
 “I learned so much myself. The course, especially Sven’s insights, was tremendously helpful and showed me how mentoring supports the future of Waldorf education.”
 
-****
-
 "The mentor training program has been a wonderful opportunity for growth and exploration. It blends thorough, well-balanced content with interactive sessions alongside experienced colleagues. I have been seeking the next step to support Waldorf education, and I have found it. "
 
-****
+["Mentoring is a work of trust and care. The program at Center for Anthroposophy has given me a telescope that examines through the past, stands solidly in the present and reaches toward the future of what it means to be an authentic mentor providing that work of service to Waldorf teachers."](#)
 
-[
+["The inclusivity and caring nature of all of the staff and community filled my heart and will guide me through my upcoming year."](#)
 
-"Mentoring is a work of trust and care. The program at Center for Anthroposophy has given me a telescope that examines through the past, stands solidly in the present and reaches toward the future of what it means to be an authentic mentor providing that work of service to Waldorf teachers."
-
-****
-
-](#)
-
-[
-
-"The inclusivity and caring nature of all of the staff and community filled my heart and will guide me through my upcoming year."
-
-****
-
-](#)
-
-[
-
-"The Mentor Program is the medicine needed for our times. We were given both practical tools and insights, as well as inspiration for personal growth and introspection. This program is a necessity to continue to grow the Waldorf education movement."
-
-****
-
-](#)
+["The Mentor Program is the medicine needed for our times. We were given both practical tools and insights, as well as inspiration for personal growth and introspection. This program is a necessity to continue to grow the Waldorf education movement."](#)

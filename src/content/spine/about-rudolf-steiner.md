@@ -8,11 +8,11 @@ order: 9
 
 ## A Sketch of His Life and Work
 
-**by: John Davy**
+**by: John Davy
 
 ![steiner-reitman-1915](/images/a0ddd89722-steiner-reitman-1915-223x300.jpg)
 
-Rudolf Steiner was born in Kraljevec (then in Austria, now part of the former Yugoslavia) in 1861, and died in Dornach, Switzerland in 1925. He thus saw the end of an old era and the birth pangs of a new one. His life echoes the transition intimately. The outer surface of the late nineteenth century gave little hint of the extraordinary events the twentieth century would bring. And a superficial biography of the first part of Steiner’s life might not easily foresee the extraordinary activities of his later years. Yet the seeds of the later are to be found in the earlier times.**** Outwardly, we see the gifted son of a minor railway official growing up in the small peasant villages of Lower Austria. He attended the village schools, and then the modern school in Wiener Neustadt. His father was a freethinker and saw his son as a railway engineer rather than as a priest (the more usual destination for bright boys from the villages). Steiner took a degree in mathematics, physics and chemistry, and later wrote a philosophical thesis for a doctorate. He supported himself through university and afterwards by tutoring. He was drawn into literary and scholarly work.
+Rudolf Steiner was born in Kraljevec (then in Austria, now part of the former Yugoslavia) in 1861, and died in Dornach, Switzerland in 1925. He thus saw the end of an old era and the birth pangs of a new one. His life echoes the transition intimately. The outer surface of the late nineteenth century gave little hint of the extraordinary events the twentieth century would bring. And a superficial biography of the first part of Steiner’s life might not easily foresee the extraordinary activities of his later years. Yet the seeds of the later are to be found in the earlier times. Outwardly, we see the gifted son of a minor railway official growing up in the small peasant villages of Lower Austria. He attended the village schools, and then the modern school in Wiener Neustadt. His father was a freethinker and saw his son as a railway engineer rather than as a priest (the more usual destination for bright boys from the villages). Steiner took a degree in mathematics, physics and chemistry, and later wrote a philosophical thesis for a doctorate. He supported himself through university and afterwards by tutoring. He was drawn into literary and scholarly work.
 
 The famous Goethe scholar, Professor Karl Julius Schroer, who befriended the young man, arranged for him to edit the scientific works of Goethe for a new complete edition. He participated actively in the rich cultural life of Vienna. Then he was invited to Weimar, to the famous Goethe archive, where he remained for seven years, working further on the scientific writings, as well as collaborating in a complete edition of Schopenhauer. The place was a famous centre, visited by the leading lights of Central European culture, and Steiner knew many of the major figures of the artistic and cultural life of his time.
 
@@ -70,7 +70,7 @@ Steiner was therefore not concerned to bring old teachings in new forms, nor to 
 
 ###### A Brief Overview of Geo-Political background of Rudolf Steiner’s Life and Work by Maria Schindler
 
-**EUROPE:** **A Cosmic Picture **by Maria Schindler *New Knowledge Books, 1975*
+**EUROPE:A Cosmic Picture **by Maria Schindler *New Knowledge Books, 1975*
 
 **AUSTRIA**Pages 191-194
 
@@ -144,7 +144,7 @@ Representative of Humanity between the two Adversaries who accompany evolution. 
 
 ![image](/images/e15ec9bbc9-image-213x300.png)
 
-The statue of the Representative of Humanity concerns all future earth development. It can be an appeal to every human being to be wide awake, if he is striving to be fully human and to become truly free.**
+The statue of the Representative of Humanity concerns all future earth development. It can be an appeal to every human being to be wide awake, if he is striving to be fully human and to become truly free.
 
 * Rudolf Steiner before he died, designed a model for the New Goetheanum, to be built in concrete.
 
@@ -152,26 +152,13 @@ The statue of the Representative of Humanity concerns all future earth developme
 
 ### Get in touch with us
 
-Fill out the form and we’ll get back to you shortly.
-
-!
+Have a question? [Contact us](/contact) and we’ll be in touch.
 
 ## Other ways to connect with us
 
-- [ ** ](https://www.facebook.com/Renewal3)
+- [Facebook](https://www.facebook.com/Renewal3)
 
-- [ ** ](https://www.youtube.com/user/CenterforAnthropos/videos)
+- [YouTube](https://www.youtube.com/user/CenterforAnthropos/videos)
 
-- [ ** ](https://www.instagram.com/centerforanthroposophy/)
-
-!
-
-Sign up for Our Newsletter
-
-** **
-
-[
-
-READ PAST NEWSLETTERS**
-
-](/news/)
+- [Instagram](https://www.instagram.com/centerforanthroposophy/)
+[READ PAST NEWSLETTERS](https://centerforanthroposophy.org/news/)

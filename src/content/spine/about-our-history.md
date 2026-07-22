@@ -86,26 +86,13 @@ The old social patterns of mistrust, institutional self -interest, egotism, raci
 
 ### Get in touch with us
 
-Fill out the form and we’ll get back to you shortly.
-
-!
+Have a question? [Contact us](/contact) and we’ll be in touch.
 
 ## Other ways to connect with us
 
-- [ ** ](https://www.facebook.com/Renewal3)
+- [Facebook](https://www.facebook.com/Renewal3)
 
-- [ ** ](https://www.youtube.com/user/CenterforAnthropos/videos)
+- [YouTube](https://www.youtube.com/user/CenterforAnthropos/videos)
 
-- [ ** ](https://www.instagram.com/centerforanthroposophy/)
-
-!
-
-Sign up for Our Newsletter
-
-** **
-
-[
-
-READ PAST NEWSLETTERS**
-
-](/news/)
+- [Instagram](https://www.instagram.com/centerforanthroposophy/)
+[READ PAST NEWSLETTERS](https://centerforanthroposophy.org/news/)

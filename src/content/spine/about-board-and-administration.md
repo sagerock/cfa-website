@@ -8,7 +8,7 @@ order: 5
 
 The primary responsibility of the Board of Trustees is to oversee the management of the Center, as well as to provide guidance and insight, offer perspectives on Waldorf Education as practiced in schools, and support for the work of the Center. The staff is responsible for operational aspects of the organization.
 
-**Board of Trustees (As of March 2026)**
+**Board of Trustees (As of March 2026)
 
 - Lisa Mahar, President & Board Chair
 
@@ -34,7 +34,7 @@ The primary responsibility of the Board of Trustees is to oversee the management
 
 - Diana Tesni
 
-**Attending board meetings Ex Officio:**
+**Attending board meetings Ex Officio:
 
 - David Barham, Executive Director
 
@@ -42,7 +42,7 @@ The primary responsibility of the Board of Trustees is to oversee the management
 
 - Milan Daler, Administrator
 
-**Board Executive Committee**
+**Board Executive Committee
 
 - David Barham, Chair
 
@@ -56,7 +56,7 @@ The primary responsibility of the Board of Trustees is to oversee the management
 
 - Milan Daler
 
-**Board Finance Committee**
+**Board Finance Committee
 
 - Karin Meadows
 
@@ -72,7 +72,7 @@ The primary responsibility of the Board of Trustees is to oversee the management
 
 - David Barham
 
-**Administrative Staff & Program Directors**
+**Administrative Staff & Program Directors
 
 - David Barham, Executive Director, Director of Waldorf High School Teacher Education Program (WHiSTEP)
 
@@ -90,47 +90,31 @@ The primary responsibility of the Board of Trustees is to oversee the management
 
 ## Get in touch with us
 
-Fill out the form and we’ll get back to you shortly.
-
-!
+Have a question? [Contact us](/contact) and we’ll be in touch.
 
 ## Other ways to connect with us
 
-- [ ** ](https://www.facebook.com/Renewal3)
+- [Facebook](https://www.facebook.com/Renewal3)
 
-- [ ** ](https://www.youtube.com/user/CenterforAnthropos/videos)
+- [YouTube](https://www.youtube.com/user/CenterforAnthropos/videos)
 
-- [ ** ](https://www.instagram.com/centerforanthroposophy/)
-
-!
+- [Instagram](https://www.instagram.com/centerforanthroposophy/)
 
 ## News & Views
 
 Stay up to date and read our extensive archive.
 
-**
-
-!
-
-**[Center & Periphery Newsletter —Spring 2026](https://centerforanthroposophy.org/center-periphery-newsletter-spring-2026/)**
+**[Center & Periphery Newsletter —Spring 2026](https://centerforanthroposophy.org/center-periphery-newsletter-spring-2026/)
 
 During this winter season at the Center for Anthroposophy (CfA), the directors of our seven programs––a record number!––are forming new courses and line-ups of faculty...
 
 [Read More](https://centerforanthroposophy.org/center-periphery-newsletter-spring-2026/)
 
-**
-
-!
-
-**[Center & Periphery Newsletter — Winter 2025-2026](https://centerforanthroposophy.org/center-periphery-newsletter-winter-2025-2026/)**
+**[Center & Periphery Newsletter — Winter 2025-2026](https://centerforanthroposophy.org/center-periphery-newsletter-winter-2025-2026/)
 
 During this winter season at the Center for Anthroposophy (CfA), the directors of our seven programs––a record number!––are forming new courses and line-ups of faculty...
 
 [Read More](https://centerforanthroposophy.org/center-periphery-newsletter-winter-2025-2026/)
-
-**
-
-!
 
 ##### [Center & Periphery Newsletter — Fall 2025](https://centerforanthroposophy.org/center-periphery-newsletter-fall-2025/)
 
@@ -138,20 +122,12 @@ During this winter season at the Center for Anthroposophy (CfA), the directors o
 
 [Read More](https://centerforanthroposophy.org/center-periphery-newsletter-fall-2025/)
 
-**
-
-!
-
-**[Center & Periphery Newsletter —Summer 2025](https://centerforanthroposophy.org/center-periphery-newsletter-summer-2025/)**
+**[Center & Periphery Newsletter —Summer 2025](https://centerforanthroposophy.org/center-periphery-newsletter-summer-2025/)
 
 During this winter season at the Center for Anthroposophy (CfA), the directors of our seven programs––a record number!––are forming new courses and line-ups of faculty...
 
 [Read More](https://centerforanthroposophy.org/center-periphery-newsletter-summer-2025/)
 
-[
-
-READ ALL**
-
-](https://centerforanthroposophy.org/news/)
+[READ ALL](https://centerforanthroposophy.org/news/)
 
 ## Sign up for our Newsletter!
