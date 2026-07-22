@@ -1,0 +1,99 @@
+---
+title: "Karmic Leadership"
+slug: "karmic-leadership"
+date: "2025-12-18"
+excerpt: "WINTER 2025-2026 In This Edition... The “Dramatic” Question: Cultural Appropriation or Cultural Appreciation? Read More » Keeping Ideals Intact: A Waldorf Teacher’s Forty-Year Perspective by David…"
+cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
+---
+
+![Center & Periphery Logo](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)
+
+WINTER 2025-2026
+
+### In This Edition...
+
+**[The “Dramatic” Question: Cultural Appropriation or Cultural Appreciation?](/news/the-dramatic-question-cultural-appropriation-or-cultural-appreciation)**
+
+[Read More »](/news/the-dramatic-question-cultural-appropriation-or-cultural-appreciation)
+
+**[Keeping Ideals Intact: A Waldorf Teacher’s Forty-Year Perspective by David Sloan](/news/keeping-ideals-intact-a-waldorf-teachers-forty-year-perspective-by-david-sloan)**
+
+[Read More »](/news/keeping-ideals-intact-a-waldorf-teachers-forty-year-perspective-by-david-sloan)
+
+**[WHiSTEP: Meeting a Changing World with Courage and Humanity](/news/whistep-meeting-a-changing-world-with-courage-and-humanity)**
+
+[Read More »](/news/whistep-meeting-a-changing-world-with-courage-and-humanity)
+
+**[Interview Questions for John Reinhart ~ Antioch Alum & Waldorf High School Teacher](/news/interview-questions-for-john-reinhart-antioch-alum-waldorf-high-school-teacher)**
+
+[Read More »](/news/interview-questions-for-john-reinhart-antioch-alum-waldorf-high-school-teacher)
+
+### [The Birth of Camphill Academy Afrika:](/news/the-birth-of-camphill-academy-afrika)
+
+[Read More »](/news/the-birth-of-camphill-academy-afrika)
+
+### [Demystifying Differentiation](/news/demystifying-differentiation)
+
+[Read More »](/news/demystifying-differentiation)
+
+### [From Building Bridges](/news/from-building-bridges)
+
+[Read More »](/news/from-building-bridges)
+
+### [Karmic Leadership](/news/karmic-leadership)
+
+[Read More »](/news/karmic-leadership)
+
+### [Message from the Executive Director](/news/message-from-the-executive-director-2)
+
+[Read More »](/news/message-from-the-executive-director-2)
+
+# Message from the Executive Director
+
+*by Torin M Finser*
+
+In the context of current events in 2025, our collective images of leadership are perhaps more conflicted than ever. Yet this situation can also provide an opportunity for Waldorf schools and other service-oriented non-profits organizations to model alternative examples. At a time when the old forms of governance and past structures are being dis-membered, Waldorf schools have a unique chance to stand for transformative leadership that inspires confidence and builds trust within the community.
+
+Historically, leaders were known as pharaohs, emperors, monarchs, generals and politicians, most of whom served in hierarchical, top-down structures that perpetuated power dynamics until internal fissures (or the discontent of the masses) caused a collapse. The rise of democracy has provided an alternative, yet many aspects of an aristocratic world order still persist worldwide (and even in our schools).
+
+Many of the early Waldorf schools in North America were founded or led by singular, inspired leaders who often presided for decades: Beulah Emmet at High Mowing School, Henry Barnes at Rudolf Steiner School in NY,John Gardner at the Garden City School. The decades following their departure often witnessed a more collective, faculty centered approach, sometimes chaotic in terms of administrative functioning, that then led to the hiring of school administrators and individuals with skill-based expertise (yet many did not have any background in Waldorf, let alone anthroposophy). Most recently we have seen the appointment of heads of schools, pedagogical directors and lead administrators. When things are going well many organizations expand the circle of responsibility, in times of crisis or financial pressure, schools tend to go vertical again. Compliance issues in public Waldorf schools, or the preferences of board members, often push schools towards efficiency and more hierarchy; while shared interest in students, curriculum development and parent-teacher relationships tend to foster community. These creative tensions ebb and flow, but repeating patterns beg the question: are we willing to re-examine assumptions about leadership and take some risks to move beyond survival mode to tap new resources, spiritually and organizationally? It might help if we look more deeply at what happens when schools bring people together.
+
+### Leaders as Karmic Facilitators
+
+We know leaders facilitate meetings, sometimes far too many each week! Navigating the ship of “school” through calm and turbulent waters is at times overwhelming. “I have no more band width” is a phrase I hear more often these days…. Another leader remarked recently that she has had to facilitate more interpersonal issues than ever before. What is going on? Is this due to “post Covid” aftershocks? Loss of listening skills, or diminished empathy for others? There may be many valid responses, but with the passage of time I have become less satisfied with the *presenting issues* and more intent on finding the deeper causes of organizational dysfunction and leadership fatigue. This search has led me to ask:
+
+Are Waldorf schools Karmic Communities?
+
+Upon reflection, this question has been part of my life for a long time: as a class teacher working with colleagues, parents and students, as an adult educator working with future teachers, and especially when trying to support school leaders who often work with very challenging situations. In this brief article I would like to present a few preliminary considerations from the perspective of Waldorf schools as opportunities for karmic reconciliation, particularly from a leadership perspective:
+
+- Given the journey between death and a new birth, the encounters along the way, and the resolutions made as a result, many of us come into a new life on earth with intentions to seek out those with whom we have karmic connections.
+
+- We tend to reincarnate with these kindred souls again and again.
+
+- Especially in the first 21 years of life, we are faced with *karmic obligations*. We are born into a family constellation and at a particular location on the earth. We encounter people in school communities with whom we have unfinished work. In that we share so many obligations with others with whom we have lived previously, there is an element of *equality* in this shared experience.
+
+- Once we have done some work with these “obligations” we enter a period of k*armic fulfillment* in the years 28-49 and beyond. These are the years when many parents and teachers have children and find each other in Waldorf schools. Karmic connections come to meet us face to face, literally! The key to success in these middle years depends upon the transformative work possible in human relationships. This striving develops empathy (for self and others) and the possibility for new founded *sister/brotherhood* in community. Despite the challenges (and traveling many circuitous ways to get there), many people feel inwardly fulfilled at having found kindred spirits in a Waldorf setting.
+
+- Then in the years 56-77 we can enter the phase of *free karmic sacrifice. *IF we have worked spiritually on ourselves, we can then move more readily beyond the boundaries of our personal self and let liberated soul forces flow into the social life. This is possible because in the years after 56 the human being’s spiritual life separates more and more from the physical life. As we get older, we can be increasingly filled with the spirit, receiving direct nourishment from the cosmic hierarchies. In the period of karmic sacrifice one can become, in *freedom*, a servant of the world.
+
+*Today more than ever, we need to find the forces to transform karmic obligations that we have brought with us from our prenatal life into karmic fulfillment in our present life. This can give us the capacity for free karmic sacrifices in later years. Likewise, by embracing stages that in succession foster equality, sister/brotherhood and then freedom, we have an opportunity to realize aspects of the three-folding of social architecture, part of the often silent “promise” of engagement in Waldorf schools.*
+
+From a leadership perspective, rather than just seeking to put out “brush fires” and “fix” the issue dejoure, we need the attitude of a midwife or facilitator: How can I help you realize your karmic intentions in this situation? What is seeking to find “birth” here? This gesture is needed not just with the “victims” but also the “perpetrators” in a dispute. Rather than just placating enough to move on (the frequent “management” perspective in administration), the inner gesture of the leader can rise to a level of karmic facilitation. This happens when we start to inwardly carry the often unspoken karmic burdens of others (as well as our own). If we truly wish to realize community, we need to each carry something of the other person’s karmic obligation to facilitate fulfillment in community.
+
+Rudolf Steiner gave a number of specific karmic exercises to help us develop the capacity to work with the riddles of life. For several years now I have included them in all our Center for Anthroposophy leadership development residencies. Some exercises work right away, others, such as the three-night exercise, require much patience. But I am convinced that leaders can no longer see karma studies as a subject just for an anthroposophical study group. In fact, thanks to the Michaelic nature of our present-day tasks in a Waldorf community, we need to consciously and intentionally work through what Steiner called *relics of old karma*. We have a particularly diverse assortment of these karmic relics in our schools, and we ignore them at our peril. In fact, Steiner further indicates that if we do not engage them, we will be increasingly hindered from doing our work in everyday life. Ordinary tasks (indeed more and more of the “presenting issues”) will take longer to resolve when we avoid the underlying spiritual causes.
+
+When we have leaders who are willing to take courage in hand and facilitate karmic encounters, everyone can attain new freedom. And with the new freedom granted to us, we can find what we are really meant to do, in our schools but also as individuals. It is possible to lift our gaze and accomplish tasks with new insight and ultimately practice free *karmic sacrifice*. This means giving to others out of recognition of who they are striving to become, not just what we see outwardly. Rather than only facilitating meetings, leaders can help *birth new capacities*. Under these conditions there are truly no limits to the potential success of our Waldorf schools. Since the spirit is magnificently potent, working with our anthroposophical foundations can enhance resilience. And this vibrancy can manifest outwardly in greater recognition, enrollment, funding, and future teachers and school leaders.
+
+Our children are far more perfect than many of the other humans on the planet today. Those who consider themselves adults (teachers, administrators and parents) have an obligation to overcome their karmic relics in the spirit of service; they need to become new again to be worthy of the confidence shown by the spiritual worlds when gifted with children to teach, love and protect. Our servant leaders are also our karmic guardians.
+
+Originally published by AWSNA. *School Renewal*, Fall 2026
+
+![Portrait of Torin Phinser](/images/posts/814e688cf5-finsersmall.jpg)
+
+**Torin M Finser**, PhD attended Waldorf Schools as a child, earned a BA from Bowdoin College (summa cum laude) and a MA from Adelphi University with a Waldorf certificate, and later earned his PhD in Leadership Development from Union College. A former class teacher, he has served as Waldorf Teacher Training Director and Education Dept Chair at Antioch University, General Secretary of the Anthroposophical Society, and founding member of CfA. He is the author of 16 books, including *Listening to our Teachers* published in 2024. Torin and his wife Karine have six children and nine grandchildren.
+
+Spring/Summer 2022
+
+## Sign up to receive our Center & Periphery Newsletter!
+
+You’ll receive the newsletter via e-mail.

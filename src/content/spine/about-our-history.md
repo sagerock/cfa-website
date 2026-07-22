@@ -95,4 +95,4 @@ Have a question? [Contact us](/contact) and we’ll be in touch.
 - [YouTube](https://www.youtube.com/user/CenterforAnthropos/videos)
 
 - [Instagram](https://www.instagram.com/centerforanthroposophy/)
-[READ PAST NEWSLETTERS](https://centerforanthroposophy.org/news/)
+[READ PAST NEWSLETTERS](/news)

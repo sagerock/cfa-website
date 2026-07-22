@@ -1,0 +1,107 @@
+---
+title: "Tree of Life"
+slug: "tree-of-life"
+date: "2025-09-29"
+excerpt: "FALL 2025 In This Edition... Message from the Executive Director Read More » Message from Torin Finser, Development Director Read More » Alumni Profiles from WHiSTEP Class of 2025 & Antioch Class of…"
+cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
+---
+
+![Center & Periphery Logo](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)
+
+FALL 2025
+
+### In This Edition...
+
+### [Message from the Executive Director](/news/message-from-the-executive-director)
+
+[Read More »](/news/message-from-the-executive-director)
+
+**[Message from Torin Finser, Development Director](/news/message-from-torin-finser-development-director)**
+
+[Read More »](/news/message-from-torin-finser-development-director)
+
+**[Alumni Profiles from WHiSTEP Class of 2025 & Antioch Class of 2025](/news/alumni-profiles-from-whistep-class-of-2025-antioch-class-of-2025)**
+
+[Read More »](/news/alumni-profiles-from-whistep-class-of-2025-antioch-class-of-2025)
+
+### [Tree of Life](/news/tree-of-life)
+
+[Read More »](/news/tree-of-life)
+
+### [Kairos: Healing in a World of Need](/news/kairos-healing-in-a-world-of-need)
+
+[Read More »](/news/kairos-healing-in-a-world-of-need)
+
+**[Wisdom into Practice: Mentor Training for Waldorf Educators](/news/wisdom-into-practice-mentor-training-for-waldorf-educators)**
+
+[Read More »](/news/wisdom-into-practice-mentor-training-for-waldorf-educators)
+
+**[David Sloan Keynote Introduction/Sunday, July 27, 2025](/news/david-sloan-keynote-introduction-sunday-july-27-2025)**
+
+[Read More »](/news/david-sloan-keynote-introduction-sunday-july-27-2025)
+
+### [Welcome Jacob Gerber & Nathan Wilcox](/news/welcome-jacob-gerber-nathan-wilcox)
+
+[Read More »](/news/welcome-jacob-gerber-nathan-wilcox)
+
+### [Interview with Sage Lewis](/news/interview-with-sage-lewis)
+
+[Read More »](/news/interview-with-sage-lewis)
+
+**[In Light of the Spirit: A New Anthology of Essays by John F. Gardner on Waldorf Education and Social Reform](/news/in-light-of-the-spirit-a-new-anthology-of-essays-by-john-f-gardner-on-waldorf-education-and-social-reform)**
+
+[Read More »](/news/in-light-of-the-spirit-a-new-anthology-of-essays-by-john-f-gardner-on-waldorf-education-and-social-reform)
+
+# In Light of the Spirit: A New Anthology of Essays by John F. Gardner on Waldorf Education and Social Reform
+
+Diaan Tesni
+
+*by Diana Tesni*
+
+In June I completed a two year cycle as a class teacher at Meadowbrook Waldorf School in Rhode Island, where I led a group of children through the second and third grade experience. It was so much fun. This was my third time teaching third grade and my fourth time teaching second grade, and it was a completely novel experience because I had this new class of students who brought me gifts and challenges that I had never encountered before. My students’ favorite phrase for me to utter consisted of 4 words – “I have a story.” There was always a morning lesson story of course, but often there were other stories that were teaching stories taken from my own life experience and from the experiences of people that I have known, or stories that I have heard other people tell that live anew in my retelling. So sometimes the students would be in the midst of a quarrel or a social difficulty and I would say “Wait, I have a story,” and they would say “Oh yay!” and settle down and listen so much more attentively than if I had just started to lecture or preach at them. The Waldorf grade school curriculum is all about the stories, because for young humans, and older humans too, stories open us up to encountering new ideas, new perspectives, and inspiration.
+
+So I have a story. Several in fact. But first I have an exercise for you that is also connected to the way we work with young students in the Waldorf elementary school.
+
+Imagine a great tree. Everyone’s tree will be different, so imagine your own tree. See it up close first – like you’re standing right next to it. Touch the bark – rough or smooth? What does it smell like? Breathe in the scent of the air. Now back up. Notice where you are standing. What is the ground like? Are there other plants around? Imagine that the soil is made of clear glass and you can look down into it. Look into the soil and see the roots of the tree stretching out all around you, connecting this tree with the other plants, other trees perhaps. Get a sense of how deep the roots go, how widely they stretch out in all directions. Now look up and see the branches of your tree. What are the leaves like? Are there flowers? Are there fruits? Perhaps this is a coniferous tree – are there cones? What season is it? Step back even further to get a view of your whole tree. What kind of environment are you in? Are you in the mountains? By a river?
+
+Open your eyes, but keep this image of your special tree while I tell you my stories.
+
+***Here is the first one.***
+
+Once upon a time there was a little girl of around 8 years old who grew up in a family of scientists who also took her to church. She learned from her teachers there that God is a good friend who wants to have a relationship with us. So the little girl decided that she would write a letter to her friend God, and she asked things like “How are you?” “Is it a lot of work, taking care of the whole world?” “I hope that you are doing ok.” “Please write back.” And she put her letter in her closet one evening before bed, because the closet was where all the unknown shadows lived.
+
+In the morning the little girl went eagerly to her closet to receive the reply that God would have written for her. And she found…just her own letter.
+
+No reply.
+
+The little girl was disappointed, but only for a moment. “I have been silly,” she thought. “God doesn’t write with a pen! God has answered my letter, because I see the sun rising and I see the world all around me and my mother is calling me to breakfast and God speaks to me through all of these things. God is right here, and we can talk whenever I want.” And she went downstairs and had her breakfast.
+
+If I was telling this story to children I would stop there. But you are grown ups, so I can go on.
+
+The little girl’s seeking for something beyond what was visible and tangible, and her experience of finding that in her own inner experience of the world was like a root reaching out of a seed and finding nourishment and connection in the community of “invisible” relationships present in living soil. This year I read the book *Eco-Alchemy* by Dan McKanan, and while the book was largely a history of how anthroposophy has influenced the environmental movement, I kept being struck by the emphasis the author placed on the importance of living soil. Science is finally catching up to what anthroposophy has always indicated – that the earth is a network of living beings that work together to create other living forms. Soil is not inert, dead matter. It is not just something to stand in or on, but rather it is a living relationship. The roots of the plant are actually its nerve/sense system, the way it “reaches out” into life. Through fungal hyphae, plants communicate with one another and form a community. Through this “soil community, “ the plant receives the nourishment it needs to grow up into the world. The bark of the tree that gives it protection can be compared to soil that has been lifted up above the ground and continues to be a communication network with all that is happening at the roots. The microscopic intricacies of this web of bacteria and fungi, and minerals is largely invisible. It can be challenging to understand it.
+
+Anthroposophy is the living soil that nourishes the tree of our work as Waldorf Educators. Human beings are like “upside-down plants,” so our “roots” are our powers of thinking, the nerve-sense system, and it is through our thinking that we can connect with a community of ideas and beings that can nourish our work. Some of us come to be Waldorf teachers because of Anthroposophy, because we have been working with this realm of the spiritual world throughout our lives, because what anthroposophy teaches about the human being is already familiar to us. For others of us, this “invisible realm” that we can access through our “sense-free thinking” is hard to grasp. We may understand it in theory, but it may be challenging to let our roots reach out and create a relationship with the spiritual world.
+
+***Here is another story.***
+
+Once upon a time there was a father who wanted a good education for his son. He wanted his son to be a worldly success and acquire all the attainments necessary for that success – to write and speak well, to have a healthy body, to be knowledgeable about the world, to have strong math and science skills. He also wanted his son to have a strong moral character and to become an independent thinker. He went in search of a school that could provide these fruits of success for his son – rather like shopping for fruit in a market. He found that some schools offered fruit that looked good, but it had no flavor and it was ultimately empty of nourishment. Many schools offered only one kind of fruit, and he was seeking diversity. He was also seeking a place where he could grow along with his child, a place where he could contribute to a larger community. He ultimately chose a Waldorf school for his family and became a member of the faculty after several years of involvement with the school.
+
+Most people who start gardens or orchards or vineyards are interested in the literal “fruit of their labor.” The branches of a plant that provide leaves, flowers, and fruits are like “Garden beds in the sky,” energy generators for the tree and also for the surrounding community of insects, birds, animals, and people! This part of the tree is akin to a human being’s metabolic/limb forces, or will forces – the part of us that breaks down and recreates substances that build for the future. We tend to see plants as useful if they can produce material that is of practical use to us. It is easy to take hold of these gifts of nature and create clothing, shelter, and nourishment.
+
+The fruits of Waldorf education are what is most easily perceived. Some people are drawn to this education because of its beauty and the practical approach of learning through doing. This aspect of Waldorf Education is concerned with the future, with growth, with developing those practical skills and capacities that we can see flourishing in our Waldorf graduates. Many of us, in fact probably all of us, come to be Waldorf Educators because we are attracted to the fruits of this education and we want to see them flourish in the world.
+
+So we have this image of a tree, a “tree of life,” rooted in living soil, rooted in a community, a network of relationships – with its branches reaching out into the world providing energy for the future. And then we have this image of the human being as the inverse of that plant image, rooted in spiritual life, in a community of relationships with ideas and inspiration and intuitive thinking – with its branches reaching out in service to the world, creating energy for the future.
+
+All of us who teach are actively engaged with cultivating the fruits of Waldorf Education, but we must also remember to cultivate the living ground of our connection to anthroposophy. The trunk of the tree is the bridge between “roots and fruits,” and by committing to the development of a strong connection to our anthroposophical foundations, we can ensure that the fruits of our work in the world will bring abundant energy to the future. Center for Anthroposophy’s teacher training programs help us prepare that ground and engage with the ideas and inspirations that form that “living soil;” and the summer Renewal program and the Abbot Hill Alumni Group help us refresh our connection to our roots.
+
+In the day-to-day busyness of teaching, it can be easy to get drawn away from our roots and become overly anxious about the fruits. We can become separated from what anthroposophy teaches us about child development, and capitulate to various other views about what a child is or what a child should be learning or doing. In my work helping organizations discover and articulate their most important priorities, my clients are often “focused on fruits” – who is our ideal customer, what is our selling proposition, what do I need to do to get myself there?
+
+I encourage them to step back and connect to their roots by asking the question “Why?” Why are you here? Why are you a Waldorf Teacher? “Why” connects us to our purpose. To craft an authentic Purpose Statement that answers this question “why?” we need to reach out into that living soil of ideas, inspiration, and spirit and tap into what wants to come into being from there.
+
+So to nurture this bridge, this connection between “roots and fruits,” I invite you to check in with that image of a tree that you imagined earlier. We can call this your “Why Tree” – it represents something that your subconscious is showing you about your purpose or your pattern or where you are today. May this centering image of a tree of life, which is often shown with branches and roots intertwined, refresh, nourish, and support your teaching work in the coming year.
+
+Spring/Summer 2022
+
+## Sign up to receive our Center & Periphery Newsletter!
+
+You’ll receive the newsletter via e-mail.

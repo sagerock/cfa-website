@@ -591,4 +591,34 @@ details.course[open] summary::before { content: '–'; }
 .thankyou p { color: var(--soft); font-size: 18px; max-width: 46ch; margin: 0 auto 10px; }
 .thankyou .actions { margin-top: 30px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
+/* ---- news / blog ---- */
+.news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.news-card {
+  display: flex; flex-direction: column;
+  background: var(--raised); border: 1px solid var(--line); border-radius: 6px;
+  overflow: hidden; text-decoration: none; color: var(--ink);
+  transition: border-color 0.15s, transform 0.15s;
+}
+.news-card:hover { border-color: var(--green); transform: translateY(-2px); }
+.news-cover { display: block; aspect-ratio: 16 / 10; overflow: hidden; background: var(--chalk); }
+.news-cover img { width: 100%; height: 100%; object-fit: cover; }
+.news-body { display: flex; flex-direction: column; gap: 7px; padding: 15px 16px 18px; }
+.news-date { font-family: var(--sans); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--green-ink); }
+.news-title { font-size: 17.5px; line-height: 1.25; font-weight: 600; }
+.news-excerpt { font-size: 13.5px; line-height: 1.5; color: var(--soft);
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+.pager { display: flex; align-items: center; justify-content: center; gap: 22px; margin-top: 34px;
+  font-family: var(--sans); font-size: 14px; }
+.pager a { color: var(--green-ink); text-decoration: none; }
+.pager a:hover { text-decoration: underline; }
+.pager .disabled { color: var(--line); }
+.pager-count { color: var(--soft); font-variant-numeric: tabular-nums; }
+
+.backlink { font-family: var(--sans); font-size: 13px; margin-bottom: 18px; }
+.backlink a { color: var(--green-ink); text-decoration: none; }
+.post-head { margin-bottom: 22px; }
+.post-head h1 { font-size: clamp(26px, 4vw, 40px); margin-top: 6px; }
+.post-head .news-date { font-size: 13px; }
+
 :focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }

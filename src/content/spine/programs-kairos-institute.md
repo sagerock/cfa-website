@@ -190,7 +190,7 @@ For questions and more info on our programs, contact Karine today!
 
 **INQUIRE
 
-[READ MORE KAIROS NEWS](https://centerforanthroposophy.org/kairos-news/)
+[READ MORE KAIROS NEWS](/news/kairos-news)
 
 Donations are gratefully accepted to support the Kairos students scholarship fund.
 

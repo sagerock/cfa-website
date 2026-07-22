@@ -1,0 +1,109 @@
+---
+title: "Climbing Aboard the Yellow School Bus: Reflections on Waldorf Schools and the “Deep Structure” of Schools"
+slug: "climbing-aboard-the-yellow-school-bus-reflections-on-waldorf-schools-and-the-deep-structure-of-schools"
+date: "2026-04-16"
+excerpt: "SPRING 2026 In This Edition... Message from the Executive Director Read More » Rachel Freierman: Cultivating The Relationships Between Child, Curriculum, & the Living World Read More » KARMIC…"
+cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
+---
+
+![Center & Periphery Logo](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)
+
+SPRING 2026
+
+### In This Edition...
+
+### [Message from the Executive Director](/news/message-from-the-executive-director-3)
+
+[Read More »](/news/message-from-the-executive-director-3)
+
+**[Rachel Freierman: Cultivating The Relationships Between Child, Curriculum, & the Living World](/news/rachel-freierman-cultivating-the-relationships-between-child-curriculum-the-living-world)**
+
+[Read More »](/news/rachel-freierman-cultivating-the-relationships-between-child-curriculum-the-living-world)
+
+**[KARMIC RECONCILIATION: CLEARING A PATH FOR DESTINY by Torin Finser](/news/karmic-reconciliation-clearing-a-path-for-destiny-by-torin-finser)**
+
+[Read More »](/news/karmic-reconciliation-clearing-a-path-for-destiny-by-torin-finser)
+
+**[Leadership and Community Development Residency in the Greater Bay Area of California!](/news/leadership-and-community-development-residency-in-the-greater-bay-area-of-california)**
+
+[Read More »](/news/leadership-and-community-development-residency-in-the-greater-bay-area-of-california)
+
+### [CFA Updates](/news/cfa-updates)
+
+[Read More »](/news/cfa-updates)
+
+**[A Message from Kairos: Therapy and Traumatology: Schooling Courage](/news/a-message-from-kairos)**
+
+[Read More »](/news/a-message-from-kairos)
+
+**[Climbing Aboard the Yellow School Bus: Reflections on Waldorf Schools and the “Deep Structure” of Schools](/news/climbing-aboard-the-yellow-school-bus-reflections-on-waldorf-schools-and-the-deep-structure-of-schools)**
+
+[Read More »](/news/climbing-aboard-the-yellow-school-bus-reflections-on-waldorf-schools-and-the-deep-structure-of-schools)
+
+**[Revisiting & Reconsidering Betty Staley’s Classic Models in the Light of our Modern Moment](/news/revisiting-reconsidering-betty-staleys-classic-models-in-the-light-of-our-modern-moment)**
+
+[Read More »](/news/revisiting-reconsidering-betty-staleys-classic-models-in-the-light-of-our-modern-moment)
+
+**[Drawbridge and Portcullis: Thresholds of Sleeping and Waking Consciousness](/news/drawbridge-and-portcullis-thresholds-of-sleeping-and-waking-consciousness)**
+
+[Read More »](/news/drawbridge-and-portcullis-thresholds-of-sleeping-and-waking-consciousness)
+
+# Drawbridge and Portcullis: Thresholds of Sleeping and Waking Consciousness
+
+## **Therapy and Traumatology: Schooling Courage**
+
+*By Liz Beaven, EdD*
+
+##### Based on a presentation for Starlight Rays
+
+Waldorf education is now well into its second century with an established school culture and a global presence. As we look towards the 100th anniversary of Waldorf in the US, it seems an opportune time to take a step back to reflect and think together about aspects of our schools and some of the very significant pressures that are impacting them. Many of these pressures are experienced in schools in general; several are specific to Waldorf.
+
+Concerns about education and schools in general are far from new. Records of anxiety about the condition of youth, schools, and teachers date back to at least Ancient Greece. Schools are core social institutions with the weighty task of preparing each new generation for work, further education, citizenship, and life. How do we approach this task in a time of turmoil and rapid change? In an earlier time of tumult, Rudolf Steiner recognized that a “new art of education”, based on a “true knowledge of the human being”, would be needed to help secure a different, more positive future. A review of Steiner’s lectures to the first teachers (2020/1919) shows many parallels with current concerns: the future was uncertain, there was social, economic, and political unrest, there were many traumatized children, and an established system of education was rigid and highly controlled.
+
+In many ways, Steiner radically reimagined education. There are signs that the pressing needs of our time are calling for us to do the same. The need to reimagine may be evident, but our ability to do so is less straightforward. The institution of school is deeply ingrained in our consciousness. Eisner (2002) observed that most adults have a “yellow school bus” image when it comes to conceiving what teaching, learning, and schools should or could look like. The yellow school bus serves as an instantly recognized metaphor for the model of education most of us have had first-hand; experience of a model that, all too often, we expect to be replicated today. Almost all of us have had direct, subjective, first-hand experience of “school” from a young age. As a result, we expect schools to be a certain way. This becomes quite evident with a simple thought exercise: what comes readily to mind in response to the word “school”? A consistent list of features quickly emerges, including a predictable school year, age-based classes, teachers and teaching, school entrance and graduation requirements, tracking and sorting of students, hierarchical structures, a “cell and bell” structure (the architecture of space and time), homework, assessment and exams. If we dig a little deeper, we find a layer of more personal experiences: the sounds and smells of schools, lockers, recess, favorite teachers and subjects, friends, teams, coaches. Tyack and Cuban (1995) described all of this as the “grammar” of schools: long-lasting, largely unchallenged core elements of schools.
+
+The need to rethink and reimagine is urgent, with many signs that the conventional yellow school bus model is struggling under increasing pressures. Schools are operating within a push for prescribed, measurable outcomes. Their task is complicated by insufficient resources, a shrinking teaching profession, a growing percentage of students with high levels of individual needs, and a drive to standardize and control curriculum and methods. There are many indications of growing public dissatisfaction with the state of schools, including a significant rise in the number of home-schooled students, higher rates of dropping out and early graduation, and the emergence of alternatives such as microschools and small “pods”. The pandemic was an accelerant for dissatisfaction, but arguably not the cause: things have not settled back to pre-pandemic levels and there were many signs of trouble in pre-pandemic years. Although emerging alternatives such as microschools provide intriguing possibilities for research and solutions for a few families and students, they tend to be privileged options in the face of systemic challenges. More is needed.
+
+As schools demonstrate signs of distress, our young people are also signaling that all is not well. There are rising rates of youth mental illness, depression, self-harm, suicidality, difficulties with body image, and questions of identity and meaning (Surgeon General, 2024). We are much more aware of the impact of acute or chronic trauma, adverse childhood experiences, and the need for trauma-informed pedagogy. All these concerns walk through the school door every day. Along with them, studies of high schools show high rates of student boredom and disconnection from school, a phenomenon identified by Pope (2001) as “doing school” and, from his examination of the senior year, described as a “vast wasteland of boredom” (Goodlad, 2004). In a thought-provoking New York Times study, Yang (2025) proposed that it is time for us to reexamine a current school climate of ever higher levels of diagnoses and labeling of student difficulties and to instead refocus our attention on schools as the source of the problem. She suggested that the fundamental problem is not students, but the format and structure of schools. The need is apparent: we are called to undertake the challenging task of examining our assumptions about the deeply familiar “place called school” (Goodlad) and to reimagine what our young people need to appropriately support their development and to adequately prepare them for a future that is arguably more uncertain and unknowable than at any previous point in human history.
+
+Where do Waldorf schools fit in this rather bleak landscape? Their 100-plus years of survival and growth demonstrate significant resilience and persistence as a “progressive, alternative” movement. In this, Waldorf contrasts with a more typical pattern for alternative pedagogies, which are often tied strongly to individual initiatives and, over time, tend to revert to the norm of school as we know it. Goodlad noted this: “most of the schools reverted to the traditional grammar of instruction, understood by most parents and teachers as standard features of a *real school*” (1995, p. 101). Another triumph for the power of the yellow school bus!
+
+However, Waldorf schools do not exist in isolation. They are also subject to social pressures and the power of the yellow school bus. We expect Waldorf education to exist within the form of schools as we know them. Many aspects of Waldorf schools are completely orthodox; this has been true from the first school onwards, which carried many of the conventions of early 20th century German schooling. These characteristics have also been remarkably resilient, over time forming part of the expected ethos of a Waldorf school. Our schools are subject to the external pressures and conventional “grammar”, but also to “Waldorf grammar” – conventions and expectations of what a Waldorf school is and is not. To demonstrate this, we can repeat our earlier thought exercise, this time in response to the prompt of “Waldorf schools…” A consistent list of core characteristics typically emerges, including class teachers, main lessons, blocks, watercolor painting, chalkboards, morning verse, festivals. What is added or taken away if we change this prompt to “Waldorf high schools”? Consider your own list – there will likely be a solid, predictable core of characteristics with variations and additions based on individual experience. Many of these are the “props and costumes” of Waldorf education rather that the pedagogical impulse itself, a factor that led Sagarin to describe “Waldorf myths” and Weichert to refer to “sacred nothings”. They exert considerable pressure on our schools and are impediments to our task of reimagination.
+
+High schools are under particularly strong internal and external pressures, caught in cross currents of competing demands. The conventional “grammar” of schooling builds with the age of students, becoming more intense in high school level. There is pressure for measurable outcomes, college or career readiness, exams, the need for teachers with specialized subject knowledge, specialized facilities, and extra-curriculars. The expectations of parents, students, and teachers increase as students progress through the grades, making it harder to follow an alternative approach.
+
+A rise in external demands and the challenges of a tuition-dependent model have required adaptation and adjustment, arguably towards a more conventional model of school. As early as 1998, social commentator Joseph Chiltern Pearce, an advocate for Waldorf education, sounded an alarm over what he saw as incremental accommodations in Waldorf schools, a creep toward the norm. Pearce spoke of his serious concerns about schools and education overall, and his support for Waldorf education as a hopeful alternative. However, he added words of warning: “Waldorf is beginning to modify and accommodate, little by little.…in order to survive.” What does this mean after an additional 28 years of modification and accommodation to the norm? What does it mean for high schools that are particularly susceptible to external pressures? What changes have our high schools made, consciously or unconsciously, to survive? As several Waldorf high schools shrink or close, these questions merit our attention.
+
+What can be done to reverse a process of incremental accommodations and to reexamine the purpose and potential of Waldorf in its second century? How might we support one another in reimagining Waldorf schools in general and the Waldorf high schools in particular? First, I believe, we need to examine our preconceptions and set them aside – easier said than done, but awareness of our definition of the yellow school bus is a great starting point. This includes identifying and naming often beloved and normalized Waldorf mythologies, the pressures they create, and why they exist. Next, we could identify success within our schools and in schools more generally. I believe that this includes looking to the growing sector of Public Waldorf high schools to identify reasons for their expansion, the challenges they navigate, and the nature of compromises and innovations that result from high external demands. The Ruskin Mill Trust in the UK is another source of example and affirmation of core practices: meeting the exceptional and “everyday” needs of youth with an emphasis on crafts, arts, the land, relationships, and the *genius loci *or deep wisdom of place – arguably all core elements of a Waldorf approach.
+
+We also need to turn to our resident experts, high school students. There is limited research here, but what exists does not show the patterns of increasing boredom and disconnect noted in the wider high school literature. Is this an anomaly? Do we fully understand what we are seeing? How can we build on it? The Challenge Success Academy (co-founded at Stanford University from Denise Pope’s work) is an excellent resource for accessing student voices and understanding their needs.
+
+Some combination of these could allow a new, urgently needed dialogue to emerge. In many ways, we are being called to abandon fixed thinking and to be “fundamentally more Waldorf”, to swim upstream against a tide of crosscurrents. Steiner assumed foundational knowledge about the developing, unfolding human being and innovation, interest, responsiveness, and interest in educators. We are called to hop off the yellow school bus, look around, challenge the status quo, and create anew.
+
+**Liz Beaven, EdD**, has been involved in Waldorf education for almost 40 years with a range of experience that includes class teaching, school administration and leadership, teacher education, higher education, lecturing, writing, and research. She is a parent of two Waldorf alumni and grandparent of four Waldorf students. Liz took an early interest in the expansion of US Waldorf education into public schools, where she has been engaged for 30 years. She is the Executive Director of the Alliance for Public Waldorf Education, a member of the Pedagogical Section Council, and serves on the Trust for Learning’s Ideal Learning Roundtable. Liz holds a doctorate in educational leadership and a certificate in Waldorf school administration.
+
+Challenge Success Academy: [https://www.challengesuccess.org/](https://www.challengesuccess.org/)
+
+Eisner, E.W. (2002). The kind of schools we need. Phi Delta Kappan, 83 (8), 576-83.
+
+Goodlad, J.I. (2004). A place called school: Special 20th anniversary edition. McGraw Hill, New York.
+
+Pope, D. (2003). Doing school: How we are creating a generation of stressed-out, materialistic, and miseducated students. New Haven, Yale University Press.
+
+Pope, D, Brown, M. & S. Miles (2015). Overloaded and underprepared: Strategies for stronger schools and healthy, successful kids. San Francisco, Jossey Bass.
+
+Surgeon General
+
+Tyack, D. & Cuban, L. (1995). Tinkering toward Utopia: A century of public school reform. Cambridge, MA: Harvard University Press.
+
+Tye, B. B. (1998). The Deep Structure of Schooling: What It Is and How It Works. The Clearing House, 71(6), 332–334. http://www.jstor.org/stable/30189393
+
+Yang, Jin Lynn, NY Times, November 24, 2025. America’s children are unwell. Are schools part of the problem? [https://www.nytimes.com/2025/11/24/magazine/youth-mental-health-crisis-schools.html](https://www.nytimes.com/2025/11/24/magazine/youth-mental-health-crisis-schools.html)?
+
+[1] The Grammar of schools. Grammar/deep structure of schools, pull to the “norm” – Barbara Tye. Powerful force with something as deeply familiar and personal as school. Schools are slow to change; reforms tend to come and go.
+
+Spring/Summer 2022
+
+## Sign up to receive our Center & Periphery Newsletter!
+
+You’ll receive the newsletter via e-mail.

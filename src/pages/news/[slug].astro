@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const fmtDate = (d) =>
+  new Date(d + 'T00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+---
+
+<Base title={`${entry.data.title} — Center for Anthroposophy`} current="/news">
+  <article class="article">
+    <div class="wrap">
+      <p class="backlink"><a href="/news">← All News &amp; Views</a></p>
+      <header class="post-head">
+        <time class="news-date">{fmtDate(entry.data.date)}</time>
+        <h1>{entry.data.title}</h1>
+      </header>
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+</Base>

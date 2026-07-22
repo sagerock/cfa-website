@@ -1,0 +1,93 @@
+---
+title: "Drawbridge and Portcullis: Thresholds of Sleeping and Waking Consciousness"
+slug: "drawbridge-and-portcullis-thresholds-of-sleeping-and-waking-consciousness"
+date: "2026-04-16"
+excerpt: "SPRING 2026 In This Edition... Message from the Executive Director Read More » Rachel Freierman: Cultivating The Relationships Between Child, Curriculum, & the Living World Read More » KARMIC…"
+cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
+---
+
+![Center & Periphery Logo](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)
+
+SPRING 2026
+
+### In This Edition...
+
+### [Message from the Executive Director](/news/message-from-the-executive-director-3)
+
+[Read More »](/news/message-from-the-executive-director-3)
+
+**[Rachel Freierman: Cultivating The Relationships Between Child, Curriculum, & the Living World](/news/rachel-freierman-cultivating-the-relationships-between-child-curriculum-the-living-world)**
+
+[Read More »](/news/rachel-freierman-cultivating-the-relationships-between-child-curriculum-the-living-world)
+
+**[KARMIC RECONCILIATION: CLEARING A PATH FOR DESTINY by Torin Finser](/news/karmic-reconciliation-clearing-a-path-for-destiny-by-torin-finser)**
+
+[Read More »](/news/karmic-reconciliation-clearing-a-path-for-destiny-by-torin-finser)
+
+**[Leadership and Community Development Residency in the Greater Bay Area of California!](/news/leadership-and-community-development-residency-in-the-greater-bay-area-of-california)**
+
+[Read More »](/news/leadership-and-community-development-residency-in-the-greater-bay-area-of-california)
+
+### [CFA Updates](/news/cfa-updates)
+
+[Read More »](/news/cfa-updates)
+
+**[A Message from Kairos: Therapy and Traumatology: Schooling Courage](/news/a-message-from-kairos)**
+
+[Read More »](/news/a-message-from-kairos)
+
+**[Climbing Aboard the Yellow School Bus: Reflections on Waldorf Schools and the “Deep Structure” of Schools](/news/climbing-aboard-the-yellow-school-bus-reflections-on-waldorf-schools-and-the-deep-structure-of-schools)**
+
+[Read More »](/news/climbing-aboard-the-yellow-school-bus-reflections-on-waldorf-schools-and-the-deep-structure-of-schools)
+
+**[Revisiting & Reconsidering Betty Staley’s Classic Models in the Light of our Modern Moment](/news/revisiting-reconsidering-betty-staleys-classic-models-in-the-light-of-our-modern-moment)**
+
+[Read More »](/news/revisiting-reconsidering-betty-staleys-classic-models-in-the-light-of-our-modern-moment)
+
+**[Drawbridge and Portcullis: Thresholds of Sleeping and Waking Consciousness](/news/drawbridge-and-portcullis-thresholds-of-sleeping-and-waking-consciousness)**
+
+[Read More »](/news/drawbridge-and-portcullis-thresholds-of-sleeping-and-waking-consciousness)
+
+# Drawbridge and Portcullis: Thresholds of Sleeping and Waking Consciousness
+
+*By Douglas Gerwin*
+
+**[Originally published in 2025 as a collection of essays by members of the Pedagogical Section Council of North America entitled Sleep On It: Awakening to the Importance of Sleep and produced by Waldorf Publications at the Research Institute for Waldorf Education]**
+
+In the course of a day we cross countless physical thresholds – stepping through an open archway from one room to another, opening or closing the door of a car or bus or train, entering or leaving a school classroom or office. In some cases, a door may open and close by itself; in other cases, you may need to push it open or shut it behind you, probably with no more than a fleeting glance of attention.
+
+Falling asleep and waking up represent two further thresholds we cross at least once each day. But these transitions are markedly different in one key aspect. When you put your hand or shoulder to a door or simply stride through a doorjamb, you are likely to be focusing more on where you’re headed than on where you’ve come from. By contrast, in the case of falling asleep and even waking up, the situation is the opposite: as we enter sleep, we have no preview of what to expect; likewise, as we approach the moment of awakening, we generally have no idea of what awaits us until we have actually crossed over into wakeful consciousness. Indeed, if we awaken in a strange bed or unfamiliar setting, for a moment we may lack even a sense of where we are. When it comes to sleeping and waking, we row backwards, so to speak, across what the Ancient Greeks knew to be the dark River Lethe separating wakefulness from sleeping existence.
+
+Sometimes the threshold separating these two states of being may be experienced as blocked off, slowing or even preventing a smooth passage into or out of sleep. Already a century ago, Rudolf Steiner warned of an advancing epidemic of sleep disturbances, and recent surveys document an alarming rise in the number of people who struggle these days to fall––or stay––asleep or who may need an alarm clock or other sensory stimulant to return to wakefulness. Last year the U.S. Centers for Disease Control and Prevention reported that some 40% of adults surveyed stated they were not periodically but *chronically* sleep-deprived.
+
+To recognize why a smooth transition from waking to sleeping may be disrupted, we need first to understand what is happening when we cross this threshold under normal circumstances. Here we come up against an initial problem: the very crossing of this threshold coincides in most cases with a total loss of daytime consciousness. Unlike stepping across a daytime threshold, in which we can typically anticipate what’s ahead before we pass through it, at night we typically become aware of having crossed into sleep and then back into wakefulness only after the fact. How often have I inadvertently fallen asleep in bed while reading a book, discovering I had dozed off only after the book had slipped from my hand and crashed to the floor with a startling thud!
+
+Put differently, the experience of falling asleep (and, perhaps to a lesser extent, also of awakening) is not subject to our control. As we rightly say, we “slip” or “fall” into sleep; we do not “step” or “leap” into it. Indeed, to capture the exact moment of passage into and return from a state of sleeping is simply beyond the reach of human awareness. What is it, then, that draws us––or on occasion fails to summon us––across this threshold?
+
+In one of his more provocative statements on this subject, Rudolf Steiner says we don’t wish to sleep because we are tired but rather, to the contrary, that we grow tired because we wish to sleep – that is, we long to re-enter the spiritual world unencumbered by the constraints and exigencies of our living physical organism. In fact, he suggests our experiences during sleep are far richer than our waking experiences, since the latter are bound by the limitations of our physical body. Because we have not as yet developed the requisite organs needed to remember our spiritual journey during sleep, we generally cannot retain upon awakening any recollection of the experiences we had while asleep. Even the dreams we have as we transit in or out of slumber easily vanish once we awaken.
+
+Drawing upon his own spiritual research, Steiner offers some remarkably detailed descriptions of what happens to a healthy adult between the moments of falling asleep and awakening, whether from a quick nap or from an extended period of repose. Based on his fourfold image of the human being, he describes that, while our physical and etheric bodies remain united during sleep, our astral body and “I” free themselves from their living physical vehicle and enter into lofty spiritual realms. In more common language, we say that during sleep we are “out of it”: in this phrase, the “it” refers to our living physical organism, and being “out” implies transcendence beyond the physical world.
+
+Lest this description be taken too simplistically, Steiner offers a much more nuanced picture. As one anthroposophical nurse once described it for me, during waking hours, our “I” and astral body are concentrated *within *the upper portions of our living physical organism (primarily our nervous and fluid systems) but simultaneously *around* our lower portions (such as the systems of metabolism) like a lemniscate, with the upper loop closed off within the upper region of our physical organism and lower loop sweeping about us in the lower region, a bit like a hoop skirt. In sleep this relationship is “involuted” or turned inside out and upside down: while “I” and astral body are released from within the upper portion of our living physical organism, in their higher forms they dive all the more deeply into our lower abdominal and autonomic muscular systems. It’s as though our own “I” and astral body need to get out of the way “upstairs” so that our higher self as well as other higher cosmic beings can work their restorative genius on our sleeping organism from out of “downstairs”. As our “I” and astral body lift out above in sleep, so “a divine astral body and ego are seen clairvoyantly to flow in [below]. The [human] body becomes the bearer or temple of higher Beings who guard and protect it. This divine astral body and ego are in fact active also by day, but are then overpowered by our own.”
+
+To complete this picture: between these two complementary opposite poles of our living body resides a middle realm of heart and lungs, which never tire since they never fully sleep nor fully wake. And yet even in these organs, especially in our lungs, we can experience a radical shift of activity as we slip into sleep. Notice how the breathing changes in sleepers once they “check out”. As Rudolf Steiner describes it, when we are awake and inside our body, we draw air into our lungs by a process akin to suction; when we sleep, our “I” and astral body now push air into our lungs, as it were, from without by a process comparable to pressure, like bellows blowing air into a bonfire. Breathing becomes deeper, often louder. Though we may occasionally sigh or snort during the day, only at night do some of us engage in steady snoring!
+
+As suggested earlier, obstacles of a physiological, psychological, and spiritual nature may disturb, even block the transitions into and out of sleep. Some obstacles are well documented, especially those of physiological origin such as excesses of sugar (indeed drugs of any kind), light (both natural and artificial, as for example from digital screens), or rigorous muscular exercise shortly before bedtime. Other obstacles of a more psychological nature, such as emotional burdens or the excitement of anticipation (the night before a family celebration, for instance), will also be familiar.
+
+Rudolf Steiner points to disruptions or imbalances of a more spiritual nature, however, that may go undetected. Adults prone to being too caught up in the world of the spirit may have difficulty taking hold of their bodily instrument and as a result are insufficiently awake during the day; they never quite make it “in” to their body, as it were. Consequently, they may lack sufficient hunger to return to the spiritual world at night since they never quite left it. Put differently, the best preparation for leaving one’s physical organism at night is to have intensely occupied it in full wakefulness during the day. By the same token, those prone to being overly attached to the physical or material world may lose sight of their spiritual origins and in consequence may unconsciously tamp down the inbuilt yearning to return to it. For them the prospect of sleep can become tainted with a dimly felt sense of repugnance, impatience, even dread. Either way, the end result may be an obstructed entry into sleep.
+
+However, if we are able to return in sleep to the spiritual worlds from which we emanate—as well as to welcome visitation by higher beings to the temple of our sleeping physical body while we rest––we accomplish three crucial tasks of healthful development while asleep: we grow, we heal, and we learn.
+
+From another point of view, one can compare the transitions of awaking and falling asleep to the periods of twilight between bright daytime consciousness and dark nighttime consciousness, or what D.H. Lawrence liked to call “our deepest lower . . . blood-consciousness.” On this view, the passage across the twilight threshold from waking to sleeping at dusk, for instance, can be greatly helped by feeling a calming mood of *trust* in the spiritual world, confident that it can imbue us with the healing and strengthening powers we need to remedy the consequences of the day past and to prepare us for the demands of the day to come. The practice of Epimethean *gratitude*––for matters both cosmic and quotidian––helps lower the drawbridge to sleep; along with Steiner’s oft-recommended *Rückschau *or bird’s eye retrospective of the day just concluded, one can also try brief exercises of movement that include actually taking a few steps backward towards the bed so as to enhance this sense of trust in the as-yet unseen world of sleep. In fact, this happens naturally when we turn to sit down on the edge of a bed or couch.
+
+As for the advent of dawning wakefulness, we need the warming mood of* courage *in order to pass safely beneath the daunting spiked portcullis that overhangs the transition from sleeping to waking. Here practicing upon awakening a brief exercise of Promethean *forethought * may be helpful before we actually open our eyelids, draw apart the curtains, and prepare to embrace the demands of the day. As Rudolf Steiner puts it:
+
+On days when something important is to happen to us we do not wake up exactly as we do on days that take their usual course –– only we do not notice it. Those who used to lead the life of peasants on the land –– such people knew about these things and did not like to be torn suddenly out of sleep, because when there is no gradual transition into the waking life of day one is wrested from such intimate experiences. Peasants say that on waking one should never look immediately at the window but away from it, so that while the light is still dim one can become aware of what is emerging from sleep . . . The more aware they become of that indefinite, half mystical influence which can radiate from sleep, the more clearly is their attention directed to their karma. (Rudolf Steiner, *Karmic Relations*, Volume VII, Lecture of 14 June 1924 in Breslau (London: Rudolf Steiner Press, 1973) p.117)
+
+In many cultural traditions, the transitional moments of twilight––dusk and dawn––are revered as a sacred or meditative time when the temporal and the earthly brush up against the eternal and the cosmic. As the sun falls asleep each evening beyond the curve of the western horizon, the vast planetary and starry realms of the spirit gradually come into view. But as the “rosy dawn”, accompanied by Venus the Morning Star, heralds the return in the east of the radiant daytime sun, the star-studded celestial firmament dissolves into a period of invisibility. In this precious twice-daily transition, we are granted a fleeting glimpse of dynamic realms normally inaccessible to direct experience.
+
+Spring/Summer 2022
+
+## Sign up to receive our Center & Periphery Newsletter!
+
+You’ll receive the newsletter via e-mail.

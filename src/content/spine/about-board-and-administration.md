@@ -104,30 +104,30 @@ Have a question? [Contact us](/contact) and we’ll be in touch.
 
 Stay up to date and read our extensive archive.
 
-**[Center & Periphery Newsletter —Spring 2026](https://centerforanthroposophy.org/center-periphery-newsletter-spring-2026/)
+**[Center & Periphery Newsletter —Spring 2026](/news/center-periphery-newsletter-spring-2026)
 
 During this winter season at the Center for Anthroposophy (CfA), the directors of our seven programs––a record number!––are forming new courses and line-ups of faculty...
 
-[Read More](https://centerforanthroposophy.org/center-periphery-newsletter-spring-2026/)
+[Read More](/news/center-periphery-newsletter-spring-2026)
 
-**[Center & Periphery Newsletter — Winter 2025-2026](https://centerforanthroposophy.org/center-periphery-newsletter-winter-2025-2026/)
-
-During this winter season at the Center for Anthroposophy (CfA), the directors of our seven programs––a record number!––are forming new courses and line-ups of faculty...
-
-[Read More](https://centerforanthroposophy.org/center-periphery-newsletter-winter-2025-2026/)
-
-##### [Center & Periphery Newsletter — Fall 2025](https://centerforanthroposophy.org/center-periphery-newsletter-fall-2025/)
+**[Center & Periphery Newsletter — Winter 2025-2026](/news/center-periphery-newsletter-winter-2025-2026)
 
 During this winter season at the Center for Anthroposophy (CfA), the directors of our seven programs––a record number!––are forming new courses and line-ups of faculty...
 
-[Read More](https://centerforanthroposophy.org/center-periphery-newsletter-fall-2025/)
+[Read More](/news/center-periphery-newsletter-winter-2025-2026)
 
-**[Center & Periphery Newsletter —Summer 2025](https://centerforanthroposophy.org/center-periphery-newsletter-summer-2025/)
+##### [Center & Periphery Newsletter — Fall 2025](/news/center-periphery-newsletter-fall-2025)
 
 During this winter season at the Center for Anthroposophy (CfA), the directors of our seven programs––a record number!––are forming new courses and line-ups of faculty...
 
-[Read More](https://centerforanthroposophy.org/center-periphery-newsletter-summer-2025/)
+[Read More](/news/center-periphery-newsletter-fall-2025)
 
-[READ ALL](https://centerforanthroposophy.org/news/)
+**[Center & Periphery Newsletter —Summer 2025](/news/center-periphery-newsletter-summer-2025)
+
+During this winter season at the Center for Anthroposophy (CfA), the directors of our seven programs––a record number!––are forming new courses and line-ups of faculty...
+
+[Read More](/news/center-periphery-newsletter-summer-2025)
+
+[READ ALL](/news)
 
 ## Sign up for our Newsletter!

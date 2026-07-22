@@ -12,4 +12,15 @@ const spine = defineCollection({
   }),
 });
 
-export const collections = { spine };
+const posts = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/posts' }),
+  schema: z.object({
+    title: z.string(),
+    slug: z.string(),
+    date: z.string(),
+    excerpt: z.string().optional(),
+    cover: z.string().optional(),
+  }),
+});
+
+export const collections = { spine, posts };
