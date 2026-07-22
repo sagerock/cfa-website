@@ -79,3 +79,22 @@ Kairos; karen@ = Mentor Training + Leadership Development; deborah@ = Exploratio
 david@ = WHS + Starlight + courses.json; elsy@ staged. Hard ceiling for everyone:
 the doorbell can never edit `doorbell/**` or infra — no email may grant email-editing
 power. Enabled ≠ invited: CfA folks don't know the address exists yet.
+
+## 2026-07-22 — CTAs + first-party tracking (the owned-data loop)
+Header "Request Info" CTA → `/contact` (real form) → Supabase → `/thank-you`; leads AND
+analytics land in the SAME database, so CfA owns both their leads and their traffic data
+(vs. scattering across a form vendor + Google Analytics they don't understand).
+- **Backend:** Supabase project `dplaqxqnczmnxkuccsph` (existing SageRock "ai-engagement-hub",
+  reused to avoid a $10/mo new project for a PoC). Tables `public.cfa_contact_submissions`
+  and `public.cfa_page_events` (RLS on, no policies — only the service-role edge functions
+  touch them). Edge functions `cfa-contact` and `cfa-track`, both `verify_jwt=false` and
+  public (no key shipped to the browser; validated server-side). Endpoint base in
+  `src/data/site.js`.
+- **Analytics:** first-party beacon (`src/components/Analytics.astro`) — pageviews, CTA
+  clicks (`[data-track]`), form_start/submit. No cookies, no third parties, no IP stored;
+  a random sessionStorage id groups a visit. No consent banner needed.
+- **Spam:** honeypot `company` field; server drops silently.
+- **Not built yet:** email notification to CfA on new lead (store-only for now), and an
+  admin/reporting view. Production → dedicated Supabase project ($10/mo) for true isolation.
+- Gotcha fixed: a 204 response must have a `null` body, not `""` (else the edge function
+  500s after a successful insert).
