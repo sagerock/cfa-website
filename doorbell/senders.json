@@ -26,9 +26,28 @@
       "approve": true
     },
     "karen@centerforanthroposophy.org": {
-      "enabled": false,
-      "name": "Karen Atkinson — staged pending Sage confirming which program page(s) are hers (tagged in 5 programs)",
-      "scope": [],
+      "enabled": true,
+      "name": "Karen Atkinson — Mentor Training + Leadership Development director",
+      "scope": [
+        "src/content/spine/programs-mentor-training.md",
+        "src/content/spine/programs-waldorf-leadership-development.md"
+      ],
+      "approve": true
+    },
+    "deborah@centerforanthroposophy.org": {
+      "enabled": true,
+      "name": "Deborah Dornemann — Explorations Online director",
+      "scope": ["src/content/spine/programs-explorations-online.md"],
+      "approve": true
+    },
+    "david@centerforanthroposophy.org": {
+      "enabled": true,
+      "name": "David Sloan — WHS Teacher Education + Starlight Rays director",
+      "scope": [
+        "src/content/spine/programs-waldorf-high-school.md",
+        "src/content/spine/programs-starlight-rays.md",
+        "src/data/courses.json"
+      ],
       "approve": true
     },
     "elsy@centerforanthroposophy.org": {
