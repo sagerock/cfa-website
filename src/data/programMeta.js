@@ -33,6 +33,28 @@ export const FACULTY_TAG = {
   'waldorf-leadership-development': 'waldorf-leadership-development',
 };
 
+// One-line descriptions, grounded in each program's real page copy.
+export const BLURB = {
+  'explorations-online':
+    'Deepen your connection to the spiritual, artistic, and human dimensions of Waldorf education — a convenient online program.',
+  'building-bridges':
+    'Discover the anthroposophical foundations of Waldorf education through engaging summer workshops.',
+  'waldorf-high-school':
+    'Low-residency certification for high school teachers advancing Waldorf pedagogy with purpose.',
+  'antioch-university':
+    'Elementary Waldorf teacher education in partnership with Antioch University New England.',
+  'kairos-institute':
+    'Courses for the public and career training in artistic therapy and trauma-informed pedagogy.',
+  'mentor-training':
+    'Bring the wisdom of your teaching experience into a new role of service through certified mentorship.',
+  'renewal-courses':
+    'Week-long, certificate-earning summer courses to nourish body, soul, and spirit.',
+  'starlight-rays':
+    'An online seminar series on contemporary topics for high school teachers, staff, and parents.',
+  'waldorf-leadership-development':
+    'Preparing leaders and administrators to carry the life of a Waldorf school.',
+};
+
 export const TAG_LABEL = {
   'explorations-online': 'Explorations Online',
   'building-bridges': 'Building Bridges',

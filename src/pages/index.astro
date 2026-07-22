@@ -1,69 +1,100 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
-import { PROGRAM_GROUPS, RESIDENCY_GROUP } from '../data/programMeta.js';
-import facultyData from '../data/faculty.json';
-import coursesData from '../data/courses.json';
+import { PROGRAM_GROUPS, BLURB } from '../data/programMeta.js';
 
 const spine = await getCollection('spine');
-const bySlug = Object.fromEntries(spine.map((e) => [e.data.slug, e]));
-const activeN = facultyData.faculty.filter((p) => p.active).length;
+const label = Object.fromEntries(spine.map((e) => [e.data.slug, e.data.navLabel]));
 ---
 
 <Base title="Center for Anthroposophy — Waldorf teacher education" current="/">
-  <header class="hero">
+  <section class="home-hero">
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <p class="eyebrow">Waldorf teacher education since 1981</p>
+        <h1>A lifelong path into Waldorf teaching</h1>
+        <p class="lede">
+          Low-residency programs in teacher education, professional and leadership
+          development, and healing education through the arts — in Wilton &amp; Keene,
+          New Hampshire, and online.
+        </p>
+        <div class="hero-cta">
+          <a class="btn" href="/programs">Explore the programs</a>
+          <a class="btn btn-ghost" href="/about/about-the-center">About the Center</a>
+        </div>
+      </div>
+      <figure class="hero-photo">
+        <img
+          src="/images/home-hero-classroom.webp"
+          alt="Adult students in a timber-framed classroom during a Center for Anthroposophy course"
+          width="820"
+          height="547"
+          fetchpriority="high"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <section class="mission">
     <div class="wrap">
-      <svg class="mark draw" viewBox="0 0 340 120" fill="none" aria-hidden="true">
+      <svg class="mission-mark" viewBox="0 0 200 60" fill="none" aria-hidden="true">
         <path
-          d="M20 60 C20 20 90 20 130 60 C170 100 240 100 250 60 C260 20 190 20 170 60 C150 100 90 100 60 60 C40 32 300 22 320 60 C330 82 300 96 280 92"
+          d="M12 30 C12 12 52 12 76 30 C100 48 140 48 148 30 C156 12 116 12 100 30 C84 48 44 48 24 30"
           stroke="var(--green)"
-          stroke-width="1.6"
+          stroke-width="1.4"
           stroke-linecap="round"></path>
       </svg>
-      <p class="eyebrow">Waldorf teacher education since 1981</p>
-      <h1>Center for Anthroposophy</h1>
-      <p class="lede">Preparing Waldorf teachers through study, artistic work, and self-development.</p>
-      <p class="place">Wilton &amp; Keene, New Hampshire</p>
+      <p class="mission-text">
+        The mission of the Center for Anthroposophy is to enkindle a flame in adults — those
+        who teach children through Waldorf education, who lead and administer Waldorf schools,
+        and who work pedagogically with the healing arts — so they can forge new human
+        capacities out of a practice of lifelong learning.
+      </p>
     </div>
-  </header>
+  </section>
 
-  <hr class="rule" />
-
-  <section class="band">
+  <section class="band programs-home">
     <div class="wrap">
       <div class="shead">
         <p class="eyebrow">Programs</p>
-        <h2>Find your path into Waldorf education</h2>
-        <p>
-          From a first exploration of anthroposophy to full high-school teacher certification —
-          {coursesData.courses.length} courses, {activeN} active faculty.
-        </p>
+        <h2>Find your path</h2>
       </div>
-      <div class="iagrid">
-        {PROGRAM_GROUPS.map((g) => (
-          <div class="iagroup">
-            <h3 class="iatag">{g.name}</h3>
-            <ul>
-              {g.slugs.map((s) => (
-                <li>
-                  <a href={`/programs/${s}`}>
-                    <span>{bySlug[s]?.data.navLabel ?? s}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-        <div class="iagroup">
-          <h3 class="iatag">{RESIDENCY_GROUP.name}</h3>
-          <ul>
-            {RESIDENCY_GROUP.slugs.map((s) => (
-              <li>
-                <a href={`/programs/${s}`}><span>{bySlug[s]?.data.navLabel ?? s}</span></a>
-              </li>
+      {PROGRAM_GROUPS.map((g) => (
+        <div class="prog-group">
+          <h3 class="iatag">{g.name}</h3>
+          <div class="prog-cards">
+            {g.slugs.map((s) => (
+              <a class="prog-card" href={`/programs/${s}`}>
+                <h4>{label[s] ?? s}</h4>
+                {BLURB[s] && <p>{BLURB[s]}</p>}
+                <span class="prog-more">Learn more →</span>
+              </a>
             ))}
-          </ul>
+          </div>
         </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="community" aria-label="Community">
+    <div class="wrap community-grid">
+      <figure class="community-photo">
+        <img
+          src="/images/home-community-cohort.jpg"
+          alt="A gathering of Center for Anthroposophy faculty and students"
+          width="760"
+          height="521"
+          loading="lazy"
+        />
+      </figure>
+      <div class="community-text">
+        <p class="eyebrow">A community of teachers</p>
+        <h2>Study alongside colleagues from Waldorf schools around the world</h2>
+        <p>
+          For more than forty years, teachers have come to New Hampshire each summer to study,
+          make art together, and return to their schools renewed.
+        </p>
+        <p><a href="/faculty">Meet the faculty →</a></p>
       </div>
     </div>
   </section>
