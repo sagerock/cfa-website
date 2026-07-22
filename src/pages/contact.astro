@@ -94,7 +94,11 @@ import { CONTACT, CONTACT_ENDPOINT, PROGRAM_OPTIONS } from '../data/site.js';
         return;
       }
       data.source_path = location.pathname;
-      try { data.session_id = sessionStorage.getItem('cfa_sid') || ''; } catch (e) {}
+      try {
+        data.session_id = sessionStorage.getItem('cfa_sid') || '';
+        data.channel = sessionStorage.getItem('cfa_src') || 'Direct';
+        data.utm = JSON.parse(sessionStorage.getItem('cfa_utm') || '{}');
+      } catch (e) {}
       btn.disabled = true;
       btn.textContent = 'Sending…';
       try {

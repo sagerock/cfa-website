@@ -50,16 +50,22 @@ const STATS_ENDPOINT = `${FN}/cfa-stats`;
 
         <div class="two-col">
           <section class="panel">
+            <div class="panel-head"><h2>Where visitors come from</h2></div>
+            <ul class="ranklist" id="sources"></ul>
+            <div id="sources-empty" class="empty" hidden>No traffic yet.</div>
+          </section>
+          <section class="panel">
             <div class="panel-head"><h2>Top pages</h2></div>
             <ul class="ranklist" id="top-pages"></ul>
             <div id="pages-empty" class="empty" hidden>No page views yet.</div>
           </section>
-          <section class="panel">
-            <div class="panel-head"><h2>Recent leads</h2></div>
-            <ul class="leadlist" id="recent-leads"></ul>
-            <div id="leads-empty" class="empty" hidden>No leads yet. Submissions from the contact form appear here.</div>
-          </section>
         </div>
+
+        <section class="panel">
+          <div class="panel-head"><h2>Recent leads</h2></div>
+          <ul class="leadlist" id="recent-leads"></ul>
+          <div id="leads-empty" class="empty" hidden>No leads yet. Submissions from the contact form appear here.</div>
+        </section>
       </div>
     </main>
 
@@ -98,8 +104,18 @@ const STATS_ENDPOINT = `${FN}/cfa-stats`;
         if (d.generated_at) $('updated').textContent = 'Updated ' + new Date(d.generated_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
 
         renderChart(d.daily || []);
+        renderSources(d.sources || []);
         renderTopPages(d.top_pages || []);
         renderLeads(d.recent_leads || []);
+      }
+
+      function renderSources(sources) {
+        if (!sources.length) { $('sources-empty').hidden = false; return; }
+        const max = Math.max(...sources.map((s) => s.visits));
+        $('sources').innerHTML = sources.map((s) =>
+          `<li><span class="rl-label">${s.source}</span>
+             <span class="rl-bar"><span style="width:${(s.visits / max) * 100}%"></span></span>
+             <span class="rl-num">${fmt(s.visits)}</span></li>`).join('');
       }
 
       function renderChart(daily) {
@@ -153,7 +169,7 @@ const STATS_ENDPOINT = `${FN}/cfa-stats`;
         $('recent-leads').innerHTML = leads.map((l) =>
           `<li><span class="ld-name">${l.name || '(no name)'}</span>
              <span class="ld-prog">${l.program || 'General inquiry'}</span>
-             <span class="ld-meta">${l.email} · ${new Date(l.at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span></li>`).join('');
+             <span class="ld-meta">${l.email} · ${new Date(l.at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}${l.source ? ` · via ${l.source}` : ''}</span></li>`).join('');
       }
 
       $('refresh').addEventListener('click', load);
