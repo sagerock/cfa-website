@@ -591,6 +591,34 @@ details.course[open] summary::before { content: '–'; }
 .thankyou p { color: var(--soft); font-size: 18px; max-width: 46ch; margin: 0 auto 10px; }
 .thankyou .actions { margin-top: 30px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
+/* ---- residency / prose extras ---- */
+.prose .notice {
+  font-family: var(--sans); font-size: 14px; line-height: 1.5;
+  background: var(--raised); border: 1px solid var(--line); border-left: 3px solid var(--gold);
+  border-radius: 4px; padding: 13px 16px; margin-bottom: 22px; color: var(--ink);
+}
+.prose small { font-family: var(--sans); font-size: 12.5px; color: var(--soft); }
+.prose .inline-btn {
+  display: inline-block; font-family: var(--sans); font-size: 14px; font-weight: 600;
+  text-decoration: none; color: var(--paper); background: var(--green); border-radius: 4px;
+  padding: 10px 20px; margin: 6px 0;
+}
+.prose .inline-btn:hover { opacity: 0.9; }
+
+.prose .table-wrap { overflow-x: auto; margin: 18px 0 6px; border: 1px solid var(--line); border-radius: 6px; }
+table.rates { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: 13px; min-width: 640px; }
+table.rates th, table.rates td { padding: 9px 12px; text-align: right; white-space: nowrap; }
+table.rates thead th { background: var(--green); color: var(--paper); font-weight: 600; vertical-align: bottom; text-align: right; font-size: 12px; }
+table.rates thead th span { display: block; font-weight: 400; opacity: 0.85; font-size: 10.5px; margin-top: 3px; }
+table.rates tbody th { text-align: left; font-weight: 600; color: var(--ink); background: var(--raised); position: sticky; left: 0; }
+table.rates tbody th small { display: block; font-weight: 400; color: var(--soft); font-size: 10.5px; }
+table.rates td { font-variant-numeric: tabular-nums; color: var(--soft); border-top: 1px solid var(--line); }
+table.rates tr.rowgap th, table.rates tr.rowgap td { border-top: 2px solid var(--line); }
+table.rates tr.total th, table.rates tr.total td { font-weight: 700; color: var(--ink); border-top: 2px solid var(--green); }
+
+.prose .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin: 18px 0; }
+.prose .photo-grid img { width: 100%; height: 130px; object-fit: cover; border-radius: 5px; border: 1px solid var(--line); margin: 0; }
+
 /* ---- rich program page ---- */
 .prog-hero { padding: 48px 0 24px; }
 .prog-hero h1 { font-size: clamp(30px, 5vw, 48px); letter-spacing: -0.01em; margin: 8px 0 14px; max-width: 18ch; }
