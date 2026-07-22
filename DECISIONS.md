@@ -132,3 +132,14 @@ token-gated `cfa-stats` edge function; **lead emails are masked server-side** be
 Page is `noindex` + unlinked; the token lives only in the URL hash (viewer supplies it, never
 baked into the built page). PoC token is a constant in the cfa-stats function (rotate by
 redeploy); productionize with a per-user login. URL: `/dashboard#<token>`.
+
+## 2026-07-22 — Referral / traffic-source tracking (ad attribution)
+"Where do people come from?" The beacon already recorded `referrer`; now it also captures
+UTM tags and stores a **first-touch source** per visit (sessionStorage), attached to any lead
+that visit. `public.cfa_source_of()` classifies referrer/utm → Google / Facebook / LinkedIn /
+Bing / Newsletter / Direct / Other. Dashboard shows a "Where visitors come from" panel + each
+lead's source. Lead attribution persists in `contacts.utm_params` + `intake_data.source`.
+Closes the SageRock-marketing loop: tag ad links with `?utm_source=linkedin` and leads trace
+to the channel. Demo data seeded (110 pageviews across sources, 9 CTA, 3 leads — all
+@example.com / session_id `demo-%`, clearable). Seed gotcha: `random()` in a non-correlated
+`lateral` evaluates ONCE — use `id % N` into a weighted array for per-row variety.
