@@ -87,8 +87,6 @@ h1, h2, h3, h4 { font-weight: 600; line-height: 1.15; text-wrap: balance; }
   color: var(--soft);
   border-bottom: 1px solid var(--line);
 }
-.head-phone { color: var(--soft); text-decoration: none; font-variant-numeric: tabular-nums; }
-.head-top a:hover { color: var(--green-ink); }
 .head-right { display: flex; align-items: center; gap: 22px; }
 .btn-contact {
   font-family: var(--sans);

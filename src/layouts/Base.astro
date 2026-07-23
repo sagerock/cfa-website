@@ -1,7 +1,6 @@
 ---
 import '../styles/global.css';
 import Analytics from '../components/Analytics.astro';
-import { CONTACT } from '../data/site.js';
 const { title = 'Center for Anthroposophy', current = '' } = Astro.props;
 const nav = [
   ['/programs', 'Programs'],
@@ -28,9 +27,6 @@ const year = new Date().getFullYear();
     <header class="site-head">
       <div class="wrap head-top">
         <span>Waldorf teacher education · Wilton &amp; Keene, New Hampshire</span>
-        <a class="head-phone" href={`tel:${CONTACT.phoneHref}`} data-track="header-phone">
-          {CONTACT.phone}
-        </a>
       </div>
       <div class="wrap head-main">
         <a class="brand" href="/">
