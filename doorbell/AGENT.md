@@ -6,7 +6,7 @@ polling agent.
 
 Current pilot:
 
-- Only `sage@sagerock.com` is authorized.
+- `sage@sagerock.com` and `milan@centerforanthroposophy.org` are authorized.
 - Mailbox mode is `dry_run`.
 - `CFA_SITE_PUBLISH_ENABLED=false`.
 - No GitHub write credential is installed.

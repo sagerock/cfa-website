@@ -65,7 +65,7 @@ new. The lemniscate mark in header/hero is drawn inline SVG, animated on the hom
    infrastructure. Commits directly to `main` with build verification.
 2. **The email doorbell** (`doorbell/`): email `cfa-site@ask.sagerock.com` → SendGrid
    triggers a hosted Railway worker using Sol high. The current private pilot authorizes
-   Sage only and runs in dry-run mode: it proposes the edit, validates the full build, and
+   Sage and Milan and runs in dry-run mode: it proposes the edit, validates the full build, and
    replies without publishing. After live activation, unambiguous in-scope requests commit
    directly to `main`; UNDO creates a revert commit. Runtime permissions live in the hosted
    mailbox configuration; `doorbell/senders.json` is the planned roster, not authority.

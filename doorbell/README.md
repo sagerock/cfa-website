@@ -6,7 +6,8 @@ Sage's computer is not involved.
 
 ## Pilot status
 
-The mailbox currently authorizes only `sage@sagerock.com` and runs in **dry-run mode**.
+The mailbox currently authorizes `sage@sagerock.com` and
+`milan@centerforanthroposophy.org` and runs in **dry-run mode**.
 It uses `openai/gpt-5.6-sol` at high reasoning to make a proposed edit in a temporary clone,
 checks the complete diff, and runs the full Astro build. It then emails the result, but it
 cannot commit or publish: no GitHub write credential is installed and both publish gates

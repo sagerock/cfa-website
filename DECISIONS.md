@@ -178,3 +178,5 @@ and `CFA_SITE_PUBLISH_ENABLED=true` before publishing is possible. Dry-run still
 real public repo, produces the smallest edit, deterministically checks scopes/protected paths,
 preserves the PoC banner and noindex, runs the full Astro build, and emails the result. After
 attended tests pass, live activation will implement the direct-to-main policy above.
+Before the first external test, Milan was also added with full dry-run scope so he can try
+the workflow safely; no publishing capability was added.

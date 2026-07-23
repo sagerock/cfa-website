@@ -1,5 +1,5 @@
 {
-  "_readme": "PLANNED ROSTER ONLY — not runtime authority. The hosted cfa-site@ask.sagerock.com worker reads sender scopes from Ask's encrypted mailbox config, outside this public repository. The dry-run pilot currently authorizes only sage@sagerock.com. Entries here record the intended rollout; enabled does not mean invited or active in Ask. Permission changes happen only in a direct session with Sage and must be applied separately to the hosted mailbox. Email can never edit doorbell/.",
+  "_readme": "PLANNED ROSTER ONLY — not runtime authority. The hosted cfa-site@ask.sagerock.com worker reads sender scopes from Ask's encrypted mailbox config, outside this public repository. The dry-run pilot currently authorizes sage@sagerock.com and milan@centerforanthroposophy.org. Entries here record the intended rollout; enabled does not mean invited or active in Ask. Permission changes happen only in a direct session with Sage and must be applied separately to the hosted mailbox. Email can never edit doorbell/.",
   "senders": {
     "sage@sagerock.com": {
       "enabled": true,
