@@ -184,3 +184,12 @@ Later that day, Sage installed a fine-grained token restricted to `sagerock/cfa-
 The two publish gates remain off. This personal token is appropriate for the pilot; the
 reusable production model should use a GitHub App installed per client repository, issuing
 short-lived installation tokens instead of depending on Sage's personal credential.
+
+## 2026-07-23 — Prefer per-repository GitHub App credentials
+The hosted worker now supports the reusable credential model: when an App ID and private
+key are configured, it signs a short-lived App JWT, discovers the App installation from
+the fixed repository, and requests a token limited to `cfa-website` and `contents: write`
+for each job. The token is available only to Git subprocesses, never to Sol or the Astro
+build. Partial App settings fail closed. The fine-grained personal token remains a temporary
+fallback until a real App dry-run verifies clone access; it will then be removed without
+changing either publish gate.
