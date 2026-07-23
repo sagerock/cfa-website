@@ -166,3 +166,15 @@ out-of-scope, ambiguous, conflicting, or build-breaking requests never publish. 
 anti-self-modification ceiling remains absolute: email can never edit `doorbell/**`,
 sender permissions, or infrastructure. The current runner is still machine-local; moving
 the same policy into an always-on hosted worker is a separate implementation step.
+
+## 2026-07-23 — Host the doorbell on Ask via SendGrid, pilot in dry-run
+The local Gmail poller is retired. `cfa-site@ask.sagerock.com` now uses the existing
+SendGrid Inbound Parse → Railway Ask pipeline, so incoming mail triggers work immediately
+without Sage's computer. A durable Postgres queue hands requests to a separate worker using
+`openai/gpt-5.6-sol` at high reasoning. Runtime sender scopes live in Ask's encrypted mailbox
+configuration, not in the editable target repository. The initial pilot authorizes only
+`sage@sagerock.com`, has no GitHub write credential, and requires both mailbox `mode=live`
+and `CFA_SITE_PUBLISH_ENABLED=true` before publishing is possible. Dry-run still clones the
+real public repo, produces the smallest edit, deterministically checks scopes/protected paths,
+preserves the PoC banner and noindex, runs the full Astro build, and emails the result. After
+attended tests pass, live activation will implement the direct-to-main policy above.

@@ -1,5 +1,5 @@
 {
-  "_readme": "Who may use the doorbell and what they may edit (glob paths). The agent reads this every cycle. An enabled sender's unambiguous, in-scope email publishes directly to main; enabled:false means staged, not live. POLICY (Sage, 2026-07-23): program directors publish within their own pages; Milan and Sage have full scope. NOTE: this file and everything in doorbell/ are NEVER editable via the doorbell itself, for anyone — permission changes happen only in a direct session with Sage.",
+  "_readme": "PLANNED ROSTER ONLY — not runtime authority. The hosted cfa-site@ask.sagerock.com worker reads sender scopes from Ask's encrypted mailbox config, outside this public repository. The dry-run pilot currently authorizes only sage@sagerock.com. Entries here record the intended rollout; enabled does not mean invited or active in Ask. Permission changes happen only in a direct session with Sage and must be applied separately to the hosted mailbox. Email can never edit doorbell/.",
   "senders": {
     "sage@sagerock.com": {
       "enabled": true,
