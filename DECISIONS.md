@@ -154,3 +154,15 @@ Astro route collision. Added News to nav. Restored newsletter TOCs: empty extrac
 `[](wp-url)` relabeled from the target post's title; 1,392 cross-post links localized to
 `/news/<slug>`, 59 dead empties dropped — blog is now internally self-contained. 23 images
 failed to localize (still hotlink WP). Reusable prep in scratchpad prep_news.py.
+
+## 2026-07-23 — Trusted doorbell edits publish directly to main
+Sage found the preview → YES → merge round trip too frustrating for routine website
+edits and explicitly chose WordPress-like immediacy. This supersedes the approval step
+in the 2026-07-22 doorbell decision: an enabled sender's unambiguous, in-scope email is
+itself authorization to publish. The agent builds first, creates one attributed commit,
+pushes it directly to `main`, and emails a precise confirmation. Git history is the
+rollback mechanism; a clear UNDO reply reverts that request's commit. Unauthorized,
+out-of-scope, ambiguous, conflicting, or build-breaking requests never publish. The
+anti-self-modification ceiling remains absolute: email can never edit `doorbell/**`,
+sender permissions, or infrastructure. The current runner is still machine-local; moving
+the same policy into an always-on hosted worker is a separate implementation step.

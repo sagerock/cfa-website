@@ -16,8 +16,8 @@ New here? Read this file, then `DECISIONS.md` (why everything is the way it is),
 
 ```
 edit (AI session or email doorbell)
-  → commit to a branch → PR → Render builds a preview URL per PR
-  → merge to main → Render auto-builds & deploys (~90s) → live
+  → validate sender/scope → edit → build → commit to main
+  → Render auto-builds & deploys (~90s) → live
 ```
 
 - **Host:** Render static site `srv-d9g2hvflk1mc739qd9e0` (workspace "My Workspace").
@@ -64,9 +64,9 @@ new. The lemniscate mark in header/hero is drawn inline SVG, animated on the hom
 1. **AI working session** (Sage + Claude): full scope — content, templates, styles,
    infrastructure. Commits directly to `main` with build verification.
 2. **The email doorbell** (`doorbell/`): anyone in `senders.json` emails
-   sage+cfaedit@sagerock.com → gets a preview URL → replies YES → published.
-   Per-sender scopes (a director can edit only their program's page). Content only;
-   the doorbell can never modify itself or infrastructure.
+   sage+cfaedit@sagerock.com → an unambiguous, in-scope request is built and published
+   directly. The sender gets a confirmation and can reply UNDO. Per-sender scopes limit
+   a director to their program's page; the doorbell can never modify itself or infrastructure.
 3. **Plain git**: it's a normal repo. Clone, edit, PR.
 
 ## Provenance
@@ -84,10 +84,12 @@ monorepo, targeted at Renewal 2027.
 
 ## Governance
 
-CfA is a MEDIUM-governance client (draft-and-stage): this PoC has not been shown to or
-approved by CfA. Until it is, every page carries the "proof of concept" banner and a
-`noindex` meta. Going live for real = CfA's call, plus: real domain, redirect map from
-old URLs, forms answer, and removing banner/noindex.
+CfA is a MEDIUM-governance client: this PoC has not been shown to or approved by CfA.
+Invited, scope-limited doorbell editors may publish routine content changes directly;
+ambiguous or out-of-scope requests stop for clarification. Until CfA approves the rebuild,
+every page carries the "proof of concept" banner and a `noindex` meta. Going live for real
+= CfA's call, plus: real domain, redirect map from old URLs, forms answer, and removing
+banner/noindex.
 
 ## Develop
 

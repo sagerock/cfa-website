@@ -1,29 +1,25 @@
 {
-  "_readme": "Who may use the doorbell, what they may edit (glob paths), and who may approve. The agent reads this every cycle. Entries with enabled:false are staged, not live. POLICY (Sage, 2026-07-22): program directors self-approve within their own program's pages; Milan and Sage have full scope. NOTE: this file and everything in doorbell/ are NEVER editable via the doorbell itself, for anyone — permission changes happen only in a direct session with Sage.",
+  "_readme": "Who may use the doorbell and what they may edit (glob paths). The agent reads this every cycle. An enabled sender's unambiguous, in-scope email publishes directly to main; enabled:false means staged, not live. POLICY (Sage, 2026-07-23): program directors publish within their own pages; Milan and Sage have full scope. NOTE: this file and everything in doorbell/ are NEVER editable via the doorbell itself, for anyone — permission changes happen only in a direct session with Sage.",
   "senders": {
     "sage@sagerock.com": {
       "enabled": true,
       "name": "Sage Lewis (SageRock)",
-      "scope": ["**"],
-      "approve": true
+      "scope": ["**"]
     },
     "sage@centerforanthroposophy.org": {
       "enabled": true,
       "name": "Sage Lewis (CfA address — same person)",
-      "scope": ["**"],
-      "approve": true
+      "scope": ["**"]
     },
     "milan@centerforanthroposophy.org": {
       "enabled": true,
       "name": "Milan Daler (CfA administration)",
-      "scope": ["**"],
-      "approve": true
+      "scope": ["**"]
     },
     "karine@centerforanthroposophy.org": {
       "enabled": true,
       "name": "Karine Munk Finser — Kairos Institute director",
-      "scope": ["src/content/spine/programs-kairos-institute.md"],
-      "approve": true
+      "scope": ["src/content/spine/programs-kairos-institute.md"]
     },
     "karen@centerforanthroposophy.org": {
       "enabled": true,
@@ -31,14 +27,12 @@
       "scope": [
         "src/content/spine/programs-mentor-training.md",
         "src/content/spine/programs-waldorf-leadership-development.md"
-      ],
-      "approve": true
+      ]
     },
     "deborah@centerforanthroposophy.org": {
       "enabled": true,
       "name": "Deborah Dornemann — Explorations Online director",
-      "scope": ["src/content/spine/programs-explorations-online.md"],
-      "approve": true
+      "scope": ["src/content/spine/programs-explorations-online.md"]
     },
     "david@centerforanthroposophy.org": {
       "enabled": true,
@@ -47,14 +41,12 @@
         "src/content/spine/programs-waldorf-high-school.md",
         "src/content/spine/programs-starlight-rays.md",
         "src/data/courses.json"
-      ],
-      "approve": true
+      ]
     },
     "elsy@centerforanthroposophy.org": {
       "enabled": false,
-      "name": "Elsy Ayoub — staged: all content, self-approve (flip on when invited)",
-      "scope": ["src/content/**", "src/data/**"],
-      "approve": true
+      "name": "Elsy Ayoub — staged: all content, direct publish (flip on when invited)",
+      "scope": ["src/content/**", "src/data/**"]
     }
   }
 }
