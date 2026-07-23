@@ -4,16 +4,17 @@ The active doorbell is the hosted `cfa-site@ask.sagerock.com` mailbox on SageRoc
 platform. SendGrid Inbound Parse triggers it directly; this repository no longer runs a
 polling agent.
 
-Current pilot:
+Current live pilot:
 
 - `sage@sagerock.com` and `milan@centerforanthroposophy.org` are authorized.
-- Mailbox mode is `dry_run`.
-- `CFA_SITE_PUBLISH_ENABLED=false`.
-- A fine-grained token restricted to `sagerock/cfa-website` is installed for future
-  attended publish testing; it cannot bypass the two publish gates.
-- Sol high may edit only a temporary clone; deterministic code validates the diff and build.
+- Mailbox mode is `live`.
+- `CFA_SITE_PUBLISH_ENABLED=true`.
+- A per-repository GitHub App supplies short-lived installation tokens; no personal token
+  is installed on the worker.
+- Sol high edits only a temporary clone; deterministic code validates the diff and build
+  before a direct push to `main`.
 
-Live policy after explicit activation:
+Live policy:
 
 - An invited sender's unambiguous in-scope email is authorization to publish to `main`.
 - Ambiguous, unauthorized, out-of-scope, conflicting, or failed-build requests do not publish.

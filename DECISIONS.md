@@ -197,3 +197,14 @@ The production credential preflight subsequently verified App JWT signing, insta
 discovery, token issuance, and authenticated repository access. The personal token was
 then removed from the worker and the service redeployed successfully; both publish gates
 remain off.
+
+## 2026-07-23 — Activate direct publishing for the private email pilot
+Sage explicitly chose WordPress-like immediacy over continuing dry-run previews: seeing a
+requested edit appear on the Render site is the point of the experiment, and every change
+is recoverable with a normal Git revert. The encrypted mailbox mode and independent Railway
+gate are therefore enabled for Sage and Milan. Unambiguous, in-scope requests publish one
+attributed commit directly to `main` only after deterministic validation and a complete
+Astro build; Render auto-deploys it and the worker replies with the result. Ambiguity,
+authorization failures, protected paths, stale branches, and build failures still stop.
+The PoC banner and `noindex` remain mandatory because this activates editing, not public
+launch approval.

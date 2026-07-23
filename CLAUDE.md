@@ -30,10 +30,9 @@ Read `README.md` first for architecture; this file is the operating rules.
   lives in the SageRock monorepo at `clients/center-for-anthroposophy/site-rebuild/`.
   Keep repo docs and that folder's docs consistent when things change.
 - CfA governance is MEDIUM. The hosted doorbell is `cfa-site@ask.sagerock.com` on the
-  Railway Ask platform. It is currently a Sage-and-Milan dry-run pilot with a repository-
-  scoped GitHub token installed but both publish gates off. After explicit activation,
-  routine unambiguous
-  requests publish directly to `main`; ambiguity stops, and Git revert is rollback.
+  Railway Ask platform. It is a Sage-and-Milan live pilot using a per-repository GitHub App.
+  Both publish gates are enabled: routine unambiguous requests publish directly to `main`;
+  ambiguity stops, and Git revert is rollback.
   Runtime sender authority lives in Ask's encrypted mailbox config, never this repo.
   `doorbell/senders.json` is only the planned roster; enabled ≠ invited.
 - Log significant decisions in `DECISIONS.md` — dated, with the why.

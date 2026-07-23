@@ -17,7 +17,7 @@ New here? Read this file, then `DECISIONS.md` (why everything is the way it is),
 ```
 AI session → edit → build → commit to main → Render deploys
 email doorbell → SendGrid trigger → hosted worker → validate sender/scope → edit → build
-  → dry-run report during pilot; direct commit to main after live activation
+  → direct commit to main → Render deploy → confirmation email
 ```
 
 - **Host:** Render static site `srv-d9g2hvflk1mc739qd9e0` (workspace "My Workspace").
@@ -65,10 +65,10 @@ new. The lemniscate mark in header/hero is drawn inline SVG, animated on the hom
    infrastructure. Commits directly to `main` with build verification.
 2. **The email doorbell** (`doorbell/`): email `cfa-site@ask.sagerock.com` → SendGrid
    triggers a hosted Railway worker using Sol high. The current private pilot authorizes
-   Sage and Milan and runs in dry-run mode: it proposes the edit, validates the full build, and
-   replies without publishing. After live activation, unambiguous in-scope requests commit
-   directly to `main`; UNDO creates a revert commit. Runtime permissions live in the hosted
-   mailbox configuration; `doorbell/senders.json` is the planned roster, not authority.
+   Sage and Milan. Unambiguous in-scope requests validate the full build, commit directly
+   to `main`, and deploy through Render; UNDO creates a revert commit. Runtime permissions
+   live in the hosted mailbox configuration; `doorbell/senders.json` is the planned roster,
+   not authority.
 3. **Plain git**: it's a normal repo. Clone, edit, PR.
 
 ## Provenance
@@ -87,8 +87,8 @@ monorepo, targeted at Renewal 2027.
 ## Governance
 
 CfA is a MEDIUM-governance client: this PoC has not been shown to or approved by CfA.
-Once the pilot is explicitly activated, invited, scope-limited doorbell editors may publish
-routine content changes directly; ambiguous or out-of-scope requests stop for clarification.
+Sage explicitly activated direct publishing for the private Sage-and-Milan email pilot;
+ambiguous or out-of-scope requests still stop without publishing.
 Until CfA approves the rebuild, every page carries the "proof of concept" banner and a
 `noindex` meta. Going live for real = CfA's call, plus: real domain, redirect map from old
 URLs, forms answer, and removing banner/noindex.

@@ -4,15 +4,15 @@ Private pilot of "others can edit the site without touching git." Email a change
 to **cfa-site@ask.sagerock.com**. SendGrid triggers a hosted worker on Railway immediately;
 Sage's computer is not involved.
 
-## Pilot status
+## Live pilot status
 
 The mailbox currently authorizes `sage@sagerock.com` and
-`milan@centerforanthroposophy.org` and runs in **dry-run mode**.
-It uses `openai/gpt-5.6-sol` at high reasoning to make a proposed edit in a temporary clone,
-checks the complete diff, and runs the full Astro build. It then emails the result, but it
-cannot commit or publish because both independent publish gates are off.
+`milan@centerforanthroposophy.org` and runs in **live mode**.
+It uses `openai/gpt-5.6-sol` at high reasoning to edit a temporary clone, checks the complete
+diff, and runs the full Astro build. Valid requests commit directly to `main`, Render deploys
+them, and the worker emails the result.
 
-## Intended live workflow
+## Workflow
 
 ```
 email → SendGrid webhook → authorize sender + scope → queue job → Sol edits temporary clone
@@ -30,14 +30,12 @@ never publish.
   public repository. `senders.json` is a planned-roster reference only.
 - Publishing requires both encrypted mailbox `mode=live` and the independent Railway
   variable `CFA_SITE_PUBLISH_ENABLED=true`.
-- A fine-grained token restricted to `sagerock/cfa-website` is installed for attended
-  publish testing, but credentials alone cannot bypass the two publish gates.
-- The production multi-client model should replace the personal token with a GitHub App
-  installed per repository and short-lived installation tokens.
+- A GitHub App installed per repository supplies a short-lived token for each job; no
+  personal GitHub token is installed on the worker.
 - Email can never edit `doorbell/**`, `.github/**`, package/build configuration, environment
   files, or OpenCode configuration.
 - The PoC banner and `noindex` are checked in source and in the built homepage.
-- Every future live change will be an attributed commit; history is never rewritten.
+- Every published change is an attributed commit; history is never rewritten.
 - Replies are signed `— Claude (CfA site doorbell)`, never as Sage.
 
 ## Implementation
