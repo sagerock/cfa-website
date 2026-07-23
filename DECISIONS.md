@@ -193,3 +193,7 @@ for each job. The token is available only to Git subprocesses, never to Sol or t
 build. Partial App settings fail closed. The fine-grained personal token remains a temporary
 fallback until a real App dry-run verifies clone access; it will then be removed without
 changing either publish gate.
+The production credential preflight subsequently verified App JWT signing, installation
+discovery, token issuance, and authenticated repository access. The personal token was
+then removed from the worker and the service redeployed successfully; both publish gates
+remain off.
