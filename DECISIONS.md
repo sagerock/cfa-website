@@ -180,3 +180,7 @@ preserves the PoC banner and noindex, runs the full Astro build, and emails the 
 attended tests pass, live activation will implement the direct-to-main policy above.
 Before the first external test, Milan was also added with full dry-run scope so he can try
 the workflow safely; no publishing capability was added.
+Later that day, Sage installed a fine-grained token restricted to `sagerock/cfa-website`.
+The two publish gates remain off. This personal token is appropriate for the pilot; the
+reusable production model should use a GitHub App installed per client repository, issuing
+short-lived installation tokens instead of depending on Sage's personal credential.

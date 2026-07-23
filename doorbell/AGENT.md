@@ -9,7 +9,8 @@ Current pilot:
 - `sage@sagerock.com` and `milan@centerforanthroposophy.org` are authorized.
 - Mailbox mode is `dry_run`.
 - `CFA_SITE_PUBLISH_ENABLED=false`.
-- No GitHub write credential is installed.
+- A fine-grained token restricted to `sagerock/cfa-website` is installed for future
+  attended publish testing; it cannot bypass the two publish gates.
 - Sol high may edit only a temporary clone; deterministic code validates the diff and build.
 
 Live policy after explicit activation:

@@ -10,8 +10,7 @@ The mailbox currently authorizes `sage@sagerock.com` and
 `milan@centerforanthroposophy.org` and runs in **dry-run mode**.
 It uses `openai/gpt-5.6-sol` at high reasoning to make a proposed edit in a temporary clone,
 checks the complete diff, and runs the full Astro build. It then emails the result, but it
-cannot commit or publish: no GitHub write credential is installed and both publish gates
-are off.
+cannot commit or publish because both independent publish gates are off.
 
 ## Intended live workflow
 
@@ -31,7 +30,10 @@ never publish.
   public repository. `senders.json` is a planned-roster reference only.
 - Publishing requires both encrypted mailbox `mode=live` and the independent Railway
   variable `CFA_SITE_PUBLISH_ENABLED=true`.
-- The worker is not given a GitHub credential during the dry-run pilot.
+- A fine-grained token restricted to `sagerock/cfa-website` is installed for attended
+  publish testing, but credentials alone cannot bypass the two publish gates.
+- The production multi-client model should replace the personal token with a GitHub App
+  installed per repository and short-lived installation tokens.
 - Email can never edit `doorbell/**`, `.github/**`, package/build configuration, environment
   files, or OpenCode configuration.
 - The PoC banner and `noindex` are checked in source and in the built homepage.
