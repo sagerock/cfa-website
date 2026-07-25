@@ -208,3 +208,13 @@ Astro build; Render auto-deploys it and the worker replies with the result. Ambi
 authorization failures, protected paths, stale branches, and build failures still stop.
 The PoC banner and `noindex` remain mandatory because this activates editing, not public
 launch approval.
+
+## 2026-07-24 — Host moved: Render → Cloudflare Pages
+Same evening as the parallel sagerock-website move, and for the same reason: SageRock's
+hosting consolidated onto Cloudflare, where DNS for all client zones already lives and
+where multi-person account access is free (Render charges per seat). Nothing about the
+site or its editing flows changed — the doorbell and AI sessions both end in a commit to
+`main`, and only the service watching that branch is different. Production URL is now
+https://cfa-website-bqx.pages.dev (Cloudflare appended the `-bqx` suffix to the pages.dev
+subdomain). The Render service `srv-d9g2hvflk1mc739qd9e0` is retired. Historical entries
+above that say "Render" describe the host as it was at the time and are left as written.

@@ -9,14 +9,14 @@ Sage's computer is not involved.
 The mailbox currently authorizes `sage@sagerock.com` and
 `milan@centerforanthroposophy.org` and runs in **live mode**.
 It uses `openai/gpt-5.6-sol` at high reasoning to edit a temporary clone, checks the complete
-diff, and runs the full Astro build. Valid requests commit directly to `main`, Render deploys
-them, and the worker emails the result.
+diff, and runs the full Astro build. Valid requests commit directly to `main`, Cloudflare
+Pages deploys them, and the worker emails the result.
 
 ## Workflow
 
 ```
 email → SendGrid webhook → authorize sender + scope → queue job → Sol edits temporary clone
-      → deterministic checks → Astro build → commit to main → Render deploy → confirmation
+      → deterministic checks → Astro build → commit to main → Cloudflare Pages deploy → confirmation
 ```
 
 An unambiguous email from an invited sender is authorization to publish within that sender's

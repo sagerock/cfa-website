@@ -24,8 +24,10 @@ Read `README.md` first for architecture; this file is the operating rules.
   Sage wouldn't want on the open web. (The content itself is already public.)
 - Repo is named `cfa-website` because Sage has an unrelated 2024 repo `CfA-Site`
   (a Python experiment) — GitHub names are case-insensitive. Don't touch that one.
-- Deploys: Render static site `srv-d9g2hvflk1mc739qd9e0`, auto-deploy on `main`
-  push, PR previews on. `RENDER_API_KEY` in `/mnt/d/dev/.env`.
+- Deploys: Cloudflare Pages project `cfa-website` (production
+  https://cfa-website-bqx.pages.dev — note CF's `-bqx` suffix; moved from Render
+  2026-07-24), auto-deploy on `main` push, branch previews on. `CLOUDFLARE_API_TOKEN`
+  in `/mnt/d/dev/.env`.
 - The wider project (full 621-file extraction, audit, forms plan, project memory)
   lives in the SageRock monorepo at `clients/center-for-anthroposophy/site-rebuild/`.
   Keep repo docs and that folder's docs consistent when things change.

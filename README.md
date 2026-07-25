@@ -1,11 +1,11 @@
 # cfa-website — Center for Anthroposophy, rebuilt off WordPress
 
-**Live:** https://cfa-website.onrender.com · **Status: proof of concept** (not CfA's
+**Live:** https://cfa-website-bqx.pages.dev · **Status: proof of concept** (not CfA's
 production site — see Governance below)
 
 This repo is both the **content and the code** of a rebuilt centerforanthroposophy.org:
 pages are Markdown, structured data is JSON, Astro renders it all to static files, and
-Render serves them. There is no WordPress, no page builder, no database, no admin
+Cloudflare Pages serves them. There is no WordPress, no page builder, no database, no admin
 dashboard. **The git repo is the CMS**; editing happens either in an AI working session
 or by email (see The Doorbell).
 
@@ -15,14 +15,14 @@ New here? Read this file, then `DECISIONS.md` (why everything is the way it is),
 ## Architecture
 
 ```
-AI session → edit → build → commit to main → Render deploys
+AI session → edit → build → commit to main → Cloudflare Pages deploys
 email doorbell → SendGrid trigger → hosted worker → validate sender/scope → edit → build
-  → direct commit to main → Render deploy → confirmation email
+  → direct commit to main → Cloudflare Pages deploy → confirmation email
 ```
 
-- **Host:** Render static site `srv-d9g2hvflk1mc739qd9e0` (workspace "My Workspace").
-  Auto-deploy on push to `main`; PR previews enabled. API key: `RENDER_API_KEY` in
-  `/mnt/d/dev/.env` (Sage's machine).
+- **Host:** Cloudflare Pages project `cfa-website` (moved from Render 2026-07-24).
+  Auto-deploy on push to `main`; branch preview deployments enabled. API token:
+  `CLOUDFLARE_API_TOKEN` in `/mnt/d/dev/.env` (Sage's machine).
 - **Rollback:** `git revert` + push. That's the whole disaster-recovery plan, and it's
   a good one.
 
@@ -66,7 +66,7 @@ new. The lemniscate mark in header/hero is drawn inline SVG, animated on the hom
 2. **The email doorbell** (`doorbell/`): email `cfa-site@ask.sagerock.com` → SendGrid
    triggers a hosted Railway worker using Sol high. The current private pilot authorizes
    Sage and Milan. Unambiguous in-scope requests validate the full build, commit directly
-   to `main`, and deploy through Render; UNDO creates a revert commit. Runtime permissions
+   to `main`, and deploy through Cloudflare Pages; UNDO creates a revert commit. Runtime permissions
    live in the hosted mailbox configuration; `doorbell/senders.json` is the planned roster,
    not authority.
 3. **Plain git**: it's a normal repo. Clone, edit, PR.
