@@ -17,10 +17,15 @@ import Learn from '../../layouts/Learn.astro';
 
   const status = document.getElementById('auth-status');
   const retry = document.getElementById('auth-retry');
-  const code = new URL(location.href).searchParams.get('code');
+  const params = new URL(location.href).searchParams;
+  const code = params.get('code');
+  const tokenHash = params.get('token_hash');
+  const type = params.get('type');
 
   let error = null;
-  if (code) {
+  if (tokenHash && type === 'email') {
+    ({ error } = await supabase.auth.verifyOtp({ token_hash: tokenHash, type: 'email' }));
+  } else if (code) {
     ({ error } = await supabase.auth.exchangeCodeForSession(code));
   } else {
     const result = await supabase.auth.getSession();

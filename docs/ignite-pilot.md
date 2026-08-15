@@ -91,6 +91,8 @@ it validates the bearer token and active enrollment before returning course cont
 The first test enrollment links the existing `sage@sagerock.com` Supabase Auth account
 to Ignite. The shared project's existing Auth redirect allow-list was preserved and
 extended with the learning subdomain, the Pages preview route, and local development.
+The shared magic-link template uses Supabase's token-hash callback format and the
+allow-listed `RedirectTo`, so each application receives the link at its own Auth route.
 
 ## Mux test
 
