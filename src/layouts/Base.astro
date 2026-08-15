@@ -17,6 +17,11 @@ const year = new Date().getFullYear();
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <title>{title}</title>
+    <script is:inline>
+      if (location.hostname === 'learn.centerforanthroposophy.org' && location.pathname === '/') {
+        location.replace('/learn');
+      }
+    </script>
   </head>
   <body>
     <div class="poc">

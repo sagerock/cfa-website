@@ -1,0 +1,79 @@
+---
+import Learn from '../../layouts/Learn.astro';
+import { ignitePilot } from '../../data/ignitePilot.js';
+---
+
+<Learn current="/learn">
+  <div class="wrap learn-home">
+    <header class="learn-intro">
+      <p class="eyebrow">Student home</p>
+      <h1>Your learning space</h1>
+      <p>Live sessions, recordings, and course resources gathered in one quiet place.</p>
+    </header>
+
+    <aside class="preview-note">
+      <strong>Interface preview</strong>
+      This page uses sample access. Supabase authentication and enrollments will replace the preview learner before testing with participants.
+    </aside>
+
+    <section class="course-section" aria-labelledby="current-courses">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">In progress</p>
+          <h2 id="current-courses">Your courses</h2>
+        </div>
+        <span>1 course</span>
+      </div>
+
+      <a class="course-card" href={`/learn/${ignitePilot.slug}`}>
+        <img src={ignitePilot.image} alt="" />
+        <div class="course-card-copy">
+          <span class="course-term">{ignitePilot.cohort}</span>
+          <h3>{ignitePilot.title}</h3>
+          <p>{ignitePilot.subtitle}</p>
+          <div
+            class="course-progress"
+            role="progressbar"
+            aria-label="Course progress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow={ignitePilot.progress}
+          >
+            <span style={`width:${ignitePilot.progress}%`}></span>
+          </div>
+          <span class="continue">Open course <b aria-hidden="true">→</b></span>
+        </div>
+      </a>
+    </section>
+  </div>
+</Learn>
+
+<style>
+  .learn-home { padding-top: 54px; }
+  .learn-intro { max-width: 680px; }
+  .learn-intro h1 { margin: 7px 0 11px; font-size: clamp(34px, 6vw, 55px); }
+  .learn-intro > p:last-child { color: var(--soft); font-size: 19px; max-width: 52ch; }
+  .preview-note { margin: 30px 0 52px; max-width: 760px; border-left: 3px solid var(--gold); padding: 12px 16px; background: var(--raised); color: var(--soft); font-family: var(--sans); font-size: 13px; }
+  .preview-note strong { display: block; color: var(--ink); margin-bottom: 2px; }
+  .course-section { max-width: 850px; }
+  .section-heading { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; }
+  .section-heading h2 { margin-top: 3px; font-size: 25px; }
+  .section-heading > span { color: var(--soft); font-family: var(--sans); font-size: 12px; }
+  .course-card { display: grid; grid-template-columns: minmax(240px, .8fr) 1.2fr; overflow: hidden; border: 1px solid var(--line); border-radius: 7px; background: var(--raised); color: var(--ink); text-decoration: none; transition: transform .15s, border-color .15s; }
+  .course-card:hover { transform: translateY(-2px); border-color: var(--green); }
+  .course-card img { width: 100%; height: 100%; min-height: 280px; object-fit: cover; }
+  .course-card-copy { display: flex; flex-direction: column; align-items: flex-start; padding: 30px; }
+  .course-term { color: var(--green-ink); font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+  .course-card h3 { margin: 12px 0 6px; font-size: 34px; }
+  .course-card p { color: var(--soft); font-size: 16px; }
+  .course-progress { width: 100%; height: 4px; margin: auto 0 18px; background: var(--line); border-radius: 3px; overflow: hidden; }
+  .course-progress span { display: block; height: 100%; background: var(--green); }
+  .continue { color: var(--green-ink); font-family: var(--sans); font-size: 13px; font-weight: 600; }
+  .continue b { margin-left: 4px; }
+  @media (max-width: 680px) {
+    .learn-home { padding-top: 36px; }
+    .course-card { grid-template-columns: 1fr; }
+    .course-card img { height: 190px; min-height: 0; }
+    .course-card-copy { min-height: 280px; padding: 24px; }
+  }
+</style>

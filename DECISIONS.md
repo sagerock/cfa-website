@@ -218,3 +218,22 @@ site or its editing flows changed — the doorbell and AI sessions both end in a
 https://cfa-website-bqx.pages.dev (Cloudflare appended the `-bqx` suffix to the pages.dev
 subdomain). The Render service `srv-d9g2hvflk1mc739qd9e0` is retired. Historical entries
 above that say "Render" describe the host as it was at the time and are left as written.
+
+## 2026-08-15 — Prototype a first-party learning portal with Ignite
+Sage chose the direction of leaving Thinkific as well as WordPress. The pilot is an
+unlinked `/learn` experience for Ignite, using the 2026–2027 seminar sequence previously
+managed as Starlight Rays. It extends the existing architecture rather than introducing
+another all-in-one platform: Astro renders the interface, Supabase will own authentication
+and entitlements, Mux will host recordings, and the existing CfA email tool will send and
+log welcomes and reminders. Git remains the CMS for public content only; student records,
+Zoom links, private resources, and signing credentials never enter this public repository.
+The first commit is deliberately an interface and data-contract prototype. It does not
+create live access, change the public Starlight page, or migrate participants.
+
+## 2026-08-15 — Pilot on learn.centerforanthroposophy.org
+The first learning portal preview uses `learn.centerforanthroposophy.org`, attached to the
+existing Cloudflare Pages proof-of-concept project. A hostname-specific redirect sends only
+that subdomain's root to `/learn`; it does not change the main Pages preview or the production
+WordPress hostname. This is intentionally a low-infrastructure pilot. If CfA approves the
+portal for real participant use, it should receive its own Cloudflare Pages project before
+the authenticated application becomes operationally independent from the public site.

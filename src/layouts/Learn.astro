@@ -1,0 +1,75 @@
+---
+import '../styles/global.css';
+
+const { title = 'Learning Portal — Center for Anthroposophy', current = '' } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title}</title>
+  </head>
+  <body class="learn-shell">
+    <div class="poc">
+      Private course portal prototype — no live student access or meeting links
+    </div>
+
+    <header class="learn-head">
+      <div class="wrap learn-head-inner">
+        <a class="learn-brand" href="/learn">
+          <svg viewBox="0 0 120 44" fill="none" aria-hidden="true">
+            <path
+              d="M8 22 C8 8 34 8 48 22 C62 36 88 36 96 22 C104 8 78 8 72 22 C66 36 40 36 26 22"
+              stroke="var(--green)"
+              stroke-width="2"
+              stroke-linecap="round"></path>
+          </svg>
+          <span>
+            <strong>Center for Anthroposophy</strong>
+            <small>Learning portal</small>
+          </span>
+        </a>
+        <nav aria-label="Learning portal">
+          <a href="/learn" aria-current={current === '/learn' ? 'page' : undefined}>My courses</a>
+          <span class="preview-person">Preview learner</span>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="learn-foot">
+      <div class="wrap">
+        <span>© {year} Center for Anthroposophy</span>
+        <a href="/">Return to the public website</a>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .learn-shell { min-height: 100vh; }
+  .learn-head { background: color-mix(in srgb, var(--raised) 94%, transparent); border-bottom: 1px solid var(--line); }
+  .learn-head-inner { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .learn-brand { display: flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; }
+  .learn-brand svg { width: 62px; flex: none; }
+  .learn-brand span { display: flex; flex-direction: column; line-height: 1.2; }
+  .learn-brand strong { font-size: 17px; }
+  .learn-brand small { color: var(--soft); font-family: var(--sans); font-size: 11px; letter-spacing: .11em; text-transform: uppercase; }
+  nav { display: flex; align-items: center; gap: 20px; font-family: var(--sans); font-size: 13px; }
+  nav a { color: var(--soft); text-decoration: none; }
+  nav a[aria-current='page'], nav a:hover { color: var(--green-ink); }
+  .preview-person { padding: 6px 12px; border: 1px solid var(--line); border-radius: 20px; color: var(--soft); }
+  .learn-foot { margin-top: 72px; border-top: 1px solid var(--line); background: var(--raised); font-family: var(--sans); font-size: 12px; color: var(--soft); }
+  .learn-foot .wrap { min-height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  @media (max-width: 620px) {
+    .learn-head-inner { align-items: flex-start; flex-direction: column; padding-top: 15px; padding-bottom: 15px; }
+    .preview-person { padding: 4px 9px; }
+    .learn-foot .wrap { align-items: flex-start; flex-direction: column; justify-content: center; gap: 3px; }
+  }
+</style>
