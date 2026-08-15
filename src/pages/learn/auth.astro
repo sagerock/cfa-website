@@ -1,0 +1,43 @@
+---
+import Learn from '../../layouts/Learn.astro';
+---
+
+<Learn title="Completing sign-in — Learning Portal">
+  <div class="wrap auth-wrap">
+    <div class="auth-card" role="status">
+      <span class="auth-spinner" aria-hidden="true"></span>
+      <p id="auth-status">Completing your secure sign-in…</p>
+      <a id="auth-retry" href="/learn/sign-in" hidden>Request a new link</a>
+    </div>
+  </div>
+</Learn>
+
+<script>
+  import { supabase } from '../../lib/learnClient.js';
+
+  const status = document.getElementById('auth-status');
+  const retry = document.getElementById('auth-retry');
+  const code = new URL(location.href).searchParams.get('code');
+
+  let error = null;
+  if (code) {
+    ({ error } = await supabase.auth.exchangeCodeForSession(code));
+  } else {
+    const result = await supabase.auth.getSession();
+    error = result.error || (!result.data.session ? new Error('No session') : null);
+  }
+
+  if (error) {
+    status.textContent = 'This sign-in link is invalid or has expired.';
+    retry.hidden = false;
+  } else {
+    location.replace('/learn');
+  }
+</script>
+
+<style>
+  .auth-wrap { display: grid; place-items: center; min-height: 60vh; }
+  .auth-card { display: grid; justify-items: center; gap: 15px; padding: 34px; color: var(--soft); font: 14px var(--sans); text-align: center; }
+  .auth-spinner { width: 32px; height: 32px; border: 3px solid var(--line); border-top-color: var(--green); border-radius: 50%; animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>

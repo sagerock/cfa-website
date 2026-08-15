@@ -112,10 +112,24 @@ const STATS_ENDPOINT = `${FN}/cfa-stats`;
       function renderSources(sources) {
         if (!sources.length) { $('sources-empty').hidden = false; return; }
         const max = Math.max(...sources.map((s) => s.visits));
-        $('sources').innerHTML = sources.map((s) =>
-          `<li><span class="rl-label">${s.source}</span>
-             <span class="rl-bar"><span style="width:${(s.visits / max) * 100}%"></span></span>
-             <span class="rl-num">${fmt(s.visits)}</span></li>`).join('');
+        const list = $('sources');
+        list.replaceChildren();
+        sources.forEach((source) => {
+          const item = document.createElement('li');
+          const label = document.createElement('span');
+          label.className = 'rl-label';
+          label.textContent = source.source;
+          const bar = document.createElement('span');
+          bar.className = 'rl-bar';
+          const fill = document.createElement('span');
+          fill.style.width = `${(source.visits / max) * 100}%`;
+          bar.append(fill);
+          const number = document.createElement('span');
+          number.className = 'rl-num';
+          number.textContent = fmt(source.visits);
+          item.append(label, bar, number);
+          list.append(item);
+        });
       }
 
       function renderChart(daily) {
@@ -144,9 +158,14 @@ const STATS_ENDPOINT = `${FN}/cfa-stats`;
       function wireBarHover() {
         const tip = $('tooltip');
         $('chart').querySelectorAll('.bar').forEach((b) => {
-          b.addEventListener('mouseenter', (e) => {
-            const r = b.getBoundingClientRect();
-            tip.innerHTML = `<b>${b.dataset.v}</b> view${b.dataset.v == 1 ? '' : 's'}<br>${new Date(b.dataset.day + 'T00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+           b.addEventListener('mouseenter', (e) => {
+             const r = b.getBoundingClientRect();
+             const count = document.createElement('b');
+             count.textContent = b.dataset.v;
+             const label = document.createTextNode(` view${b.dataset.v == 1 ? '' : 's'}`);
+             const br = document.createElement('br');
+             const date = document.createTextNode(new Date(b.dataset.day + 'T00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+             tip.replaceChildren(count, label, br, date);
             tip.hidden = false;
             tip.style.left = r.left + r.width / 2 + 'px';
             tip.style.top = r.top - 8 + 'px';
@@ -158,18 +177,45 @@ const STATS_ENDPOINT = `${FN}/cfa-stats`;
       function renderTopPages(pages) {
         if (!pages.length) { $('pages-empty').hidden = false; return; }
         const max = Math.max(...pages.map((p) => p.views));
-        $('top-pages').innerHTML = pages.map((p) =>
-          `<li><span class="rl-label" title="${p.path}">${p.path}</span>
-             <span class="rl-bar"><span style="width:${(p.views / max) * 100}%"></span></span>
-             <span class="rl-num">${fmt(p.views)}</span></li>`).join('');
+        const list = $('top-pages');
+        list.replaceChildren();
+        pages.forEach((page) => {
+          const item = document.createElement('li');
+          const label = document.createElement('span');
+          label.className = 'rl-label';
+          label.title = page.path;
+          label.textContent = page.path;
+          const bar = document.createElement('span');
+          bar.className = 'rl-bar';
+          const fill = document.createElement('span');
+          fill.style.width = `${(page.views / max) * 100}%`;
+          bar.append(fill);
+          const number = document.createElement('span');
+          number.className = 'rl-num';
+          number.textContent = fmt(page.views);
+          item.append(label, bar, number);
+          list.append(item);
+        });
       }
 
       function renderLeads(leads) {
         if (!leads.length) { $('leads-empty').hidden = false; return; }
-        $('recent-leads').innerHTML = leads.map((l) =>
-          `<li><span class="ld-name">${l.name || '(no name)'}</span>
-             <span class="ld-prog">${l.program || 'General inquiry'}</span>
-             <span class="ld-meta">${l.email} · ${new Date(l.at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}${l.source ? ` · via ${l.source}` : ''}</span></li>`).join('');
+        const list = $('recent-leads');
+        list.replaceChildren();
+        leads.forEach((lead) => {
+          const item = document.createElement('li');
+          const name = document.createElement('span');
+          name.className = 'ld-name';
+          name.textContent = lead.name || '(no name)';
+          const program = document.createElement('span');
+          program.className = 'ld-prog';
+          program.textContent = lead.program || 'General inquiry';
+          const meta = document.createElement('span');
+          meta.className = 'ld-meta';
+          meta.textContent = `${lead.email} · ${new Date(lead.at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}${lead.source ? ` · via ${lead.source}` : ''}`;
+          item.append(name, program, meta);
+          list.append(item);
+        });
       }
 
       $('refresh').addEventListener('click', load);

@@ -1,4 +1,4 @@
--- Staged only. Apply to the dedicated CfA learning environment after review.
+-- Applied to the shared Supabase project for the authenticated Ignite pilot.
 
 create table public.cfa_learn_profiles (
   user_id uuid primary key references auth.users(id) on delete cascade,
@@ -43,8 +43,8 @@ create table public.cfa_learn_sessions (
   position integer not null check (position > 0),
   presenter text,
   title text not null,
-  starts_at timestamptz,
-  ends_at timestamptz,
+  starts_at timestamptz not null,
+  ends_at timestamptz not null,
   zoom_url text,
   mux_playback_id text,
   published boolean not null default false,

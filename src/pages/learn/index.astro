@@ -1,10 +1,19 @@
 ---
 import Learn from '../../layouts/Learn.astro';
-import { ignitePilot } from '../../data/ignitePilot.js';
 ---
 
 <Learn current="/learn">
-  <div class="wrap learn-home">
+  <div id="learn-loading" class="wrap learn-state" role="status">Opening your learning space…</div>
+  <div id="learn-denied" class="wrap learn-state" hidden>
+    <h1>No active courses</h1>
+    <p>You’re signed in, but this account does not have an active course enrollment. Contact <a href="mailto:office@centerforanthroposophy.org">the CfA office</a> if this looks wrong.</p>
+  </div>
+  <div id="learn-error" class="wrap learn-state" hidden>
+    <h1>We couldn’t load your courses</h1>
+    <p>Please refresh the page or try again in a few minutes.</p>
+  </div>
+
+  <div id="learn-content" class="wrap learn-home" hidden>
     <header class="learn-intro">
       <p class="eyebrow">Student home</p>
       <h1>Your learning space</h1>
@@ -12,8 +21,8 @@ import { ignitePilot } from '../../data/ignitePilot.js';
     </header>
 
     <aside class="preview-note">
-      <strong>Interface preview</strong>
-      This page uses sample access. Supabase authentication and enrollments will replace the preview learner before testing with participants.
+      <strong>Secure pilot</strong>
+      Your course list comes from your Supabase enrollment. Meeting links and private resources are never built into the public website.
     </aside>
 
     <section class="course-section" aria-labelledby="current-courses">
@@ -25,21 +34,21 @@ import { ignitePilot } from '../../data/ignitePilot.js';
         <span>1 course</span>
       </div>
 
-      <a class="course-card" href={`/learn/${ignitePilot.slug}`}>
-        <img src={ignitePilot.image} alt="" />
+      <a class="course-card" href="/learn/ignite">
+        <img id="course-image" src="/images/posts/e54997f7cf-thechallengeofinnerbalancehorizontal1.jpg" alt="" />
         <div class="course-card-copy">
-          <span class="course-term">{ignitePilot.cohort}</span>
-          <h3>{ignitePilot.title}</h3>
-          <p>{ignitePilot.subtitle}</p>
+          <span id="course-cohort" class="course-term"></span>
+          <h3 id="course-title"></h3>
+          <p id="course-subtitle"></p>
           <div
             class="course-progress"
             role="progressbar"
             aria-label="Course progress"
             aria-valuemin="0"
             aria-valuemax="100"
-            aria-valuenow={ignitePilot.progress}
+            aria-valuenow="0"
           >
-            <span style={`width:${ignitePilot.progress}%`}></span>
+            <span style="width:0%"></span>
           </div>
           <span class="continue">Open course <b aria-hidden="true">→</b></span>
         </div>
@@ -48,7 +57,34 @@ import { ignitePilot } from '../../data/ignitePilot.js';
   </div>
 </Learn>
 
+<script>
+  import { getCoursePayload } from '../../lib/learnClient.js';
+
+  const result = await getCoursePayload('ignite');
+  if (result.status === 'signed_out') {
+    location.replace('/learn/sign-in');
+  } else {
+    document.getElementById('learn-loading').hidden = true;
+    if (result.status === 'forbidden') {
+      document.getElementById('learn-denied').hidden = false;
+    } else if (result.status !== 'ok') {
+      document.getElementById('learn-error').hidden = false;
+    } else {
+      const { course, learner } = result.data;
+      document.getElementById('course-cohort').textContent = course.cohort || 'Course';
+      document.getElementById('course-title').textContent = course.title;
+      document.getElementById('course-subtitle').textContent = course.subtitle || '';
+      if (course.image_url?.startsWith('/')) document.getElementById('course-image').src = course.image_url;
+      const person = document.getElementById('learn-person');
+      person.textContent = learner.display_name;
+      document.getElementById('learn-content').hidden = false;
+    }
+  }
+</script>
+
 <style>
+  .learn-state { max-width: 760px; padding-top: 70px; min-height: 52vh; color: var(--soft); }
+  .learn-state h1 { margin-bottom: 10px; color: var(--ink); font-size: 32px; }
   .learn-home { padding-top: 54px; }
   .learn-intro { max-width: 680px; }
   .learn-intro h1 { margin: 7px 0 11px; font-size: clamp(34px, 6vw, 55px); }

@@ -1,8 +1,8 @@
 # Ignite learning portal pilot
 
-The unlinked `/learn` and `/learn/ignite` routes prove the student experience without
-putting student data, meeting links, or credentials in this public repository. The
-current pages use static preview data from `src/data/ignitePilot.js`.
+The `/learn` portal is an authenticated pilot at
+`https://learn.centerforanthroposophy.org`. Public marketing content remains static,
+while course access comes from Supabase after a participant signs in by email magic link.
 
 ## Pilot boundary
 
@@ -79,14 +79,18 @@ The eventual database should keep existing CRM contacts separate from login iden
 
 All `cfa_learn_*` tables require Row Level Security. Zoom URLs and Mux signing keys must
 never be exposed through anonymous policies or built into the Astro output.
-Authenticated users also have no direct table grants in the staged migration; a verified
+Authenticated users also have no direct table grants; a verified
 Edge Function returns only the learner-safe fields in the contract above.
 
-The reviewed, unapplied migration is in
-`supabase/migrations/20260815000000_ignite_learning_pilot.sql`. It creates the tables,
-indexes, enrollment-based read policies, and unpublished Ignite seed records. It must
-not be applied to the shared production email database until the dedicated learning
-environment has been chosen.
+The migration in `supabase/migrations/20260815000000_ignite_learning_pilot.sql` was
+applied to the shared Supabase project for this pilot. It creates only prefixed
+`cfa_learn_*` tables, revokes direct browser table access, and retains enrollment-based
+RLS as defense in depth. `cfa-learn-course` is the only learner-facing data endpoint;
+it validates the bearer token and active enrollment before returning course content.
+
+The first test enrollment links the existing `sage@sagerock.com` Supabase Auth account
+to Ignite. The shared project's existing Auth redirect allow-list was preserved and
+extended with the learning subdomain, the Pages preview route, and local development.
 
 ## Mux test
 
@@ -98,17 +102,16 @@ Mux's free plan is sufficient for this pilot. After creating the account:
    `.env.example` documents the variable names without carrying values.
 3. Upload one non-sensitive test recording.
 4. Use public playback for interface testing only.
-5. Put its playback ID in the relevant `playbackId` field in
-   `src/data/ignitePilot.js`.
-6. Before inviting participants, replace the static preview player with a client-side
-   player created only after a verified Supabase Edge Function returns a short-lived
-   signed playback token. Never render that token during Astro's static build.
+5. Never put a playback ID in `src/data/ignitePilot.js` or other statically built data.
+6. Before inviting participants, create the player client-side only after a verified
+   Supabase Edge Function returns a short-lived signed playback token. The checked-in
+   player intentionally remains in its empty state until that flow exists. Never render
+   the token during Astro's static build.
 
 ## Release gates
 
-1. Interface preview builds and works on mobile.
-2. Dedicated Supabase environment and RLS policies are reviewed.
-3. One internal user completes magic-link sign-in and sees only Ignite.
-4. One test Zoom link and signed Mux recording work for that user but not anonymously.
-5. The email tool records and resends a welcome message.
-6. Only then connect a registration form or import a participant roster.
+1. One internal user completes magic-link sign-in and sees only Ignite.
+2. A second authenticated account without enrollment receives an access-denied response.
+3. One test Zoom link and signed Mux recording work for the enrolled user but not anonymously.
+4. The email tool records and resends a welcome message.
+5. Only then connect a registration form or import a participant roster.

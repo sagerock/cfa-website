@@ -10,11 +10,12 @@ const year = new Date().getFullYear();
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://ckloewflialohuvixmvd.supabase.co; frame-src https://player.mux.com; form-action 'self'; base-uri 'none'" />
     <title>{title}</title>
   </head>
   <body class="learn-shell">
     <div class="poc">
-      Private course portal prototype — no live student access or meeting links
+      Authenticated course portal pilot — access is limited to invited participants
     </div>
 
     <header class="learn-head">
@@ -34,7 +35,8 @@ const year = new Date().getFullYear();
         </a>
         <nav aria-label="Learning portal">
           <a href="/learn" aria-current={current === '/learn' ? 'page' : undefined}>My courses</a>
-          <span class="preview-person">Preview learner</span>
+          <span id="learn-person" class="preview-person" hidden>Signed in</span>
+          <button id="learn-signout" type="button" hidden>Sign out</button>
         </nav>
       </div>
     </header>
@@ -65,6 +67,7 @@ const year = new Date().getFullYear();
   nav a { color: var(--soft); text-decoration: none; }
   nav a[aria-current='page'], nav a:hover { color: var(--green-ink); }
   .preview-person { padding: 6px 12px; border: 1px solid var(--line); border-radius: 20px; color: var(--soft); }
+  #learn-signout { padding: 0; border: 0; color: var(--green-ink); background: none; font: inherit; cursor: pointer; }
   .learn-foot { margin-top: 72px; border-top: 1px solid var(--line); background: var(--raised); font-family: var(--sans); font-size: 12px; color: var(--soft); }
   .learn-foot .wrap { min-height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
   @media (max-width: 620px) {
@@ -73,3 +76,27 @@ const year = new Date().getFullYear();
     .learn-foot .wrap { align-items: flex-start; flex-direction: column; justify-content: center; gap: 3px; }
   }
 </style>
+
+<script>
+  import { supabase } from '../lib/learnClient.js';
+
+  const person = document.getElementById('learn-person');
+  const signout = document.getElementById('learn-signout');
+  const { data } = await supabase.auth.getSession();
+  if (data.session) {
+    person.hidden = false;
+    signout.hidden = false;
+  }
+  supabase.auth.onAuthStateChange((event) => {
+    if (event !== 'SIGNED_OUT') return;
+    document.querySelector('main')?.replaceChildren();
+    location.replace('/learn/sign-in');
+  });
+  signout.addEventListener('click', async () => {
+    document.querySelector('main')?.replaceChildren();
+    await supabase.auth.signOut({ scope: 'local' });
+  });
+  addEventListener('pageshow', (event) => {
+    if (event.persisted) location.reload();
+  });
+</script>

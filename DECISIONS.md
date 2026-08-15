@@ -237,3 +237,12 @@ that subdomain's root to `/learn`; it does not change the main Pages preview or 
 WordPress hostname. This is intentionally a low-infrastructure pilot. If CfA approves the
 portal for real participant use, it should receive its own Cloudflare Pages project before
 the authenticated application becomes operationally independent from the public site.
+
+## 2026-08-15 — Authenticate the Ignite pilot through shared Supabase
+Sage approved moving the preview into a real one-user access test. The shared Supabase
+project already holds CfA contacts and Sage's Auth account, so the pilot uses isolated
+`cfa_learn_*` tables there rather than creating another database. Direct grants to browser
+roles are revoked: the `cfa-learn-course` Edge Function validates each bearer token and
+active enrollment before returning course fields, including any future Zoom URL. The first
+manual enrollment is `sage@sagerock.com`; no other contact becomes an Auth user or learner.
+Magic links use PKCE and the existing Auth redirect allow-list was merged, not replaced.

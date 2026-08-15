@@ -8,8 +8,6 @@ export const ignitePilot = {
   facilitator: 'David Barham, M.Ed.',
   image: '/images/posts/e54997f7cf-thechallengeofinnerbalancehorizontal1.jpg',
   progress: 0,
-  pilotMuxAssetId: '4PvFRFikolId1AAVHPboOD6wFyafRao2edlSVJL37ro',
-  pilotMuxPlaybackId: 'l5XbyMp022BBrh1kqfvtylb00GWvu39wmRBgwUDlx87x00',
   nextSessionId: 'methods',
   sessions: [
     {

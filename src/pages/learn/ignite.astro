@@ -2,23 +2,29 @@
 import Learn from '../../layouts/Learn.astro';
 import MuxVideo from '../../components/MuxVideo.astro';
 import { ignitePilot } from '../../data/ignitePilot.js';
-
-const nextSession = ignitePilot.sessions.find((session) => session.id === ignitePilot.nextSessionId);
 ---
 
 <Learn title={`${ignitePilot.title} — Learning Portal`}>
+  <div id="course-loading" class="wrap course-state" role="status">Checking your Ignite enrollment…</div>
+  <div id="course-error" class="wrap course-state" hidden>
+    <h1>Course access unavailable</h1>
+    <p id="course-error-copy">We couldn’t load this course. Please return to your courses and try again.</p>
+    <a href="/learn">Return to my courses</a>
+  </div>
+
+  <div id="course-content" hidden>
   <div class="course-hero">
     <div class="wrap">
       <a class="back" href="/learn">← My courses</a>
       <div class="course-hero-grid">
         <div>
-          <p class="eyebrow">{ignitePilot.cohort}</p>
-          <h1>{ignitePilot.title}</h1>
-          <p class="course-subtitle">{ignitePilot.subtitle}</p>
+          <p id="course-cohort" class="eyebrow"></p>
+          <h1 id="course-title"></h1>
+          <p id="course-subtitle" class="course-subtitle"></p>
         </div>
         <div class="facilitator">
           <span>Program facilitator</span>
-          <strong>{ignitePilot.facilitator}</strong>
+          <strong id="course-facilitator"></strong>
         </div>
       </div>
     </div>
@@ -26,48 +32,34 @@ const nextSession = ignitePilot.sessions.find((session) => session.id === ignite
 
   <div class="wrap course-grid">
     <div class="course-main">
-      {nextSession && (
-        <section class="next-session">
-          <div class="next-kicker">
-            <span class="live-dot"></span>
-            Next live seminar
-          </div>
-          <p class="session-presenter">{nextSession.presenter}</p>
-          <h2>{nextSession.title}</h2>
-          <div class="session-time">
-            <span>{nextSession.date}</span>
-            <span>{nextSession.time}</span>
-          </div>
-          <button class="join-button" type="button" disabled>Join link appears after sign-in</button>
-          <p class="privacy-note">The live Zoom link will be returned by Supabase only to enrolled participants.</p>
-        </section>
-      )}
+      <section class="next-session">
+        <div class="next-kicker">
+          <span class="live-dot"></span>
+          Next live seminar
+        </div>
+        <p id="next-presenter" class="session-presenter"></p>
+        <h2 id="next-title"></h2>
+        <div class="session-time">
+          <span id="next-date"></span>
+          <span id="next-time"></span>
+        </div>
+        <a id="join-link" class="join-button" href="" target="_blank" rel="noopener" hidden>Join the live seminar</a>
+        <button id="join-pending" class="join-button" type="button" disabled>Zoom link coming soon</button>
+        <p class="privacy-note">This meeting link is available only after your enrollment is verified.</p>
+      </section>
 
       <section class="curriculum" aria-labelledby="curriculum-title">
         <div class="section-title">
           <p class="eyebrow">Course path</p>
           <h2 id="curriculum-title">Seminars and recordings</h2>
         </div>
-        <ol class="session-list">
-          {ignitePilot.sessions.map((session, index) => (
-            <li class:list={{ active: session.id === ignitePilot.nextSessionId }}>
-              <span class="session-number">{String(index + 1).padStart(2, '0')}</span>
-              <div>
-                <span class="session-state">{session.status === 'upcoming' ? 'Next session' : 'Scheduled'}</span>
-                <h3>{session.title}</h3>
-                <p>{session.presenter} · {session.date}</p>
-              </div>
-              <span class="session-arrow" aria-hidden="true">{session.status === 'upcoming' ? '→' : '·'}</span>
-            </li>
-          ))}
-        </ol>
+        <ol id="session-list" class="session-list"></ol>
       </section>
 
       <MuxVideo
-        playbackId={ignitePilot.pilotMuxPlaybackId}
-        eyebrow="Technical pilot"
-        title="Mux playback test"
-        emptyMessage="The Mux sample video is still processing."
+        eyebrow="Session recordings"
+        title="Secure video playback"
+        emptyMessage="Recordings will appear here after signed Mux playback is enabled."
       />
     </div>
 
@@ -75,26 +67,16 @@ const nextSession = ignitePilot.sessions.find((session) => session.id === ignite
       <section class="side-card welcome-card">
         <p class="eyebrow">Begin here</p>
         <h2>Welcome to Ignite</h2>
-        <p>Your welcome letter and orientation will live here, available whenever you need them.</p>
-        <button type="button" disabled>Open welcome letter</button>
+        <p id="welcome-body" tabindex="-1" aria-live="polite">Your welcome letter and orientation will live here, available whenever you need them.</p>
+        <button id="welcome-button" type="button" disabled>Welcome letter loading…</button>
       </section>
 
       <section class="side-card">
         <div class="side-title">
           <h2>Resources</h2>
-          <span>{ignitePilot.resources.length}</span>
+          <span id="resource-count">0</span>
         </div>
-        <ul class="resource-list">
-          {ignitePilot.resources.map((resource) => (
-            <li>
-              <span class="resource-icon" aria-hidden="true">{resource.status === 'available' ? '↗' : '+'}</span>
-              <div>
-                <strong>{resource.title}</strong>
-                <span>{resource.detail}</span>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <ul id="resource-list" class="resource-list"></ul>
       </section>
 
       <section class="help-card">
@@ -104,9 +86,119 @@ const nextSession = ignitePilot.sessions.find((session) => session.id === ignite
       </section>
     </aside>
   </div>
+  </div>
 </Learn>
 
+<script>
+  import { getCoursePayload } from '../../lib/learnClient.js';
+
+  const dateFormat = new Intl.DateTimeFormat('en-US', {
+    weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'America/New_York',
+  });
+  const timeFormat = new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric', minute: '2-digit', timeZone: 'America/New_York', timeZoneName: 'short',
+  });
+  const result = await getCoursePayload('ignite');
+
+  if (result.status === 'signed_out') {
+    location.replace('/learn/sign-in');
+  } else if (result.status !== 'ok') {
+    document.getElementById('course-loading').hidden = true;
+    document.getElementById('course-error').hidden = false;
+    if (result.status === 'forbidden') {
+      document.getElementById('course-error-copy').textContent = 'This account does not have an active Ignite enrollment.';
+    }
+  } else {
+    const { course, learner, sessions, resources } = result.data;
+    document.getElementById('course-cohort').textContent = course.cohort || 'Course';
+    document.getElementById('course-title').textContent = course.title;
+    document.getElementById('course-subtitle').textContent = course.subtitle || '';
+    document.getElementById('course-facilitator').textContent = course.facilitator || '';
+    document.getElementById('learn-person').textContent = learner.display_name;
+
+    const now = Date.now();
+    const validSessions = sessions.filter((session) => Number.isFinite(new Date(session.starts_at).getTime()));
+    const next = validSessions.find((session) => new Date(session.ends_at || session.starts_at).getTime() >= now) || validSessions.at(-1);
+    if (next) {
+      const starts = new Date(next.starts_at);
+      const ends = next.ends_at ? new Date(next.ends_at) : null;
+      document.getElementById('next-presenter').textContent = next.presenter || '';
+      document.getElementById('next-title').textContent = next.title;
+      document.getElementById('next-date').textContent = dateFormat.format(starts);
+      document.getElementById('next-time').textContent = ends
+        ? `${timeFormat.format(starts).replace(/\s[A-Z]{3,4}$/, '')}–${timeFormat.format(ends)}`
+        : timeFormat.format(starts);
+      if (next.zoom_url?.startsWith('https://')) {
+        const link = document.getElementById('join-link');
+        link.href = next.zoom_url;
+        link.hidden = false;
+        document.getElementById('join-pending').hidden = true;
+      }
+    }
+
+    const sessionList = document.getElementById('session-list');
+    validSessions.forEach((session, index) => {
+      const item = document.createElement('li');
+      if (session.id === next?.id) item.classList.add('active');
+      const number = document.createElement('span');
+      number.className = 'session-number';
+      number.textContent = String(index + 1).padStart(2, '0');
+      const copy = document.createElement('div');
+      const state = document.createElement('span');
+      state.className = 'session-state';
+      state.textContent = session.id === next?.id ? 'Next session' : new Date(session.ends_at || session.starts_at).getTime() < now ? 'Recording' : 'Scheduled';
+      const title = document.createElement('h3');
+      title.textContent = session.title;
+      const meta = document.createElement('p');
+      meta.textContent = `${session.presenter || ''} · ${dateFormat.format(new Date(session.starts_at))}`;
+      const arrow = document.createElement('span');
+      arrow.className = 'session-arrow';
+      arrow.setAttribute('aria-hidden', 'true');
+      arrow.textContent = session.id === next?.id ? '→' : '·';
+      copy.append(state, title, meta);
+      item.append(number, copy, arrow);
+      sessionList.append(item);
+    });
+
+    const resourceList = document.getElementById('resource-list');
+    document.getElementById('resource-count').textContent = String(resources.length);
+    resources.forEach((resource) => {
+      const item = document.createElement('li');
+      const icon = document.createElement('span');
+      icon.className = 'resource-icon';
+      icon.setAttribute('aria-hidden', 'true');
+      icon.textContent = '↗';
+      const copy = document.createElement('div');
+      const title = document.createElement('strong');
+      title.textContent = resource.title;
+      const detail = document.createElement('span');
+      detail.textContent = resource.kind === 'page' ? 'Course page' : 'Course resource';
+      copy.append(title, detail);
+      item.append(icon, copy);
+      resourceList.append(item);
+    });
+
+    const welcome = resources.find((resource) => resource.kind === 'page' && resource.body);
+    if (welcome) {
+      const button = document.getElementById('welcome-button');
+      button.disabled = false;
+      button.textContent = 'Open welcome letter';
+      button.addEventListener('click', () => {
+        const body = document.getElementById('welcome-body');
+        body.textContent = welcome.body;
+        button.hidden = true;
+        body.focus();
+      });
+    }
+
+    document.getElementById('course-loading').hidden = true;
+    document.getElementById('course-content').hidden = false;
+  }
+</script>
+
 <style>
+  .course-state { max-width: 760px; min-height: 55vh; padding-top: 70px; color: var(--soft); }
+  .course-state h1 { margin-bottom: 10px; color: var(--ink); font-size: 32px; }
   .course-hero { padding: 28px 0 42px; border-bottom: 1px solid var(--line); background: var(--raised); }
   .back { display: inline-block; margin-bottom: 26px; color: var(--soft); font-family: var(--sans); font-size: 12px; text-decoration: none; }
   .back:hover { color: var(--green-ink); }
@@ -125,7 +217,8 @@ const nextSession = ignitePilot.sessions.find((session) => session.id === ignite
   .session-presenter { margin-top: 25px; color: #a9cbb8; font-family: var(--sans); font-size: 13px; }
   .next-session h2 { max-width: 25ch; margin: 7px 0 19px; font-size: clamp(24px, 4vw, 34px); }
   .session-time { display: flex; gap: 7px 22px; flex-wrap: wrap; color: #cad6ce; font-family: var(--sans); font-size: 13px; }
-  .join-button, .welcome-card button { margin-top: 25px; border: 1px solid rgba(255, 255, 255, .3); border-radius: 3px; padding: 10px 15px; color: #b5c2ba; background: rgba(255,255,255,.05); font-family: var(--sans); font-size: 12px; }
+  .join-button, .welcome-card button { display: inline-block; margin-top: 25px; border: 1px solid rgba(255, 255, 255, .3); border-radius: 3px; padding: 10px 15px; color: #b5c2ba; background: rgba(255,255,255,.05); font-family: var(--sans); font-size: 12px; text-decoration: none; }
+  a.join-button { color: #17231c; background: #a9cbb8; border-color: #a9cbb8; font-weight: 600; }
   .privacy-note { margin-top: 9px; color: #8da095; font-family: var(--sans); font-size: 11px; }
   .curriculum { padding: 7px 0; }
   .section-title { margin-bottom: 17px; }

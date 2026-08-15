@@ -1,0 +1,76 @@
+---
+import Learn from '../../layouts/Learn.astro';
+---
+
+<Learn title="Sign in — Learning Portal">
+  <div class="wrap signin-wrap">
+    <section class="signin-card">
+      <p class="eyebrow">Learning portal</p>
+      <h1>Sign in to your courses</h1>
+      <p class="signin-lede">Enter the email address you registered with. We’ll send you a secure sign-in link—no password required. Open the link in this same browser.</p>
+
+      <form id="signin-form">
+        <label for="email">Email address</label>
+        <input id="email" name="email" type="email" autocomplete="email" required />
+        <button type="submit">Email me a sign-in link</button>
+      </form>
+
+      <div id="signin-status" class="signin-status" role="status" hidden></div>
+      <p class="signin-help">Only invited participants can open course materials. If your registration uses another email, contact <a href="mailto:office@centerforanthroposophy.org">the CfA office</a>.</p>
+    </section>
+  </div>
+</Learn>
+
+<script>
+  import { supabase } from '../../lib/learnClient.js';
+
+  const form = document.getElementById('signin-form');
+  const email = document.getElementById('email');
+  const status = document.getElementById('signin-status');
+  const button = form.querySelector('button');
+
+  const { data } = await supabase.auth.getSession();
+  if (data.session) location.replace('/learn');
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    button.disabled = true;
+    status.hidden = false;
+    status.classList.remove('error');
+    status.textContent = 'Sending your secure link…';
+
+    const { error } = await supabase.auth.signInWithOtp({
+      email: email.value.trim(),
+      options: {
+        emailRedirectTo: `${location.origin}/learn/auth`,
+        shouldCreateUser: false,
+      },
+    });
+
+    if (error) {
+      status.classList.add('error');
+      status.textContent = 'We could not send the link. Check the address and try again.';
+      button.disabled = false;
+      return;
+    }
+
+    status.textContent = 'Check your inbox on this device. Open the link in this same browser; it expires soon and can be used once.';
+    form.reset();
+  });
+</script>
+
+<style>
+  .signin-wrap { display: grid; place-items: center; min-height: 64vh; padding-top: 54px; }
+  .signin-card { width: min(100%, 560px); padding: clamp(26px, 6vw, 48px); border: 1px solid var(--line); border-top: 3px solid var(--gold); border-radius: 7px; background: var(--raised); box-shadow: 0 24px 60px -50px #000; }
+  .signin-card h1 { margin: 7px 0 12px; font-size: clamp(30px, 6vw, 43px); }
+  .signin-lede { color: var(--soft); font-size: 17px; }
+  form { display: flex; flex-direction: column; gap: 8px; margin-top: 28px; }
+  label { font-family: var(--sans); font-size: 12px; font-weight: 600; }
+  input { width: 100%; border: 1px solid var(--line); border-radius: 3px; padding: 12px 13px; color: var(--ink); background: var(--paper); font: 16px var(--sans); }
+  input:focus { outline: 2px solid var(--green); outline-offset: 2px; }
+  form button { margin-top: 5px; border: 1px solid var(--green); border-radius: 3px; padding: 12px 16px; color: var(--paper); background: var(--green); font: 600 14px var(--sans); cursor: pointer; }
+  form button:disabled { cursor: wait; opacity: .65; }
+  .signin-status { margin-top: 18px; border-left: 3px solid var(--green); padding: 10px 13px; color: var(--green-ink); background: var(--chalk); font: 13px/1.5 var(--sans); }
+  .signin-status.error { border-color: #a8324a; color: #a8324a; }
+  .signin-help { margin-top: 22px; color: var(--soft); font: 11.5px/1.5 var(--sans); }
+</style>
