@@ -12,7 +12,7 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
   },
 });
 
-export async function getCoursePayload(slug = 'ignite') {
+export async function getCoursePayload(slug = 'starlight-rays-2026-2027') {
   const { data, error } = await supabase.auth.getSession();
   if (error || !data.session) return { status: 'signed_out' };
 

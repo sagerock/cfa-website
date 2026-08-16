@@ -29,6 +29,11 @@ import Learn from '../../layouts/Learn.astro';
   const status = document.getElementById('signin-status');
   const button = form.querySelector('button');
 
+  if (new URLSearchParams(location.search).get('registered') === '1') {
+    status.hidden = false;
+    status.textContent = 'Your registration is complete. Sign in with the email address you used at checkout.';
+  }
+
   const { data } = await supabase.auth.getSession();
   if (data.session) location.replace('/learn');
 

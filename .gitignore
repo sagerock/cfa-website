@@ -6,3 +6,5 @@ dist/
 .env.*
 !.env.example
 doorbell/state/
+supabase/.temp/
+deno.lock

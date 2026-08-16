@@ -80,9 +80,11 @@ the extraction tooling and audit findings — lives in the SageRock monorepo:
 `sagerock/clients/center-for-anthroposophy/site-rebuild/`. This repo carries only the
 curated live spine (~20 pages + data).
 
-Registration forms are deliberately absent: the plan (SageRock-owned form + Supabase +
-CfA's existing Authorize.Net gateway) is at `site-rebuild/FORMS-PLAN.md` in the
-monorepo, targeted at Renewal 2027.
+The first native registration pilot is Starlight Rays 2026–2027: an Astro form uses
+Authorize.Net hosted Accept.js fields, a Supabase Edge Function performs server-priced
+payment, and the shared contact/program/enrollment tables grant portal access. It remains
+sandbox-gated until CfA approves policy copy and the sandbox and announced live-card tests
+pass. The broader reusable form plan is at `site-rebuild/FORMS-PLAN.md` in the monorepo.
 
 ## Governance
 

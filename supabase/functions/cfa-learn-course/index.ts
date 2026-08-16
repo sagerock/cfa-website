@@ -52,10 +52,10 @@ Deno.serve(async (request: Request) => {
   const { data: authData, error: authError } = await admin.auth.getUser(token);
   if (authError || !authData.user) return json({ error: "invalid_session" }, 401, origin);
 
-  const slug = new URL(request.url).searchParams.get("slug")?.trim() || "ignite";
+  const slug = new URL(request.url).searchParams.get("slug")?.trim() || "starlight-rays-2026-2027";
   const { data: course, error: courseError } = await admin
     .from("cfa_learn_courses")
-    .select("id, slug, title, former_name, subtitle, cohort, facilitator, image_url")
+    .select("id, program_id, slug, title, former_name, subtitle, cohort, facilitator, image_url")
     .eq("slug", slug)
     .eq("published", true)
     .maybeSingle();
@@ -63,19 +63,40 @@ Deno.serve(async (request: Request) => {
   if (courseError) return json({ error: "course_lookup_failed" }, 500, origin);
   if (!course) return json({ error: "course_not_found" }, 404, origin);
 
-  const { data: enrollment, error: enrollmentError } = await admin
-    .from("cfa_learn_enrollments")
-    .select("id, starts_at, expires_at, revoked_at")
+  const { data: program, error: programError } = await admin
+    .from("programs")
+    .select("id, client_id")
+    .eq("id", course.program_id)
+    .maybeSingle();
+
+  if (programError) return json({ error: "program_lookup_failed" }, 500, origin);
+  if (!program) return json({ error: "course_not_found" }, 404, origin);
+
+  const { data: identity, error: identityError } = await admin
+    .from("client_auth_identities")
+    .select("contact_id")
     .eq("user_id", authData.user.id)
-    .eq("course_id", course.id)
+    .eq("client_id", program.client_id)
+    .maybeSingle();
+
+  if (identityError) return json({ error: "identity_lookup_failed" }, 500, origin);
+  if (!identity) return json({ error: "enrollment_required" }, 403, origin);
+
+  const { data: enrollment, error: enrollmentError } = await admin
+    .from("enrollments")
+    .select("id, enrolled_at, access_starts_at, access_ends_at, revoked_at")
+    .eq("client_id", program.client_id)
+    .eq("program_id", program.id)
+    .eq("contact_id", identity.contact_id)
+    .eq("status", "registered")
     .maybeSingle();
 
   if (enrollmentError) return json({ error: "enrollment_lookup_failed" }, 500, origin);
   const now = Date.now();
   const hasAccess = enrollment
     && !enrollment.revoked_at
-    && new Date(enrollment.starts_at).getTime() <= now
-    && (!enrollment.expires_at || new Date(enrollment.expires_at).getTime() > now);
+    && new Date(enrollment.access_starts_at).getTime() <= now
+    && (!enrollment.access_ends_at || new Date(enrollment.access_ends_at).getTime() > now);
   if (!hasAccess) return json({ error: "enrollment_required" }, 403, origin);
 
   const [sessionsResult, resourcesResult, profileResult] = await Promise.all([
@@ -109,7 +130,7 @@ Deno.serve(async (request: Request) => {
         || "Learner",
     },
     course,
-    enrollment: { starts_at: enrollment.starts_at, expires_at: enrollment.expires_at },
+    enrollment: { starts_at: enrollment.access_starts_at, expires_at: enrollment.access_ends_at },
     sessions: sessionsResult.data || [],
     resources: resourcesResult.data || [],
   }, 200, origin);

@@ -1,6 +1,6 @@
-export const ignitePilot = {
-  slug: 'ignite',
-  title: 'Ignite',
+export const starlightPilot = {
+  slug: 'starlight-rays-2026-2027',
+  title: 'Starlight Rays 2026–2027',
   formerName: 'Starlight Rays in Darkened Times',
   sourceCourseId: 3357450,
   subtitle: 'Contemporary questions in Waldorf education',

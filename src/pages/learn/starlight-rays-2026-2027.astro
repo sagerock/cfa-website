@@ -1,11 +1,11 @@
 ---
 import Learn from '../../layouts/Learn.astro';
 import MuxVideo from '../../components/MuxVideo.astro';
-import { ignitePilot } from '../../data/ignitePilot.js';
+import { starlightPilot } from '../../data/starlightPilot.js';
 ---
 
-<Learn title={`${ignitePilot.title} — Learning Portal`}>
-  <div id="course-loading" class="wrap course-state" role="status">Checking your Ignite enrollment…</div>
+<Learn title={`${starlightPilot.title} — Learning Portal`}>
+  <div id="course-loading" class="wrap course-state" role="status">Checking your Starlight Rays enrollment…</div>
   <div id="course-error" class="wrap course-state" hidden>
     <h1>Course access unavailable</h1>
     <p id="course-error-copy">We couldn’t load this course. Please return to your courses and try again.</p>
@@ -66,7 +66,7 @@ import { ignitePilot } from '../../data/ignitePilot.js';
     <aside class="course-side">
       <section class="side-card welcome-card">
         <p class="eyebrow">Begin here</p>
-        <h2>Welcome to Ignite</h2>
+        <h2>Welcome to Starlight Rays</h2>
         <p id="welcome-body" tabindex="-1" aria-live="polite">Your welcome letter and orientation will live here, available whenever you need them.</p>
         <button id="welcome-button" type="button" disabled>Welcome letter loading…</button>
       </section>
@@ -98,7 +98,7 @@ import { ignitePilot } from '../../data/ignitePilot.js';
   const timeFormat = new Intl.DateTimeFormat('en-US', {
     hour: 'numeric', minute: '2-digit', timeZone: 'America/New_York', timeZoneName: 'short',
   });
-  const result = await getCoursePayload('ignite');
+  const result = await getCoursePayload('starlight-rays-2026-2027');
 
   if (result.status === 'signed_out') {
     location.replace('/learn/sign-in');
@@ -106,7 +106,7 @@ import { ignitePilot } from '../../data/ignitePilot.js';
     document.getElementById('course-loading').hidden = true;
     document.getElementById('course-error').hidden = false;
     if (result.status === 'forbidden') {
-      document.getElementById('course-error-copy').textContent = 'This account does not have an active Ignite enrollment.';
+      document.getElementById('course-error-copy').textContent = 'This account does not have an active Starlight Rays enrollment.';
     }
   } else {
     const { course, learner, sessions, resources } = result.data;

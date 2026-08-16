@@ -34,7 +34,7 @@ import Learn from '../../layouts/Learn.astro';
         <span>1 course</span>
       </div>
 
-      <a class="course-card" href="/learn/ignite">
+      <a class="course-card" href="/learn/starlight-rays-2026-2027">
         <img id="course-image" src="/images/posts/e54997f7cf-thechallengeofinnerbalancehorizontal1.jpg" alt="" />
         <div class="course-card-copy">
           <span id="course-cohort" class="course-term"></span>
@@ -60,7 +60,7 @@ import Learn from '../../layouts/Learn.astro';
 <script>
   import { getCoursePayload } from '../../lib/learnClient.js';
 
-  const result = await getCoursePayload('ignite');
+  const result = await getCoursePayload('starlight-rays-2026-2027');
   if (result.status === 'signed_out') {
     location.replace('/learn/sign-in');
   } else {

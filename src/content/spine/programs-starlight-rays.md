@@ -1,6 +1,6 @@
 ---
-title: "Starlight Rays in Darkened Times: Seminars on Contemporary Topics"
-navLabel: "Starlight Rays in Darkened Times"
+title: "Starlight Rays 2026-2027: Seminars on Contemporary Topics"
+navLabel: "Starlight Rays"
 section: programs
 slug: starlight-rays
 order: 8
@@ -20,7 +20,7 @@ director: "David Barham, M.Ed."
 directorRole: "WHiSTEP Program Director"
 directorPhoto: "/images/767ac3b81b-david-barham-portrait-300x300.webp"
 directorEmail: "david@centerforanthroposophy.org"
-applyUrl: "https://courses.centerforanthroposophy.org/courses/starlight-rays-2026%E2%80%932027"
+applyUrl: "/register/starlight-rays-2026-2027"
 applyLabel: "Register for the 2026-27 series"
 testimonials:
   - quote: "The entire series has been excellent and inspiring. I appreciated the breadth and depth of topics covered and the expertise of the presenters. I'm so glad I attended."

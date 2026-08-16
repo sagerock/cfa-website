@@ -21,6 +21,7 @@ import Learn from '../../layouts/Learn.astro';
   const code = params.get('code');
   const tokenHash = params.get('token_hash');
   const type = params.get('type');
+  history.replaceState(null, '', location.pathname);
 
   let error = null;
   if (tokenHash && type === 'email') {

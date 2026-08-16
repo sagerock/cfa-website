@@ -246,3 +246,10 @@ roles are revoked: the `cfa-learn-course` Edge Function validates each bearer to
 active enrollment before returning course fields, including any future Zoom URL. The first
 manual enrollment is `sage@sagerock.com`; no other contact becomes an Auth user or learner.
 Magic links use PKCE and the existing Auth redirect allow-list was merged, not replaced.
+
+## 2026-08-15 — Correct the pilot identity to Starlight Rays
+The first portal prototype incorrectly used the name Ignite for Thinkific course `3357450`.
+That course is Starlight Rays 2026–2027 (product `3683719`); Ignite! Summer Residency is
+a separate course (`3075585`, product `3358198`). The live pilot is therefore renamed to
+Starlight Rays, and future imports and payment mappings must use source IDs rather than names.
+The old `/learn/ignite` path redirects to the corrected Starlight route.
