@@ -102,9 +102,10 @@ uses that nonce for an `authCaptureTransaction`, stores only a masked gateway su
 creates or links the central CfA contact and Auth identity, creates the central enrollment,
 and sends a secure welcome/sign-in link.
 
-Required Edge Function secrets are documented without values in `.env.example`.
-`REGISTRATION_LIVE` defaults to false. Before production is enabled, CfA must approve the
-displayed cancellation language and configure Turnstile for the production hostname.
+Required Edge Function secrets are documented without secret values in `.env.example`.
+`REGISTRATION_LIVE` defaults to false. Turnstile was configured and its secret validated for
+the production hostname on 2026-08-16. Before production is enabled, CfA must approve the
+displayed cancellation language.
 Sandbox checkout is not allowed against the shared production database. A one-use production
 test authorization instead forces a $1 transaction, immediately voids any nonzero gateway
 transaction, and creates no contact, Auth identity, enrollment, or accounting entry.

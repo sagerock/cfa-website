@@ -76,12 +76,14 @@ function registrationConfig() {
   const transactionKey = Deno.env.get("AUTHORIZE_NET_TRANSACTION_KEY") || "";
   const publicClientKey = Deno.env.get("AUTHORIZE_NET_PUBLIC_CLIENT_KEY") || "";
   const rateLimitSalt = Deno.env.get("REGISTRATION_RATE_LIMIT_SALT") || "";
+  const turnstileSiteKey = Deno.env.get("TURNSTILE_SITE_KEY") || "";
+  const turnstileConfigured = Boolean(turnstileSiteKey && Deno.env.get("TURNSTILE_SECRET_KEY"));
   const testToken = Deno.env.get("REGISTRATION_TEST_TOKEN") || "";
   const testMode = environment === "production"
     && Deno.env.get("REGISTRATION_TEST_MODE")?.toLowerCase() === "true"
     && Boolean(testToken);
   const configured = Boolean(apiLoginId && transactionKey && publicClientKey && rateLimitSalt);
-  const enabled = configured && environment === "production" && liveEnabled;
+  const enabled = configured && turnstileConfigured && environment === "production" && liveEnabled;
   return {
     environment,
     liveEnabled,
@@ -89,6 +91,8 @@ function registrationConfig() {
     transactionKey,
     publicClientKey,
     rateLimitSalt,
+    turnstileSiteKey,
+    turnstileConfigured,
     testToken,
     testMode,
     enabled,
@@ -243,19 +247,25 @@ async function voidIsConfirmed(
 async function verifyTurnstile(token: string, remoteIp: string) {
   const secret = Deno.env.get("TURNSTILE_SECRET_KEY") || "";
   if (!secret) return false;
-  const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({ secret, response: token, remoteip: remoteIp }),
-  });
-  const result = await response.json() as {
-    success?: boolean;
-    hostname?: string;
-    action?: string;
-  };
-  return result.success === true
-    && result.hostname === productionHostname
-    && result.action === "registration";
+  try {
+    const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      signal: AbortSignal.timeout(10_000),
+      body: new URLSearchParams({ secret, response: token, remoteip: remoteIp }),
+    });
+    if (!response.ok) return false;
+    const result = await response.json() as {
+      success?: boolean;
+      hostname?: string;
+      action?: string;
+    };
+    return result.success === true
+      && result.hostname === productionHostname
+      && result.action === "registration";
+  } catch {
+    return false;
+  }
 }
 
 function parseFrom(value: string) {
@@ -383,7 +393,8 @@ Deno.serve(async (request: Request) => {
         public_client_key: paymentAvailable ? discovered.publicClientKey || null : null,
         accept_script: acceptScript(config.environment),
       },
-      turnstile_site_key: config.liveEnabled ? Deno.env.get("TURNSTILE_SITE_KEY") || null : null,
+      turnstile_site_key: config.liveEnabled ? config.turnstileSiteKey || null : null,
+      turnstile_configured: config.turnstileConfigured,
     }, 200, origin);
   }
 

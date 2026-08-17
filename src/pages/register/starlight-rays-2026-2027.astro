@@ -177,6 +177,7 @@ import Base from '../../layouts/Base.astro';
   let idempotencyKey = localStorage.getItem(checkoutKeyName) || crypto.randomUUID();
   localStorage.setItem(checkoutKeyName, idempotencyKey);
   let turnstileToken = '';
+  let turnstileWidgetId;
 
   const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
 
@@ -294,7 +295,10 @@ import Base from '../../layouts/Base.astro';
       }
     }
     paymentButton.disabled = false;
-    if (window.turnstile) window.turnstile.reset();
+    if (window.turnstile && turnstileWidgetId !== undefined) {
+      turnstileToken = '';
+      window.turnstile.reset(turnstileWidgetId);
+    }
   }
 
   window.responseHandler = async (response) => {
@@ -374,7 +378,7 @@ import Base from '../../layouts/Base.astro';
       paymentButton.setAttribute('data-responseHandler', 'responseHandler');
       if (config.turnstile_site_key) {
         await loadScript('https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit');
-        window.turnstile.render('#turnstile', {
+        turnstileWidgetId = window.turnstile.render('#turnstile', {
           sitekey: config.turnstile_site_key,
           action: 'registration',
           callback: (token) => { turnstileToken = token; },
