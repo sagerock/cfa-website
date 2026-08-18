@@ -142,3 +142,22 @@ Mux's free plan is sufficient for this pilot. After creating the account:
 6. Sandbox payment testing uses a separate non-production Supabase project.
 7. A successful charge followed by an access failure is marked `enrollment_pending` for
    manual reconciliation and is never charged automatically a second time.
+
+## Gate status
+
+Recorded evidence only; a gate with no entry is open. Headless runs use
+`scripts/starlight-gate-check.py`, which prints sanitized evidence and removes its
+throwaway test account.
+
+- **Gate 1 — partially passed 2026-08-18 (API path).** Magic-link verification for the
+  enrolled internal account succeeded and the course endpoint returned only Starlight
+  Rays (12 sessions; a different course slug returns 404). Still owed before the gate
+  fully closes: one browser walkthrough using a real delivered magic-link email, since
+  the headless run generates the link server-side and does not exercise email delivery.
+- **Gate 2 — passed 2026-08-18.** A freshly created authenticated account with no
+  enrollment received 403 `enrollment_required`; an anonymous request received 401.
+  The test account was deleted afterward.
+- **Gates 3–7 — open.** Gate 3 is blocked on the signed Mux playback flow (not built)
+  and on a session Zoom URL being loaded; as of 2026-08-18 no `cfa_learn_sessions` row
+  carries a Zoom URL, including Sept 5. Gate 5's money step is Sage's. Gate 6 requires
+  the separate non-production Supabase project.

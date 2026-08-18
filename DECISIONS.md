@@ -253,3 +253,16 @@ That course is Starlight Rays 2026–2027 (product `3683719`); Ignite! Summer Re
 a separate course (`3075585`, product `3358198`). The live pilot is therefore renamed to
 Starlight Rays, and future imports and payment mappings must use source IDs rather than names.
 The old `/learn/ignite` path redirects to the corrected Starlight route.
+
+## 2026-08-18 — Full cutover to the new platform for Sept 5
+Elsy decided the migration question (option a in the Sept 5 launch map): all 74 Starlight
+Rays participants move to the new portal for the Sept 5 first session, and Thinkific becomes
+the archive rather than parallel-running the season. The contacts-and-enrollments half of
+that migration already ran on 2026-08-17 (74 Thinkific-source enrollments, batch
+`starlight-thinkific-2026-08-16`, zero Auth users — identity stays just-in-time). What the
+decision adds is the second half: after the seven release gates in `docs/starlight-pilot.md`
+pass, bulk magic-link invitations bring the 74 into the portal. Sequencing is explicit —
+**gates first, then bulk invite**; nobody outside the internal test accounts gets an
+invitation while any gate is open. Thinkific itself stays untouched (live, paid enrollees)
+until the Nov 10 renewal decision; roster parity for David's per-school mailing groups must
+survive the cutover.
