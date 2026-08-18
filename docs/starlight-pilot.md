@@ -186,12 +186,13 @@ throwaway test account.
   log's foreign key from the legacy pilot enrollments table to central `enrollments`
   and adds the lineage columns. Test: `starlight-gate-check.py --gate4`.
 - **Gate 5 — open.** The money step is Sage's (due 9/2).
-- **Gate 6 — open.** Requires the separate non-production Supabase project
-  ($10/month on this org; awaiting approval).
-- **Gate 7 — code-verified 2026-08-18; live test pending.** Three layers prevent a
-  second automatic charge after charge-but-no-access: replaying the same idempotency
-  key against an `enrollment_pending` registration returns 409 before any gateway
-  call; a new attempt for the same email and program 409s while any pending record
-  exists; and `registrations_one_active_email_program_idx` enforces one active
-  registration per email and program at the database. The live exercise belongs to
-  the sandbox project (gate 6) or the gate-5 production test window.
+- **Gate 6 — waived by Sage 2026-08-18** (see `DECISIONS.md`). No sandbox project;
+  payment verification rests on gate 5's $1-charge-and-void production test. Failure
+  paths remain code-verified only. Sandbox checkout stays disallowed against the
+  shared production database.
+- **Gate 7 — code-verified 2026-08-18; live exercise folded into gate 5.** Three
+  layers prevent a second automatic charge after charge-but-no-access: replaying the
+  same idempotency key against an `enrollment_pending` registration returns 409
+  before any gateway call; a new attempt for the same email and program 409s while
+  any pending record exists; and `registrations_one_active_email_program_idx`
+  enforces one active registration per email and program at the database.

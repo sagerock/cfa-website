@@ -266,3 +266,14 @@ pass, bulk magic-link invitations bring the 74 into the portal. Sequencing is ex
 invitation while any gate is open. Thinkific itself stays untouched (live, paid enrollees)
 until the Nov 10 renewal decision; roster parity for David's per-school mailing groups must
 survive the cutover.
+
+## 2026-08-18 — Waive gate 6 (sandbox payment project)
+Sage decided to skip the separate non-production Supabase project that release gate 6
+called for. Payment verification rests on gate 5's purpose-built $1-charge-and-void
+production test instead. The accepted trade-off, stated plainly: the failure paths
+(declines, gateway timeouts, charge-succeeds-but-enrollment-fails) stay code-verified
+only — reviewed in the deployed cfa-register source and enforced by the database's
+one-active-registration index, but never exercised end-to-end against a sandbox
+gateway. Sandbox checkout remains disallowed against the shared production database;
+if tuition-scale payments (25-month HS program, Oct/Nov) warrant it later, a
+disposable test project can be created then.
