@@ -47,6 +47,10 @@ async function sendPortalWelcome(input: {
     `${productionOrigin}/learn/sign-in`,
     "",
     "If you have questions, contact office@centerforanthroposophy.org.",
+    "",
+    "Warmly,",
+    "David Barham and Elsy Ayoub",
+    "Center for Anthroposophy",
   ].join("\n");
   const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
     method: "POST",
