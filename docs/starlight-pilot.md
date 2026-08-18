@@ -165,13 +165,15 @@ throwaway test account.
 - **Gate 2 — passed 2026-08-18.** A freshly created authenticated account with no
   enrollment received 403 `enrollment_required`; an anonymous request received 401.
   The test account was deleted afterward.
-- **Gate 3 — video half passed 2026-08-18; Zoom half open.** With a session temporarily
-  pointed at the signed sample asset: the enrolled user received playback/thumbnail/
-  storyboard tokens and the HLS stream returned 200 with the token; the stream returned
-  403 without it; the playback endpoint returned 401 anonymously and 403 for an
-  authenticated unenrolled account; the course payload reported `has_recording` without
-  exposing the playback ID; the session row was restored to null afterward. Still open:
-  the test Zoom link — as of 2026-08-18 no `cfa_learn_sessions` row carries a Zoom URL,
-  including Sept 5; the enrolled-only exposure path is proven but the data is missing.
+- **Gate 3 — passed 2026-08-18.** Video: with a session temporarily pointed at the signed
+  sample asset, the enrolled user received playback/thumbnail/storyboard tokens and the
+  HLS stream returned 200 with the token; the stream returned 403 without it; the
+  playback endpoint returned 401 anonymously and 403 for an authenticated unenrolled
+  account; the course payload reported `has_recording` without exposing the playback ID;
+  the session row was restored to null afterward. Zoom: all 12 sessions now carry the
+  season's vanity room link (`centerforanthroposophy.org/zoomroom4`, announced by David
+  to participants 2026-08-18; it 301s to the real Zoom meeting so CfA can repoint it),
+  returned only through the authenticated course endpoint — the same run shows the
+  enrolled user receiving it and unenrolled/anonymous callers denied.
 - **Gates 4–7 — open.** Gate 5's money step is Sage's. Gate 6 requires the separate
   non-production Supabase project.
