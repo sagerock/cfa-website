@@ -3,8 +3,9 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 
 // Operations-only endpoint: sends (or resends) the portal welcome email for one
 // central enrollment and records the delivery in cfa_learn_email_events.
-// Callers must present the service-role key; there is deliberately no CORS
-// support and no browser path. Used by the gate-4 check and the invitation wave.
+// Callers must present the dedicated CFA_LEARN_OPS_TOKEN; there is deliberately
+// no CORS support and no browser path. Used by the gate-4 check and the
+// invitation wave.
 
 const productionOrigin = "https://learn.centerforanthroposophy.org";
 
@@ -73,11 +74,13 @@ Deno.serve(async (request: Request) => {
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  if (!supabaseUrl || !serviceRoleKey) return json({ error: "server_configuration" }, 500);
+  const opsToken = Deno.env.get("CFA_LEARN_OPS_TOKEN");
+  if (!supabaseUrl || !serviceRoleKey || !opsToken) {
+    return json({ error: "server_configuration" }, 500);
+  }
 
-  const authorization = request.headers.get("Authorization") ?? "";
-  const presented = authorization.startsWith("Bearer ") ? authorization.slice(7) : "";
-  if (!presented || presented !== serviceRoleKey) {
+  const presented = request.headers.get("X-Cfa-Ops-Token") ?? "";
+  if (!presented || presented !== opsToken) {
     return json({ error: "service_authorization_required" }, 401);
   }
 

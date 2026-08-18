@@ -85,6 +85,12 @@ def main() -> None:
         action="store_true",
         help="Also run gate 4: really sends two welcome emails to the internal account",
     )
+    parser.add_argument(
+        "--ops-token-env",
+        type=Path,
+        default=Path("/mnt/d/dev/secrets/cfa-learn-ops.env"),
+        help="Env file holding CFA_LEARN_OPS_TOKEN (gate 4 only)",
+    )
     args = parser.parse_args()
 
     env = parse_env(args.supabase_env)
@@ -264,10 +270,14 @@ def main() -> None:
         )
         enrollment_id = enrollment_rows[0]["id"]
 
+        ops_token = parse_env(args.ops_token_env).get("CFA_LEARN_OPS_TOKEN", "")
+        if not ops_token:
+            raise RuntimeError("CFA_LEARN_OPS_TOKEN missing for gate 4")
+
         def send_welcome() -> tuple[int, Any]:
             return request_json(
                 f"{supabase_url}/functions/v1/cfa-learn-welcome",
-                admin_headers,
+                {**anon_headers, "X-Cfa-Ops-Token": ops_token},
                 method="POST",
                 body={"enrollment_id": enrollment_id},
             )

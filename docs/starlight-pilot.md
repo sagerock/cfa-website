@@ -175,16 +175,18 @@ throwaway test account.
   to participants 2026-08-18; it 301s to the real Zoom meeting so CfA can repoint it),
   returned only through the authenticated course endpoint — the same run shows the
   enrolled user receiving it and unenrolled/anonymous callers denied.
-- **Gate 4 — machinery built 2026-08-18, test pending one migration.** The
-  `cfa-learn-welcome` Edge Function (service-role-only, no CORS) sends or resends the
-  portal welcome for one central enrollment: it ensures the Auth user and the
-  client-scoped identity bridge (erroring on any identity conflict rather than
-  re-linking), mints a fresh sign-in link, sends via SendGrid, and records every
-  delivery in `cfa_learn_email_events` with the provider message id and `resend_of`
-  lineage. This is also the unit of the invitation wave. Blocked on applying
-  `20260818181500_welcome_email_delivery_log.sql`, which repoints the (empty) event
-  log's foreign key from the legacy pilot enrollments table to central `enrollments`
-  and adds the lineage columns. Test: `starlight-gate-check.py --gate4`.
+- **Gate 4 — passed 2026-08-18.** The `cfa-learn-welcome` Edge Function (guarded by
+  the dedicated `CFA_LEARN_OPS_TOKEN` header, no CORS) sends or resends the portal
+  welcome for one central enrollment: it ensures the Auth user and the client-scoped
+  identity bridge (erroring on any identity conflict rather than re-linking), mints a
+  fresh sign-in link, sends via SendGrid, and records every delivery in
+  `cfa_learn_email_events` with the provider message id and `resend_of` lineage.
+  This is also the unit of the invitation wave. Evidence (`starlight-gate-check.py
+  --gate4`, Sage approving the enabling migration): two sends to the internal
+  account returned 200, two events recorded with provider ids, the second linking
+  `resend_of` to the first; an unauthorized call returned 401; delivery confirmed in
+  the recipient inbox. Migration `20260818181500_welcome_email_delivery_log` was
+  applied with explicit approval and recorded in the remote migration history.
 - **Gate 5 — open.** The money step is Sage's (due 9/2).
 - **Gate 6 — waived by Sage 2026-08-18** (see `DECISIONS.md`). No sandbox project;
   payment verification rests on gate 5's $1-charge-and-void production test. Failure
