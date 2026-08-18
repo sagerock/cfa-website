@@ -175,5 +175,23 @@ throwaway test account.
   to participants 2026-08-18; it 301s to the real Zoom meeting so CfA can repoint it),
   returned only through the authenticated course endpoint — the same run shows the
   enrolled user receiving it and unenrolled/anonymous callers denied.
-- **Gates 4–7 — open.** Gate 5's money step is Sage's. Gate 6 requires the separate
-  non-production Supabase project.
+- **Gate 4 — machinery built 2026-08-18, test pending one migration.** The
+  `cfa-learn-welcome` Edge Function (service-role-only, no CORS) sends or resends the
+  portal welcome for one central enrollment: it ensures the Auth user and the
+  client-scoped identity bridge (erroring on any identity conflict rather than
+  re-linking), mints a fresh sign-in link, sends via SendGrid, and records every
+  delivery in `cfa_learn_email_events` with the provider message id and `resend_of`
+  lineage. This is also the unit of the invitation wave. Blocked on applying
+  `20260818181500_welcome_email_delivery_log.sql`, which repoints the (empty) event
+  log's foreign key from the legacy pilot enrollments table to central `enrollments`
+  and adds the lineage columns. Test: `starlight-gate-check.py --gate4`.
+- **Gate 5 — open.** The money step is Sage's (due 9/2).
+- **Gate 6 — open.** Requires the separate non-production Supabase project
+  ($10/month on this org; awaiting approval).
+- **Gate 7 — code-verified 2026-08-18; live test pending.** Three layers prevent a
+  second automatic charge after charge-but-no-access: replaying the same idempotency
+  key against an `enrollment_pending` registration returns 409 before any gateway
+  call; a new attempt for the same email and program 409s while any pending record
+  exists; and `registrations_one_active_email_program_idx` enforces one active
+  registration per email and program at the database. The live exercise belongs to
+  the sandbox project (gate 6) or the gate-5 production test window.

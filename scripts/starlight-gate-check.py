@@ -80,6 +80,11 @@ def main() -> None:
         type=Path,
         help="File holding the public (publishable) client key; falls back to env vars",
     )
+    parser.add_argument(
+        "--gate4",
+        action="store_true",
+        help="Also run gate 4: really sends two welcome emails to the internal account",
+    )
     args = parser.parse_args()
 
     env = parse_env(args.supabase_env)
@@ -241,6 +246,55 @@ def main() -> None:
         )
         evidence["gate3_cleanup"] = {
             "session_playback_id_restored": restored[0]["mux_playback_id"] == prior_playback_id,
+        }
+
+    # Gate 4: the welcome email is recorded and resendable (internal account only)
+    if args.gate4:
+        program_rows = rest_get(
+            f"cfa_learn_courses?slug=eq.{COURSE_SLUG}&select=program_id"
+        )
+        program_id = program_rows[0]["program_id"]
+        client_id = rest_get(f"programs?id=eq.{program_id}&select=client_id")[0]["client_id"]
+        contact_rows = rest_get(
+            f"contacts?client_id=eq.{client_id}&email=eq.{GATE1_EMAIL}&select=id"
+        )
+        enrollment_rows = rest_get(
+            f"enrollments?contact_id=eq.{contact_rows[0]['id']}&program_id=eq.{program_id}"
+            "&status=eq.registered&select=id"
+        )
+        enrollment_id = enrollment_rows[0]["id"]
+
+        def send_welcome() -> tuple[int, Any]:
+            return request_json(
+                f"{supabase_url}/functions/v1/cfa-learn-welcome",
+                admin_headers,
+                method="POST",
+                body={"enrollment_id": enrollment_id},
+            )
+
+        first_status, first = send_welcome()
+        second_status, second = send_welcome()
+        events = rest_get(
+            f"cfa_learn_email_events?enrollment_id=eq.{enrollment_id}"
+            "&message_type=eq.welcome&select=id,status,provider_message_id,resend_of,sent_at"
+            "&order=created_at.asc"
+        )
+        evidence["gate4_welcome_email"] = {
+            "recipient": GATE1_EMAIL,
+            "first_send_status": first_status,
+            "second_send_status": second_status,
+            "events_recorded": len(events),
+            "all_sent": all(e["status"] == "sent" for e in events),
+            "provider_message_ids_present": all(e["provider_message_id"] for e in events),
+            "resend_links_to_prior_event": (
+                len(events) >= 2 and events[-1]["resend_of"] == events[-2]["id"]
+            ),
+            "unauthorized_call_status": request_json(
+                f"{supabase_url}/functions/v1/cfa-learn-welcome",
+                anon_headers,
+                method="POST",
+                body={"enrollment_id": enrollment_id},
+            )[0],
         }
 
     print(json.dumps(evidence, indent=2))
