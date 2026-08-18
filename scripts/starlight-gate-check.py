@@ -23,6 +23,8 @@ from typing import Any
 GATE1_EMAIL = "sage@sagerock.com"
 GATE2_EMAIL = "starlight-gate2-check@sagerock.com"
 COURSE_SLUG = "starlight-rays-2026-2027"
+GATE3_SESSION_SLUG = "methods"
+GATE3_TEST_PLAYBACK_ID = "JddlbDD00UcRWVYUzEgEcOI9mpBEEbbxorMqQ8J0200ZWE"  # signed policy, sample asset
 
 
 def parse_env(path: Path) -> dict[str, str]:
@@ -36,6 +38,15 @@ def parse_env(path: Path) -> dict[str, str]:
     return values
 
 
+def fetch_status(url: str) -> int:
+    request = urllib.request.Request(url)
+    try:
+        with urllib.request.urlopen(request, timeout=60) as response:
+            return response.status
+    except urllib.error.HTTPError as error:
+        return error.code
+
+
 def request_json(
     url: str,
     headers: dict[str, str],
@@ -46,7 +57,8 @@ def request_json(
     request = urllib.request.Request(url, headers=headers, method=method, data=data)
     try:
         with urllib.request.urlopen(request, timeout=60) as response:
-            return response.status, json.load(response)
+            raw = response.read()
+            return response.status, json.loads(raw) if raw.strip() else {}
     except urllib.error.HTTPError as error:
         detail = error.read().decode("utf-8", errors="replace")
         try:
@@ -117,6 +129,28 @@ def main() -> None:
             headers["Authorization"] = f"Bearer {access_token}"
         return request_json(f"{course_url}?slug={slug}", headers)
 
+    def call_playback(access_token: str | None, session_id: str) -> tuple[int, Any]:
+        headers = dict(anon_headers)
+        if access_token:
+            headers["Authorization"] = f"Bearer {access_token}"
+        return request_json(
+            f"{supabase_url}/functions/v1/cfa-learn-playback?slug={COURSE_SLUG}&session={session_id}",
+            headers,
+        )
+
+    def rest_get(path: str) -> Any:
+        return request_json(f"{supabase_url}/rest/v1/{path}", admin_headers)[1]
+
+    def rest_patch(path: str, body: dict[str, Any]) -> None:
+        status, _ = request_json(
+            f"{supabase_url}/rest/v1/{path}",
+            {**admin_headers, "Prefer": "return=minimal"},
+            method="PATCH",
+            body=body,
+        )
+        if status not in (200, 204):
+            raise RuntimeError(f"session update failed: {status}")
+
     # Gate 1: enrolled internal user
     token = sign_in_via_magic_link(GATE1_EMAIL)
     status, payload = call_course(token)
@@ -131,35 +165,83 @@ def main() -> None:
         "other_slug_lookup": call_course(token, slug="ignite-summer-residency")[0],
     }
 
-    # Gate 2: authenticated but unenrolled, plus anonymous
-    status, created = request_json(
-        f"{supabase_url}/auth/v1/admin/users",
-        admin_headers,
-        method="POST",
-        body={"email": GATE2_EMAIL, "email_confirm": True},
+    # Gate 3 setup: temporarily point one session at the signed sample asset,
+    # restoring the exact prior value afterward.
+    rows = rest_get(
+        f"cfa_learn_sessions?slug=eq.{GATE3_SESSION_SLUG}&select=id,mux_playback_id"
     )
-    if status not in (200, 201):
-        raise RuntimeError(f"gate-2 test user creation failed: {status} {created.get('msg')}")
-    user_id = created["id"]
+    if len(rows) != 1:
+        raise RuntimeError(f"expected one session with slug {GATE3_SESSION_SLUG}")
+    gate3_session_id = rows[0]["id"]
+    prior_playback_id = rows[0]["mux_playback_id"]
+    rest_patch(
+        f"cfa_learn_sessions?id=eq.{gate3_session_id}",
+        {"mux_playback_id": GATE3_TEST_PLAYBACK_ID},
+    )
     try:
-        token2 = sign_in_via_magic_link(GATE2_EMAIL)
-        status2, payload2 = call_course(token2)
-        anon_status, anon_payload = call_course(None)
-        evidence["gate2_unenrolled_user"] = {
-            "email": GATE2_EMAIL,
-            "magic_link_verified": True,
-            "course_status": status2,
-            "course_error": payload2.get("error"),
-            "anonymous_status": anon_status,
-            "anonymous_error": anon_payload.get("error"),
+        # Gate 2: authenticated but unenrolled, plus anonymous
+        status, created = request_json(
+            f"{supabase_url}/auth/v1/admin/users",
+            admin_headers,
+            method="POST",
+            body={"email": GATE2_EMAIL, "email_confirm": True},
+        )
+        if status not in (200, 201):
+            raise RuntimeError(f"gate-2 test user creation failed: {status} {created.get('msg')}")
+        user_id = created["id"]
+        try:
+            token2 = sign_in_via_magic_link(GATE2_EMAIL)
+            status2, payload2 = call_course(token2)
+            anon_status, anon_payload = call_course(None)
+            playback_status2, playback_payload2 = call_playback(token2, gate3_session_id)
+            evidence["gate2_unenrolled_user"] = {
+                "email": GATE2_EMAIL,
+                "magic_link_verified": True,
+                "course_status": status2,
+                "course_error": payload2.get("error"),
+                "anonymous_status": anon_status,
+                "anonymous_error": anon_payload.get("error"),
+                "playback_status": playback_status2,
+                "playback_error": playback_payload2.get("error"),
+            }
+        finally:
+            delete_status, _ = request_json(
+                f"{supabase_url}/auth/v1/admin/users/{user_id}",
+                admin_headers,
+                method="DELETE",
+            )
+            evidence["gate2_cleanup"] = {"test_user_deleted": delete_status in (200, 204)}
+
+        # Gate 3 (video half): signed playback for the enrolled user, denied elsewhere
+        pb_status, pb = call_playback(token, gate3_session_id)
+        video_token = pb.get("tokens", {}).get("video", "") if pb_status == 200 else ""
+        stream_url = f"https://stream.mux.com/{GATE3_TEST_PLAYBACK_ID}.m3u8"
+        course_status, course_payload = call_course(token)
+        gate3_session = next(
+            (s for s in course_payload.get("sessions", []) if s.get("id") == gate3_session_id),
+            {},
+        ) if course_status == 200 else {}
+        evidence["gate3_signed_playback"] = {
+            "playback_endpoint_status": pb_status,
+            "tokens_issued": sorted(pb.get("tokens", {}).keys()) if pb_status == 200 else [],
+            "expires_at": pb.get("expires_at"),
+            "hls_with_token_status": fetch_status(f"{stream_url}?token={video_token}") if video_token else None,
+            "hls_anonymous_status": fetch_status(stream_url),
+            "anonymous_playback_endpoint_status": call_playback(None, gate3_session_id)[0],
+            "course_reports_has_recording": gate3_session.get("has_recording"),
+            "course_leaks_playback_id": "mux_playback_id" in gate3_session,
         }
     finally:
-        delete_status, _ = request_json(
-            f"{supabase_url}/auth/v1/admin/users/{user_id}",
-            admin_headers,
-            method="DELETE",
+        rest_patch(
+            f"cfa_learn_sessions?id=eq.{gate3_session_id}",
+            {"mux_playback_id": prior_playback_id},
         )
-        evidence["gate2_cleanup"] = {"test_user_deleted": delete_status in (200, 204)}
+        restored = rest_get(
+            f"cfa_learn_sessions?id=eq.{gate3_session_id}&select=mux_playback_id"
+        )
+        evidence["gate3_cleanup"] = {
+            "session_playback_id_restored": restored[0]["mux_playback_id"] == prior_playback_id,
+        }
 
     print(json.dumps(evidence, indent=2))
 

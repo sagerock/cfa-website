@@ -1,5 +1,8 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { SignJWT, importPKCS8 } from "npm:jose@5";
+
+const TOKEN_TTL_SECONDS = 3600;
 
 const allowedOrigins = new Set([
   "https://learn.centerforanthroposophy.org",
@@ -44,7 +47,11 @@ Deno.serve(async (request: Request) => {
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  if (!supabaseUrl || !serviceRoleKey) return json({ error: "server_configuration" }, 500, origin);
+  const signingKeyId = Deno.env.get("MUX_SIGNING_KEY_ID");
+  const signingPrivateKeyBase64 = Deno.env.get("MUX_SIGNING_PRIVATE_KEY");
+  if (!supabaseUrl || !serviceRoleKey || !signingKeyId || !signingPrivateKeyBase64) {
+    return json({ error: "server_configuration" }, 500, origin);
+  }
 
   const admin = createClient(supabaseUrl, serviceRoleKey, {
     auth: { persistSession: false, autoRefreshToken: false },
@@ -52,10 +59,14 @@ Deno.serve(async (request: Request) => {
   const { data: authData, error: authError } = await admin.auth.getUser(token);
   if (authError || !authData.user) return json({ error: "invalid_session" }, 401, origin);
 
-  const slug = new URL(request.url).searchParams.get("slug")?.trim() || "starlight-rays-2026-2027";
+  const url = new URL(request.url);
+  const slug = url.searchParams.get("slug")?.trim() || "starlight-rays-2026-2027";
+  const sessionId = url.searchParams.get("session")?.trim() || "";
+  if (!sessionId) return json({ error: "session_required" }, 400, origin);
+
   const { data: course, error: courseError } = await admin
     .from("cfa_learn_courses")
-    .select("id, program_id, slug, title, former_name, subtitle, cohort, facilitator, image_url")
+    .select("id, program_id")
     .eq("slug", slug)
     .eq("published", true)
     .maybeSingle();
@@ -84,7 +95,7 @@ Deno.serve(async (request: Request) => {
 
   const { data: enrollment, error: enrollmentError } = await admin
     .from("enrollments")
-    .select("id, enrolled_at, access_starts_at, access_ends_at, revoked_at")
+    .select("id, access_starts_at, access_ends_at, revoked_at")
     .eq("client_id", program.client_id)
     .eq("program_id", program.id)
     .eq("contact_id", identity.contact_id)
@@ -99,42 +110,34 @@ Deno.serve(async (request: Request) => {
     && (!enrollment.access_ends_at || new Date(enrollment.access_ends_at).getTime() > now);
   if (!hasAccess) return json({ error: "enrollment_required" }, 403, origin);
 
-  const [sessionsResult, resourcesResult, profileResult] = await Promise.all([
-    admin
-      .from("cfa_learn_sessions")
-      .select("id, slug, position, presenter, title, starts_at, ends_at, zoom_url, mux_playback_id")
-      .eq("course_id", course.id)
-      .eq("published", true)
-      .order("position"),
-    admin
-      .from("cfa_learn_resources")
-      .select("id, session_id, title, kind, body, position")
-      .eq("course_id", course.id)
-      .eq("published", true)
-      .order("position"),
-    admin
-      .from("cfa_learn_profiles")
-      .select("display_name")
-      .eq("user_id", authData.user.id)
-      .maybeSingle(),
+  const { data: session, error: sessionError } = await admin
+    .from("cfa_learn_sessions")
+    .select("id, mux_playback_id")
+    .eq("course_id", course.id)
+    .eq("id", sessionId)
+    .eq("published", true)
+    .maybeSingle();
+
+  if (sessionError) return json({ error: "session_lookup_failed" }, 500, origin);
+  if (!session || !session.mux_playback_id) return json({ error: "recording_not_available" }, 404, origin);
+
+  const privateKeyPem = atob(signingPrivateKeyBase64);
+  const privateKey = await importPKCS8(privateKeyPem, "RS256");
+  const expiresAt = Math.floor(now / 1000) + TOKEN_TTL_SECONDS;
+  const signPlayback = (audience: string) =>
+    new SignJWT({ sub: session.mux_playback_id, aud: audience, exp: expiresAt })
+      .setProtectedHeader({ alg: "RS256", kid: signingKeyId })
+      .sign(privateKey);
+
+  const [video, thumbnail, storyboard] = await Promise.all([
+    signPlayback("v"),
+    signPlayback("t"),
+    signPlayback("s"),
   ]);
 
-  if (sessionsResult.error || resourcesResult.error) {
-    return json({ error: "course_content_failed" }, 500, origin);
-  }
-
   return json({
-    learner: {
-      display_name: profileResult.data?.display_name
-        || authData.user.email?.split("@")[0]
-        || "Learner",
-    },
-    course,
-    enrollment: { starts_at: enrollment.access_starts_at, expires_at: enrollment.access_ends_at },
-    sessions: (sessionsResult.data || []).map(({ mux_playback_id, ...session }) => ({
-      ...session,
-      has_recording: Boolean(mux_playback_id),
-    })),
-    resources: resourcesResult.data || [],
+    playback_id: session.mux_playback_id,
+    tokens: { video, thumbnail, storyboard },
+    expires_at: new Date(expiresAt * 1000).toISOString(),
   }, 200, origin);
 });

@@ -128,9 +128,17 @@ Mux's free plan is sufficient for this pilot. After creating the account:
 4. Use public playback for interface testing only.
 5. Never put a playback ID in `src/data/starlightPilot.js` or other statically built data.
 6. Before inviting participants, create the player client-side only after a verified
-   Supabase Edge Function returns a short-lived signed playback token. The checked-in
-   player intentionally remains in its empty state until that flow exists. Never render
+   Supabase Edge Function returns a short-lived signed playback token. Never render
    the token during Astro's static build.
+
+That flow exists as of 2026-08-18: `cfa-learn-playback` validates the bearer token and
+active enrollment exactly like `cfa-learn-course`, then mints one-hour RS256 playback,
+thumbnail, and storyboard tokens for the session's `mux_playback_id`. The course endpoint
+exposes only a `has_recording` boolean; the playback ID itself never reaches the browser
+outside the signed-token response. The Mux access token and signing key live only in the
+Supabase secret store (`MUX_*`, private key converted to PKCS8 for Deno's jose import).
+The one sample asset keeps its public playback ID for interface testing; real session
+recordings get signed playback IDs only.
 
 ## Release gates
 
@@ -157,7 +165,13 @@ throwaway test account.
 - **Gate 2 — passed 2026-08-18.** A freshly created authenticated account with no
   enrollment received 403 `enrollment_required`; an anonymous request received 401.
   The test account was deleted afterward.
-- **Gates 3–7 — open.** Gate 3 is blocked on the signed Mux playback flow (not built)
-  and on a session Zoom URL being loaded; as of 2026-08-18 no `cfa_learn_sessions` row
-  carries a Zoom URL, including Sept 5. Gate 5's money step is Sage's. Gate 6 requires
-  the separate non-production Supabase project.
+- **Gate 3 — video half passed 2026-08-18; Zoom half open.** With a session temporarily
+  pointed at the signed sample asset: the enrolled user received playback/thumbnail/
+  storyboard tokens and the HLS stream returned 200 with the token; the stream returned
+  403 without it; the playback endpoint returned 401 anonymously and 403 for an
+  authenticated unenrolled account; the course payload reported `has_recording` without
+  exposing the playback ID; the session row was restored to null afterward. Still open:
+  the test Zoom link — as of 2026-08-18 no `cfa_learn_sessions` row carries a Zoom URL,
+  including Sept 5; the enrolled-only exposure path is proven but the data is missing.
+- **Gates 4–7 — open.** Gate 5's money step is Sage's. Gate 6 requires the separate
+  non-production Supabase project.

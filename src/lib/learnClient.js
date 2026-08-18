@@ -33,3 +33,26 @@ export async function getCoursePayload(slug = 'starlight-rays-2026-2027') {
   if (!response.ok) return { status: 'error', error: body.error || 'course_request_failed' };
   return { status: 'ok', data: body };
 }
+
+export async function getPlaybackTokens(slug, sessionId) {
+  const { data, error } = await supabase.auth.getSession();
+  if (error || !data.session) return { status: 'signed_out' };
+
+  const params = new URLSearchParams({ slug, session: sessionId });
+  const response = await fetch(
+    `${SUPABASE_URL}/functions/v1/cfa-learn-playback?${params}`,
+    {
+      headers: {
+        Authorization: `Bearer ${data.session.access_token}`,
+        apikey: SUPABASE_PUBLISHABLE_KEY,
+      },
+      cache: 'no-store',
+    },
+  );
+
+  const body = await response.json().catch(() => ({}));
+  if (response.status === 401) return { status: 'signed_out' };
+  if (response.status === 403) return { status: 'forbidden' };
+  if (!response.ok) return { status: 'error', error: body.error || 'playback_request_failed' };
+  return { status: 'ok', data: body };
+}

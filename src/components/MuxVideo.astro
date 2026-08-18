@@ -4,15 +4,16 @@ const {
   title,
   eyebrow = 'Session recording',
   emptyMessage = 'The recording will appear here after the live seminar.',
+  id,
 } = Astro.props;
 
 const playerUrl = playbackId ? `https://player.mux.com/${encodeURIComponent(playbackId)}` : '';
 ---
 
-<section class="video-card" aria-label={title}>
+<section class="video-card" aria-label={title} id={id}>
   <div class="video-copy">
     <p class="eyebrow">{eyebrow}</p>
-    <h2>{title}</h2>
+    <h2 data-video-title>{title}</h2>
   </div>
   {playbackId ? (
     <iframe
