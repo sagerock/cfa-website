@@ -187,7 +187,14 @@ throwaway test account.
   `resend_of` to the first; an unauthorized call returned 401; delivery confirmed in
   the recipient inbox. Migration `20260818181500_welcome_email_delivery_log` was
   applied with explicit approval and recorded in the remote migration history.
-- **Gate 5 — open.** The money step is Sage's (due 9/2).
+- **Gate 5 — passed 2026-08-18.** Sage ran the controlled production test in the
+  browser with a one-use token (SHA-256-gated, two-hour expiry): the $1 charge was
+  approved and immediately voided, the registration row is retained as `is_test` /
+  `voided` with its gateway transaction id, and the residue check against the
+  pre-test baseline shows zero new contacts, Auth users, identities, or
+  enrollments. A first attempt correctly 409'd on the already-enrolled guard
+  (the tester's own enrolled email); the passing run used an unenrolled address.
+  Test mode was disarmed and the token secret removed immediately afterward.
 - **Gate 6 — waived by Sage 2026-08-18** (see `DECISIONS.md`). No sandbox project;
   payment verification rests on gate 5's $1-charge-and-void production test. Failure
   paths remain code-verified only. Sandbox checkout stays disallowed against the
