@@ -44,15 +44,22 @@ import Learn from '../../layouts/Learn.astro';
     status.classList.remove('error');
     status.textContent = 'Sending your secure link…';
 
-    const { error } = await supabase.auth.signInWithOtp({
-      email: email.value.trim(),
-      options: {
-        emailRedirectTo: `${location.origin}/learn/auth`,
-        shouldCreateUser: false,
-      },
-    });
+    let failed = false;
+    try {
+      const response = await fetch(
+        'https://ckloewflialohuvixmvd.supabase.co/functions/v1/cfa-learn-signin',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email.value.trim() }),
+        },
+      );
+      failed = !response.ok;
+    } catch {
+      failed = true;
+    }
 
-    if (error) {
+    if (failed) {
       status.classList.add('error');
       status.textContent = 'We could not send the link. Check the address and try again.';
       button.disabled = false;
