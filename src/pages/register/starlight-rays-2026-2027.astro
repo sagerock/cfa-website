@@ -112,7 +112,7 @@ import Base from '../../layouts/Base.astro';
             <input type="checkbox" name="marketing_opt_in" />
             <span>Send me occasional Center for Anthroposophy program news.</span>
           </label>
-          <div id="turnstile" class="turnstile"></div>
+          <div id="turnstile-widget" class="turnstile"></div>
           <button
             id="payment-button"
             class="payment-button"
@@ -454,7 +454,7 @@ import Base from '../../layouts/Base.astro';
       paymentButton.setAttribute('data-responseHandler', 'responseHandler');
       if (config.turnstile_site_key) {
         await loadScript('https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit');
-        turnstileWidgetId = window.turnstile.render('#turnstile', {
+        turnstileWidgetId = window.turnstile.render('#turnstile-widget', {
           sitekey: config.turnstile_site_key,
           action: 'registration',
           callback: (token) => { turnstileToken = token; },
