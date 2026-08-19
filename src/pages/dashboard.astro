@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { FN } from '../data/site.js';
 const STATS_ENDPOINT = `${FN}/cfa-stats`;
+const REGISTRATIONS_ENDPOINT = `${FN}/cfa-registrations`;
 ---
 
 <html lang="en">
@@ -66,12 +67,32 @@ const STATS_ENDPOINT = `${FN}/cfa-stats`;
           <ul class="leadlist" id="recent-leads"></ul>
           <div id="leads-empty" class="empty" hidden>No leads yet. Submissions from the contact form appear here.</div>
         </section>
+
+        <section class="tiles" aria-label="Registrations summary" id="reg-tiles" hidden>
+          <div class="tile"><span class="t-label">Active enrollments</span><span class="t-num" id="r-enrolled">–</span><span class="t-sub" id="r-sources">Starlight Rays</span></div>
+          <div class="tile"><span class="t-label">Paid registrations</span><span class="t-num" id="r-paid">–</span><span class="t-sub">via the site form</span></div>
+          <div class="tile"><span class="t-label">Comped</span><span class="t-num" id="r-comped">–</span><span class="t-sub">coupon registrations</span></div>
+          <div class="tile tile-accent"><span class="t-label">Net revenue</span><span class="t-num" id="r-revenue">–</span><span class="t-sub" id="r-pending">collected on the site</span></div>
+        </section>
+
+        <section class="panel" id="reg-panel" hidden>
+          <div class="panel-head"><h2>Registrations</h2><span class="hint" id="reg-course"></span></div>
+          <div class="reg-table-wrap">
+            <table class="reg-table">
+              <thead>
+                <tr><th>Date</th><th>Name</th><th>Email</th><th>Registration</th><th>Coupon</th><th>Amount</th><th>Status</th></tr>
+              </thead>
+              <tbody id="reg-rows"></tbody>
+            </table>
+          </div>
+          <div id="reg-empty" class="empty" hidden>No registrations through the site form yet. Imported Thinkific enrollments appear in the enrollment count above.</div>
+        </section>
       </div>
     </main>
 
     <div id="tooltip" class="tooltip" hidden></div>
 
-    <script is:inline define:vars={{ endpoint: STATS_ENDPOINT }}>
+    <script is:inline define:vars={{ endpoint: STATS_ENDPOINT, regEndpoint: REGISTRATIONS_ENDPOINT }}>
       const $ = (id) => document.getElementById(id);
       const token = decodeURIComponent(location.hash.replace(/^#/, '').trim());
       const fmt = (n) => (n ?? 0).toLocaleString('en-US');
@@ -85,6 +106,7 @@ const STATS_ENDPOINT = `${FN}/cfa-stats`;
           if (res.status === 401) { $('gate').hidden = false; return; }
           if (!res.ok) throw new Error('Request failed');
           render(await res.json());
+          loadRegistrations();
         } catch (e) {
           showError('Could not load the dashboard. Check your token and try again.');
         }
@@ -107,6 +129,57 @@ const STATS_ENDPOINT = `${FN}/cfa-stats`;
         renderSources(d.sources || []);
         renderTopPages(d.top_pages || []);
         renderLeads(d.recent_leads || []);
+      }
+
+      async function loadRegistrations() {
+        if (!token) return;
+        try {
+          const res = await fetch(`${regEndpoint}?token=${encodeURIComponent(token)}`, { cache: 'no-store' });
+          if (!res.ok) return;
+          renderRegistrations(await res.json());
+        } catch { /* the analytics half of the dashboard still works */ }
+      }
+
+      function renderRegistrations(d) {
+        const money = (cents) => (cents / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        $('reg-tiles').hidden = false;
+        $('reg-panel').hidden = false;
+        const t = d.totals || {};
+        $('r-enrolled').textContent = fmt(t.active_enrollments);
+        $('r-paid').textContent = fmt(t.paid_registrations);
+        $('r-comped').textContent = fmt(t.comped_registrations);
+        $('r-revenue').textContent = money(t.net_revenue_cents || 0);
+        $('r-pending').textContent = t.pending_review
+          ? `${t.pending_review} awaiting manual review`
+          : 'collected on the site';
+        const sources = Object.entries(d.enrollment_sources || {})
+          .map(([source, count]) => `${count} ${source}`).join(' · ');
+        if (sources) $('r-sources').textContent = sources;
+        $('reg-course').textContent = d.course || '';
+
+        const rows = d.registrations || [];
+        if (!rows.length) { $('reg-empty').hidden = false; return; }
+        const body = $('reg-rows');
+        body.replaceChildren();
+        rows.forEach((r) => {
+          const tr = document.createElement('tr');
+          const cells = [
+            new Date(r.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+            r.name,
+            r.email,
+            r.organization ? `${r.offer} — ${r.organization}` : r.offer,
+            r.coupon_code || '—',
+            money(r.amount_cents),
+            r.status,
+          ];
+          cells.forEach((value, index) => {
+            const td = document.createElement('td');
+            td.textContent = value;
+            if (index === 6) td.dataset.status = r.status;
+            tr.append(td);
+          });
+          body.append(tr);
+        });
       }
 
       function renderSources(sources) {
@@ -258,6 +331,13 @@ const STATS_ENDPOINT = `${FN}/cfa-stats`;
       .chart-svg .axis { stroke: var(--line); stroke-width: .3; }
       .chart-axis { display: flex; justify-content: space-between; font-family: var(--sans); font-size: 11.5px; color: var(--soft); margin-top: 6px; font-variant-numeric: tabular-nums; }
       .empty { font-family: var(--sans); font-size: 13.5px; color: var(--soft); padding: 20px 0; text-align: center; }
+      .reg-table-wrap { overflow-x: auto; }
+      .reg-table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 13px; }
+      .reg-table th { padding: 8px 10px; border-bottom: 2px solid var(--line); color: var(--soft); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; text-align: left; }
+      .reg-table td { padding: 9px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+      .reg-table td[data-status='paid'] { color: var(--green-ink); font-weight: 600; }
+      .reg-table td[data-status='enrollment_pending'] { color: #a8631e; font-weight: 600; }
+      .reg-table td[data-status='refunded'], .reg-table td[data-status='cancelled'] { color: var(--soft); }
 
       .ranklist, .leadlist { list-style: none; display: flex; flex-direction: column; gap: 9px; }
       .ranklist li { display: grid; grid-template-columns: 1fr 70px auto; align-items: center; gap: 10px; font-family: var(--sans); font-size: 13px; }
