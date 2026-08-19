@@ -368,6 +368,8 @@ import Base from '../../layouts/Base.astro';
       portalLink.textContent = 'Sign in to the learning portal';
       status.append(' ', portalLink);
       return;
+    } else if (result.error === 'verification_failed') {
+      setStatus('The verification check expired. Please complete it again, then resubmit.', 'error');
     } else {
       setStatus(result.message || 'Registration could not be completed. Please review the form or contact the CfA office before trying again.', 'error');
       if (result.error === 'payment_declined') {

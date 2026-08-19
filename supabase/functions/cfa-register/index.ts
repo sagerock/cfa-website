@@ -259,10 +259,20 @@ async function verifyTurnstile(token: string, remoteIp: string) {
       success?: boolean;
       hostname?: string;
       action?: string;
+      "error-codes"?: string[];
     };
-    return result.success === true
+    const verified = result.success === true
       && result.hostname === productionHostname
       && result.action === "registration";
+    if (!verified) {
+      console.error("turnstile_verification_failed", JSON.stringify({
+        success: result.success,
+        hostname: result.hostname,
+        action: result.action,
+        error_codes: result["error-codes"],
+      }));
+    }
+    return verified;
   } catch {
     return false;
   }
