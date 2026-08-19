@@ -370,6 +370,10 @@ import Base from '../../layouts/Base.astro';
       return;
     } else if (result.error === 'verification_failed') {
       setStatus('The verification check expired. Please complete it again, then resubmit.', 'error');
+    } else if (result.error === 'idempotency_conflict') {
+      idempotencyKey = crypto.randomUUID();
+      localStorage.setItem(checkoutKeyName, idempotencyKey);
+      setStatus('This browser held a reference to an earlier checkout. It has been reset — please submit again.', 'error');
     } else {
       setStatus(result.message || 'Registration could not be completed. Please review the form or contact the CfA office before trying again.', 'error');
       if (result.error === 'payment_declined') {
