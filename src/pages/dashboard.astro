@@ -87,6 +87,11 @@ const REGISTRATIONS_ENDPOINT = `${FN}/cfa-registrations`;
           </div>
           <div id="reg-empty" class="empty" hidden>No registrations through the site form yet. Imported Thinkific enrollments appear in the enrollment count above.</div>
         </section>
+
+        <section class="panel" id="programs-panel" hidden>
+          <div class="panel-head"><h2>Programs &amp; rosters</h2><span class="hint">click a program to see who's enrolled</span></div>
+          <ul class="programlist" id="program-list"></ul>
+        </section>
       </div>
     </main>
 
@@ -131,6 +136,57 @@ const REGISTRATIONS_ENDPOINT = `${FN}/cfa-registrations`;
         renderLeads(d.recent_leads || []);
       }
 
+      function renderPrograms(programs) {
+        if (!programs.length) return;
+        $('programs-panel').hidden = false;
+        const list = $('program-list');
+        list.replaceChildren();
+        programs.forEach((program) => {
+          const item = document.createElement('li');
+          const row = document.createElement('button');
+          row.type = 'button';
+          row.className = 'program-row';
+          const name = document.createElement('span');
+          name.textContent = program.name;
+          const count = document.createElement('span');
+          count.className = 'program-count';
+          count.textContent = `${program.active}`;
+          row.append(name, count);
+          const roster = document.createElement('div');
+          roster.className = 'program-roster';
+          roster.hidden = true;
+          row.addEventListener('click', async () => {
+            if (!roster.hidden) { roster.hidden = true; return; }
+            roster.hidden = false;
+            if (roster.dataset.loaded) return;
+            roster.textContent = 'Loading roster…';
+            try {
+              const res = await fetch(`${regEndpoint}?token=${encodeURIComponent(token)}&roster=${program.id}`, { cache: 'no-store' });
+              if (!res.ok) throw new Error('roster');
+              const { people } = await res.json();
+              roster.dataset.loaded = '1';
+              roster.replaceChildren();
+              const table = document.createElement('table');
+              table.className = 'reg-table';
+              people.forEach((person) => {
+                const tr = document.createElement('tr');
+                [person.name, person.email, person.organization || '', person.source].forEach((value) => {
+                  const td = document.createElement('td');
+                  td.textContent = value;
+                  tr.append(td);
+                });
+                table.append(tr);
+              });
+              roster.append(table);
+            } catch {
+              roster.textContent = 'Could not load this roster.';
+            }
+          });
+          item.append(row, roster);
+          list.append(item);
+        });
+      }
+
       async function loadRegistrations() {
         if (!token) return;
         try {
@@ -156,6 +212,8 @@ const REGISTRATIONS_ENDPOINT = `${FN}/cfa-registrations`;
           .map(([source, count]) => `${count} ${source}`).join(' · ');
         if (sources) $('r-sources').textContent = sources;
         $('reg-course').textContent = d.course || '';
+
+        renderPrograms(d.programs || []);
 
         const rows = d.registrations || [];
         if (!rows.length) { $('reg-empty').hidden = false; return; }
@@ -338,6 +396,12 @@ const REGISTRATIONS_ENDPOINT = `${FN}/cfa-registrations`;
       .reg-table td[data-status='paid'] { color: var(--green-ink); font-weight: 600; }
       .reg-table td[data-status='enrollment_pending'] { color: #a8631e; font-weight: 600; }
       .reg-table td[data-status='refunded'], .reg-table td[data-status='cancelled'] { color: var(--soft); }
+      .programlist { list-style: none; margin: 0; padding: 0; }
+      .programlist li { border-bottom: 1px solid var(--line); }
+      .program-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; width: 100%; padding: 11px 4px; border: 0; background: none; font: 14px var(--sans); color: var(--ink); text-align: left; cursor: pointer; }
+      .program-row:hover { color: var(--green-ink); }
+      .program-count { flex-shrink: 0; min-width: 34px; padding: 2px 9px; border-radius: 20px; background: var(--chalk); color: var(--green-ink); font-weight: 600; text-align: center; }
+      .program-roster { padding: 2px 4px 14px; overflow-x: auto; }
 
       .ranklist, .leadlist { list-style: none; display: flex; flex-direction: column; gap: 9px; }
       .ranklist li { display: grid; grid-template-columns: 1fr 70px auto; align-items: center; gap: 10px; font-family: var(--sans); font-size: 13px; }

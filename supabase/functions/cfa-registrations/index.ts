@@ -43,6 +43,40 @@ Deno.serve(async (req: Request) => {
     { auth: { persistSession: false, autoRefreshToken: false } },
   );
 
+  // Per-program roster, fetched lazily when a program is expanded.
+  const rosterProgramId = url.searchParams.get("roster");
+  if (rosterProgramId) {
+    if (!/^[0-9a-f-]{36}$/.test(rosterProgramId)) return json({ error: "invalid_program" }, 400);
+    const { data: rosterRows, error: rosterError } = await admin
+      .from("enrollments")
+      .select("contact_id, source")
+      .eq("client_id", CFA_CLIENT_ID)
+      .eq("program_id", rosterProgramId)
+      .eq("status", "registered")
+      .is("revoked_at", null);
+    if (rosterError) return json({ error: "roster_failed" }, 500);
+    const contactIds = (rosterRows || []).map((row) => row.contact_id);
+    const { data: contactRows, error: contactError } = contactIds.length
+      ? await admin
+        .from("contacts")
+        .select("id, first_name, last_name, email, company")
+        .eq("client_id", CFA_CLIENT_ID)
+        .in("id", contactIds)
+      : { data: [], error: null };
+    if (contactError) return json({ error: "roster_failed" }, 500);
+    const contactsById = new Map((contactRows || []).map((c) => [c.id, c]));
+    const people = (rosterRows || []).map((row) => {
+      const contact = contactsById.get(row.contact_id);
+      return {
+        name: contact ? `${contact.first_name || ""} ${contact.last_name || ""}`.trim() : "—",
+        email: maskEmail(contact?.email || ""),
+        organization: contact?.company || null,
+        source: row.source,
+      };
+    }).sort((a, b) => a.name.localeCompare(b.name));
+    return json({ people });
+  }
+
   const { data: course } = await admin
     .from("cfa_learn_courses")
     .select("program_id, title")
@@ -94,6 +128,29 @@ Deno.serve(async (req: Request) => {
   const bySource: Record<string, number> = {};
   for (const e of active) bySource[e.source || "unknown"] = (bySource[e.source || "unknown"] || 0) + 1;
 
+  const [programNamesResult, allEnrollmentsResult] = await Promise.all([
+    admin.from("programs").select("id, name").eq("client_id", CFA_CLIENT_ID),
+    admin
+      .from("enrollments")
+      .select("program_id")
+      .eq("client_id", CFA_CLIENT_ID)
+      .eq("status", "registered")
+      .is("revoked_at", null)
+      .limit(10000),
+  ]);
+  const countByProgram = new Map<string, number>();
+  for (const row of allEnrollmentsResult.data || []) {
+    countByProgram.set(row.program_id, (countByProgram.get(row.program_id) || 0) + 1);
+  }
+  const programs = (programNamesResult.data || [])
+    .map((program) => ({
+      id: program.id,
+      name: program.name,
+      active: countByProgram.get(program.id) || 0,
+    }))
+    .filter((program) => program.active > 0)
+    .sort((a, b) => b.active - a.active || a.name.localeCompare(b.name));
+
   const paid = registrations.filter((r) => r.status === "paid");
   return json({
     generated_at: new Date().toISOString(),
@@ -106,6 +163,7 @@ Deno.serve(async (req: Request) => {
       net_revenue_cents: paid.reduce((sum, r) => sum + r.amount_cents, 0),
     },
     enrollment_sources: bySource,
+    programs,
     registrations,
   });
 });
