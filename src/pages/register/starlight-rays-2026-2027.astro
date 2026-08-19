@@ -36,6 +36,14 @@ import Base from '../../layouts/Base.astro';
           <div id="offer-list" class="offer-list" aria-live="polite">
             <p class="loading-copy">Loading registration options…</p>
           </div>
+          <div class="coupon-row">
+            <label class="coupon-label">
+              Coupon code <small>optional</small>
+              <input type="text" id="coupon-input" maxlength="40" autocomplete="off" autocapitalize="characters" />
+            </label>
+            <button id="coupon-apply" class="coupon-apply" type="button">Apply</button>
+          </div>
+          <p id="coupon-status" class="coupon-status" role="status" aria-live="polite"></p>
         </fieldset>
 
         <fieldset class="form-section">
@@ -191,15 +199,72 @@ import Base from '../../layouts/Base.astro';
     return config?.offers?.find((offer) => offer.code === code);
   }
 
+  let appliedCoupon = null;
+  const couponInput = document.getElementById('coupon-input');
+  const couponApply = document.getElementById('coupon-apply');
+  const couponStatus = document.getElementById('coupon-status');
+
+  function effectiveAmountCents(offer) {
+    if (!offer) return null;
+    if (!appliedCoupon) return offer.amount_cents;
+    const discount = Math.min(offer.amount_cents, Math.round(offer.amount_cents * appliedCoupon.percent_off / 100));
+    return offer.amount_cents - discount;
+  }
+
   function updateSelection() {
     const offer = selectedOffer();
     const isInstitution = offer?.code === 'institution';
     organizationField.hidden = !isInstitution;
     organizationInput.required = isInstitution;
     summaryOffer.textContent = offer?.name || 'Choose an option';
-    summaryPrice.textContent = offer ? money.format(offer.amount_cents / 100) : '—';
-    paymentButton.textContent = offer ? `Continue to secure payment · ${money.format(offer.amount_cents / 100)}` : 'Choose a registration option';
+    const total = effectiveAmountCents(offer);
+    summaryPrice.textContent = offer ? money.format(total / 100) : '—';
+    paymentButton.textContent = !offer
+      ? 'Choose a registration option'
+      : total === 0
+      ? 'Complete free registration'
+      : `Continue to secure payment · ${money.format(total / 100)}`;
   }
+
+  async function applyCoupon() {
+    const code = (couponInput.value || '').trim().toUpperCase();
+    appliedCoupon = null;
+    if (!code) {
+      couponStatus.textContent = '';
+      updateSelection();
+      return;
+    }
+    couponApply.disabled = true;
+    couponStatus.textContent = 'Checking coupon…';
+    try {
+      const headers = new Headers({ Accept: 'application/json' });
+      if (testToken) headers.set('X-Registration-Test', testToken);
+      const response = await fetch(`${endpoint}?coupon=${encodeURIComponent(code)}`, { headers });
+      const payload = await response.json();
+      if (payload.coupon?.valid) {
+        appliedCoupon = payload.coupon;
+        couponInput.value = payload.coupon.code;
+        couponStatus.textContent = `Coupon ${payload.coupon.code} applied — ${payload.coupon.percent_off}% off.`;
+        couponStatus.dataset.kind = 'ok';
+      } else {
+        couponStatus.textContent = 'That coupon code is not valid.';
+        couponStatus.dataset.kind = 'error';
+      }
+    } catch {
+      couponStatus.textContent = 'The coupon could not be checked. Please try again.';
+      couponStatus.dataset.kind = 'error';
+    }
+    couponApply.disabled = false;
+    updateSelection();
+  }
+
+  couponApply.addEventListener('click', applyCoupon);
+  couponInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      applyCoupon();
+    }
+  });
 
   function loadScript(src) {
     return new Promise((resolve, reject) => {
@@ -239,7 +304,8 @@ import Base from '../../layouts/Base.astro';
         terms_accepted: data.get('terms_accepted') === 'on',
         marketing_opt_in: data.get('marketing_opt_in') === 'on',
         turnstile_token: turnstileToken,
-        opaque_data: opaqueData,
+        coupon_code: appliedCoupon?.code || '',
+        opaque_data: opaqueData || {},
       }),
     });
     const result = await response.json().catch(() => ({}));
@@ -257,6 +323,10 @@ import Base from '../../layouts/Base.astro';
       const copy = document.createElement('p');
       copy.textContent = result.test_mode && result.voided
         ? 'The $1 production transaction was approved and immediately voided. No course enrollment was created.'
+        : result.amount_cents === 0
+        ? (result.email_sent
+          ? 'Your registration is complete and your course access is ready. Check your email for a secure sign-in link.'
+          : 'Your registration is complete and your course access is ready. Continue to the portal to request a secure sign-in link.')
         : result.email_sent
         ? 'Your payment was approved and your course access is ready. Check your email for a secure sign-in link.'
         : 'Your payment was approved and your course access is ready. Continue to the portal to request a secure sign-in link.';
@@ -323,6 +393,12 @@ import Base from '../../layouts/Base.astro';
       event.preventDefault();
       event.stopImmediatePropagation();
       setStatus('Please complete the verification before continuing.', 'error');
+    } else if (effectiveAmountCents(selectedOffer()) === 0) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      submitRegistration(null).catch(() => {
+        setStatus('We could not confirm the registration. Please contact the CfA office for help.', 'error');
+      });
     } else {
       setStatus('Enter your card details in the secure Authorize.Net window.');
     }
@@ -510,6 +586,14 @@ import Base from '../../layouts/Base.astro';
   .payment-button:disabled { cursor: not-allowed; opacity: 0.55; }
   .payment-note, .form-status { color: var(--soft); font-size: 14px; margin-top: 12px; }
   .form-status[data-kind='error'] { color: #9e3d2d; }
+  .coupon-row { display: flex; align-items: flex-end; gap: 10px; margin-top: 16px; }
+  .coupon-label { display: flex; flex-direction: column; gap: 6px; font-family: var(--sans); font-size: 13px; }
+  .coupon-label small { color: var(--soft); }
+  .coupon-label input { max-width: 200px; text-transform: uppercase; }
+  .coupon-apply { padding: 9px 16px; border: 1px solid var(--line); border-radius: 4px; background: var(--chalk); font-family: var(--sans); font-size: 13px; cursor: pointer; }
+  .coupon-status { margin-top: 8px; color: var(--soft); font-family: var(--sans); font-size: 13px; }
+  .coupon-status[data-kind='ok'] { color: var(--green-ink); }
+  .coupon-status[data-kind='error'] { color: #9e3d2d; }
   .turnstile { margin-top: 20px; }
   .registration-summary { position: sticky; top: 118px; }
   .summary-card { border: 1px solid var(--line); background: var(--raised); padding: 28px; }

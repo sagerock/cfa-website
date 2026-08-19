@@ -381,9 +381,30 @@ Deno.serve(async (request: Request) => {
           amount_cents: PRODUCTION_TEST_AMOUNT_CENTS,
         }))
       : offers || [];
+    const couponParam = text(new URL(request.url).searchParams.get("coupon") || "", 40).trim().toUpperCase();
+    let couponInfo: JsonRecord | null = null;
+    if (couponParam) {
+      const { data: couponRow } = await admin
+        .from("program_coupons")
+        .select("code, percent_off, active, starts_at, ends_at, max_uses, use_count")
+        .eq("client_id", CFA_CLIENT_ID)
+        .eq("program_id", program.id)
+        .eq("code", couponParam)
+        .maybeSingle();
+      const nowMs = Date.now();
+      const couponUsable = couponRow
+        && couponRow.active
+        && (!couponRow.starts_at || new Date(couponRow.starts_at).getTime() <= nowMs)
+        && (!couponRow.ends_at || new Date(couponRow.ends_at).getTime() > nowMs)
+        && (couponRow.max_uses === null || couponRow.use_count < couponRow.max_uses);
+      couponInfo = couponUsable
+        ? { code: couponRow.code, percent_off: couponRow.percent_off, valid: true }
+        : { code: couponParam, valid: false };
+    }
     return json({
       program: { name: program.name },
       offers: responseOffers,
+      coupon: couponInfo,
       payment: {
         available: paymentAvailable,
         environment: config.environment,
@@ -475,9 +496,6 @@ Deno.serve(async (request: Request) => {
   if (!validUuid(idempotencyKey) || !offerCode || !firstName || !lastName || !validEmail(email) || !termsAccepted) {
     return json({ error: "invalid_registration_details" }, 400, origin);
   }
-  if (dataDescriptor !== "COMMON.ACCEPT.INAPP.PAYMENT" || !dataValue) {
-    return json({ error: "invalid_payment_token" }, 400, origin);
-  }
   if (!billingAddress.address || !billingAddress.city || !billingAddress.state || !billingAddress.zip) {
     return json({ error: "invalid_billing_address" }, 400, origin);
   }
@@ -512,6 +530,34 @@ Deno.serve(async (request: Request) => {
     : offers || [];
   const selectedOffer = requestOffers.find((offer) => offer.code === offerCode);
   if (!selectedOffer) return json({ error: "offer_unavailable" }, 400, origin);
+
+  const couponCode = text(body.coupon_code, 40).trim().toUpperCase();
+  let coupon: { id: string; code: string; percent_off: number } | null = null;
+  if (couponCode && !testAuthorized) {
+    const { data: couponRow, error: couponError } = await admin
+      .from("program_coupons")
+      .select("id, code, percent_off, active, starts_at, ends_at, max_uses, use_count")
+      .eq("client_id", CFA_CLIENT_ID)
+      .eq("program_id", program.id)
+      .eq("code", couponCode)
+      .maybeSingle();
+    if (couponError) return json({ error: "coupon_lookup_failed" }, 500, origin);
+    const nowMs = Date.now();
+    const couponUsable = couponRow
+      && couponRow.active
+      && (!couponRow.starts_at || new Date(couponRow.starts_at).getTime() <= nowMs)
+      && (!couponRow.ends_at || new Date(couponRow.ends_at).getTime() > nowMs)
+      && (couponRow.max_uses === null || couponRow.use_count < couponRow.max_uses);
+    if (!couponUsable) return json({ error: "coupon_invalid" }, 400, origin);
+    coupon = { id: couponRow.id, code: couponRow.code, percent_off: couponRow.percent_off };
+  }
+  const discountCents = coupon
+    ? Math.min(selectedOffer.amount_cents, Math.round(selectedOffer.amount_cents * coupon.percent_off / 100))
+    : 0;
+  const chargeAmountCents = selectedOffer.amount_cents - discountCents;
+  if (chargeAmountCents > 0 && (dataDescriptor !== "COMMON.ACCEPT.INAPP.PAYMENT" || !dataValue)) {
+    return json({ error: "invalid_payment_token" }, 400, origin);
+  }
 
   const { data: alreadyEnrolled, error: enrollmentAccessError } = await admin.rpc(
     "cfa_registration_has_access",
@@ -586,9 +632,11 @@ Deno.serve(async (request: Request) => {
     phone: phone || null,
     organization: organization || null,
     billing_address: billingAddress,
-    amount_cents: selectedOffer.amount_cents,
+    amount_cents: chargeAmountCents,
     currency: selectedOffer.currency,
     seat_count: selectedOffer.seat_count,
+    coupon_code: coupon?.code ?? null,
+    discount_cents: discountCents,
     marketing_opt_in: marketingOptIn,
     terms_accepted_at: new Date().toISOString(),
     gateway_environment: config.environment,
@@ -629,6 +677,29 @@ Deno.serve(async (request: Request) => {
     }
   }
 
+  if (coupon) {
+    const { data: couponClaimed, error: couponClaimError } = await admin.rpc("cfa_claim_coupon", {
+      requested_coupon_id: coupon.id,
+      requested_registration_id: registrationId,
+    });
+    if (couponClaimError || couponClaimed !== true) {
+      await admin.from("registrations").update({
+        status: "cancelled",
+        failure_code: "coupon_unavailable",
+        failure_message: "The coupon code is no longer available.",
+      }).eq("id", registrationId);
+      return json({ error: "coupon_invalid" }, 409, origin);
+    }
+  }
+
+  // A fully discounted registration never touches the gateway; the synthetic
+  // transaction reference keeps completion and audit records consistent.
+  let transactionId = `comp-${registrationId.replaceAll("-", "").slice(0, 16)}`;
+  let summary: JsonRecord = {
+    code: "coupon_comp",
+    description: `Registered with ${coupon?.percent_off ?? 100}% coupon ${coupon?.code ?? ""}`.trim(),
+  };
+  if (chargeAmountCents > 0) {
   const chargeRequest = {
     createTransactionRequest: {
       merchantAuthentication: {
@@ -638,7 +709,7 @@ Deno.serve(async (request: Request) => {
       refId: registrationId.replaceAll("-", "").slice(0, 20),
       transactionRequest: {
         transactionType: "authCaptureTransaction",
-        amount: (selectedOffer.amount_cents / 100).toFixed(2),
+        amount: (chargeAmountCents / 100).toFixed(2),
         payment: { opaqueData: { dataDescriptor, dataValue } },
         order: {
           invoiceNumber: `SR-${registrationId.replaceAll("-", "").slice(0, 15)}`,
@@ -682,12 +753,12 @@ Deno.serve(async (request: Request) => {
 
   const transaction = chargePayload.transactionResponse as JsonRecord | undefined;
   const messages = chargePayload.messages as JsonRecord | undefined;
-  const transactionId = text(transaction?.transId, 40);
+  transactionId = text(transaction?.transId, 40);
   const approved = messages?.resultCode === "Ok"
     && transaction?.responseCode === "1"
     && Boolean(transactionId)
     && transactionId !== "0";
-  const summary = authorizeSummary(chargePayload);
+  summary = authorizeSummary(chargePayload);
   if (!approved) {
     if (testAuthorized && transactionId && transactionId !== "0") {
       await admin.from("registrations").update({
@@ -742,6 +813,7 @@ Deno.serve(async (request: Request) => {
       error: "payment_declined",
       message: summary.description || "The payment was declined.",
     }, 402, origin);
+  }
   }
 
   const { error: paymentRecordError } = await admin.from("registrations").update({
@@ -864,8 +936,10 @@ Deno.serve(async (request: Request) => {
     emailSent = await sendWelcomeEmail({
       email,
       firstName,
-      offerName: selectedOffer.name,
-      amountCents: selectedOffer.amount_cents,
+      offerName: coupon
+        ? `${selectedOffer.name} (coupon ${coupon.code}, ${coupon.percent_off}% off)`
+        : selectedOffer.name,
+      amountCents: chargeAmountCents,
       transactionId,
       signInLink: signInUrl.toString(),
     });
@@ -881,6 +955,8 @@ Deno.serve(async (request: Request) => {
     registration_id: registrationId,
     transaction_id: transactionId,
     email_sent: emailSent,
+    amount_cents: chargeAmountCents,
+    coupon: coupon?.code ?? null,
     redirect: "/learn/sign-in?registered=1",
   }, 200, origin);
 });
