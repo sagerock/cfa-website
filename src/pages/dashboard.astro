@@ -353,7 +353,9 @@ const REGISTRATIONS_ENDPOINT = `${FN}/cfa-registrations`;
       load();
     </script>
 
-    <style>
+    {/* Global: most of this page's DOM is built by its script at runtime, and
+        Astro's scoping attribute never lands on JS-created elements. */}
+    <style is:global>
       body.dash { background: var(--paper); }
       .dash-head { border-bottom: 1px solid var(--line); background: var(--raised); padding: 18px 0; }
       .dash-head .wrap { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
