@@ -496,9 +496,6 @@ Deno.serve(async (request: Request) => {
   if (!validUuid(idempotencyKey) || !offerCode || !firstName || !lastName || !validEmail(email) || !termsAccepted) {
     return json({ error: "invalid_registration_details" }, 400, origin);
   }
-  if (!billingAddress.address || !billingAddress.city || !billingAddress.state || !billingAddress.zip) {
-    return json({ error: "invalid_billing_address" }, 400, origin);
-  }
   if (offerCode === "institution" && !organization) {
     return json({ error: "organization_required" }, 400, origin);
   }
@@ -557,6 +554,10 @@ Deno.serve(async (request: Request) => {
   const chargeAmountCents = selectedOffer.amount_cents - discountCents;
   if (chargeAmountCents > 0 && (dataDescriptor !== "COMMON.ACCEPT.INAPP.PAYMENT" || !dataValue)) {
     return json({ error: "invalid_payment_token" }, 400, origin);
+  }
+  if (chargeAmountCents > 0
+    && (!billingAddress.address || !billingAddress.city || !billingAddress.state || !billingAddress.zip)) {
+    return json({ error: "invalid_billing_address" }, 400, origin);
   }
 
   const { data: alreadyEnrolled, error: enrollmentAccessError } = await admin.rpc(

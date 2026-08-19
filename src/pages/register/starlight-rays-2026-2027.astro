@@ -73,7 +73,7 @@ import Base from '../../layouts/Base.astro';
           </div>
         </fieldset>
 
-        <fieldset class="form-section">
+        <fieldset class="form-section" id="billing-section">
           <legend><span>03</span> Billing address</legend>
           <div class="field-grid">
             <label class="wide">
@@ -106,7 +106,7 @@ import Base from '../../layouts/Base.astro';
           <legend><span>04</span> Confirm and pay</legend>
           <label class="check-row">
             <input type="checkbox" name="terms_accepted" required />
-            <span>I authorize the selected charge and understand that registration is subject to CfA's cancellation policies.</span>
+            <span id="terms-copy">I authorize the selected charge and understand that registration is subject to CfA's cancellation policies.</span>
           </label>
           <label class="check-row">
             <input type="checkbox" name="marketing_opt_in" />
@@ -211,6 +211,11 @@ import Base from '../../layouts/Base.astro';
     return offer.amount_cents - discount;
   }
 
+  const billingSection = document.getElementById('billing-section');
+  const billingInputs = ['address', 'city', 'state', 'zip', 'country']
+    .map((name) => form.elements.namedItem(name));
+  const termsCopy = document.getElementById('terms-copy');
+
   function updateSelection() {
     const offer = selectedOffer();
     const isInstitution = offer?.code === 'institution';
@@ -218,10 +223,16 @@ import Base from '../../layouts/Base.astro';
     organizationInput.required = isInstitution;
     summaryOffer.textContent = offer?.name || 'Choose an option';
     const total = effectiveAmountCents(offer);
+    const free = offer && total === 0;
+    billingSection.hidden = Boolean(free);
+    billingInputs.forEach((input) => { input.required = !free; });
+    termsCopy.textContent = free
+      ? "I understand that registration is subject to CfA's cancellation policies."
+      : "I authorize the selected charge and understand that registration is subject to CfA's cancellation policies.";
     summaryPrice.textContent = offer ? money.format(total / 100) : '—';
     paymentButton.textContent = !offer
       ? 'Choose a registration option'
-      : total === 0
+      : free
       ? 'Complete free registration'
       : `Continue to secure payment · ${money.format(total / 100)}`;
   }
