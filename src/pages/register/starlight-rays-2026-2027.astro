@@ -224,6 +224,7 @@ import Base from '../../layouts/Base.astro';
     summaryOffer.textContent = offer?.name || 'Choose an option';
     const total = effectiveAmountCents(offer);
     const free = offer && total === 0;
+    if (config?.payment?.available) paymentButton.classList.toggle('AcceptUI', !free);
     billingSection.hidden = Boolean(free);
     billingInputs.forEach((input) => { input.required = !free; });
     termsCopy.textContent = free
@@ -240,6 +241,12 @@ import Base from '../../layouts/Base.astro';
   async function applyCoupon() {
     const code = (couponInput.value || '').trim().toUpperCase();
     appliedCoupon = null;
+    if (testToken) {
+      couponStatus.textContent = 'Coupons are not available in payment test mode.';
+      couponStatus.dataset.kind = 'error';
+      updateSelection();
+      return;
+    }
     if (!code) {
       couponStatus.textContent = '';
       updateSelection();
@@ -374,6 +381,8 @@ import Base from '../../layouts/Base.astro';
       idempotencyKey = crypto.randomUUID();
       localStorage.setItem(checkoutKeyName, idempotencyKey);
       setStatus('This browser held a reference to an earlier checkout. It has been reset — please submit again.', 'error');
+    } else if (result.error === 'coupon_invalid') {
+      setStatus('That coupon code is no longer valid. Remove it or apply a different code, then try again.', 'error');
     } else {
       setStatus(result.message || 'Registration could not be completed. Please review the form or contact the CfA office before trying again.', 'error');
       if (result.error === 'payment_declined') {

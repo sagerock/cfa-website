@@ -277,3 +277,20 @@ one-active-registration index, but never exercised end-to-end against a sandbox
 gateway. Sandbox checkout remains disallowed against the shared production database;
 if tuition-scale payments (25-month HS program, Oct/Nov) warrant it later, a
 disposable test project can be created then.
+
+## 2026-08-19 — Coupon codes and live registration, built for the Elsy demo
+Sage decided Elsy's Aug 20 walkthrough should be a real registration on the live form,
+so percent-off coupon support was designed, built, and rehearsed in one day, and
+`REGISTRATION_LIVE` was turned on permanently ahead of the cancellation-language nod
+(Sage's explicit call: anyone who finds the unlinked form and pays is a legitimate
+enrollee). Coupons are server-authoritative (`program_coupons`, atomic claim-before-
+charge); a 100% code produces a $0 registration that skips Authorize.Net entirely and
+records a synthetic `comp-` transaction reference — `amount_cents` now means "amount
+charged," with `discount_cents`/`coupon_code` preserving the ledger. The live rehearsal
+caught four production landmines (Turnstile global shadowed by `id="turnstile"`, the
+`amount_cents > 0` constraint, the unsubscribe-token trigger breaking every brand-new-
+contact registration, and idempotency-key pinning) — all fixed same-day. An adversarial
+cross-model review is logged in `ai-collab/2026-08-19-starlight-coupon-live-registration.md`;
+its verdict: demo-ready, but the GET coupon oracle needs throttling, declines must not
+burn coupon uses, and the trigger fix must be schema-qualified in the email tool's own
+repo before the invitation wave. `ELSY100` (100%) expires end of Aug 20.

@@ -593,7 +593,7 @@ Deno.serve(async (request: Request) => {
   if (existing && (
     existing.email !== email
     || existing.offer_id !== selectedOffer.id
-    || existing.amount_cents !== selectedOffer.amount_cents
+    || existing.amount_cents !== chargeAmountCents
   )) {
     return json({ error: "idempotency_conflict" }, 409, origin);
   }
