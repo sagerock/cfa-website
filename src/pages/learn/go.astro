@@ -49,7 +49,9 @@ import Learn from '../../layouts/Learn.astro';
         if (error) {
           fail('We could not complete the sign-in. Request a fresh link by email instead.');
         } else {
-          location.replace(result.next || '/learn');
+          // Keep the durable token in the destination URL so the page people
+          // actually bookmark can sign them back in by itself later.
+          location.replace(`${result.next || '/learn'}?k=${encodeURIComponent(token)}`);
         }
       }
     } catch {

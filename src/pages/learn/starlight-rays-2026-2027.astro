@@ -101,8 +101,9 @@ import { starlightPilot } from '../../data/starlightPilot.js';
   });
   const result = await getCoursePayload('starlight-rays-2026-2027');
 
+  const durableToken = new URL(location.href).searchParams.get('k');
   if (result.status === 'signed_out') {
-    location.replace('/learn/sign-in');
+    location.replace(durableToken ? `/learn/go?k=${encodeURIComponent(durableToken)}` : '/learn/sign-in');
   } else if (result.status !== 'ok') {
     document.getElementById('course-loading').hidden = true;
     document.getElementById('course-error').hidden = false;

@@ -57,7 +57,8 @@ import Learn from '../../layouts/Learn.astro';
 
   const result = await getCoursePayload('starlight-rays-2026-2027');
   if (result.status === 'signed_out') {
-    location.replace('/learn/sign-in');
+    const durableToken = new URL(location.href).searchParams.get('k');
+    location.replace(durableToken ? `/learn/go?k=${encodeURIComponent(durableToken)}` : '/learn/sign-in');
   } else {
     document.getElementById('learn-loading').hidden = true;
     if (result.status === 'forbidden') {
