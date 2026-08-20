@@ -6,9 +6,11 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 // POST {token}            (public, CORS-limited): exchange a durable token for a
 //                         fresh one-time magic-link token-hash the browser can
 //                         verify into a session. Reusable until revoked/expired.
-// POST {action:"create"}  (X-Cfa-Ops-Token): mint a link for an enrollment,
-//                         revoking any prior active link for it (rotation).
-//                         Returns the raw URL once; only the hash is stored.
+// POST {action:"create"}  (X-Cfa-Ops-Token): mint a link for an enrollment.
+//                         Prior links stay valid (each email hands out its own
+//                         door) unless rotate:true, which revokes them — the
+//                         security response for a leaked link. Returns the raw
+//                         URL once; only the hash is stored.
 
 const productionOrigin = "https://learn.centerforanthroposophy.org";
 const CFA_CLIENT_ID = "22500cd6-052a-42ff-a0cb-4f3ba9125dfd";
@@ -96,12 +98,14 @@ Deno.serve(async (request: Request) => {
       + crypto.randomUUID().replaceAll("-", "");
     const tokenHash = await sha256(rawToken);
 
-    const { error: revokeError } = await admin
-      .from("cfa_learn_access_links")
-      .update({ revoked_at: new Date().toISOString() })
-      .eq("enrollment_id", enrollment.id)
-      .is("revoked_at", null);
-    if (revokeError) return json({ error: "link_rotate_failed" }, 500, origin);
+    if (body.rotate === true) {
+      const { error: revokeError } = await admin
+        .from("cfa_learn_access_links")
+        .update({ revoked_at: new Date().toISOString() })
+        .eq("enrollment_id", enrollment.id)
+        .is("revoked_at", null);
+      if (revokeError) return json({ error: "link_rotate_failed" }, 500, origin);
+    }
 
     const { error: insertError } = await admin.from("cfa_learn_access_links").insert({
       client_id: enrollment.client_id,
