@@ -116,7 +116,15 @@ def main() -> None:
         )
 
     if args.send_test:
-        status, result = send(roster[0]["enrollment_id"], override=args.send_test)
+        # Prefer the test recipient's own enrollment so the durable link in the
+        # test email belongs to them, never to a real participant.
+        test_email = args.send_test.strip().lower()
+        own = next((r for r in roster if r["email"].lower() == test_email), None)
+        if own is None:
+            raise RuntimeError(
+                f"{test_email} has no active enrollment; test emails must not carry another person's link"
+            )
+        status, result = send(own["enrollment_id"], override=args.send_test)
         print(json.dumps({"mode": "test_send", "to": args.send_test, "status": status, "result": result}, indent=2))
         return
 
