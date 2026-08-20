@@ -1,0 +1,66 @@
+---
+import Learn from '../../layouts/Learn.astro';
+---
+
+<Learn title="Opening your classroom — Learning Portal">
+  <div class="wrap go-wrap">
+    <div class="go-card" role="status">
+      <span class="go-spinner" aria-hidden="true"></span>
+      <p id="go-status">Opening your classroom…</p>
+      <a id="go-retry" href="/learn/sign-in" hidden>Request a sign-in link by email</a>
+    </div>
+  </div>
+</Learn>
+
+<script>
+  import { supabase } from '../../lib/learnClient.js';
+
+  const status = document.getElementById('go-status');
+  const retry = document.getElementById('go-retry');
+  const token = new URL(location.href).searchParams.get('k') || '';
+
+  function fail(message) {
+    status.textContent = message;
+    retry.hidden = false;
+  }
+
+  if (!token) {
+    fail('This link is incomplete. Request a fresh sign-in link by email instead.');
+  } else {
+    try {
+      // Already signed in as someone? A personal link always opens its own
+      // classroom as its own person, so clear any existing session first.
+      const { data: existing } = await supabase.auth.getSession();
+      if (existing.session) await supabase.auth.signOut();
+
+      const response = await fetch(
+        'https://ckloewflialohuvixmvd.supabase.co/functions/v1/cfa-learn-access',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token }),
+        },
+      );
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.token_hash) {
+        fail('This classroom link is no longer active. Request a fresh sign-in link by email instead.');
+      } else {
+        const { error } = await supabase.auth.verifyOtp({ token_hash: result.token_hash, type: 'email' });
+        if (error) {
+          fail('We could not complete the sign-in. Request a fresh link by email instead.');
+        } else {
+          location.replace(result.next || '/learn');
+        }
+      }
+    } catch {
+      fail('We could not open the classroom. Check your connection and try again.');
+    }
+  }
+</script>
+
+<style>
+  .go-wrap { display: grid; place-items: center; min-height: 60vh; }
+  .go-card { display: grid; justify-items: center; gap: 15px; padding: 34px; color: var(--soft); font: 14px var(--sans); text-align: center; }
+  .go-spinner { width: 32px; height: 32px; border: 3px solid var(--line); border-top-color: var(--green); border-radius: 50%; animation: go-spin .8s linear infinite; }
+  @keyframes go-spin { to { transform: rotate(360deg); } }
+</style>
