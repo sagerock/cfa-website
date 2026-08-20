@@ -164,8 +164,20 @@ import Base from '../../layouts/Base.astro';
 </Base>
 
 <script>
+  import { supabase } from '../../lib/learnClient.js';
+
   const endpoint = 'https://ckloewflialohuvixmvd.supabase.co/functions/v1/cfa-register';
   const form = document.getElementById('registration-form');
+
+  // Bookmark-friendliness: people keep this URL after registering. If they
+  // already have a portal session, the header link takes them straight in.
+  supabase.auth.getSession().then(({ data }) => {
+    if (data.session) {
+      const portalLink = document.getElementById('portal-link');
+      portalLink.textContent = 'My courses →';
+      portalLink.href = '/learn';
+    }
+  }).catch(() => {});
   const offerList = document.getElementById('offer-list');
   const paymentButton = document.getElementById('payment-button');
   const status = document.getElementById('form-status');

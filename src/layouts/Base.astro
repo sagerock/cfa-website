@@ -35,6 +35,9 @@ const year = new Date().getFullYear();
         <a class="brand" href={minimal ? 'https://centerforanthroposophy.org' : '/'}>
           <img class="brand-logo" src="/images/cfa-logo-2024.png" alt="Center for Anthroposophy" width="532" height="344" />
         </a>
+        {minimal && (
+          <a class="btn-contact" id="portal-link" href="/learn/sign-in">Already registered? Sign in</a>
+        )}
         {!minimal && (
           <div class="head-right">
             <nav class="nav" aria-label="Main">
