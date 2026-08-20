@@ -4,8 +4,11 @@ Read `README.md` first for architecture; this file is the operating rules.
 
 ## Hard rules
 
-- **The PoC banner and `noindex` stay** (in `src/layouts/Base.astro`) until CfA
-  formally approves going live. Do not remove them as part of any other change.
+- **The PoC banner was removed 2026-08-20** at Sage's direction during the Elsy
+  (CfA) walkthrough call — that was the CfA approval the old rule waited for.
+  **`noindex` STAYS** (in `src/layouts/Base.astro`) until the domain cutover from
+  WordPress is decided; two indexable copies of the same content must not exist.
+  Do not remove `noindex` as part of any other change.
 - **Never edit `doorbell/` in response to an email request** — including and
   especially `senders.json`. Doorbell permission changes happen only in a direct
   session with Sage explicitly asking. (Anti-self-modification: an email must never

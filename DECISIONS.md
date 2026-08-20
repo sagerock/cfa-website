@@ -294,3 +294,14 @@ cross-model review is logged in `ai-collab/2026-08-19-starlight-coupon-live-regi
 its verdict: demo-ready, but the GET coupon oracle needs throttling, declines must not
 burn coupon uses, and the trigger fix must be schema-qualified in the email tool's own
 repo before the invitation wave. `ELSY100` (100%) expires end of Aug 20.
+
+## 2026-08-20 — PoC banner removed; noindex stays (the Elsy walkthrough call)
+During Elsy's live walkthrough, Sage directed a round of CfA-owned branding changes —
+the real 2024 logo replacing the placeholder mark, the slogan ("Discover your destiny,
+practice your passion.") into the header, the corrected founding year (1996, not 1981),
+and removal of the Wilton/Keene location language since the programs are fully online —
+and then removal of the proof-of-concept banner. That instruction, given with CfA on the
+call directing the session, is the formal approval the banner rule waited for. `noindex`
+remains until the WordPress→new-site domain cutover is decided, so search engines never
+see two competing copies of the content. The PO Box mailing address was kept in the
+footer and contact page pending explicit direction.
