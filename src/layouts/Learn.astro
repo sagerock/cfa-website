@@ -14,22 +14,11 @@ const year = new Date().getFullYear();
     <title>{title}</title>
   </head>
   <body class="learn-shell">
-    <div class="poc">
-      Authenticated course portal pilot — access is limited to invited participants
-    </div>
-
     <header class="learn-head">
       <div class="wrap learn-head-inner">
         <a class="learn-brand" href="/learn">
-          <svg viewBox="0 0 120 44" fill="none" aria-hidden="true">
-            <path
-              d="M8 22 C8 8 34 8 48 22 C62 36 88 36 96 22 C104 8 78 8 72 22 C66 36 40 36 26 22"
-              stroke="var(--green)"
-              stroke-width="2"
-              stroke-linecap="round"></path>
-          </svg>
+          <img src="/images/cfa-logo-2024.png" alt="Center for Anthroposophy" width="532" height="344" />
           <span>
-            <strong>Center for Anthroposophy</strong>
             <small>Learning portal</small>
           </span>
         </a>
@@ -48,7 +37,7 @@ const year = new Date().getFullYear();
     <footer class="learn-foot">
       <div class="wrap">
         <span>© {year} Center for Anthroposophy</span>
-        <a href="/">Return to the public website</a>
+        <a href="https://centerforanthroposophy.org">centerforanthroposophy.org</a>
       </div>
     </footer>
   </body>
@@ -60,6 +49,7 @@ const year = new Date().getFullYear();
   .learn-head-inner { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
   .learn-brand { display: flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; }
   .learn-brand svg { width: 62px; flex: none; }
+  .learn-brand img { width: auto; height: 60px; flex: none; }
   .learn-brand span { display: flex; flex-direction: column; line-height: 1.2; }
   .learn-brand strong { font-size: 17px; }
   .learn-brand small { color: var(--soft); font-family: var(--sans); font-size: 11px; letter-spacing: .11em; text-transform: uppercase; }

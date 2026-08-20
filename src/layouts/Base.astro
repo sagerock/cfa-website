@@ -1,7 +1,10 @@
 ---
 import '../styles/global.css';
 import Analytics from '../components/Analytics.astro';
-const { title = 'Center for Anthroposophy', current = '' } = Astro.props;
+// minimal: standalone chrome for pilot-facing pages (registration) — no site
+// navigation, logo points at the live public site, slim footer. The rebuilt
+// site stays unreachable from the pilot until it launches.
+const { title = 'Center for Anthroposophy', current = '', minimal = false } = Astro.props;
 const nav = [
   ['/programs', 'Programs'],
   ['/faculty', 'Faculty'],
@@ -29,18 +32,20 @@ const year = new Date().getFullYear();
         <span>Discover your destiny, practice your passion.</span>
       </div>
       <div class="wrap head-main">
-        <a class="brand" href="/">
+        <a class="brand" href={minimal ? 'https://centerforanthroposophy.org' : '/'}>
           <img class="brand-logo" src="/images/cfa-logo-2024.png" alt="Center for Anthroposophy" width="532" height="344" />
         </a>
-        <div class="head-right">
-          <nav class="nav" aria-label="Main">
-            {nav.map(([href, label]) => (
-              <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>
-            ))}
-          </nav>
-          <a class="btn-contact" href="/contact" data-track="header-contact"
-             aria-current={current === '/contact' ? 'page' : undefined}>Request Info</a>
-        </div>
+        {!minimal && (
+          <div class="head-right">
+            <nav class="nav" aria-label="Main">
+              {nav.map(([href, label]) => (
+                <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>
+              ))}
+            </nav>
+            <a class="btn-contact" href="/contact" data-track="header-contact"
+               aria-current={current === '/contact' ? 'page' : undefined}>Request Info</a>
+          </div>
+        )}
       </div>
     </header>
 
@@ -49,6 +54,7 @@ const year = new Date().getFullYear();
     </main>
 
     <footer class="site-foot">
+      {!minimal && (
       <div class="wrap foot-grid">
         <div class="foot-col foot-brand">
           <img class="brand-logo foot-logo" src="/images/cfa-logo-2024.png" alt="Center for Anthroposophy" width="532" height="344" loading="lazy" />
@@ -98,9 +104,17 @@ const year = new Date().getFullYear();
           </ul>
         </div>
       </div>
+      )}
       <div class="foot-bottom">
         <div class="wrap">
           <span>© {year} Center for Anthroposophy</span>
+          {minimal && (
+            <span>
+              <a href="mailto:office@centerforanthroposophy.org">office@centerforanthroposophy.org</a>
+              &nbsp;·&nbsp;
+              <a href="tel:+16036542566">603-654-2566</a>
+            </span>
+          )}
         </div>
       </div>
     </footer>
