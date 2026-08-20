@@ -115,6 +115,7 @@ h1, h2, h3, h4 { font-weight: 600; line-height: 1.15; text-wrap: balance; }
 }
 .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
 .brand-mark { width: 58px; flex: none; }
+.brand-logo { width: auto; height: 72px; }
 .brand-name { font-size: 19px; font-weight: 600; line-height: 1.15; }
 .brand-name em { font-style: normal; color: var(--green-ink); }
 .nav { display: flex; gap: 24px; font-family: var(--sans); font-size: 14.5px; font-weight: 500; }
@@ -506,6 +507,7 @@ details.course[open] summary::before { content: '–'; }
 @media (max-width: 520px) { .foot-grid { grid-template-columns: 1fr; } }
 .foot-col { font-family: var(--sans); font-size: 13.5px; }
 .foot-brand .brand-mark { width: 64px; margin-bottom: 10px; }
+.foot-logo { height: 84px; margin-bottom: 12px; }
 .foot-mission { font-family: var(--serif); font-style: italic; color: var(--soft); font-size: 15px; margin-bottom: 14px; max-width: 30ch; }
 .foot-col address { font-style: normal; line-height: 1.7; color: var(--soft); }
 .foot-tag {
