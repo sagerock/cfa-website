@@ -47,6 +47,7 @@ async function sendPortalWelcome(input: {
     `${productionOrigin}/learn/sign-in`,
     "",
     "If you have questions, contact office@centerforanthroposophy.org.",
+    "Trouble signing in? Email sage@centerforanthroposophy.org",
     "",
     "Warmly,",
     "David Barham and Elsy Ayoub",

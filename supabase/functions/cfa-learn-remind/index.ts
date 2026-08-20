@@ -51,6 +51,7 @@ function launchEmail(firstName: string, classroomLink: string, sessionLine: stri
       "Center for Anthroposophy",
       "",
       `Lost this email? Sign in any time at ${productionOrigin}/learn/sign-in`,
+      "Trouble signing in? Email sage@centerforanthroposophy.org",
     ].join("\n"),
   };
 }
@@ -76,6 +77,7 @@ function sessionEmail(firstName: string, classroomLink: string, sessionLine: str
       "Center for Anthroposophy",
       "",
       `Lost this email? Sign in any time at ${productionOrigin}/learn/sign-in`,
+      "Trouble signing in? Email sage@centerforanthroposophy.org",
     ].join("\n"),
   };
 }
