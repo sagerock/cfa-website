@@ -88,6 +88,17 @@ h1, h2, h3, h4 { font-weight: 600; line-height: 1.15; text-wrap: balance; }
   border-bottom: 1px solid var(--line);
 }
 .head-right { display: flex; align-items: center; gap: 22px; }
+.head-actions { display: flex; align-items: center; gap: 12px; }
+.btn-info {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--green-ink);
+  white-space: nowrap;
+}
+.btn-info:hover { text-decoration: underline; }
+.btn-info[aria-current='page'] { text-decoration: underline; text-underline-offset: 4px; }
 .btn-contact {
   font-family: var(--sans);
   font-size: 13.5px;
@@ -103,7 +114,8 @@ h1, h2, h3, h4 { font-weight: 600; line-height: 1.15; text-wrap: balance; }
 }
 .btn-contact:hover { opacity: 0.9; transform: translateY(-1px); }
 @media (max-width: 560px) {
-  .head-right { width: 100%; justify-content: space-between; gap: 12px; }
+  .head-right { width: 100%; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .nav { width: 100%; justify-content: center; gap: 16px; }
 }
 .head-main {
   display: flex;

@@ -40,7 +40,7 @@ src/data/
                       managed the old site's gallery.
   programMeta.js      program grouping (the real CfA nav, per Sage) + program-slug →
                       faculty-tag mapping
-src/pages/            routes: home, programs/+[slug], faculty (filterable), about/+[slug]
+src/pages/            routes: home, programs/+[slug], faculty, about/+[slug], news, donate
 src/layouts/Base.astro   site chrome: PoC banner, sticky header, footer (real contact
                          info: PO Box 545 Wilton NH, 603-654-2566, office@)
 src/components/PageHeader.astro   standard page opening (eyebrow/title/lede)

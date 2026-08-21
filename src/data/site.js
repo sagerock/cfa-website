@@ -4,6 +4,7 @@
 export const FN = 'https://ckloewflialohuvixmvd.supabase.co/functions/v1';
 export const CONTACT_ENDPOINT = `${FN}/cfa-contact`;
 export const TRACK_ENDPOINT = `${FN}/cfa-track`;
+export const DONATION_CHECKOUT_URL = 'https://centerforanthroposophy.org/make-a-donation/';
 
 export const CONTACT = {
   phone: '603-654-2566',

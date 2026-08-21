@@ -45,8 +45,12 @@ const year = new Date().getFullYear();
                 <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>
               ))}
             </nav>
-            <a class="btn-contact" href="/contact" data-track="header-contact"
-               aria-current={current === '/contact' ? 'page' : undefined}>Request Info</a>
+            <div class="head-actions">
+              <a class="btn-info" href="/contact" data-track="header-contact"
+                 aria-current={current === '/contact' ? 'page' : undefined}>Request Info</a>
+              <a class="btn-contact" href="/donate" data-track="header-donate"
+                 aria-current={current === '/donate' ? 'page' : undefined}>Donate</a>
+            </div>
           </div>
         )}
       </div>
@@ -99,8 +103,9 @@ const year = new Date().getFullYear();
         </div>
 
         <div class="foot-col">
-          <h3 class="foot-tag">Visiting</h3>
+          <h3 class="foot-tag">More</h3>
           <ul>
+            <li><a href="/donate">Support the Center</a></li>
             <li><a href="/programs/summer-housing-meals">Summer Housing &amp; Meals</a></li>
             <li><a href="/about/goetheanum">The Goetheanum</a></li>
             <li><a href="/about/rudolf-steiner">Rudolf Steiner</a></li>

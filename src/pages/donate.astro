@@ -1,0 +1,477 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT, DONATION_CHECKOUT_URL } from '../data/site.js';
+
+const designations = [
+  'General Support',
+  'Building Bridges',
+  'Diversity Scholarships',
+  'Douglas Gerwin High School Teacher Education Scholarship Fund',
+  'Explorations',
+  'Georg Locher Elementary Teacher Education Scholarship Fund',
+  'Kairos Institute',
+  'Mentor Training',
+  'Renewal Courses',
+  'Waldorf Leadership Development',
+];
+---
+
+<Base title="Support the Center for Anthroposophy" current="/donate">
+  <section class="donation-hero">
+    <div class="wrap donation-hero-grid">
+      <div class="appeal-copy">
+        <p class="eyebrow">Support the Center</p>
+        <h1>Help Waldorf educators carry the work forward</h1>
+        <p class="hero-lede">
+          Your gift helps teachers deepen their practice, return to their schools renewed,
+          and reach the training they need when tuition is out of reach.
+        </p>
+        <p class="appeal-note">
+          Gifts of every size sustain teacher education, professional renewal, leadership
+          development, and healing education through the arts.
+        </p>
+      </div>
+
+      <aside class="giving-card" aria-labelledby="giving-title">
+        <p class="eyebrow">Make a gift</p>
+        <h2 id="giving-title">Support the work you value</h2>
+        <p>
+          Choose a one-time or recurring gift, then direct it to general support, a program,
+          or a scholarship fund.
+        </p>
+        <ul class="checkout-features" aria-label="Donation options">
+          <li>One-time and recurring gifts</li>
+          <li>Credit card or check</li>
+          <li>Optional fund designation</li>
+        </ul>
+        <a
+          class="give-button"
+          href={DONATION_CHECKOUT_URL}
+          data-track="donate-checkout"
+        >
+          Continue to the secure donation form
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+        <p class="secure-note">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="5" y="10" width="14" height="11" rx="2"></rect>
+            <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+          </svg>
+          Checkout continues on CfA's current website while the rebuilt site is in preview.
+        </p>
+        <p class="tax-note">All donations to CfA are tax-deductible.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="impact-section" aria-labelledby="impact-title">
+    <div class="wrap impact-grid">
+      <figure class="impact-photo">
+        <img
+          src="/images/bd7d64ac81-renewal-2025-hand-gesture-crop.webp"
+          alt="Center for Anthroposophy participants moving together during a Renewal gathering"
+          width="1536"
+          height="2048"
+          loading="eager"
+        />
+      </figure>
+      <div class="impact-copy">
+        <p class="eyebrow">One year of shared work</p>
+        <h2 id="impact-title">A growing circle of teachers and learners</h2>
+        <p>
+          During the 2024-25 school year, CfA's seven programs served educators online and
+          in person, from New Hampshire to an international leadership cohort in New Zealand.
+        </p>
+        <dl class="impact-stats">
+          <div>
+            <dt>972</dt>
+            <dd>participants served</dd>
+          </div>
+          <div>
+            <dt>139</dt>
+            <dd>instructors and guest presenters</dd>
+          </div>
+          <div>
+            <dt>1,475</dt>
+            <dd>hours of teaching</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="funds-section" aria-labelledby="funds-title">
+    <div class="wrap">
+      <div class="section-intro">
+        <p class="eyebrow">Where your gift can go</p>
+        <h2 id="funds-title">Give where you feel most connected</h2>
+        <p>
+          General support gives CfA the greatest flexibility. You can also direct your gift
+          toward access for students or the program closest to your own path.
+        </p>
+      </div>
+      <div class="fund-grid">
+        <article>
+          <span class="fund-number">01</span>
+          <h3>Where it is needed most</h3>
+          <p>General support sustains the people, teaching, technology, and coordination behind every program.</p>
+        </article>
+        <article>
+          <span class="fund-number">02</span>
+          <h3>Open the door to study</h3>
+          <p>Scholarship giving helps educators continue their development when schools and families cannot meet the full cost.</p>
+        </article>
+        <article>
+          <span class="fund-number">03</span>
+          <h3>Strengthen a program</h3>
+          <p>Direct your support to the particular course of study, renewal, leadership, or healing education you value.</p>
+        </article>
+      </div>
+      <details class="designation-list">
+        <summary>See all current gift designations</summary>
+        <ul>
+          {designations.map((designation) => <li>{designation}</li>)}
+        </ul>
+      </details>
+    </div>
+  </section>
+
+  <section class="appeal-section">
+    <div class="wrap appeal-grid">
+      <div class="appeal-image">
+        <img
+          src="/images/e7bf51d474-mentor-training-students-in-class.webp"
+          alt="Adult students listening and taking notes in a Center for Anthroposophy classroom"
+          width="1200"
+          height="800"
+          loading="eager"
+        />
+      </div>
+      <blockquote>
+        <p>
+          We need to stand together to build sustainability through the deepening of Waldorf
+          pedagogy, renewal through professional development, and healing in a world that
+          needs us more than ever.
+        </p>
+        <cite>Torin M. Finser</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="other-ways" aria-labelledby="other-ways-title">
+    <div class="wrap other-ways-grid">
+      <div>
+        <p class="eyebrow">More ways to help</p>
+        <h2 id="other-ways-title">Plan a gift that works for you</h2>
+      </div>
+      <div class="ways-list">
+        <article>
+          <h3>Give monthly</h3>
+          <p>Recurring gifts give the Center dependable support throughout the year. Select recurring giving in the secure form.</p>
+        </article>
+        <article>
+          <h3>Give by check</h3>
+          <p>The secure form includes the Center's current check instructions and lets CfA prepare an accurate receipt.</p>
+        </article>
+        <article>
+          <h3>Discuss a planned gift</h3>
+          <p>
+            For bequests or other planned gifts, contact
+            <a href={`mailto:${CONTACT.email}`} data-track="donate-email">{CONTACT.email}</a>
+            or call <a href={`tel:${CONTACT.phoneHref}`} data-track="donate-phone">{CONTACT.phone}</a>.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-give">
+    <div class="wrap final-give-inner">
+      <div>
+        <p class="eyebrow">Thank you</p>
+        <h2>Keep the path open for the next teacher</h2>
+      </div>
+      <a class="give-button" href={DONATION_CHECKOUT_URL} data-track="donate-checkout-bottom">
+        Make a secure gift
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .donation-hero {
+    padding: 72px 0 68px;
+    background:
+      linear-gradient(125deg, var(--chalk), transparent 58%),
+      var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .donation-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
+    gap: clamp(42px, 7vw, 82px);
+    align-items: center;
+  }
+  .appeal-copy h1 {
+    font-size: clamp(42px, 6.5vw, 70px);
+    letter-spacing: -0.035em;
+    max-width: 14ch;
+    margin: 12px 0 22px;
+  }
+  .hero-lede {
+    font-size: clamp(20px, 2.6vw, 25px);
+    line-height: 1.45;
+    max-width: 44ch;
+  }
+  .appeal-note {
+    border-left: 2px solid var(--gold);
+    color: var(--soft);
+    font-size: 16px;
+    max-width: 55ch;
+    margin-top: 25px;
+    padding-left: 18px;
+  }
+  .giving-card {
+    background: var(--raised);
+    border: 1px solid var(--line);
+    border-top: 5px solid var(--gold);
+    box-shadow: 0 24px 60px -42px rgba(20, 28, 22, 0.7);
+    padding: clamp(26px, 4vw, 38px);
+  }
+  .giving-card h2 {
+    font-size: clamp(27px, 3vw, 34px);
+    margin: 8px 0 14px;
+  }
+  .giving-card > p:not(.eyebrow, .secure-note, .tax-note) {
+    color: var(--soft);
+    font-size: 16px;
+  }
+  .checkout-features {
+    display: grid;
+    gap: 8px;
+    list-style: none;
+    margin: 24px 0;
+    font-family: var(--sans);
+    font-size: 13.5px;
+  }
+  .checkout-features li {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+  }
+  .checkout-features li::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex: none;
+  }
+  .give-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    width: 100%;
+    background: var(--green);
+    border: 1px solid var(--green);
+    color: var(--paper);
+    font: 650 14px var(--sans);
+    line-height: 1.3;
+    padding: 15px 17px;
+    text-decoration: none;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .give-button:hover { opacity: 0.9; transform: translateY(-1px); }
+  .give-button span { font-size: 21px; line-height: 1; }
+  .secure-note {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    color: var(--soft);
+    font: 11.5px/1.45 var(--sans);
+    margin-top: 13px;
+  }
+  .secure-note svg {
+    width: 15px;
+    height: 15px;
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+  }
+  .tax-note {
+    border-top: 1px solid var(--line);
+    color: var(--soft);
+    font: 12px var(--sans);
+    margin-top: 18px;
+    padding-top: 14px;
+    text-align: center;
+  }
+  .impact-section { padding: 78px 0; }
+  .impact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+    gap: clamp(38px, 7vw, 78px);
+    align-items: center;
+  }
+  .impact-photo { margin: 0; position: relative; aspect-ratio: 4 / 3; }
+  .impact-photo::after {
+    content: '';
+    position: absolute;
+    inset: 14px -14px -14px 14px;
+    border: 1px solid var(--gold);
+    z-index: -1;
+  }
+  .impact-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    border: 1px solid var(--line);
+  }
+  .impact-copy h2, .section-intro h2, .other-ways h2 {
+    font-size: clamp(29px, 4vw, 42px);
+    margin: 8px 0 16px;
+  }
+  .impact-copy > p:not(.eyebrow) { color: var(--soft); font-size: 16.5px; }
+  .impact-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    border-top: 1px solid var(--line);
+    margin-top: 30px;
+    padding-top: 24px;
+  }
+  .impact-stats div { display: grid; gap: 4px; }
+  .impact-stats dt {
+    color: var(--green-ink);
+    font: 650 clamp(25px, 3.4vw, 36px) var(--sans);
+    letter-spacing: -0.04em;
+  }
+  .impact-stats dd { color: var(--soft); font: 11.5px/1.4 var(--sans); }
+  .funds-section {
+    background: var(--raised);
+    border-block: 1px solid var(--line);
+    padding: 72px 0;
+  }
+  .section-intro { max-width: 65ch; }
+  .section-intro > p:not(.eyebrow) { color: var(--soft); font-size: 17px; }
+  .fund-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 42px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .fund-grid article { padding: 30px 28px 32px 0; }
+  .fund-grid article + article { border-left: 1px solid var(--line); padding-left: 28px; }
+  .fund-number {
+    color: var(--gold);
+    font: 11px var(--sans);
+    letter-spacing: 0.14em;
+  }
+  .fund-grid h3 { font-size: 21px; margin: 8px 0 11px; }
+  .fund-grid p { color: var(--soft); font-size: 14.5px; }
+  .designation-list {
+    max-width: 760px;
+    margin-top: 26px;
+    font-family: var(--sans);
+  }
+  .designation-list summary {
+    color: var(--green-ink);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .designation-list ul {
+    columns: 2;
+    column-gap: 36px;
+    color: var(--soft);
+    font-size: 13px;
+    list-style-position: inside;
+    margin-top: 15px;
+  }
+  .designation-list li { break-inside: avoid; margin: 7px 0; }
+  .appeal-section { padding: 82px 0; }
+  .appeal-grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(36px, 8vw, 88px);
+    align-items: center;
+  }
+  .appeal-image { aspect-ratio: 1 / 1; }
+  .appeal-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50% 50% 4px 4px;
+    border: 1px solid var(--line);
+  }
+  blockquote { margin: 0; }
+  blockquote::before {
+    content: '\201C';
+    display: block;
+    color: var(--gold);
+    font-size: 82px;
+    line-height: 0.7;
+    margin-bottom: 12px;
+  }
+  blockquote p { font-size: clamp(23px, 3.3vw, 34px); line-height: 1.4; }
+  blockquote cite {
+    display: block;
+    color: var(--green-ink);
+    font: 600 12px var(--sans);
+    letter-spacing: 0.12em;
+    margin-top: 22px;
+    text-transform: uppercase;
+  }
+  .other-ways {
+    background: var(--raised);
+    border-block: 1px solid var(--line);
+    padding: 70px 0;
+  }
+  .other-ways-grid {
+    display: grid;
+    grid-template-columns: minmax(250px, 0.75fr) minmax(0, 1.25fr);
+    gap: clamp(38px, 8vw, 90px);
+  }
+  .ways-list { display: grid; gap: 0; }
+  .ways-list article { border-top: 1px solid var(--line); padding: 22px 0; }
+  .ways-list article:last-child { border-bottom: 1px solid var(--line); }
+  .ways-list h3 { font-size: 19px; margin-bottom: 6px; }
+  .ways-list p { color: var(--soft); font-size: 14.5px; }
+  .final-give { padding: 72px 0 36px; }
+  .final-give-inner {
+    display: grid;
+    grid-template-columns: 1fr minmax(280px, 360px);
+    gap: 40px;
+    align-items: center;
+  }
+  .final-give h2 { font-size: clamp(28px, 4vw, 40px); margin-top: 6px; }
+  @media (max-width: 820px) {
+    .donation-hero { padding-top: 50px; }
+    .donation-hero-grid, .impact-grid, .appeal-grid, .other-ways-grid, .final-give-inner {
+      grid-template-columns: 1fr;
+    }
+    .appeal-copy h1 { max-width: 16ch; }
+    .impact-photo { margin-right: 14px; }
+    .appeal-grid { max-width: 680px; }
+    .appeal-image { max-width: 440px; }
+    .fund-grid { grid-template-columns: 1fr; }
+    .fund-grid article { padding: 24px 0; }
+    .fund-grid article + article { border-left: 0; border-top: 1px solid var(--line); padding-left: 0; }
+  }
+  @media (max-width: 560px) {
+    .donation-hero { padding: 38px 0 48px; }
+    .appeal-copy h1 { font-size: clamp(38px, 12vw, 52px); }
+    .impact-section, .funds-section, .appeal-section, .other-ways { padding: 52px 0; }
+    .impact-stats { grid-template-columns: 1fr; }
+    .impact-stats div { grid-template-columns: 92px 1fr; align-items: baseline; }
+    .designation-list ul { columns: 1; }
+    .final-give { padding-top: 52px; }
+  }
+</style>

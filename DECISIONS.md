@@ -305,3 +305,16 @@ call directing the session, is the formal approval the banner rule waited for. `
 remains until the WordPress→new-site domain cutover is decided, so search engines never
 see two competing copies of the content. The PO Box mailing address was kept in the
 footer and contact page pending explicit direction.
+
+## 2026-08-21 — Stage the new giving page before replacing donation checkout
+Torin asked Sage for an upgraded annual-appeal experience, using Free Columbia's donation
+page as a reference. The rebuilt site now has a native `/donate` campaign page and a
+prominent Donate header action: concise appeal copy, CfA program photography, 2024-25
+participation evidence, current fund designations, recurring/check/planned-gift guidance,
+and first-party CTA tracking. It deliberately does not repeat the prior appeal's match
+language because the next appeal's goal, deadline, and matching terms are not confirmed.
+Payment still hands off transparently to live WordPress Gravity Form 97. That form has no
+supported external-prefill parameters and cannot safely be embedded or posted to from the
+static Astro site. A native donation checkout therefore waits for a donation-specific,
+reconciled Authorize.Net endpoint and controlled payment test rather than pretending the
+registration endpoint is interchangeable. `noindex` remains unchanged.
