@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "@supabase/supabase-js";
+import { buildWelcomeEmailText, type WelcomeSession } from "./email.ts";
 
 const CFA_CLIENT_ID = "22500cd6-052a-42ff-a0cb-4f3ba9125dfd";
 const STARLIGHT_PROGRAM_PLATFORM_ID = "3357450";
@@ -292,6 +293,7 @@ async function sendWelcomeEmail(input: {
   amountCents: number;
   transactionId: string;
   signInLink: string;
+  sessions: WelcomeSession[];
 }) {
   const key = Deno.env.get("SENDGRID_API_KEY") || "";
   if (!key) return false;
@@ -301,20 +303,14 @@ async function sendWelcomeEmail(input: {
     style: "currency",
     currency: "USD",
   }).format(input.amountCents / 100);
-  const emailText = [
-    `Dear ${input.firstName},`,
-    "",
-    "Thank you for registering for Starlight Rays 2026–2027.",
-    "",
-    `Registration: ${input.offerName}`,
-    `Amount: ${amount}`,
-    `Transaction: ${input.transactionId}`,
-    "",
-    "Use this secure link to open your learning portal:",
-    input.signInLink,
-    "",
-    "If you have questions, contact office@centerforanthroposophy.org.",
-  ].join("\n");
+  const emailText = buildWelcomeEmailText({
+    firstName: input.firstName,
+    offerName: input.offerName,
+    amount,
+    transactionId: input.transactionId,
+    signInLink: input.signInLink,
+    sessions: input.sessions,
+  });
   const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
     method: "POST",
     headers: {
@@ -382,7 +378,7 @@ Deno.serve(async (request: Request) => {
   const { data: includedSessions, error: includedSessionError } = sessionIds.length
     ? await admin
       .from("cfa_learn_sessions")
-      .select("id, slug, presenter, title, starts_at")
+      .select("id, slug, presenter, title, starts_at, ends_at, zoom_url")
       .in("id", sessionIds)
     : { data: [], error: null };
   if (offerSessionError || includedSessionError) {
@@ -395,7 +391,15 @@ Deno.serve(async (request: Request) => {
       .filter((row) => row.offer_id === offer.id)
       .map((row) => sessionById.get(row.session_id))
       .filter(Boolean)
-      .sort((a, b) => String(a!.starts_at).localeCompare(String(b!.starts_at))),
+      .sort((a, b) => String(a!.starts_at).localeCompare(String(b!.starts_at)))
+      .map((session) => ({
+        id: session!.id,
+        slug: session!.slug,
+        presenter: session!.presenter,
+        title: session!.title,
+        starts_at: session!.starts_at,
+        ends_at: session!.ends_at,
+      })),
   }));
 
   const config = registrationConfig();
@@ -988,6 +992,19 @@ Deno.serve(async (request: Request) => {
 
   let emailSent = false;
   try {
+    const purchasedSessions: WelcomeSession[] = selectedOffer.access_scope === "sessions"
+      ? (offerSessionRows || [])
+        .filter((row) => row.offer_id === selectedOffer.id)
+        .map((row) => sessionById.get(row.session_id))
+        .filter(Boolean)
+        .sort((a, b) => String(a!.starts_at).localeCompare(String(b!.starts_at)))
+        .map((session) => ({
+          title: String(session!.title),
+          startsAt: String(session!.starts_at),
+          endsAt: session!.ends_at ? String(session!.ends_at) : null,
+          zoomUrl: session!.zoom_url ? String(session!.zoom_url) : null,
+        }))
+      : [];
     emailSent = await sendWelcomeEmail({
       email,
       firstName,
@@ -997,6 +1014,7 @@ Deno.serve(async (request: Request) => {
       amountCents: chargeAmountCents,
       transactionId,
       signInLink: signInUrl.toString(),
+      sessions: purchasedSessions,
     });
   } catch {
     emailSent = false;
