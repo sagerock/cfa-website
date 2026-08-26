@@ -362,7 +362,7 @@ Deno.serve(async (request: Request) => {
   const now = new Date().toISOString();
   const { data: offers, error: offerError } = await admin
     .from("program_offers")
-    .select("id, code, name, description, amount_cents, currency, seat_count")
+    .select("id, code, name, description, amount_cents, currency, seat_count, access_scope")
     .eq("client_id", CFA_CLIENT_ID)
     .eq("program_id", program.id)
     .eq("active", true)
@@ -370,6 +370,33 @@ Deno.serve(async (request: Request) => {
     .or(`ends_at.is.null,ends_at.gt.${now}`)
     .order("amount_cents");
   if (offerError) return json({ error: "offers_unavailable" }, 503, origin);
+
+  const offerIds = (offers || []).map((offer) => offer.id);
+  const { data: offerSessionRows, error: offerSessionError } = offerIds.length
+    ? await admin
+      .from("program_offer_sessions")
+      .select("offer_id, session_id")
+      .in("offer_id", offerIds)
+    : { data: [], error: null };
+  const sessionIds = [...new Set((offerSessionRows || []).map((row) => row.session_id))];
+  const { data: includedSessions, error: includedSessionError } = sessionIds.length
+    ? await admin
+      .from("cfa_learn_sessions")
+      .select("id, slug, presenter, title, starts_at")
+      .in("id", sessionIds)
+    : { data: [], error: null };
+  if (offerSessionError || includedSessionError) {
+    return json({ error: "offer_sessions_unavailable" }, 503, origin);
+  }
+  const sessionById = new Map((includedSessions || []).map((session) => [session.id, session]));
+  const offersWithSessions = (offers || []).map((offer) => ({
+    ...offer,
+    included_sessions: (offerSessionRows || [])
+      .filter((row) => row.offer_id === offer.id)
+      .map((row) => sessionById.get(row.session_id))
+      .filter(Boolean)
+      .sort((a, b) => String(a!.starts_at).localeCompare(String(b!.starts_at))),
+  }));
 
   const config = registrationConfig();
   const headerTestToken = request.headers.get("X-Registration-Test") || "";
@@ -382,7 +409,7 @@ Deno.serve(async (request: Request) => {
       : { valid: true, publicClientKey: config.publicClientKey };
     const paymentAvailable = (config.enabled && origin === productionOrigin) || headerTestAuthorized;
     const responseOffers = headerTestAuthorized
-      ? (offers || [])
+      ? offersWithSessions
         .filter((offer) => offer.code === "individual")
         .map((offer) => ({
           ...offer,
@@ -390,7 +417,7 @@ Deno.serve(async (request: Request) => {
           description: "$1 charge followed by an immediate automatic void.",
           amount_cents: PRODUCTION_TEST_AMOUNT_CENTS,
         }))
-      : offers || [];
+      : offersWithSessions;
     const couponParam = text(new URL(request.url).searchParams.get("coupon") || "", 40).trim().toUpperCase();
     let couponInfo: JsonRecord | null = null;
     if (couponParam) {
@@ -531,10 +558,10 @@ Deno.serve(async (request: Request) => {
   }
 
   const requestOffers = testAuthorized
-    ? (offers || [])
+    ? offersWithSessions
       .filter((offer) => offer.code === "individual")
       .map((offer) => ({ ...offer, amount_cents: PRODUCTION_TEST_AMOUNT_CENTS }))
-    : offers || [];
+    : offersWithSessions;
   const selectedOffer = requestOffers.find((offer) => offer.code === offerCode);
   if (!selectedOffer) return json({ error: "offer_unavailable" }, 400, origin);
 
@@ -571,10 +598,11 @@ Deno.serve(async (request: Request) => {
   }
 
   const { data: alreadyEnrolled, error: enrollmentAccessError } = await admin.rpc(
-    "cfa_registration_has_access",
+    "cfa_registration_has_offer_access",
     {
       requested_client_id: CFA_CLIENT_ID,
       requested_program_id: program.id,
+      requested_offer_id: selectedOffer.id,
       requested_email: email,
     },
   );
@@ -612,23 +640,39 @@ Deno.serve(async (request: Request) => {
     return json({ error: "idempotency_conflict" }, 409, origin);
   }
 
-  const { data: duplicateRegistration, error: duplicateError } = await admin
-    .from("registrations")
-    .select("id, status")
-    .eq("client_id", CFA_CLIENT_ID)
-    .eq("program_id", program.id)
-    .eq("email", email)
-    .in("status", ["paid", "processing", "enrollment_pending"])
-    .neq("idempotency_key", idempotencyKey)
-    .order("created_at", { ascending: false })
-    .limit(1)
-    .maybeSingle();
-  if (duplicateError) return json({ error: "registration_lookup_failed" }, 500, origin);
-  if (duplicateRegistration?.status === "paid") {
+  const [pendingRegistrationResult, paidOfferResult] = await Promise.all([
+    admin
+      .from("registrations")
+      .select("id, status")
+      .eq("client_id", CFA_CLIENT_ID)
+      .eq("program_id", program.id)
+      .eq("email", email)
+      .in("status", ["processing", "enrollment_pending"])
+      .neq("idempotency_key", idempotencyKey)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+    admin
+      .from("registrations")
+      .select("id, status")
+      .eq("client_id", CFA_CLIENT_ID)
+      .eq("program_id", program.id)
+      .eq("offer_id", selectedOffer.id)
+      .eq("email", email)
+      .eq("status", "paid")
+      .neq("idempotency_key", idempotencyKey)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+  ]);
+  if (pendingRegistrationResult.error || paidOfferResult.error) {
+    return json({ error: "registration_lookup_failed" }, 500, origin);
+  }
+  if (paidOfferResult.data) {
     return json({ error: "already_registered", redirect: "/learn/sign-in?registered=1" }, 409, origin);
   }
-  if (duplicateRegistration) {
-    return json({ error: "registration_pending", registration_id: duplicateRegistration.id }, 409, origin);
+  if (pendingRegistrationResult.data) {
+    return json({ error: "registration_pending", registration_id: pendingRegistrationResult.data.id }, 409, origin);
   }
 
   const registrationValues = {

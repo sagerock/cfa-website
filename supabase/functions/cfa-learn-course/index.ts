@@ -84,7 +84,7 @@ Deno.serve(async (request: Request) => {
 
   const { data: enrollment, error: enrollmentError } = await admin
     .from("enrollments")
-    .select("id, enrolled_at, access_starts_at, access_ends_at, revoked_at")
+    .select("id, enrolled_at, access_starts_at, access_ends_at, revoked_at, access_scope")
     .eq("client_id", program.client_id)
     .eq("program_id", program.id)
     .eq("contact_id", identity.contact_id)
@@ -123,6 +123,31 @@ Deno.serve(async (request: Request) => {
     return json({ error: "course_content_failed" }, 500, origin);
   }
 
+  const { data: sessionAccess, error: sessionAccessError } = enrollment.access_scope === "sessions"
+    ? await admin
+      .from("enrollment_session_access")
+      .select("session_id")
+      .eq("enrollment_id", enrollment.id)
+    : { data: [], error: null };
+  if (sessionAccessError) return json({ error: "course_access_failed" }, 500, origin);
+  const entitledSessionIds = enrollment.access_scope === "all"
+    ? null
+    : new Set((sessionAccess || []).map((row) => row.session_id));
+  const sessions = (sessionsResult.data || []).map(({ mux_playback_id, ...session }) => {
+    const entitled = entitledSessionIds === null || entitledSessionIds.has(session.id);
+    return {
+      ...session,
+      zoom_url: entitled ? session.zoom_url : null,
+      entitled,
+      has_recording: Boolean(mux_playback_id),
+    };
+  });
+  const resources = (resourcesResult.data || []).filter((resource) =>
+    !resource.session_id
+      || entitledSessionIds === null
+      || entitledSessionIds.has(resource.session_id)
+  );
+
   return json({
     learner: {
       display_name: profileResult.data?.display_name
@@ -130,11 +155,12 @@ Deno.serve(async (request: Request) => {
         || "Learner",
     },
     course,
-    enrollment: { starts_at: enrollment.access_starts_at, expires_at: enrollment.access_ends_at },
-    sessions: (sessionsResult.data || []).map(({ mux_playback_id, ...session }) => ({
-      ...session,
-      has_recording: Boolean(mux_playback_id),
-    })),
-    resources: resourcesResult.data || [],
+    enrollment: {
+      starts_at: enrollment.access_starts_at,
+      expires_at: enrollment.access_ends_at,
+      access_scope: enrollment.access_scope,
+    },
+    sessions,
+    resources,
   }, 200, origin);
 });

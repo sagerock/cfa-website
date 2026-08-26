@@ -95,7 +95,7 @@ Deno.serve(async (request: Request) => {
 
   const { data: enrollment, error: enrollmentError } = await admin
     .from("enrollments")
-    .select("id, access_starts_at, access_ends_at, revoked_at")
+    .select("id, access_starts_at, access_ends_at, revoked_at, access_scope")
     .eq("client_id", program.client_id)
     .eq("program_id", program.id)
     .eq("contact_id", identity.contact_id)
@@ -109,6 +109,17 @@ Deno.serve(async (request: Request) => {
     && new Date(enrollment.access_starts_at).getTime() <= now
     && (!enrollment.access_ends_at || new Date(enrollment.access_ends_at).getTime() > now);
   if (!hasAccess) return json({ error: "enrollment_required" }, 403, origin);
+
+  if (enrollment.access_scope === "sessions") {
+    const { data: sessionAccess, error: sessionAccessError } = await admin
+      .from("enrollment_session_access")
+      .select("session_id")
+      .eq("enrollment_id", enrollment.id)
+      .eq("session_id", sessionId)
+      .maybeSingle();
+    if (sessionAccessError) return json({ error: "session_access_lookup_failed" }, 500, origin);
+    if (!sessionAccess) return json({ error: "session_access_required" }, 403, origin);
+  }
 
   const { data: session, error: sessionError } = await admin
     .from("cfa_learn_sessions")

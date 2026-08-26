@@ -10,7 +10,6 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 // stay valid). Every send is recorded in cfa_learn_email_events.
 
 const productionOrigin = "https://learn.centerforanthroposophy.org";
-const ZOOM_URL = "https://centerforanthroposophy.org/zoomroom4";
 const LINK_EXPIRES_AT = "2027-03-31T00:00:00Z";
 
 function json(body: unknown, status = 200) {
@@ -56,7 +55,7 @@ function launchEmail(firstName: string, classroomLink: string, sessionLine: stri
   };
 }
 
-function sessionEmail(firstName: string, classroomLink: string, sessionLine: string) {
+function sessionEmail(firstName: string, classroomLink: string, sessionLine: string, zoomUrl: string) {
   return {
     subject: `Starlight Rays is tomorrow — ${sessionLine.split(" with ")[0]}`,
     text: [
@@ -65,7 +64,7 @@ function sessionEmail(firstName: string, classroomLink: string, sessionLine: str
       `Starlight Rays meets tomorrow, ${sessionLine}.`,
       "",
       "Join the live seminar here:",
-      ZOOM_URL,
+      zoomUrl,
       "",
       "Your classroom — schedule, materials, and the recording afterward:",
       classroomLink,
@@ -106,8 +105,9 @@ Deno.serve(async (request: Request) => {
   const enrollmentId = typeof body.enrollment_id === "string" ? body.enrollment_id : "";
   const template = body.template === "session" ? "session" : body.template === "launch" ? "launch" : "";
   const sessionLine = typeof body.session_line === "string" ? body.session_line.slice(0, 200) : "";
+  const sessionSlug = typeof body.session_slug === "string" ? body.session_slug.slice(0, 100) : "";
   const overrideEmail = typeof body.override_recipient === "string" ? body.override_recipient.trim().toLowerCase() : "";
-  if (!/^[0-9a-f-]{36}$/.test(enrollmentId) || !template || !sessionLine) {
+  if (!/^[0-9a-f-]{36}$/.test(enrollmentId) || !template || !sessionLine || !sessionSlug) {
     return json({ error: "invalid_request" }, 400);
   }
 
@@ -117,12 +117,45 @@ Deno.serve(async (request: Request) => {
 
   const { data: enrollment, error: enrollmentError } = await admin
     .from("enrollments")
-    .select("id, client_id, contact_id, status, revoked_at")
+    .select("id, client_id, contact_id, program_id, status, revoked_at, access_scope, access_starts_at, access_ends_at")
     .eq("id", enrollmentId)
     .maybeSingle();
   if (enrollmentError) return json({ error: "enrollment_lookup_failed" }, 500);
-  if (!enrollment || enrollment.status !== "registered" || enrollment.revoked_at) {
+  const now = Date.now();
+  if (!enrollment
+    || enrollment.status !== "registered"
+    || enrollment.revoked_at
+    || new Date(enrollment.access_starts_at).getTime() > now
+    || (enrollment.access_ends_at && new Date(enrollment.access_ends_at).getTime() <= now)) {
     return json({ error: "enrollment_not_active" }, 404);
+  }
+  const { data: course, error: courseError } = await admin
+    .from("cfa_learn_courses")
+    .select("id")
+    .eq("program_id", enrollment.program_id)
+    .eq("published", true)
+    .maybeSingle();
+  if (courseError || !course) return json({ error: "course_lookup_failed" }, 500);
+  const { data: session, error: sessionError } = await admin
+    .from("cfa_learn_sessions")
+    .select("id, zoom_url")
+    .eq("course_id", course.id)
+    .eq("slug", sessionSlug)
+    .eq("published", true)
+    .maybeSingle();
+  if (sessionError || !session) return json({ error: "session_lookup_failed" }, 500);
+  if (template === "session" && !session.zoom_url) {
+    return json({ error: "session_join_link_missing" }, 409);
+  }
+  if (enrollment.access_scope === "sessions") {
+    const { data: sessionAccess, error: sessionAccessError } = await admin
+      .from("enrollment_session_access")
+      .select("session_id")
+      .eq("enrollment_id", enrollment.id)
+      .eq("session_id", session.id)
+      .maybeSingle();
+    if (sessionAccessError) return json({ error: "session_access_lookup_failed" }, 500);
+    if (!sessionAccess) return json({ error: "session_access_required" }, 403);
   }
   const { data: contact, error: contactError } = await admin
     .from("contacts")
@@ -149,7 +182,7 @@ Deno.serve(async (request: Request) => {
   const firstName = contact.first_name || "colleague";
   const message = template === "launch"
     ? launchEmail(firstName, classroomLink, sessionLine)
-    : sessionEmail(firstName, classroomLink, sessionLine);
+    : sessionEmail(firstName, classroomLink, sessionLine, session.zoom_url!);
   const recipient = overrideEmail || contact.email;
 
   const from = Deno.env.get("REGISTRATION_FROM")

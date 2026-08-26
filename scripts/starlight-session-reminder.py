@@ -81,6 +81,7 @@ def main() -> None:
         str(Path(__file__).with_name("starlight-remind.py")),
         "session",
         "--session-line", session_line,
+        "--session-slug", session["slug"],
     ]
     if not args.dry_run:
         command += ["--apply", "--confirm-template", "session"]

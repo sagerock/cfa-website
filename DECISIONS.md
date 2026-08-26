@@ -318,3 +318,15 @@ supported external-prefill parameters and cannot safely be embedded or posted to
 static Astro site. A native donation checkout therefore waits for a donation-specific,
 reconciled Authorize.Net endpoint and controlled payment test rather than pretending the
 registration endpoint is interchangeable. `noindex` remains unchanged.
+
+## 2026-08-26 — One classroom with session-scoped Starlight access
+Elsy asked for the three featured $19 sessions to live inside the CfA classroom rather
+than arrive as bare Zoom links, with locked previews and an “Unlock Full Series” path.
+The platform therefore keeps one Starlight course and adds explicit offer and enrollment
+session entitlements. Rawson, Blanning, and Kaliks each grant one session; the $44 bundle
+grants all three; the $420 individual and $1,220 institution offers retain all twelve.
+The course endpoint removes private Zoom/resource data from locked sessions, playback and
+reminder endpoints enforce the same entitlement server-side, and the classroom shows the
+rest of the schedule as locked previews. A full-series purchase upgrades the existing
+enrollment to all-session access. It currently charges the published $420 price; no credit
+for earlier single-session purchases is automatic without CfA approving that money policy.

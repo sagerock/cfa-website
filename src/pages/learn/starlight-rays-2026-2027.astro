@@ -72,6 +72,13 @@ import { starlightPilot } from '../../data/starlightPilot.js';
         <button id="welcome-button" type="button" disabled>Welcome letter loading…</button>
       </section>
 
+      <section id="upgrade-card" class="side-card upgrade-card" hidden>
+        <p class="eyebrow">Continue the journey</p>
+        <h2>Unlock the full series</h2>
+        <p>Join all twelve seminars and receive every recording and course resource.</p>
+        <a href="/register/starlight-rays-2026-2027?offer=individual">Unlock Full Series</a>
+      </section>
+
       <section class="side-card">
         <div class="side-title">
           <h2>Resources</h2>
@@ -110,7 +117,7 @@ import { starlightPilot } from '../../data/starlightPilot.js';
       document.getElementById('course-error-copy').textContent = 'This account does not have an active Starlight Rays enrollment.';
     }
   } else {
-    const { course, learner, sessions, resources } = result.data;
+    const { course, learner, enrollment, sessions, resources } = result.data;
     document.getElementById('course-cohort').textContent = course.cohort || 'Course';
     document.getElementById('course-title').textContent = course.title;
     document.getElementById('course-subtitle').textContent = course.subtitle || '';
@@ -119,7 +126,9 @@ import { starlightPilot } from '../../data/starlightPilot.js';
 
     const now = Date.now();
     const validSessions = sessions.filter((session) => Number.isFinite(new Date(session.starts_at).getTime()));
-    const next = validSessions.find((session) => new Date(session.ends_at || session.starts_at).getTime() >= now) || validSessions.at(-1);
+    const entitledSessions = validSessions.filter((session) => session.entitled !== false);
+    const next = entitledSessions.find((session) => new Date(session.ends_at || session.starts_at).getTime() >= now) || entitledSessions.at(-1);
+    document.getElementById('upgrade-card').hidden = enrollment.access_scope !== 'sessions';
     if (next) {
       const starts = new Date(next.starts_at);
       const ends = next.ends_at ? new Date(next.ends_at) : null;
@@ -171,7 +180,15 @@ import { starlightPilot } from '../../data/starlightPilot.js';
       const copy = document.createElement('div');
       const state = document.createElement('span');
       state.className = 'session-state';
-      state.textContent = session.id === next?.id ? 'Next session' : session.has_recording ? 'Recording available' : new Date(session.ends_at || session.starts_at).getTime() < now ? 'Recording coming soon' : 'Scheduled';
+      state.textContent = session.entitled === false
+        ? 'Full series'
+        : session.id === next?.id
+        ? 'Next session'
+        : session.has_recording
+        ? 'Recording available'
+        : new Date(session.ends_at || session.starts_at).getTime() < now
+        ? 'Recording coming soon'
+        : 'Scheduled';
       const title = document.createElement('h3');
       title.textContent = session.title;
       const meta = document.createElement('p');
@@ -179,10 +196,12 @@ import { starlightPilot } from '../../data/starlightPilot.js';
       const arrow = document.createElement('span');
       arrow.className = 'session-arrow';
       arrow.setAttribute('aria-hidden', 'true');
-      arrow.textContent = session.has_recording ? '▶' : session.id === next?.id ? '→' : '·';
+      arrow.textContent = session.entitled === false ? '🔒' : session.has_recording ? '▶' : session.id === next?.id ? '→' : '·';
       copy.append(state, title, meta);
       item.append(number, copy, arrow);
-      if (session.has_recording) {
+      if (session.entitled === false) {
+        item.classList.add('locked');
+      } else if (session.has_recording) {
         item.classList.add('has-recording');
         item.tabIndex = 0;
         item.setAttribute('role', 'button');
@@ -198,7 +217,7 @@ import { starlightPilot } from '../../data/starlightPilot.js';
       sessionList.append(item);
     });
 
-    const recorded = validSessions.filter((session) => session.has_recording);
+    const recorded = entitledSessions.filter((session) => session.has_recording);
     if (recorded.length) showRecording(recorded.at(-1));
 
     const resourceList = document.getElementById('resource-list');
@@ -270,6 +289,7 @@ import { starlightPilot } from '../../data/starlightPilot.js';
   .session-list li.active { background: linear-gradient(90deg, var(--chalk), transparent); }
   .session-list li.has-recording { cursor: pointer; }
   .session-list li.has-recording:hover, .session-list li.has-recording:focus-visible { background: linear-gradient(90deg, var(--chalk), transparent); }
+  .session-list li.locked { opacity: .68; }
   .session-number { color: var(--soft); font-family: var(--sans); font-size: 11px; font-variant-numeric: tabular-nums; }
   .session-state { color: var(--green-ink); font-family: var(--sans); font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
   .session-list h3 { margin: 3px 0 4px; font-size: 17px; line-height: 1.3; }
@@ -282,6 +302,10 @@ import { starlightPilot } from '../../data/starlightPilot.js';
   .welcome-card h2 { margin: 6px 0 9px; font-size: 22px; }
   .welcome-card p { color: var(--soft); font-size: 14px; line-height: 1.5; white-space: pre-line; }
   .welcome-card button { width: 100%; margin-top: 17px; border-color: var(--line); color: var(--soft); background: var(--paper); }
+  .upgrade-card { border-top: 3px solid var(--gold); }
+  .upgrade-card h2 { margin: 6px 0 9px; font-size: 22px; }
+  .upgrade-card p:not(.eyebrow) { color: var(--soft); font-size: 14px; line-height: 1.5; }
+  .upgrade-card a { display: inline-block; margin-top: 17px; border-radius: 3px; padding: 10px 15px; color: #fff8ec; background: var(--green); font-family: var(--sans); font-size: 12px; font-weight: 600; text-decoration: none; }
   .side-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
   .side-title span { display: grid; place-items: center; width: 23px; height: 23px; border-radius: 50%; color: var(--green-ink); background: var(--chalk); font-family: var(--sans); font-size: 11px; }
   .resource-list { list-style: none; }

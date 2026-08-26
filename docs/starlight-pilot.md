@@ -13,6 +13,7 @@ while course access comes from Supabase after a participant signs in by email ma
 - Supabase magic-link authentication and course entitlements.
 - Existing CfA email tooling for welcome and reminder messages.
 - First-party registration using Authorize.Net Accept.js tokenization.
+- Session-scoped access for the three featured single-session products and bundle.
 
 The pilot does not include quizzes, certificates, discussion forums, roster self-service,
 refund tooling, or accounting export.
@@ -62,6 +63,7 @@ The authenticated course endpoint returns:
       "title": "...",
       "starts_at": "2026-09-05T19:00:00Z",
       "zoom_url": "returned only to enrolled users",
+      "entitled": true,
       "mux_playback_token": null
     }
   ],
@@ -79,6 +81,8 @@ The database keeps existing CRM contacts separate from login identities:
 - `cfa_learn_resources`: private files or links associated with a course/session.
 - `cfa_learn_email_events`: welcome/reminder delivery and resend history.
 - `program_offers`: server-authoritative price and availability definitions.
+- `program_offer_sessions`: sessions included by a session-scoped offer.
+- `enrollment_session_access`: the purchased session entitlements snapshotted onto an enrollment.
 - `registrations`: payment state and sanitized gateway results; never card data or nonce.
 
 All `cfa_learn_*` tables require Row Level Security. Zoom URLs and Mux signing keys must

@@ -19,6 +19,7 @@ import json
 import time
 import urllib.error
 import urllib.request
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -58,6 +59,8 @@ def main() -> None:
     parser.add_argument("template", choices=["launch", "session"])
     parser.add_argument("--session-line", required=True,
                         help='e.g. "September 5, 3:00-4:30 pm Eastern, with Dr. Martyn Rawson"')
+    parser.add_argument("--session-slug", required=True,
+                        help='session slug used to limit delivery to entitled participants')
     parser.add_argument("--send-test", metavar="EMAIL",
                         help="send one real email (first enrollee's content) to this address")
     parser.add_argument("--apply", action="store_true", help="send to the full active roster")
@@ -80,16 +83,49 @@ def main() -> None:
             raise RuntimeError(f"REST {path.split('?')[0]} failed: {status}")
         return payload
 
-    program_id = rest(f"cfa_learn_courses?slug=eq.{COURSE_SLUG}&select=program_id")[0]["program_id"]
+    course = rest(f"cfa_learn_courses?slug=eq.{COURSE_SLUG}&select=id,program_id")[0]
+    program_id = course["program_id"]
+    session_rows = rest(
+        f"cfa_learn_sessions?course_id=eq.{course['id']}&slug=eq.{args.session_slug}"
+        "&published=is.true&select=id,slug"
+    )
+    if not session_rows:
+        raise RuntimeError(f"Published session {args.session_slug!r} not found")
+    session_id = session_rows[0]["id"]
     enrollments = rest(
         f"enrollments?client_id=eq.{CFA_CLIENT_ID}&program_id=eq.{program_id}"
-        "&status=eq.registered&revoked_at=is.null&select=id,contact_id&order=enrolled_at"
+        "&status=eq.registered&revoked_at=is.null"
+        "&select=id,contact_id,access_scope,access_starts_at,access_ends_at&order=enrolled_at"
     )
+    now = datetime.now(timezone.utc)
+
+    def active(enrollment: dict[str, Any]) -> bool:
+        starts = datetime.fromisoformat(enrollment["access_starts_at"].replace("Z", "+00:00"))
+        ends_value = enrollment.get("access_ends_at")
+        ends = datetime.fromisoformat(ends_value.replace("Z", "+00:00")) if ends_value else None
+        return starts <= now and (ends is None or ends > now)
+
+    enrollments = [e for e in enrollments if active(e)]
+    restricted_ids = [e["id"] for e in enrollments if e.get("access_scope") == "sessions"]
+    entitled_restricted = set()
+    if restricted_ids:
+        joined = ",".join(restricted_ids)
+        entitled_restricted = {
+            row["enrollment_id"]
+            for row in rest(
+                f"enrollment_session_access?enrollment_id=in.({joined})&session_id=eq.{session_id}"
+                "&select=enrollment_id"
+            )
+        }
+    enrollments = [
+        e for e in enrollments
+        if e.get("access_scope") == "all" or e["id"] in entitled_restricted
+    ]
     contact_ids = ",".join(sorted({e["contact_id"] for e in enrollments}))
-    contacts = {
+    contacts = ({
         c["id"]: c
         for c in rest(f"contacts?client_id=eq.{CFA_CLIENT_ID}&id=in.({contact_ids})&select=id,email,first_name,last_name")
-    }
+    } if contact_ids else {})
     roster = [
         {
             "enrollment_id": e["id"],
@@ -105,6 +141,7 @@ def main() -> None:
             "enrollment_id": enrollment_id,
             "template": args.template,
             "session_line": args.session_line,
+            "session_slug": args.session_slug,
         }
         if override:
             body["override_recipient"] = override
@@ -133,6 +170,7 @@ def main() -> None:
             "mode": "dry_run",
             "template": args.template,
             "session_line": args.session_line,
+            "session_slug": args.session_slug,
             "recipients": len(roster),
             "sample": [r["email"] for r in roster[:5]],
         }, indent=2))
