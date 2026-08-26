@@ -1,0 +1,15 @@
+---
+// Third-party measurement (GA4 + Meta Pixel), added 2026-08-26 on Sage's go so paid
+// traffic can be routed to learn.* without going dark: HolyOps' Meta campaigns
+// optimise on the CfA Pixel and CfA reports in GA4. The first-party tracker
+// (Analytics.astro) is untouched. Rendered in <head> on every page, INCLUDING
+// minimal (registration) pages — that is where conversions happen.
+// No inline JS: the bootstrap lives in /public/tags.js so the CSP stays
+// script-src 'self' plus the two vendor hosts (see public/_headers).
+const GA4_ID = 'G-M22HNR1PLT';
+const META_PIXEL_ID = '1802139657408971';
+---
+<script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}></script>
+<script is:inline src="/tags.js"></script>
+<noscript><img height="1" width="1" style="display:none" alt=""
+  src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`} /></noscript>

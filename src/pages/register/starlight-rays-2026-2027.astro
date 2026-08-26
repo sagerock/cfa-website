@@ -360,6 +360,19 @@ import Base from '../../layouts/Base.astro';
     const result = await response.json().catch(() => ({}));
     if (response.ok && result.ok) {
       localStorage.removeItem(checkoutKeyName);
+      if (!result.test_mode) {
+        // Conversion: Meta Purchase + GA4 purchase (ThirdPartyTags) and the first-party tracker.
+        const paidOffer = selectedOffer();
+        const conversion = {
+          value: (result.amount_cents ?? 0) / 100,
+          currency: 'USD',
+          transaction_id: result.registration_id,
+          name: paidOffer ? `Starlight Rays 2026-27: ${paidOffer.name}` : 'Starlight Rays 2026-27',
+          id: paidOffer?.code,
+        };
+        if (window.__cfaConversion) window.__cfaConversion('purchase', conversion);
+        if (window.__cfaTrack) window.__cfaTrack('registration', { offer: paidOffer?.code, value: conversion.value });
+      }
       form.hidden = true;
       const success = document.createElement('section');
       success.className = 'success-card';

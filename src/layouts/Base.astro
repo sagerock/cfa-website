@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Analytics from '../components/Analytics.astro';
+import ThirdPartyTags from '../components/ThirdPartyTags.astro';
 // minimal: standalone chrome for pilot-facing pages (registration) — no site
 // navigation, logo points at the live public site, slim footer. The rebuilt
 // site stays unreachable from the pilot until it launches.
@@ -20,6 +21,7 @@ const year = new Date().getFullYear();
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <title>{title}</title>
+    <ThirdPartyTags />
     <script is:inline>
       if (location.hostname === 'learn.centerforanthroposophy.org' && location.pathname === '/') {
         location.replace('/learn');
