@@ -473,7 +473,15 @@ import Base from '../../layouts/Base.astro';
       config = await response.json();
       offerList.replaceChildren();
       const requestedOfferExists = config.offers.some((offer) => offer.code === requestedOfferCode);
+      let previousScope = null;
       config.offers.forEach((offer, index) => {
+        if (previousScope === 'all' && offer.access_scope !== 'all') {
+          const divider = document.createElement('p');
+          divider.className = 'offer-divider';
+          divider.textContent = 'Not ready to commit to the entire series yet? Choose your one-off session below and we\u2019ll see you in the room!';
+          offerList.append(divider);
+        }
+        previousScope = offer.access_scope;
         const label = document.createElement('label');
         label.className = 'offer-option';
         const input = document.createElement('input');
@@ -605,6 +613,7 @@ import Base from '../../layouts/Base.astro';
   :global(.offer-copy strong), :global(.offer-price) { font-family: var(--sans); }
   :global(.offer-copy small) { color: var(--soft); font-size: 15px; }
   :global(.offer-price) { font-size: 19px; font-weight: 650; }
+  :global(.offer-divider) { margin: 18px 0 6px; padding-top: 14px; border-top: 1px solid var(--rule, #e6e1d8); color: var(--soft); font-family: var(--serif); font-size: 15px; font-style: italic; }
   .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
   #organization-field[hidden] { display: none; }
   .field-grid label { display: grid; gap: 7px; font-family: var(--sans); font-size: 14px; font-weight: 600; }

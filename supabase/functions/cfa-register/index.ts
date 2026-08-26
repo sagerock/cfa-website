@@ -385,7 +385,14 @@ Deno.serve(async (request: Request) => {
     return json({ error: "offer_sessions_unavailable" }, 503, origin);
   }
   const sessionById = new Map((includedSessions || []).map((session) => [session.id, session]));
-  const offersWithSessions = (offers || []).map((offer) => ({
+  // Signature series offers (access_scope 'all') come first so the full series is the default
+  // selection; single sessions and the bundle follow. Price order is kept within each group.
+  // Requested by Elsy Ayoub 2026-08-26.
+  const groupRank = (offer: { access_scope?: string | null }) => (offer.access_scope === "all" ? 0 : 1);
+  const orderedOffers = [...(offers || [])].sort((a, b) =>
+    groupRank(a) - groupRank(b) || a.amount_cents - b.amount_cents
+  );
+  const offersWithSessions = orderedOffers.map((offer) => ({
     ...offer,
     included_sessions: (offerSessionRows || [])
       .filter((row) => row.offer_id === offer.id)
