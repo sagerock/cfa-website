@@ -1,0 +1,522 @@
+---
+import Base from '../../../layouts/Base.astro';
+---
+
+<Base title="Complete your Starlight Rays roster | Center for Anthroposophy" minimal>
+  <header class="roster-head">
+    <div class="wrap roster-intro">
+      <div>
+        <p class="eyebrow">Institution registration</p>
+        <h1>Complete your team roster</h1>
+      </div>
+      <p>
+        Add each participant who should receive access to all twelve Starlight Rays seminars,
+        recordings, and course resources.
+      </p>
+    </div>
+  </header>
+
+  <main class="wrap roster-main">
+    <section id="loading" class="notice" aria-live="polite">
+      <strong>Opening your private roster…</strong>
+    </section>
+
+    <section id="invalid-link" class="notice notice-error" hidden>
+      <h2>This roster link is unavailable</h2>
+      <p>The link may have expired or been replaced. Please contact the CfA office for a fresh one.</p>
+      <a href="mailto:office@centerforanthroposophy.org">office@centerforanthroposophy.org</a>
+    </section>
+
+    <div id="roster-app" hidden>
+      <section class="school-card">
+        <div>
+          <p class="eyebrow">School or institution</p>
+          <h2 id="organization-name"></h2>
+          <p id="representative-copy"></p>
+        </div>
+        <div class="seat-meter">
+          <strong id="seat-count">0</strong>
+          <span id="seat-limit">of 20 participants</span>
+        </div>
+      </section>
+
+      <section class="import-card" aria-labelledby="import-title">
+        <div>
+          <h2 id="import-title">Enter a roster or import one</h2>
+          <p>
+            Spreadsheet files are read only in your browser. Nothing is uploaded until you review
+            the participant rows and submit them below.
+          </p>
+        </div>
+        <div class="import-actions">
+          <label class="file-button">
+            Import CSV or Excel
+            <input id="roster-file" type="file" accept=".csv,.xlsx,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+          </label>
+          <button id="download-template" type="button" class="secondary-button">Download template</button>
+        </div>
+        <p id="import-status" class="form-status" role="status" aria-live="polite"></p>
+      </section>
+
+      <form id="roster-form" novalidate>
+        <div class="roster-section-head">
+          <div>
+            <p class="eyebrow">Participants</p>
+            <h2>Review everyone before submitting</h2>
+          </div>
+          <button id="add-participant" type="button" class="secondary-button">+ Add participant</button>
+        </div>
+
+        <div class="roster-table-wrap">
+          <table class="roster-table">
+            <thead>
+              <tr>
+                <th scope="col">First name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Title or role</th>
+                <th scope="col">Teacher training completed?</th>
+                <th scope="col"><span class="sr-only">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody id="roster-rows"></tbody>
+          </table>
+        </div>
+
+        <div class="submit-row">
+          <div>
+            <p id="roster-status" class="form-status" role="status" aria-live="polite"></p>
+            <p class="privacy-copy">Each participant receives their own private sign-in email.</p>
+          </div>
+          <button id="submit-roster" type="submit" class="submit-button">Create participant access</button>
+        </div>
+      </form>
+
+      <section id="completion-card" class="completion-card" hidden tabindex="-1">
+        <p class="eyebrow">Roster processed</p>
+        <h2 id="completion-heading">Your team is ready</h2>
+        <p id="completion-copy"></p>
+      </section>
+    </div>
+  </main>
+</Base>
+
+<script>
+  import readXlsxFile from 'read-excel-file';
+
+  const endpoint = 'https://ckloewflialohuvixmvd.supabase.co/functions/v1/cfa-institution-roster';
+  const tokenKey = 'cfa-starlight-roster-token';
+  const fragmentToken = decodeURIComponent(location.hash.replace(/^#/, '').trim());
+  if (fragmentToken) {
+    sessionStorage.setItem(tokenKey, fragmentToken);
+    history.replaceState(null, '', location.pathname);
+  }
+  const rosterToken = fragmentToken || sessionStorage.getItem(tokenKey) || '';
+  const loading = document.getElementById('loading');
+  const invalidLink = document.getElementById('invalid-link');
+  const app = document.getElementById('roster-app');
+  const rowsBody = document.getElementById('roster-rows');
+  const form = document.getElementById('roster-form');
+  const addButton = document.getElementById('add-participant');
+  const submitButton = document.getElementById('submit-roster');
+  const fileInput = document.getElementById('roster-file');
+  const importStatus = document.getElementById('import-status');
+  const rosterStatus = document.getElementById('roster-status');
+  const completionCard = document.getElementById('completion-card');
+  let roster;
+  let rowState = [];
+
+  function setStatus(element, message, kind = '') {
+    element.textContent = message;
+    element.dataset.kind = kind;
+  }
+
+  function protectedMember(member) {
+    return ['provisioning', 'provisioned', 'invited'].includes(member.status);
+  }
+
+  function blankMember() {
+    return {
+      id: '', first_name: '', last_name: '', email: '', title_role: '',
+      completed_teacher_training: '', status: 'draft',
+    };
+  }
+
+  function updateSeatCount() {
+    document.getElementById('seat-count').textContent = String(rowState.length);
+    document.getElementById('seat-limit').textContent = `of ${roster.seat_limit} participants`;
+    addButton.disabled = rowState.length >= roster.seat_limit;
+  }
+
+  function inputCell(member, name, type = 'text') {
+    const td = document.createElement('td');
+    const label = document.createElement('label');
+    label.className = 'mobile-label';
+    const captions = {
+      first_name: 'First name', last_name: 'Last name', email: 'Email', title_role: 'Title or role',
+    };
+    label.textContent = captions[name];
+    const input = document.createElement('input');
+    input.type = type;
+    input.name = name;
+    input.value = member[name] || '';
+    input.required = true;
+    input.maxLength = name === 'email' ? 254 : name === 'title_role' ? 120 : 100;
+    if (name === 'email' && protectedMember(member)) {
+      input.readOnly = true;
+      input.title = 'Contact the CfA office to change an email after access has been created.';
+    }
+    label.append(input);
+    td.append(label);
+    return td;
+  }
+
+  function renderRows() {
+    rowsBody.replaceChildren();
+    rowState.forEach((member, index) => {
+      const tr = document.createElement('tr');
+      tr.dataset.id = member.id || '';
+      tr.dataset.status = member.status || 'draft';
+      tr.append(
+        inputCell(member, 'first_name'),
+        inputCell(member, 'last_name'),
+        inputCell(member, 'email', 'email'),
+        inputCell(member, 'title_role'),
+      );
+
+      const trainingCell = document.createElement('td');
+      const trainingLabel = document.createElement('label');
+      trainingLabel.className = 'mobile-label';
+      trainingLabel.textContent = 'Teacher training completed?';
+      const training = document.createElement('select');
+      training.name = 'completed_teacher_training';
+      training.required = true;
+      [
+        ['', 'Choose…'], ['yes', 'Yes'], ['no', 'No'],
+      ].forEach(([value, label]) => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = label;
+        training.append(option);
+      });
+      training.value = member.completed_teacher_training === true
+        ? 'yes'
+        : member.completed_teacher_training === false
+        ? 'no'
+        : '';
+      trainingLabel.append(training);
+      trainingCell.append(trainingLabel);
+      tr.append(trainingCell);
+
+      const actions = document.createElement('td');
+      actions.className = 'row-actions';
+      if (member.status === 'invited') {
+        const badge = document.createElement('span');
+        badge.className = 'status-badge';
+        badge.textContent = 'Access sent';
+        actions.append(badge);
+      } else if (member.status === 'failed') {
+        const badge = document.createElement('span');
+        badge.className = 'status-badge status-error';
+        badge.textContent = 'Retry needed';
+        actions.append(badge);
+      }
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.className = 'remove-row';
+      remove.textContent = 'Remove';
+      remove.disabled = protectedMember(member);
+      remove.title = protectedMember(member)
+        ? 'Access has already been created. Contact the CfA office to remove this participant.'
+        : 'Remove participant';
+      remove.addEventListener('click', () => {
+        rowState.splice(index, 1);
+        if (!rowState.length) rowState.push(blankMember());
+        renderRows();
+      });
+      actions.append(remove);
+      tr.append(actions);
+      rowsBody.append(tr);
+    });
+    updateSeatCount();
+  }
+
+  function readRowsFromForm() {
+    return [...rowsBody.querySelectorAll('tr')].map((tr) => ({
+      id: tr.dataset.id || '',
+      first_name: tr.querySelector('[name="first_name"]').value.trim(),
+      last_name: tr.querySelector('[name="last_name"]').value.trim(),
+      email: tr.querySelector('[name="email"]').value.trim().toLowerCase(),
+      title_role: tr.querySelector('[name="title_role"]').value.trim(),
+      completed_teacher_training: tr.querySelector('[name="completed_teacher_training"]').value === 'yes'
+        ? true
+        : tr.querySelector('[name="completed_teacher_training"]').value === 'no'
+        ? false
+        : null,
+      status: tr.dataset.status || 'draft',
+    }));
+  }
+
+  function normalizeHeader(value) {
+    return String(value || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  }
+
+  const headerAliases = {
+    first_name: ['first name', 'firstname', 'given name'],
+    last_name: ['last name', 'lastname', 'family name', 'surname'],
+    email: ['email', 'email address', 'e mail'],
+    title_role: ['title role', 'title', 'role', 'job title', 'position'],
+    completed_teacher_training: [
+      'completed middle or high school teacher training',
+      'completed teacher training', 'teacher training completed', 'teacher training',
+    ],
+  };
+
+  function trainingValue(value) {
+    if (value === true || value === 1) return true;
+    if (value === false || value === 0) return false;
+    const normalized = String(value ?? '').trim().toLowerCase();
+    if (['yes', 'y', 'true', 'completed'].includes(normalized)) return true;
+    if (['no', 'n', 'false', 'not completed'].includes(normalized)) return false;
+    return '';
+  }
+
+  function rowsFromGrid(grid) {
+    if (!grid.length) throw new Error('The spreadsheet is empty.');
+    const headers = grid[0].map(normalizeHeader);
+    const positions = {};
+    Object.entries(headerAliases).forEach(([field, aliases]) => {
+      positions[field] = headers.findIndex((header) => aliases.includes(header));
+    });
+    const missing = Object.entries(positions).filter(([, index]) => index < 0).map(([field]) => field);
+    if (missing.length) throw new Error('Use the provided template so all five required columns are present.');
+    return grid.slice(1)
+      .filter((row) => row.some((value) => String(value ?? '').trim()))
+      .map((row) => ({
+        ...blankMember(),
+        first_name: String(row[positions.first_name] ?? '').trim(),
+        last_name: String(row[positions.last_name] ?? '').trim(),
+        email: String(row[positions.email] ?? '').trim().toLowerCase(),
+        title_role: String(row[positions.title_role] ?? '').trim(),
+        completed_teacher_training: trainingValue(row[positions.completed_teacher_training]),
+      }));
+  }
+
+  function parseCsv(source) {
+    const rows = [];
+    let row = [], cell = '', quoted = false;
+    for (let index = 0; index < source.length; index += 1) {
+      const char = source[index];
+      if (quoted) {
+        if (char === '"' && source[index + 1] === '"') { cell += '"'; index += 1; }
+        else if (char === '"') quoted = false;
+        else cell += char;
+      } else if (char === '"') quoted = true;
+      else if (char === ',') { row.push(cell); cell = ''; }
+      else if (char === '\n') { row.push(cell); rows.push(row); row = []; cell = ''; }
+      else if (char !== '\r') cell += char;
+    }
+    if (cell || row.length) { row.push(cell); rows.push(row); }
+    return rows;
+  }
+
+  async function importFile(file) {
+    if (file.size > 2 * 1024 * 1024) throw new Error('Please use a spreadsheet smaller than 2 MB.');
+    const extension = file.name.toLowerCase().split('.').pop();
+    const grid = extension === 'csv'
+      ? parseCsv(await file.text())
+      : extension === 'xlsx'
+      ? await readXlsxFile(file)
+      : null;
+    if (!grid) throw new Error('Choose a CSV or Excel (.xlsx) file.');
+    const imported = rowsFromGrid(grid);
+    if (!imported.length) throw new Error('No participant rows were found.');
+    const retained = readRowsFromForm().filter(protectedMember);
+    if (retained.length + imported.length > roster.seat_limit) {
+      throw new Error(`This would exceed the ${roster.seat_limit}-participant limit.`);
+    }
+    const emails = [...retained, ...imported].map((member) => member.email).filter(Boolean);
+    if (new Set(emails).size !== emails.length) throw new Error('The roster contains duplicate email addresses.');
+    rowState = [...retained, ...imported];
+    renderRows();
+    setStatus(importStatus, `${imported.length} participant${imported.length === 1 ? '' : 's'} imported. Review every row before submitting.`, 'ok');
+  }
+
+  function downloadTemplate() {
+    const content = [
+      'First name,Last name,Email address,Title or role,Completed middle or high school teacher training',
+      'Jane,Example,jane@example.org,High school teacher,Yes',
+    ].join('\n');
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(new Blob([content], { type: 'text/csv;charset=utf-8' }));
+    link.download = 'starlight-institution-roster-template.csv';
+    link.click();
+    URL.revokeObjectURL(link.href);
+  }
+
+  function showRoster(data) {
+    roster = data;
+    document.getElementById('organization-name').textContent = roster.organization;
+    document.getElementById('representative-copy').textContent = roster.representative
+      ? `Registration contact: ${roster.representative.name} · ${roster.representative.email}`
+      : '';
+    rowState = roster.members.length ? roster.members : [blankMember()];
+    renderRows();
+    loading.hidden = true;
+    invalidLink.hidden = true;
+    app.hidden = false;
+    const invited = roster.members.filter((member) => member.status === 'invited').length;
+    if (invited) {
+      setStatus(rosterStatus, `${invited} participant${invited === 1 ? '' : 's'} already received access. You may add more people up to the limit.`, 'ok');
+    }
+  }
+
+  async function loadRoster() {
+    if (!rosterToken) throw new Error('missing');
+    const response = await fetch(endpoint, {
+      headers: { 'X-Roster-Token': rosterToken, Accept: 'application/json' },
+      cache: 'no-store',
+    });
+    if (!response.ok) throw new Error('invalid');
+    const result = await response.json();
+    showRoster(result.roster);
+  }
+
+  addButton.addEventListener('click', () => {
+    rowState = readRowsFromForm();
+    if (rowState.length >= roster.seat_limit) return;
+    rowState.push(blankMember());
+    renderRows();
+    rowsBody.lastElementChild?.querySelector('input')?.focus();
+  });
+
+  fileInput.addEventListener('change', async () => {
+    const file = fileInput.files?.[0];
+    if (!file) return;
+    setStatus(importStatus, 'Reading your spreadsheet…');
+    try { await importFile(file); }
+    catch (error) { setStatus(importStatus, error.message || 'The spreadsheet could not be read.', 'error'); }
+    fileInput.value = '';
+  });
+
+  document.getElementById('download-template').addEventListener('click', downloadTemplate);
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!form.reportValidity()) {
+      setStatus(rosterStatus, 'Please complete every field in every participant row.', 'error');
+      return;
+    }
+    const members = readRowsFromForm();
+    const emails = members.map((member) => member.email);
+    if (new Set(emails).size !== emails.length) {
+      setStatus(rosterStatus, 'Each participant must have a unique email address.', 'error');
+      return;
+    }
+    if (members.some((member) => member.completed_teacher_training === null)) {
+      setStatus(rosterStatus, 'Choose Yes or No for teacher training on every row.', 'error');
+      return;
+    }
+    submitButton.disabled = true;
+    addButton.disabled = true;
+    setStatus(rosterStatus, `Creating access and sending ${members.length} personal email${members.length === 1 ? '' : 's'}…`);
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Roster-Token': rosterToken },
+        body: JSON.stringify({ action: 'submit', members }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || 'submission_failed');
+      showRoster(result.roster);
+      const failed = roster.members.filter((member) => member.status === 'failed').length;
+      const invited = roster.members.filter((member) => member.status === 'invited').length;
+      completionCard.hidden = false;
+      document.getElementById('completion-heading').textContent = failed
+        ? 'Most access is ready'
+        : 'Your team is ready';
+      document.getElementById('completion-copy').textContent = failed
+        ? `${invited} participant${invited === 1 ? '' : 's'} received access. ${failed} invitation${failed === 1 ? '' : 's'} need another attempt; submit the roster again or contact the CfA office.`
+        : `${invited} participant${invited === 1 ? '' : 's'} now have full-series access and have been sent their personal sign-in emails.`;
+      setStatus(rosterStatus, failed ? 'Some invitations need another attempt.' : 'Roster complete.', failed ? 'error' : 'ok');
+      completionCard.focus();
+    } catch (error) {
+      const conflict = error.message === 'roster_conflict';
+      const processing = error.message === 'roster_processing';
+      setStatus(rosterStatus, conflict
+        ? 'Someone on this roster already has access and cannot be removed or have their email changed here. Reload the page or contact the CfA office.'
+        : processing
+        ? 'This roster is already being processed. Wait a moment, then reload this page to see the results.'
+        : 'The roster could not be completed. No second payment is needed. Please try again or contact the CfA office.', 'error');
+    } finally {
+      submitButton.disabled = false;
+      updateSeatCount();
+    }
+  });
+
+  loadRoster().catch(() => {
+    loading.hidden = true;
+    app.hidden = true;
+    invalidLink.hidden = false;
+  });
+</script>
+
+<style>
+  .roster-head { border-bottom: 1px solid var(--line); background: linear-gradient(120deg, rgba(46, 94, 78, .1), transparent 62%); padding: 52px 0 44px; }
+  .roster-intro { display: grid; grid-template-columns: minmax(300px, 1fr) minmax(300px, .9fr); gap: 60px; align-items: end; }
+  .roster-head h1 { font-size: clamp(40px, 6vw, 68px); letter-spacing: -.04em; margin-top: 8px; }
+  .roster-head p:last-child { color: var(--soft); font-size: 19px; line-height: 1.65; }
+  .roster-main { padding: 42px 24px 80px; }
+  .notice { max-width: 720px; border: 1px solid var(--line); background: var(--raised); padding: 30px; }
+  .notice h2 { margin-bottom: 10px; }
+  .notice p { color: var(--soft); margin-bottom: 10px; }
+  .notice-error { border-top: 4px solid #a8324a; }
+  .school-card { display: flex; justify-content: space-between; gap: 30px; align-items: center; border: 1px solid var(--line); background: var(--raised); padding: 28px 30px; }
+  .school-card h2 { font-size: 31px; margin: 6px 0; }
+  .school-card p:last-child { color: var(--soft); }
+  .seat-meter { min-width: 150px; text-align: right; font-family: var(--sans); }
+  .seat-meter strong { display: block; color: var(--green-ink); font-size: 38px; }
+  .seat-meter span { color: var(--soft); font-size: 13px; }
+  .import-card { display: flex; justify-content: space-between; gap: 30px; align-items: center; border: 1px solid var(--line); border-top: 0; padding: 26px 30px; }
+  .import-card h2 { font-size: 23px; margin-bottom: 6px; }
+  .import-card p { color: var(--soft); max-width: 65ch; }
+  .import-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+  .file-button, .secondary-button, .submit-button { border: 1px solid var(--green); border-radius: 4px; cursor: pointer; font-family: var(--sans); font-size: 14px; font-weight: 650; padding: 11px 16px; }
+  .file-button { position: relative; overflow: hidden; color: white; background: var(--green); }
+  .file-button input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .secondary-button { color: var(--green-ink); background: transparent; }
+  .secondary-button:disabled { cursor: not-allowed; opacity: .45; }
+  .form-status { min-height: 1.4em; color: var(--soft); font-family: var(--sans); font-size: 13px; }
+  .form-status[data-kind='ok'] { color: var(--green-ink); }
+  .form-status[data-kind='error'] { color: #a8324a; }
+  #import-status { flex-basis: 100%; margin-top: 8px; }
+  #roster-form { margin-top: 38px; }
+  .roster-section-head { display: flex; justify-content: space-between; gap: 20px; align-items: end; margin-bottom: 18px; }
+  .roster-section-head h2 { font-size: 29px; margin-top: 5px; }
+  .roster-table-wrap { overflow-x: auto; border: 1px solid var(--line); }
+  .roster-table { width: 100%; min-width: 980px; border-collapse: collapse; background: var(--raised); }
+  .roster-table th { color: var(--soft); background: var(--paper); font: 11px var(--sans); letter-spacing: .08em; padding: 12px 10px; text-align: left; text-transform: uppercase; }
+  .roster-table td { border-top: 1px solid var(--line); padding: 10px; vertical-align: middle; }
+  .roster-table input, .roster-table select { width: 100%; border: 1px solid var(--line); border-radius: 3px; background: var(--paper); color: var(--ink); font: 14px var(--sans); padding: 10px; }
+  .roster-table input:read-only { color: var(--soft); background: rgba(0, 0, 0, .035); }
+  .mobile-label { display: contents; }
+  .row-actions { width: 112px; text-align: right; }
+  .remove-row { border: 0; background: none; color: #9e3d2d; cursor: pointer; font: 12px var(--sans); padding: 5px; }
+  .remove-row:disabled { color: var(--soft); cursor: not-allowed; opacity: .5; }
+  .status-badge { display: block; color: var(--green-ink); font: 11px var(--sans); margin-bottom: 3px; white-space: nowrap; }
+  .status-error { color: #a8324a; }
+  .submit-row { display: flex; justify-content: space-between; gap: 30px; align-items: center; border: 1px solid var(--line); border-top: 0; padding: 24px; }
+  .privacy-copy { color: var(--soft); font-size: 14px; }
+  .submit-button { color: white; background: var(--green); padding: 14px 22px; }
+  .submit-button:disabled { cursor: wait; opacity: .55; }
+  .completion-card { border-top: 4px solid var(--green); background: var(--raised); margin-top: 28px; padding: 34px; }
+  .completion-card h2 { font-size: 32px; margin: 7px 0 10px; }
+  .completion-card p:last-child { color: var(--soft); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+  @media (max-width: 760px) {
+    .roster-intro { grid-template-columns: 1fr; gap: 22px; }
+    .school-card, .import-card, .submit-row { align-items: stretch; flex-direction: column; }
+    .seat-meter { text-align: left; }
+    .import-actions { justify-content: flex-start; }
+  }
+</style>

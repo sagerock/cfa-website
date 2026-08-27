@@ -6,7 +6,7 @@ import Base from '../../layouts/Base.astro';
   <header class="registration-head">
     <div class="wrap registration-intro">
       <div>
-        <p class="eyebrow">Online seminar series</p>
+        <a class="eyebrow series-link" href="/programs/starlight-rays/">Online seminar series · View the full lineup →</a>
         <h1>Starlight Rays</h1>
         <p class="cohort">2026–2027</p>
       </div>
@@ -47,7 +47,7 @@ import Base from '../../layouts/Base.astro';
         </fieldset>
 
         <fieldset class="form-section">
-          <legend><span>02</span> Participant details</legend>
+          <legend><span>02</span> <span id="details-legend-text" class="legend-label">Participant details</span></legend>
           <div class="field-grid">
             <label>
               First name
@@ -60,7 +60,7 @@ import Base from '../../layouts/Base.astro';
             <label class="wide">
               Email
               <input type="email" name="email" autocomplete="email" maxlength="254" required />
-              <span>Your portal access will use this address.</span>
+              <span id="email-helper">Your portal access will use this address.</span>
             </label>
             <label>
               Phone <small>optional</small>
@@ -183,6 +183,8 @@ import Base from '../../layouts/Base.astro';
   const status = document.getElementById('form-status');
   const organizationField = document.getElementById('organization-field');
   const organizationInput = form.elements.namedItem('organization');
+  const detailsLegend = document.getElementById('details-legend-text');
+  const emailHelper = document.getElementById('email-helper');
   const summaryOffer = document.getElementById('summary-offer');
   const summaryFormat = document.getElementById('summary-format');
   const summaryDates = document.getElementById('summary-dates');
@@ -239,6 +241,10 @@ import Base from '../../layouts/Base.astro';
     const isInstitution = offer?.code === 'institution';
     organizationField.hidden = !isInstitution;
     organizationInput.required = isInstitution;
+    detailsLegend.textContent = isInstitution ? 'School representative' : 'Participant details';
+    emailHelper.textContent = isInstitution
+      ? 'We will send the private roster link to this address.'
+      : 'Your portal access will use this address.';
     summaryOffer.textContent = offer?.name || 'Choose an option';
     const includedSessions = offer?.included_sessions || [];
     summaryFormat.textContent = !offer
@@ -328,7 +334,9 @@ import Base from '../../layouts/Base.astro';
 
   async function submitRegistration(opaqueData) {
     paymentButton.disabled = true;
-    setStatus('Authorizing payment and preparing your course access…');
+    setStatus(selectedOffer()?.code === 'institution'
+      ? 'Authorizing payment and preparing your private roster…'
+      : 'Authorizing payment and preparing your course access…');
     const data = new FormData(form);
     const response = await fetch(endpoint, {
       method: 'POST',
@@ -360,7 +368,7 @@ import Base from '../../layouts/Base.astro';
     const result = await response.json().catch(() => ({}));
     if (response.ok && result.ok) {
       localStorage.removeItem(checkoutKeyName);
-      if (!result.test_mode) {
+      if (!result.test_mode && !result.replayed) {
         // Conversion: Meta Purchase + GA4 purchase (ThirdPartyTags) and the first-party tracker.
         const paidOffer = selectedOffer();
         const conversion = {
@@ -381,10 +389,14 @@ import Base from '../../layouts/Base.astro';
       eyebrow.className = 'eyebrow';
       eyebrow.textContent = 'Registration complete';
       const heading = document.createElement('h2');
-      heading.textContent = 'Welcome to Starlight Rays';
+      heading.textContent = result.institution ? 'Your institution is registered' : 'Welcome to Starlight Rays';
       const copy = document.createElement('p');
       copy.textContent = result.test_mode && result.voided
         ? 'The $1 production transaction was approved and immediately voided. No course enrollment was created.'
+        : result.institution
+        ? (result.email_sent
+          ? 'Your payment was approved. We emailed your private roster link so you can add the participants who should receive individual access.'
+          : 'Your payment was approved. Continue to your private roster now; if you need the link resent later, contact the CfA office.')
         : result.amount_cents === 0
         ? (result.email_sent
           ? 'Your registration is complete and your course access is ready. Check your email for a secure sign-in link.'
@@ -397,9 +409,17 @@ import Base from '../../layouts/Base.astro';
         heading.textContent = 'Production payment test complete';
         success.append(eyebrow, heading, copy);
       } else {
-        link.href = result.redirect || '/learn/sign-in?registered=1';
-        link.textContent = 'Continue to the learning portal';
-        success.append(eyebrow, heading, copy, link);
+        if (result.institution && result.roster_url) {
+          link.href = result.roster_url;
+          link.textContent = 'Complete your team roster';
+          success.append(eyebrow, heading, copy, link);
+        } else if (!result.institution) {
+          link.href = result.redirect || '/learn/sign-in?registered=1';
+          link.textContent = 'Continue to the learning portal';
+          success.append(eyebrow, heading, copy, link);
+        } else {
+          success.append(eyebrow, heading, copy);
+        }
       }
       document.querySelector('.registration-main').append(success);
       success.focus();
@@ -569,6 +589,8 @@ import Base from '../../layouts/Base.astro';
     letter-spacing: -0.045em;
     margin-top: 6px;
   }
+  .series-link { color: var(--green-ink); text-decoration: none; }
+  .series-link:hover { text-decoration: underline; text-underline-offset: 4px; }
   .cohort {
     color: var(--gold);
     font-family: var(--sans);
@@ -601,7 +623,7 @@ import Base from '../../layouts/Base.astro';
     font-weight: 600;
     padding-right: 18px;
   }
-  .form-section legend span {
+  .form-section legend > span:first-child {
     color: var(--gold);
     font-family: var(--sans);
     font-size: 12px;
@@ -609,6 +631,7 @@ import Base from '../../layouts/Base.astro';
     margin-right: 12px;
     vertical-align: middle;
   }
+  .form-section legend .legend-label { color: inherit; font: inherit; letter-spacing: inherit; margin: 0; }
   .offer-list { display: grid; gap: 12px; margin-top: 24px; }
   :global(.offer-option) {
     display: grid;

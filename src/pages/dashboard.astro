@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { FN } from '../data/site.js';
 const STATS_ENDPOINT = `${FN}/cfa-stats`;
 const REGISTRATIONS_ENDPOINT = `${FN}/cfa-registrations`;
+const INSTITUTION_ROSTER_ENDPOINT = `${FN}/cfa-institution-roster`;
 ---
 
 <html lang="en">
@@ -88,6 +89,15 @@ const REGISTRATIONS_ENDPOINT = `${FN}/cfa-registrations`;
           <div id="reg-empty" class="empty" hidden>No registrations through the site form yet. Imported Thinkific enrollments appear in the enrollment count above.</div>
         </section>
 
+        <section class="panel" id="institution-panel" hidden>
+          <div class="panel-head">
+            <h2>Institution rosters</h2>
+            <span class="hint">private links, participant access, and invitation delivery</span>
+          </div>
+          <div id="institution-rosters" class="institution-rosters"></div>
+          <div id="institution-empty" class="empty" hidden>No institutional purchases yet.</div>
+        </section>
+
         <section class="panel" id="programs-panel" hidden>
           <div class="panel-head"><h2>Programs &amp; rosters</h2><span class="hint">click a program to see who's enrolled</span></div>
           <ul class="programlist" id="program-list"></ul>
@@ -97,7 +107,11 @@ const REGISTRATIONS_ENDPOINT = `${FN}/cfa-registrations`;
 
     <div id="tooltip" class="tooltip" hidden></div>
 
-    <script is:inline define:vars={{ endpoint: STATS_ENDPOINT, regEndpoint: REGISTRATIONS_ENDPOINT }}>
+    <script is:inline define:vars={{
+      endpoint: STATS_ENDPOINT,
+      regEndpoint: REGISTRATIONS_ENDPOINT,
+      institutionEndpoint: INSTITUTION_ROSTER_ENDPOINT,
+    }}>
       const $ = (id) => document.getElementById(id);
       const token = decodeURIComponent(location.hash.replace(/^#/, '').trim());
       const fmt = (n) => (n ?? 0).toLocaleString('en-US');
@@ -214,6 +228,7 @@ const REGISTRATIONS_ENDPOINT = `${FN}/cfa-registrations`;
         $('reg-course').textContent = d.course || '';
 
         renderPrograms(d.programs || []);
+        renderInstitutionRosters(d.institution_rosters || []);
 
         const rows = d.registrations || [];
         if (!rows.length) { $('reg-empty').hidden = false; return; }
@@ -237,6 +252,100 @@ const REGISTRATIONS_ENDPOINT = `${FN}/cfa-registrations`;
             tr.append(td);
           });
           body.append(tr);
+        });
+      }
+
+      async function institutionAction(action, payload, button) {
+        const original = button.textContent;
+        button.disabled = true;
+        button.textContent = action === 'resend_roster_link' ? 'Sending…' : 'Retrying…';
+        try {
+          const response = await fetch(institutionEndpoint, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ action, ...payload }),
+          });
+          if (!response.ok) throw new Error('action_failed');
+          await loadRegistrations();
+        } catch {
+          button.textContent = 'Try again';
+          button.disabled = false;
+          return;
+        }
+        button.textContent = original;
+        button.disabled = false;
+      }
+
+      function renderInstitutionRosters(rosters) {
+        $('institution-panel').hidden = false;
+        $('institution-empty').hidden = rosters.length > 0;
+        const container = $('institution-rosters');
+        container.replaceChildren();
+        rosters.forEach((roster) => {
+          const card = document.createElement('article');
+          card.className = 'institution-card';
+          const head = document.createElement('div');
+          head.className = 'institution-head';
+          const titleWrap = document.createElement('div');
+          const title = document.createElement('h3');
+          title.textContent = roster.organization;
+          const purchaser = document.createElement('p');
+          purchaser.textContent = roster.purchaser
+            ? `${roster.purchaser.name} · ${roster.purchaser.email}`
+            : 'Purchaser record unavailable';
+          titleWrap.append(title, purchaser);
+          const badge = document.createElement('span');
+          badge.className = `roster-badge roster-${roster.status}`;
+          badge.textContent = roster.status.replace('_', ' ');
+          head.append(titleWrap, badge);
+
+          const facts = document.createElement('dl');
+          facts.className = 'institution-facts';
+          [
+            ['Participants', `${roster.counts.invited} invited · ${roster.counts.total}/${roster.seat_limit} entered`],
+            ['Roster link', roster.confirmation_sent ? 'Sent' : 'Not delivered'],
+            ['Last opened', roster.last_opened_at ? new Date(roster.last_opened_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'Not opened'],
+            ['Submitted', roster.submitted_at ? new Date(roster.submitted_at).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'Waiting'],
+          ].forEach(([label, value]) => {
+            const group = document.createElement('div');
+            const dt = document.createElement('dt'); dt.textContent = label;
+            const dd = document.createElement('dd'); dd.textContent = value;
+            group.append(dt, dd); facts.append(group);
+          });
+
+          const actions = document.createElement('div');
+          actions.className = 'institution-actions';
+          const resend = document.createElement('button');
+          resend.type = 'button';
+          resend.textContent = roster.confirmation_sent ? 'Send a fresh roster link' : 'Send roster link';
+          resend.addEventListener('click', () => institutionAction('resend_roster_link', { roster_id: roster.id }, resend));
+          actions.append(resend);
+
+          if (roster.failed_members.length) {
+            const failures = document.createElement('div');
+            failures.className = 'roster-failures';
+            const failureTitle = document.createElement('strong');
+            failureTitle.textContent = 'Invitations needing attention';
+            failures.append(failureTitle);
+            roster.failed_members.forEach((member) => {
+              const row = document.createElement('div');
+              const person = document.createElement('span');
+              person.textContent = `${member.name} · ${member.email}`;
+              const retry = document.createElement('button');
+              retry.type = 'button';
+              retry.textContent = 'Retry access and email';
+              retry.addEventListener('click', () => institutionAction('retry_member', { member_id: member.id }, retry));
+              row.append(person, retry);
+              failures.append(row);
+            });
+            card.append(head, facts, actions, failures);
+          } else {
+            card.append(head, facts, actions);
+          }
+          container.append(card);
         });
       }
 
@@ -391,6 +500,24 @@ const REGISTRATIONS_ENDPOINT = `${FN}/cfa-registrations`;
       .chart-svg .axis { stroke: var(--line); stroke-width: .3; }
       .chart-axis { display: flex; justify-content: space-between; font-family: var(--sans); font-size: 11.5px; color: var(--soft); margin-top: 6px; font-variant-numeric: tabular-nums; }
       .empty { font-family: var(--sans); font-size: 13.5px; color: var(--soft); padding: 20px 0; text-align: center; }
+      .institution-rosters { display: grid; gap: 12px; }
+      .institution-card { border: 1px solid var(--line); border-radius: 5px; padding: 16px; }
+      .institution-head { display: flex; justify-content: space-between; gap: 16px; align-items: start; }
+      .institution-head h3 { font: 600 17px var(--sans); }
+      .institution-head p { color: var(--soft); font: 12.5px var(--sans); margin-top: 3px; }
+      .roster-badge { border-radius: 20px; color: var(--soft); background: var(--paper); font: 11px var(--sans); padding: 5px 10px; text-transform: capitalize; }
+      .roster-complete { color: var(--green-ink); }
+      .roster-needs_attention { color: #a8324a; }
+      .institution-facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 15px; }
+      .institution-facts div { border-top: 1px solid var(--line); padding-top: 9px; }
+      .institution-facts dt { color: var(--soft); font: 10px var(--sans); letter-spacing: .07em; text-transform: uppercase; }
+      .institution-facts dd { font: 13px var(--sans); margin-top: 3px; }
+      .institution-actions { margin-top: 14px; }
+      .institution-actions button, .roster-failures button { border: 1px solid var(--line); border-radius: 3px; color: var(--green-ink); background: var(--raised); cursor: pointer; font: 12px var(--sans); padding: 7px 11px; }
+      .institution-actions button:disabled, .roster-failures button:disabled { cursor: wait; opacity: .55; }
+      .roster-failures { border-top: 1px solid var(--line); display: grid; gap: 7px; margin-top: 14px; padding-top: 12px; font: 12px var(--sans); }
+      .roster-failures > div { display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+      @media (max-width: 760px) { .institution-facts { grid-template-columns: repeat(2, 1fr); } }
       .reg-table-wrap { overflow-x: auto; }
       .reg-table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 13px; }
       .reg-table th { padding: 8px 10px; border-bottom: 2px solid var(--line); color: var(--soft); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; text-align: left; }

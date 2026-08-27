@@ -87,7 +87,7 @@ Deno.serve(async (req: Request) => {
   const [registrationsResult, enrollmentsResult, offersResult] = await Promise.all([
     admin
       .from("registrations")
-      .select("created_at, paid_at, status, first_name, last_name, email, organization, offer_id, amount_cents, discount_cents, coupon_code, is_test")
+      .select("id, created_at, paid_at, status, first_name, last_name, email, organization, offer_id, amount_cents, discount_cents, coupon_code, is_test")
       .eq("client_id", CFA_CLIENT_ID)
       .eq("program_id", course.program_id)
       .order("created_at", { ascending: false })
@@ -122,6 +122,62 @@ Deno.serve(async (req: Request) => {
       discount_cents: r.discount_cents,
       coupon_code: r.coupon_code,
     }));
+
+  const { data: institutionRosterRows, error: institutionRosterError } = await admin
+    .from("institution_rosters")
+    .select("id, registration_id, organization, seat_limit, status, confirmation_sent_at, confirmation_error, last_opened_at, submitted_at, completed_at, created_at, updated_at")
+    .eq("client_id", CFA_CLIENT_ID)
+    .eq("program_id", course.program_id)
+    .order("created_at", { ascending: false });
+  if (institutionRosterError) return json({ error: "institution_rosters_failed" }, 500);
+  const institutionRosterIds = (institutionRosterRows || []).map((roster) => roster.id);
+  const { data: institutionMemberRows, error: institutionMemberError } = institutionRosterIds.length
+    ? await admin
+      .from("institution_roster_members")
+      .select("id, roster_id, first_name, last_name, email, status, error_code, welcome_sent_at")
+      .in("roster_id", institutionRosterIds)
+    : { data: [], error: null };
+  if (institutionMemberError) return json({ error: "institution_roster_members_failed" }, 500);
+  const registrationsById = new Map(
+    (registrationsResult.data || []).map((registration) => [registration.id, registration]),
+  );
+  const institutionRosters = (institutionRosterRows || []).map((roster) => {
+    const registration = registrationsById.get(roster.registration_id);
+    const members = (institutionMemberRows || []).filter((member) => member.roster_id === roster.id);
+    return {
+      id: roster.id,
+      organization: roster.organization,
+      seat_limit: roster.seat_limit,
+      status: roster.status,
+      confirmation_sent: Boolean(roster.confirmation_sent_at),
+      confirmation_error: roster.confirmation_error,
+      last_opened_at: roster.last_opened_at,
+      submitted_at: roster.submitted_at,
+      completed_at: roster.completed_at,
+      created_at: roster.created_at,
+      updated_at: roster.updated_at,
+      purchaser: registration
+        ? {
+          name: `${registration.first_name || ""} ${registration.last_name || ""}`.trim(),
+          email: maskEmail(registration.email),
+        }
+        : null,
+      counts: {
+        total: members.length,
+        invited: members.filter((member) => member.status === "invited").length,
+        failed: members.filter((member) => member.status === "failed").length,
+        processing: members.filter((member) => ["pending", "provisioning", "provisioned"].includes(member.status)).length,
+      },
+      failed_members: members
+        .filter((member) => member.status === "failed")
+        .map((member) => ({
+          id: member.id,
+          name: `${member.first_name || ""} ${member.last_name || ""}`.trim(),
+          email: maskEmail(member.email),
+          error_code: member.error_code,
+        })),
+    };
+  });
 
   const enrollments = enrollmentsResult.data || [];
   const active = enrollments.filter((e) => e.status === "registered" && !e.revoked_at);
@@ -163,6 +219,7 @@ Deno.serve(async (req: Request) => {
       net_revenue_cents: paid.reduce((sum, r) => sum + r.amount_cents, 0),
     },
     enrollment_sources: bySource,
+    institution_rosters: institutionRosters,
     programs,
     registrations,
   });

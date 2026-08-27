@@ -51,6 +51,23 @@ Each seminar brings participants into conversation with practicing educators and
 
 The series does not claim to offer simple answers. Its purpose is to open vital topics in a spirit of thoughtful discourse and help educators meet the evolving needs of their students.
 
+### 2026–2027 series lineup
+
+All seminars meet online from 3:00–4:30 pm Eastern Time.
+
+- **September 5 — Dr. Martyn Rawson:** *Steiner Frequently Called the Waldorf School a Method School. Oh Really? Which Methods Are Those?*
+- **September 26 — Vicki Larson and Heather Scott:** *Stepping Into Life: Cultivating Student Leadership*
+- **October 10 — Carol Bärtges:** *What Have They Been Doing in the Lower School?*
+- **October 31 — Dr. Adam Blanning:** *What Does a Healthy Sensory Diet Look Like for the Modern Adolescent?*
+- **November 7 — Alison Davis:** *Let's Get Real About Burnout*
+- **November 21 — Sven Saar:** *Does Spirit Matter?*
+- **December 12 — Cedar Oliver:** *“True Equality”: How and Why We Sort Our Students*
+- **December 19 — Dr. Constanza Kaliks:** *Citizenship and the Search for Knowledge on the Human Being as Fundamentals for the Teachers' Work*
+- **January 9 — Liz Beaven:** *Talkin’ ’bout My Generation*
+- **January 23 — Nathan Wilcox:** *Solid Foundations: The Three Critical Skills Every Ninth Grader Needs, and How to Teach Them*
+- **February 13 — Beverly Amico:** *Education in a Time of Systemic Change: Trends, Challenges, and Possibilities for Waldorf Schools*
+- **February 27 — David Barham:** *Instilling Social Impulses in an Antisocial Age*
+
 ### Featured single sessions
 
 Join one featured seminar for $19, or attend all three for $44. Each registration includes the live seminar, its recording, and related classroom resources.

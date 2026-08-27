@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.3",
-    "astro": "^5.12.3"
+    "astro": "^5.12.3",
+    "read-excel-file": "^6.0.3"
   }
 }

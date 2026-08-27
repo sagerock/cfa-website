@@ -330,3 +330,17 @@ reminder endpoints enforce the same entitlement server-side, and the classroom s
 rest of the schedule as locked previews. A full-series purchase upgrades the existing
 enrollment to all-session access. It currently charges the published $420 price; no credit
 for earlier single-session purchases is automatic without CfA approving that money policy.
+
+## 2026-08-27 — Institutional purchases become self-service rosters
+Elsy asked to remove the office back-and-forth after a school buys the $1,220 Starlight
+institution offer. The purchaser now receives a private, expiring roster link instead of
+being treated as the single learner; they may enter or import up to 20 participants and
+review first name, last name, email, title/role, and middle/high-school teacher-training
+completion before submitting. Each reviewed participant receives an individual full-series
+enrollment and personal sign-in email automatically. Private roster tokens are stored only
+as hashes, browser links carry the raw token in the URL fragment, participant rows stay
+service-role-only, and the existing staff dashboard exposes masked delivery status plus
+explicit resend/retry controls. Already provisioned participants cannot be silently removed
+or have their login email changed from the public roster. The checkout card now states the
+20-person limit, and institutional buyers who already have personal Starlight access are
+still allowed to purchase for their school.

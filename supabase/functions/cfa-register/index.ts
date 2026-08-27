@@ -1,6 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "@supabase/supabase-js";
 import { buildWelcomeEmailText, type WelcomeSession } from "./email.ts";
+import { sendInstitutionRosterConfirmation } from "../_shared/institutionRosterEmail.ts";
 
 const CFA_CLIENT_ID = "22500cd6-052a-42ff-a0cb-4f3ba9125dfd";
 const STARLIGHT_PROGRAM_PLATFORM_ID = "3357450";
@@ -14,6 +15,9 @@ const allowedOrigins = new Set([
 ]);
 
 type JsonRecord = Record<string, unknown>;
+// This project does not check generated database types into the public repo.
+// deno-lint-ignore no-explicit-any
+type AdminClient = any;
 
 function isAllowedOrigin(origin: string | null) {
   if (!origin) return false;
@@ -62,6 +66,48 @@ function validUuid(value: string) {
 async function sha256(value: string) {
   const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
   return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+async function reissueInstitutionRosterLink(
+  admin: AdminClient,
+  registrationId: string,
+  firstName: string,
+  email: string,
+) {
+  const { data: roster, error: rosterError } = await admin
+    .from("institution_rosters")
+    .select("id, organization, seat_limit")
+    .eq("registration_id", registrationId)
+    .maybeSingle();
+  if (rosterError || !roster) return null;
+
+  const rawToken = crypto.randomUUID().replaceAll("-", "")
+    + crypto.randomUUID().replaceAll("-", "");
+  const tokenHash = await sha256(rawToken);
+  const { error: tokenError } = await admin.from("institution_rosters").update({
+    token_hash: tokenHash,
+    token_expires_at: "2027-03-31T23:59:59Z",
+  }).eq("id", roster.id);
+  if (tokenError) return null;
+
+  const url = `${productionOrigin}/register/starlight-rays-2026-2027/roster#${rawToken}`;
+  const confirmation = await sendInstitutionRosterConfirmation({
+    email,
+    firstName,
+    organization: roster.organization,
+    rosterUrl: url,
+    seatLimit: roster.seat_limit,
+  });
+  await admin.from("institution_rosters").update({
+    confirmation_sent_at: confirmation.ok ? new Date().toISOString() : null,
+    confirmation_error: confirmation.ok ? null : confirmation.error,
+  }).eq("id", roster.id);
+  if (confirmation.ok) {
+    await admin.from("registrations").update({
+      welcome_sent_at: new Date().toISOString(),
+    }).eq("id", registrationId);
+  }
+  return { url, emailSent: confirmation.ok };
 }
 
 function authorizeEnvironment() {
@@ -608,18 +654,20 @@ Deno.serve(async (request: Request) => {
     return json({ error: "invalid_billing_address" }, 400, origin);
   }
 
-  const { data: alreadyEnrolled, error: enrollmentAccessError } = await admin.rpc(
-    "cfa_registration_has_offer_access",
-    {
-      requested_client_id: CFA_CLIENT_ID,
-      requested_program_id: program.id,
-      requested_offer_id: selectedOffer.id,
-      requested_email: email,
-    },
-  );
-  if (enrollmentAccessError) return json({ error: "enrollment_lookup_failed" }, 500, origin);
-  if (alreadyEnrolled === true) {
-    return json({ error: "already_enrolled", redirect: "/learn/sign-in?registered=1" }, 409, origin);
+  if (selectedOffer.code !== "institution") {
+    const { data: alreadyEnrolled, error: enrollmentAccessError } = await admin.rpc(
+      "cfa_registration_has_offer_access",
+      {
+        requested_client_id: CFA_CLIENT_ID,
+        requested_program_id: program.id,
+        requested_offer_id: selectedOffer.id,
+        requested_email: email,
+      },
+    );
+    if (enrollmentAccessError) return json({ error: "enrollment_lookup_failed" }, 500, origin);
+    if (alreadyEnrolled === true) {
+      return json({ error: "already_enrolled", redirect: "/learn/sign-in?registered=1" }, 409, origin);
+    }
   }
 
   const { data: existing, error: existingError } = await admin
@@ -637,11 +685,29 @@ Deno.serve(async (request: Request) => {
     return json({ error: "idempotency_conflict" }, 409, origin);
   }
   if (existing?.status === "paid") {
+    if (selectedOffer.code === "institution") {
+      const rosterLink = await reissueInstitutionRosterLink(admin, existing.id, firstName, email);
+      if (!rosterLink) {
+        return json({ error: "access_pending", registration_id: existing.id }, 202, origin);
+      }
+      return json({
+        ok: true,
+        replayed: true,
+        institution: true,
+        registration_id: existing.id,
+        email_sent: rosterLink.emailSent,
+        amount_cents: existing.amount_cents,
+        roster_url: rosterLink.url,
+        redirect: null,
+      }, 200, origin);
+    }
     return json({
       ok: true,
+      replayed: true,
       registration_id: existing.id,
       email_sent: Boolean(existing.welcome_sent_at),
-      redirect: "/learn/sign-in?registered=1",
+      institution: selectedOffer.code === "institution",
+      redirect: selectedOffer.code === "institution" ? null : "/learn/sign-in?registered=1",
     }, 200, origin);
   }
   if (existing && ["processing", "enrollment_pending"].includes(existing.status)) {
@@ -680,6 +746,26 @@ Deno.serve(async (request: Request) => {
     return json({ error: "registration_lookup_failed" }, 500, origin);
   }
   if (paidOfferResult.data) {
+    if (selectedOffer.code === "institution") {
+      const rosterLink = await reissueInstitutionRosterLink(
+        admin,
+        paidOfferResult.data.id,
+        firstName,
+        email,
+      );
+      if (!rosterLink) {
+        return json({ error: "access_pending", registration_id: paidOfferResult.data.id }, 202, origin);
+      }
+      return json({
+        ok: true,
+        replayed: true,
+        institution: true,
+        registration_id: paidOfferResult.data.id,
+        email_sent: rosterLink.emailSent,
+        roster_url: rosterLink.url,
+        redirect: null,
+      }, 200, origin);
+    }
     return json({ error: "already_registered", redirect: "/learn/sign-in?registered=1" }, 409, origin);
   }
   if (pendingRegistrationResult.data) {
@@ -948,6 +1034,69 @@ Deno.serve(async (request: Request) => {
       registration_id: registrationId,
       transaction_id: transactionId,
       email_sent: false,
+    }, 200, origin);
+  }
+
+  if (selectedOffer.code === "institution") {
+    const rawRosterToken = crypto.randomUUID().replaceAll("-", "")
+      + crypto.randomUUID().replaceAll("-", "");
+    const rosterTokenHash = await sha256(rawRosterToken);
+    const rosterTokenExpiresAt = "2027-03-31T23:59:59Z";
+    const { data: completionRows, error: completionError } = await admin.rpc(
+      "cfa_complete_institution_registration",
+      {
+        requested_registration_id: registrationId,
+        requested_gateway_transaction_id: transactionId,
+        requested_gateway_response: summary,
+        requested_roster_token_hash: rosterTokenHash,
+        requested_token_expires_at: rosterTokenExpiresAt,
+      },
+    );
+    if (completionError) {
+      await admin.from("registrations").update({
+        status: "enrollment_pending",
+        gateway_transaction_id: transactionId,
+        gateway_response: summary,
+        failure_code: "institution_roster_failed",
+        failure_message: "Payment succeeded, but the institution roster requires manual review.",
+      }).eq("id", registrationId);
+      return json({ error: "access_pending", registration_id: registrationId }, 202, origin);
+    }
+
+    const completion = Array.isArray(completionRows) ? completionRows[0] : completionRows;
+    const rosterId = completion && typeof completion === "object"
+      ? text((completion as JsonRecord).roster_id, 36)
+      : "";
+    const rosterUrl = `${productionOrigin}/register/starlight-rays-2026-2027/roster#${rawRosterToken}`;
+    const confirmation = await sendInstitutionRosterConfirmation({
+      email,
+      firstName,
+      organization,
+      rosterUrl,
+      seatLimit: selectedOffer.seat_count,
+    });
+    if (rosterId) {
+      await admin.from("institution_rosters").update({
+        confirmation_sent_at: confirmation.ok ? new Date().toISOString() : null,
+        confirmation_error: confirmation.ok ? null : confirmation.error,
+      }).eq("id", rosterId);
+    }
+    if (confirmation.ok) {
+      await admin.from("registrations").update({
+        welcome_sent_at: new Date().toISOString(),
+      }).eq("id", registrationId);
+    }
+
+    return json({
+      ok: true,
+      institution: true,
+      registration_id: registrationId,
+      transaction_id: transactionId,
+      email_sent: confirmation.ok,
+      amount_cents: chargeAmountCents,
+      coupon: coupon?.code ?? null,
+      roster_url: rosterUrl,
+      redirect: null,
     }, 200, origin);
   }
 
