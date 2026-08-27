@@ -32,10 +32,11 @@ function maskEmail(e: string): string {
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
   const url = new URL(req.url);
-  const expected = Deno.env.get("DASHBOARD_TOKEN") || "";
+  const allowed = (Deno.env.get("DASHBOARD_TOKENS") || Deno.env.get("DASHBOARD_TOKEN") || "")
+    .split(",").map((t) => t.trim()).filter(Boolean);
   const token = url.searchParams.get("token")
     || (req.headers.get("authorization") || "").replace(/^Bearer\s+/i, "");
-  if (!expected || token !== expected) return json({ error: "Unauthorized" }, 401);
+  if (!token || !allowed.includes(token)) return json({ error: "Unauthorized" }, 401);
 
   const admin = createClient(
     Deno.env.get("SUPABASE_URL")!,

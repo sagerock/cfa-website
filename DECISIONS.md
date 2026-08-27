@@ -344,3 +344,12 @@ explicit resend/retry controls. Already provisioned participants cannot be silen
 or have their login email changed from the public roster. The checkout card now states the
 20-person limit, and institutional buyers who already have personal Starlight access are
 still allowed to purchase for their school.
+
+## 2026-08-27 — Per-person dashboard viewer tokens
+Sage couldn't get into `/dashboard` and Sascha (HolyOps) needs a view of leads, registrations,
+and revenue. Cause: `cfa-stats` had its token hardcoded in the function (source lived only in
+the deployed copy) while `cfa-registrations` read a `DASHBOARD_TOKEN` secret — two different
+tokens, neither recorded. Fix: `cfa-stats` is now vendored into this repo; both functions read a
+comma-separated `DASHBOARD_TOKENS` secret (one token per person, prefixed by name, so any one can
+be revoked alone), falling back to the legacy `DASHBOARD_TOKEN`. Tokens are handed out directly,
+never posted in the shared Slack channel; the values live in `/mnt/d/dev/.env` on Sage's machine.
