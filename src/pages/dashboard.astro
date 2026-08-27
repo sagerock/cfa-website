@@ -31,7 +31,8 @@ const INSTITUTION_ROSTER_ENDPOINT = `${FN}/cfa-institution-roster`;
       <div id="gate" class="gate" hidden>
         <h2>Access token required</h2>
         <p>Open this page with your access token in the address, e.g.<br />
-          <code>/dashboard#your-token</code></p>
+          <code>/dashboard#your-token</code><br />
+          (a trailing slash after <code>dashboard</code> is fine)</p>
       </div>
 
       <div id="error" class="dash-error" hidden></div>
@@ -114,6 +115,8 @@ const INSTITUTION_ROSTER_ENDPOINT = `${FN}/cfa-institution-roster`;
     }}>
       const $ = (id) => document.getElementById(id);
       const token = decodeURIComponent(location.hash.replace(/^#/, '').trim());
+      // Pasting or editing the token after the page loaded doesn't reload it; do that ourselves.
+      window.addEventListener('hashchange', () => location.reload());
       const fmt = (n) => (n ?? 0).toLocaleString('en-US');
 
       function showError(msg) { const e = $('error'); e.textContent = msg; e.hidden = false; }
