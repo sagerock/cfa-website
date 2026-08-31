@@ -42,6 +42,8 @@ Read `README.md` first for architecture; this file is the operating rules.
   scope under `src/content/posts/`. It uses a per-repository GitHub App.
   Both publish gates are enabled: routine unambiguous requests publish directly to `main`;
   ambiguity stops, and Git revert is rollback.
+  Authorized JPEG/PNG/WebP attachments pass through Ask's metadata-stripping, 2,400 px
+  WebP optimizer and fixed S3 publication prefix before the queued editor sees their URLs.
   Runtime sender authority lives in Ask's encrypted mailbox config, never this repo.
   `doorbell/senders.json` is only the planned roster; enabled ≠ invited.
 - Log significant decisions in `DECISIONS.md` — dated, with the why.

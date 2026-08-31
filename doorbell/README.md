@@ -14,6 +14,12 @@ It uses `openai/gpt-5.6-sol` at high reasoning to edit a temporary clone, checks
 diff, and runs the full Astro build. Valid requests commit directly to `main`, Cloudflare
 Pages deploys them, and the worker emails the result.
 
+Invited senders may attach up to eight JPEG, PNG, or WebP images to a request. After sender
+authorization, Ask rotates from EXIF, caps the longest side at 2,400 px, removes embedded
+metadata, converts the image to WebP, and uploads it to the fixed Center & Periphery prefix
+in SageRock's S3 media bucket. The editor receives only the resulting public URL, so images
+do not enlarge this repository or expand Elsy's content-only scope.
+
 ## Workflow
 
 ```
@@ -32,6 +38,8 @@ never publish.
   public repository. `senders.json` is a planned-roster reference only.
 - Publishing requires both encrypted mailbox `mode=live` and the independent Railway
   variable `CFA_SITE_PUBLISH_ENABLED=true`.
+- Image upload requires both mailbox `site_editor.media.enabled` and the independent Railway
+  variable `CFA_SITE_MEDIA_UPLOAD_ENABLED=true`.
 - A GitHub App installed per repository supplies a short-lived token for each job; no
   personal GitHub token is installed on the worker.
 - Email can never edit `doorbell/**`, `.github/**`, package/build configuration, environment

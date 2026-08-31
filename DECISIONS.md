@@ -369,3 +369,14 @@ Elsy is invited to the existing `cfa-site@ask.sagerock.com` live editor with the
 repository scope `src/content/posts/**`. She can create and revise Center & Periphery issue
 and article Markdown, while site code, layouts, deployment configuration, program data, and
 the editor's own policy remain outside her authority. Sage and Milan retain full-site scope.
+
+## 2026-08-31 — Optimize emailed publication images into S3
+Sage chose to let Elsy attach article images directly to her Ask emails, while also preventing
+the oversized original uploads common in WordPress workflows. After sender authorization,
+Ask accepts only JPEG, PNG, or WebP raster images; rejects animation, oversized files and
+pixel counts, SVG, and arbitrary binaries; applies camera orientation; caps the long edge at
+2,400 px; strips embedded metadata; and encodes WebP at a web-appropriate quality. Optimized
+objects use immutable, content-derived keys under
+`sagerock-email-images/center-for-anthroposophy/center-periphery/YYYY/MM/`. Only the public
+URL and dimensions enter the durable job and Markdown. This keeps binaries out of Git and
+does not broaden Elsy's `src/content/posts/**` repository scope.
