@@ -5,13 +5,28 @@ import ThirdPartyTags from '../components/ThirdPartyTags.astro';
 // minimal: standalone chrome for pilot-facing pages (registration) — no site
 // navigation, logo points at the live public site, slim footer. The rebuilt
 // site stays unreachable from the pilot until it launches.
-const { title = 'Center for Anthroposophy', current = '', minimal = false } = Astro.props;
-const nav = [
+const {
+  title = 'Center for Anthroposophy',
+  current = '',
+  minimal = false,
+  publication = false,
+} = Astro.props;
+const liveSite = 'https://centerforanthroposophy.org';
+const publicationSite = 'https://news.centerforanthroposophy.org';
+const nav = publication ? [
+  [`${liveSite}/programs/`, 'Programs'],
+  [`${liveSite}/about/faculty/`, 'Faculty'],
+  ['/center-periphery', 'Center & Periphery'],
+  [`${liveSite}/about/`, 'About'],
+] : [
   ['/programs', 'Programs'],
   ['/faculty', 'Faculty'],
   ['/news', 'News'],
   ['/about', 'About'],
 ];
+const canonical = publication
+  ? `${publicationSite}${Astro.url.pathname}`
+  : null;
 const year = new Date().getFullYear();
 ---
 
@@ -19,7 +34,8 @@ const year = new Date().getFullYear();
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex" />
+    <meta name="robots" content={publication ? 'index, follow, max-image-preview:large' : 'noindex'} />
+    {canonical && <link rel="canonical" href={canonical} />}
     <title>{title}</title>
     <ThirdPartyTags />
     <script is:inline>
@@ -34,7 +50,7 @@ const year = new Date().getFullYear();
         <span>Discover your destiny, practice your passion.</span>
       </div>
       <div class="wrap head-main">
-        <a class="brand" href={minimal ? 'https://centerforanthroposophy.org' : '/'}>
+        <a class="brand" href={minimal || publication ? liveSite : '/'}>
           <img class="brand-logo" src="/images/cfa-logo-2024.png" alt="Center for Anthroposophy" width="532" height="344" />
         </a>
         {minimal && (
@@ -48,9 +64,9 @@ const year = new Date().getFullYear();
               ))}
             </nav>
             <div class="head-actions">
-              <a class="btn-info" href="/contact" data-track="header-contact"
+              <a class="btn-info" href={publication ? `${liveSite}/contact-us/` : '/contact'} data-track="header-contact"
                  aria-current={current === '/contact' ? 'page' : undefined}>Request Info</a>
-              <a class="btn-contact" href="/donate" data-track="header-donate"
+              <a class="btn-contact" href={publication ? `${liveSite}/make-a-donation/` : '/donate'} data-track="header-donate"
                  aria-current={current === '/donate' ? 'page' : undefined}>Donate</a>
             </div>
           </div>

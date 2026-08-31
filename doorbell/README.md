@@ -6,8 +6,10 @@ Sage's computer is not involved.
 
 ## Live pilot status
 
-The mailbox currently authorizes `sage@sagerock.com` and
-`milan@centerforanthroposophy.org` and runs in **live mode**.
+The mailbox currently authorizes `sage@sagerock.com`,
+`milan@centerforanthroposophy.org`, and `elsy@centerforanthroposophy.org`, and
+runs in **live mode**. Elsy's scope is limited to news and Center & Periphery
+content under `src/content/posts/`; Sage and Milan retain full-site scope.
 It uses `openai/gpt-5.6-sol` at high reasoning to edit a temporary clone, checks the complete
 diff, and runs the full Astro build. Valid requests commit directly to `main`, Cloudflare
 Pages deploys them, and the worker emails the result.

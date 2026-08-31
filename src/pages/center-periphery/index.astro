@@ -1,0 +1,27 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import NewsGrid from '../../components/NewsGrid.astro';
+import { getCollection } from 'astro:content';
+import { indexPosts } from '../../data/newsHelpers.js';
+
+const editions = indexPosts(await getCollection('posts'))
+  .filter((item) => item.articleCount > 0);
+---
+
+<Base
+  title="Center & Periphery — Center for Anthroposophy"
+  current="/center-periphery"
+  publication={true}
+>
+  <PageHeader
+    eyebrow="The online newsletter of the Center for Anthroposophy"
+    title="Center &amp; Periphery"
+    lede="Original articles, reflections, and updates from the Center's programs and the wider Waldorf community."
+  />
+  <section class="band">
+    <div class="wrap">
+      <NewsGrid items={editions} />
+    </div>
+  </section>
+</Base>

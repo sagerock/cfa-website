@@ -44,9 +44,9 @@
       ]
     },
     "elsy@centerforanthroposophy.org": {
-      "enabled": false,
-      "name": "Elsy Ayoub — staged: all content, direct publish (flip on when invited)",
-      "scope": ["src/content/**", "src/data/**"]
+      "enabled": true,
+      "name": "Elsy Ayoub — Center & Periphery content, direct publish",
+      "scope": ["src/content/posts/**"]
     }
   }
 }

@@ -21,7 +21,11 @@ const fmtDate = (d) =>
   new Date(d + 'T00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 ---
 
-<Base title={`${entry.data.title} — Center for Anthroposophy`} current="/news">
+<Base
+  title={`${entry.data.title} — Center for Anthroposophy`}
+  current={edition ? '/center-periphery' : '/news'}
+  publication={Boolean(edition)}
+>
   {redirectTo && <meta http-equiv="refresh" content={`0;url=/news/${redirectTo}`} />}
   <article class="article">
     <div class="wrap">
@@ -39,7 +43,7 @@ const fmtDate = (d) =>
                 </li>
               ))}
             </ul>
-            <a class="side-all" href="/news">← All News &amp; Views</a>
+            <a class="side-all" href="/center-periphery">← All Center &amp; Periphery</a>
           </aside>
           <div class="news-main">
             <header class="post-head">

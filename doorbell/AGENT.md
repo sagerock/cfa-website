@@ -6,7 +6,9 @@ polling agent.
 
 Current live pilot:
 
-- `sage@sagerock.com` and `milan@centerforanthroposophy.org` are authorized.
+- `sage@sagerock.com` and `milan@centerforanthroposophy.org` have full-site scope;
+  `elsy@centerforanthroposophy.org` has content-only scope under
+  `src/content/posts/` for Center & Periphery and news updates.
 - Mailbox mode is `live`.
 - `CFA_SITE_PUBLISH_ENABLED=true`.
 - A per-repository GitHub App supplies short-lived installation tokens; no personal token

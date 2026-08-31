@@ -353,3 +353,19 @@ tokens, neither recorded. Fix: `cfa-stats` is now vendored into this repo; both 
 comma-separated `DASHBOARD_TOKENS` secret (one token per person, prefixed by name, so any one can
 be revoked alone), falling back to the legacy `DASHBOARD_TOKEN`. Tokens are handed out directly,
 never posted in the shared Slack channel; the values live in `/mnt/d/dev/.env` on Sage's machine.
+
+## 2026-08-31 — Publish Center & Periphery first on its own subdomain
+Sage chose the rebuilt site's edition-and-article reader for the Fall 2026 Center & Periphery
+instead of creating another Elementor issue in WordPress. `news.centerforanthroposophy.org`
+points at the existing Cloudflare Pages project, but behaves as a publication front door:
+its root opens a dedicated edition archive, issue articles retain their table-of-contents
+sidebar, and non-publication navigation returns to the live WordPress site. This is a scoped
+section launch, not the whole-site cutover. Center & Periphery pages carry an indexable robots
+directive and canonical URL for the news hostname; Pages middleware adds an HTTP `noindex`
+guard on every other hostname so the Pages preview cannot compete with production. The rest
+of the rebuilt site remains `noindex`.
+
+Elsy is invited to the existing `cfa-site@ask.sagerock.com` live editor with the narrow
+repository scope `src/content/posts/**`. She can create and revise Center & Periphery issue
+and article Markdown, while site code, layouts, deployment configuration, program data, and
+the editor's own policy remain outside her authority. Sage and Milan retain full-site scope.
