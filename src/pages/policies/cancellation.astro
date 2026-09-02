@@ -1,0 +1,182 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+
+// One place for every program's cancellation terms. The five established
+// paragraphs are quoted verbatim from their program pages (2026-09-02); the
+// Starlight Rays section is a proposal awaiting CfA approval and says so.
+// Registration checkboxes and welcome emails link here.
+---
+
+<Base title="Cancellation Policies | Center for Anthroposophy" current="/policies/cancellation">
+  <PageHeader
+    eyebrow="Policies"
+    title="Cancellation and refund policies"
+    lede="Terms differ by program. Requests should be made in writing to the office or the program contact listed below."
+  />
+
+  <div class="wrap policy-layout">
+    <nav class="policy-index" aria-label="Programs">
+      <a href="#starlight-rays">Starlight Rays 2026–2027</a>
+      <a href="#renewal-courses">Renewal Courses</a>
+      <a href="#explorations-online">Explorations Online</a>
+      <a href="#mentor-training">Mentor Training</a>
+      <a href="#waldorf-leadership-development">Waldorf Leadership Development</a>
+      <a href="#building-bridges">Building Bridges</a>
+    </nav>
+
+    <main class="policy-main">
+      <section id="starlight-rays" class="policy-section proposed">
+        <p class="status-badge">Proposed · under review by CfA, September 2026</p>
+        <h2>Starlight Rays 2026–2027</h2>
+        <p class="section-note">
+          Online seminar series, September 5, 2026 – February 27, 2027. Register or cancel
+          by email to <a href="mailto:office@centerforanthroposophy.org">office@centerforanthroposophy.org</a>.
+        </p>
+
+        <h3>Full series (individual registration, $420)</h3>
+        <p>
+          Cancel by email before the first seminar on September 5, 2026, and we'll refund your
+          registration less a $75 cancellation fee.
+        </p>
+        <p>
+          Once the series has begun there are no refunds, since recordings and resources for
+          every seminar stay available to you through the season. You can transfer your
+          registration to a colleague at any time by emailing the office.
+        </p>
+
+        <h3>Five-payment plan</h3>
+        <p>
+          The payment plan is a commitment to the full $420 registration, paid as $84 today
+          and $84 a month for the following four months. The terms above apply: cancel before
+          September 5 and we'll refund what you've paid less $75 and cancel the remaining
+          payments; after that, the remaining payments continue as scheduled.
+        </p>
+        <p>
+          If a payment can't be collected, we'll email you to update your card. Access to the
+          seminars and recordings pauses if a payment is more than 30 days late and resumes as
+          soon as the plan is current. You can pay the remaining balance early at any time by
+          contacting the office.
+        </p>
+
+        <h3>Institution registration ($1,220, up to 20 participants)</h3>
+        <p>
+          Same terms as the full series. The school can change who is on its roster at any
+          time, so a participant who leaves mid-season can be replaced rather than refunded.
+        </p>
+
+        <h3>Single seminars ($19) and the three-seminar bundle ($44)</h3>
+        <p>
+          These include the live seminar and its recording, so they aren't refundable. Before
+          the seminar takes place you can transfer a ticket to another person by emailing the
+          office.
+        </p>
+
+        <h3>If CfA cancels a seminar</h3>
+        <p>
+          We'll reschedule it or provide a recorded alternative. If a seminar is cancelled
+          outright and not replaced, series registrants receive a refund of that seminar's
+          share ($35), and single seminar ticket holders receive a full refund for it.
+        </p>
+      </section>
+
+      <section id="renewal-courses" class="policy-section">
+        <h2>Renewal Courses</h2>
+        <p>
+          Requests received at least 30 days before the registration deadline will result in a
+          full refund, less $100 cancellation fee. No refunds will be granted if cancellation is
+          received within 30 days of the program start date or while in session.
+        </p>
+        <p class="section-note">Some individual Renewal course listings state a $75 fee; the listing for your course applies.</p>
+      </section>
+
+      <section id="explorations-online" class="policy-section">
+        <h2>Explorations Online</h2>
+        <p>
+          You may cancel up to 15 days before the program begins for a full refund. Withdrawals
+          during the session are credited toward your account, minus a $75 cancellation fee.
+          Limited financial aid is available on request; reach out to the program director
+          before registering.
+        </p>
+      </section>
+
+      <section id="mentor-training" class="policy-section">
+        <h2>Mentor Training</h2>
+        <p>
+          Requests received at least 30 days before the registration deadline will result in a
+          full refund, less $100 cancellation fee. No refunds will be granted if cancellation is
+          received within 30 days of the program start date or while in session.
+        </p>
+      </section>
+
+      <section id="waldorf-leadership-development" class="policy-section">
+        <h2>Waldorf Leadership Development</h2>
+        <p>
+          An enrolled student may withdraw from the program upon written request to
+          <a href="mailto:milan@centerforanthroposophy.org">milan@centerforanthroposophy.org</a>.
+          Such a request must be received at least 30 days prior to the beginning of the program
+          in order to receive a refund (less $75 cancellation fee). No refunds will be granted if
+          cancellation is received within 30 days of the program start date or while in session.
+        </p>
+      </section>
+
+      <section id="building-bridges" class="policy-section">
+        <h2>Building Bridges to Waldorf Teacher Training</h2>
+        <p>
+          An enrolled student may withdraw from the program upon written request to
+          <a href="mailto:milan@centerforanthroposophy.org">milan@centerforanthroposophy.org</a>.
+          Such a request must be received at least 30 days prior to the beginning of the program
+          in order to receive a tuition refund (less $75 cancellation fee). No refunds will be
+          granted if cancellation is received within 30 days of the program start date.
+        </p>
+      </section>
+
+      <p class="policy-contact">
+        Questions: <a href="mailto:office@centerforanthroposophy.org">office@centerforanthroposophy.org</a> · <a href="tel:+16036542566">603-654-2566</a>
+      </p>
+    </main>
+  </div>
+</Base>
+
+<style>
+  .policy-layout {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 56px;
+    padding-top: 40px;
+    padding-bottom: 96px;
+    align-items: start;
+  }
+  .policy-index {
+    position: sticky;
+    top: 118px;
+    display: grid;
+    gap: 10px;
+    font-family: var(--sans);
+    font-size: 14px;
+  }
+  .policy-index a { color: var(--soft); text-decoration: none; }
+  .policy-index a:hover { color: var(--green-ink); text-decoration: underline; text-underline-offset: 4px; }
+  .policy-main { max-width: 68ch; }
+  .policy-section { border-top: 1px solid var(--line); padding: 34px 0 30px; }
+  .policy-section h2 { font-size: 28px; margin-bottom: 14px; }
+  .policy-section h3 { font-family: var(--sans); font-size: 15px; font-weight: 650; margin: 22px 0 6px; }
+  .policy-section p { margin-bottom: 12px; line-height: 1.55; }
+  .section-note { color: var(--soft); font-size: 15px; font-style: italic; }
+  .proposed { border-top-color: var(--gold); }
+  .status-badge {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    background: color-mix(in srgb, var(--gold) 10%, var(--raised));
+    padding: 5px 10px;
+    margin-bottom: 14px;
+    font: 600 12px var(--sans);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .policy-contact { color: var(--soft); font-family: var(--sans); font-size: 14px; margin-top: 30px; }
+  @media (max-width: 820px) {
+    .policy-layout { grid-template-columns: 1fr; gap: 24px; }
+    .policy-index { position: static; grid-template-columns: 1fr 1fr; }
+  }
+</style>
