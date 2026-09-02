@@ -15,7 +15,7 @@ import { createClient } from "@supabase/supabase-js";
 // path. Run it by hand or from a scheduler:
 //
 //   curl -X POST https://<project>.supabase.co/functions/v1/cfa-plan-sync \
-//     -H "Authorization: Bearer <anon key>" -H "X-Ops-Token: $CFA_LEARN_OPS_TOKEN" \
+//     -H "Authorization: Bearer <anon key>" -H "X-Cfa-Ops-Token: $CFA_LEARN_OPS_TOKEN" \
 //     -H "Content-Type: application/json" -d '{}'
 //
 // Body may carry {"registration_id": "<uuid>"} to sync one plan.
@@ -83,7 +83,7 @@ function planStatusFor(gatewayStatus: string, allPaid: boolean) {
 Deno.serve(async (request: Request) => {
   if (request.method !== "POST") return json({ error: "method_not_allowed" }, 405);
   const opsToken = Deno.env.get("CFA_LEARN_OPS_TOKEN");
-  if (!opsToken || request.headers.get("X-Ops-Token") !== opsToken) {
+  if (!opsToken || request.headers.get("X-Cfa-Ops-Token") !== opsToken) {
     return json({ error: "unauthorized" }, 401);
   }
 
