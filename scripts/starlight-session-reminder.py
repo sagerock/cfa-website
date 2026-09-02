@@ -67,7 +67,7 @@ def main() -> None:
         "&select=slug,presenter,title,starts_at,ends_at&order=starts_at&limit=1"
     )
     if not sessions:
-        print(json.dumps({"result": "no_session_tomorrow"}))
+        print(json.dumps({"result": "no_session_in_window", "timing": args.timing}))
         return
 
     session = sessions[0]
