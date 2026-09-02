@@ -185,15 +185,29 @@ const INSTITUTION_ROSTER_ENDPOINT = `${FN}/cfa-institution-roster`;
               roster.replaceChildren();
               const table = document.createElement('table');
               table.className = 'reg-table';
+              const head = document.createElement('thead');
+              const headRow = document.createElement('tr');
+              ['Name', 'Email', 'Registration', 'Source'].forEach((label) => {
+                const th = document.createElement('th');
+                th.textContent = label;
+                headRow.append(th);
+              });
+              head.append(headRow);
+              table.append(head);
+              const body = document.createElement('tbody');
               people.forEach((person) => {
                 const tr = document.createElement('tr');
-                [person.name, person.email, person.organization || '', person.source].forEach((value) => {
+                const registration = person.registration_type === 'group'
+                  ? `Group — ${person.organization || 'organization not recorded'}`
+                  : person.organization || 'Individual';
+                [person.name, person.email, registration, person.source].forEach((value) => {
                   const td = document.createElement('td');
                   td.textContent = value;
                   tr.append(td);
                 });
-                table.append(tr);
+                body.append(tr);
               });
+              table.append(body);
               roster.append(table);
             } catch {
               roster.textContent = 'Could not load this roster.';

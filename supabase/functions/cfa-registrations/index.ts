@@ -50,7 +50,7 @@ Deno.serve(async (req: Request) => {
     if (!/^[0-9a-f-]{36}$/.test(rosterProgramId)) return json({ error: "invalid_program" }, 400);
     const { data: rosterRows, error: rosterError } = await admin
       .from("enrollments")
-      .select("contact_id, source")
+      .select("contact_id, source, raw_data")
       .eq("client_id", CFA_CLIENT_ID)
       .eq("program_id", rosterProgramId)
       .eq("status", "registered")
@@ -68,10 +68,21 @@ Deno.serve(async (req: Request) => {
     const contactsById = new Map((contactRows || []).map((c) => [c.id, c]));
     const people = (rosterRows || []).map((row) => {
       const contact = contactsById.get(row.contact_id);
+      const rawData = row.raw_data && typeof row.raw_data === "object"
+        ? row.raw_data as Record<string, unknown>
+        : {};
+      const isGroup = rawData.registration_type === "group";
+      const groupName = isGroup && typeof rawData.group_name === "string"
+        ? rawData.group_name
+        : null;
       return {
         name: contact ? `${contact.first_name || ""} ${contact.last_name || ""}`.trim() : "—",
         email: maskEmail(contact?.email || ""),
-        organization: contact?.company || null,
+        organization: groupName || contact?.company || null,
+        registration_type: isGroup ? "group" : "individual",
+        group_payment_type: isGroup && typeof rawData.group_payment_type === "string"
+          ? rawData.group_payment_type
+          : null,
         source: row.source,
       };
     }).sort((a, b) => a.name.localeCompare(b.name));
