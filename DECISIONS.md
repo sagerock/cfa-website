@@ -435,3 +435,12 @@ an autofilled company name could previously have tripped the bot trap and faked 
 registration. The Authorize.Net card lightbox is unchanged; moving card fields onto our page
 (Accept.js hosted by us) would change CfA's PCI footprint and was left as a separate decision.
 
+## 2026-09-02 — Charged-but-not-enrolled is now self-healing, and watched
+Sage asked whether the system checks itself after the enrollment incident. It did not: the
+incident was found by accident. Decision: an hourly `cfa-registration-heal` Edge Function
+finishes any registration the gateway confirmed as paid but the site failed to enrol (same
+idempotent completion routines, then the welcome), and reports what it cannot finish or what
+needs a human at the gateway. Run from the desktop cron with a Cron Monitor heartbeat, like the
+daily plan sync: healed/broken/needs-human → Telegram + degraded; nothing found → silent;
+missed run → monitor alert. The function never retries a charge and never touches the gateway.
+

@@ -181,6 +181,22 @@ Operating notes:
   months (5 payments, $420 total), and I understand that registration is subject to CfA's
   cancellation policies." CfA has not yet reviewed this wording.
 
+## Registration self-heal
+
+`cfa-registration-heal` (ops-token guarded, no CORS, deploy with `--no-verify-jwt`) finishes
+any registration the gateway confirmed as paid — `enrollment_pending` with a `paid_at` and a
+transaction id, untouched for 10 minutes — by re-running the same completion routine
+`cfa-register` uses (`cfa_complete_registration`, or the institution variant with a fresh
+roster token) and sending the welcome through `cfa-learn-welcome` (or the roster
+confirmation). Both routines are idempotent. It never touches the gateway: registrations
+whose payment result is unknown (held for review, void pending, stuck in `processing`) are
+reported for a human, not retried. The desktop cron `cron-registration-heal.sh` (sagerock
+repo, Cron Monitor job `cfa-registration-heal`) runs it hourly at :17; anything healed,
+still broken, or needing a human goes to Sage on Telegram and marks the heartbeat degraded,
+and a missed run is caught by the monitor. Added 2026-09-02 after the enrollment-completion
+incident; had it existed, the two affected customers would have had access within ~70
+minutes and Sage a Telegram the same evening.
+
 ## Mux test
 
 Mux's free plan is sufficient for this pilot. After creating the account:
