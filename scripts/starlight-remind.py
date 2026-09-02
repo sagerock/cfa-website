@@ -8,6 +8,7 @@ Dry-run by default: lists who would receive what, sends nothing.
 Templates:
   launch   "begins this Saturday" + personal classroom link (the Aug 31 email)
   session  T-24h reminder with the Zoom link in the email
+  session_1h  T-1h reminder with the Zoom link in the email
 
 Example session line: "September 5, 3:00-4:30 pm Eastern, with Dr. Martyn Rawson"
 """
@@ -25,6 +26,12 @@ from typing import Any
 
 CFA_CLIENT_ID = "22500cd6-052a-42ff-a0cb-4f3ba9125dfd"
 COURSE_SLUG = "starlight-rays-2026-2027"
+NOTIFICATION_EXCLUDED_EMAILS = {"sage@sagerock.com"}
+REQUIRED_ONE_HOUR_RECIPIENTS = {
+    "david@centerforanthroposophy.org",
+    "elsy@centerforanthroposophy.org",
+    "sage@centerforanthroposophy.org",
+}
 
 
 def parse_env(path: Path) -> dict[str, str]:
@@ -56,7 +63,7 @@ def request_json(url: str, headers: dict[str, str], method: str = "GET", body: A
 def main() -> None:
     dev_root = Path(__file__).resolve().parents[2]
     parser = argparse.ArgumentParser()
-    parser.add_argument("template", choices=["launch", "session"])
+    parser.add_argument("template", choices=["launch", "session", "session_1h"])
     parser.add_argument("--session-line", required=True,
                         help='e.g. "September 5, 3:00-4:30 pm Eastern, with Dr. Martyn Rawson"')
     parser.add_argument("--session-slug", required=True,
@@ -134,7 +141,17 @@ def main() -> None:
         }
         for e in enrollments
         if e["contact_id"] in contacts
+        and contacts[e["contact_id"]]["email"].strip().lower()
+        not in NOTIFICATION_EXCLUDED_EMAILS
     ]
+    if args.template == "session_1h":
+        roster_emails = {row["email"].strip().lower() for row in roster}
+        missing_required = sorted(REQUIRED_ONE_HOUR_RECIPIENTS - roster_emails)
+        if missing_required:
+            raise RuntimeError(
+                "required one-hour recipients are not active and entitled: "
+                + ", ".join(missing_required)
+            )
 
     def send(enrollment_id: str, override: str | None = None) -> tuple[int, Any]:
         body: dict[str, Any] = {

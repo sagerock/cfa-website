@@ -380,3 +380,38 @@ objects use immutable, content-derived keys under
 `sagerock-email-images/center-for-anthroposophy/center-periphery/YYYY/MM/`. Only the public
 URL and dimensions enter the durable job and Markdown. This keeps binaries out of Git and
 does not broaden Elsy's `src/content/posts/**` repository scope.
+
+## 2026-09-02 — Incident: every individual and session registration since 08-26 failed at enrollment
+Migration `20260826170000_starlight_session_entitlements` added statements referencing
+`enrollment_session_access.enrollment_id` inside `cfa_complete_registration`, whose
+`returns table (contact_id, enrollment_id, user_id)` OUT parameters are PL/pgSQL variables of
+the same names. Every call raised `column reference "enrollment_id" is ambiguous`, so from
+2026-08-26 on, each non-institution purchase charged the card and then landed in
+`enrollment_pending` with no portal access and no welcome email. Two real customers were hit
+($420 on 09-01, $44 on 09-02) before it was noticed on 09-02 while starting the payment-plan
+work. Institution purchases were unaffected because they complete through a different function.
+Fix: `#variable_conflict use_column` (migration `20260902120000`), signature unchanged, no
+function redeploy. The two registrations were completed by re-running the repaired function and
+their portal welcomes sent via `cfa-learn-welcome`. Lesson recorded: the daily gate-check does
+not exercise a real purchase, so a broken completion path is invisible until a customer pays.
+A `registrations.status = 'enrollment_pending'` row older than a few minutes is an alarm, not a
+queue.
+
+## 2026-09-02 — Starlight Rays five-payment plan: charge installment 1 now, ARB for the rest
+Sage asked for a five-payment plan on Starlight Rays. Decisions, all Sage's: individual offer
+only (not institution); same $420 total as paying at once, no surcharge; and the CIM-plus-ARB
+hybrid over a pure ARB subscription or manual invoicing. The hybrid keeps installment 1 on the
+existing synchronous charge path (so access is still granted only after money has settled and
+gate 7's double-charge protections still apply), and hands the remaining four monthly charges to
+Authorize.Net's scheduler rather than building a charger and dunning engine here. Full mechanism
+and operating notes in `docs/starlight-pilot.md` → Payment plans. Known gaps accepted for the
+launch: no automatic access revocation on a missed installment; reconciliation (`cfa-plan-sync`)
+is run by hand or by a scheduler, not by webhook; the checkout authorization sentence has not
+been reviewed by CfA.
+
+## 2026-09-02 — Percent-off coupon codes
+Sage asked for 10/20/30/50% coupons alongside the plan launch. Created `STARLIGHT10`,
+`STARLIGHT20`, `STARLIGHT30`, `STARLIGHT50` on the Starlight program with no expiry and no use
+cap; they apply to every offer, including the plan (discount taken from the total before the
+split). Cap or expire them by updating `program_coupons` when CfA decides how they are used.
+

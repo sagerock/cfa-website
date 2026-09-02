@@ -2,10 +2,11 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 
 // Season reminder emails, ops-only. One enrollment per call; the driver script
-// loops the roster. Two templates:
+// loops the roster. Three templates:
 //   template "launch"  — the Mon Aug 31 "begins this Saturday" email (also the
 //                        invitation: first the cohort hears of the portal).
 //   template "session" — the T-24h reminder with the Zoom link in the email.
+//   template "session_1h" — the T-1h reminder with the Zoom link in the email.
 // Every email's main button is a fresh durable classroom link (prior links
 // stay valid). Every send is recorded in cfa_learn_email_events.
 
@@ -81,6 +82,32 @@ function sessionEmail(firstName: string, classroomLink: string, sessionLine: str
   };
 }
 
+function sessionOneHourEmail(firstName: string, classroomLink: string, sessionLine: string, zoomUrl: string) {
+  return {
+    subject: `Starlight Rays starts in one hour — ${sessionLine.split(" with ")[0]}`,
+    text: [
+      `Dear ${firstName},`,
+      "",
+      `Starlight Rays starts in one hour, ${sessionLine}.`,
+      "",
+      "Join the live seminar here:",
+      zoomUrl,
+      "",
+      "Your classroom — schedule, materials, and the recording afterward:",
+      classroomLink,
+      "",
+      "See you soon.",
+      "",
+      "Warmly,",
+      "David Barham and Elsy Ayoub",
+      "Center for Anthroposophy",
+      "",
+      `Lost this email? Sign in any time at ${productionOrigin}/learn/sign-in`,
+      "Trouble signing in? Email sage@centerforanthroposophy.org",
+    ].join("\n"),
+  };
+}
+
 Deno.serve(async (request: Request) => {
   if (request.method !== "POST") return json({ error: "method_not_allowed" }, 405);
 
@@ -103,7 +130,13 @@ Deno.serve(async (request: Request) => {
     return json({ error: "invalid_request" }, 400);
   }
   const enrollmentId = typeof body.enrollment_id === "string" ? body.enrollment_id : "";
-  const template = body.template === "session" ? "session" : body.template === "launch" ? "launch" : "";
+  const template = body.template === "session"
+    ? "session"
+    : body.template === "session_1h"
+      ? "session_1h"
+      : body.template === "launch"
+        ? "launch"
+        : "";
   const sessionLine = typeof body.session_line === "string" ? body.session_line.slice(0, 200) : "";
   const sessionSlug = typeof body.session_slug === "string" ? body.session_slug.slice(0, 100) : "";
   const overrideEmail = typeof body.override_recipient === "string" ? body.override_recipient.trim().toLowerCase() : "";
@@ -144,7 +177,7 @@ Deno.serve(async (request: Request) => {
     .eq("published", true)
     .maybeSingle();
   if (sessionError || !session) return json({ error: "session_lookup_failed" }, 500);
-  if (template === "session" && !session.zoom_url) {
+  if (template !== "launch" && !session.zoom_url) {
     return json({ error: "session_join_link_missing" }, 409);
   }
   if (enrollment.access_scope === "sessions") {
@@ -182,7 +215,9 @@ Deno.serve(async (request: Request) => {
   const firstName = contact.first_name || "colleague";
   const message = template === "launch"
     ? launchEmail(firstName, classroomLink, sessionLine)
-    : sessionEmail(firstName, classroomLink, sessionLine, session.zoom_url!);
+    : template === "session_1h"
+      ? sessionOneHourEmail(firstName, classroomLink, sessionLine, session.zoom_url!)
+      : sessionEmail(firstName, classroomLink, sessionLine, session.zoom_url!);
   const recipient = overrideEmail || contact.email;
 
   const from = Deno.env.get("REGISTRATION_FROM")

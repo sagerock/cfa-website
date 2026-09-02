@@ -13,7 +13,7 @@ facts:
   - label: "Dates"
     value: "September 2026 - February 2027"
   - label: "Tuition"
-    value: "$19 featured session · $44 three-session bundle · $420 full series · $1,220 institution"
+    value: "$19 featured session · $44 three-session bundle · $420 full series (or 5 monthly payments of $84) · $1,220 institution"
   - label: "Who"
     value: "High school teachers, administrators, staff & parents"
 director: "David Barham, M.Ed."

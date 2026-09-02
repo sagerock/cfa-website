@@ -83,9 +83,12 @@ curated live spine (~20 pages + data).
 
 The first native registration pilot is Starlight Rays 2026–2027: an Astro form uses
 Authorize.Net hosted Accept.js fields, a Supabase Edge Function performs server-priced
-payment, and the shared contact/program/enrollment tables grant portal access. It remains
-sandbox-gated until CfA approves policy copy and the sandbox and announced live-card tests
-pass. The broader reusable form plan is at `site-rebuild/FORMS-PLAN.md` in the monorepo.
+payment, and the shared contact/program/enrollment tables grant portal access. Registration
+has been live since 2026-08-20. The individual $420 offer can also be paid as five monthly
+installments (added 2026-09-02): installment 1 is charged immediately from an Authorize.Net
+stored payment profile and the rest run as an ARB subscription; `cfa-plan-sync` reconciles
+gateway results back into the database. See `docs/starlight-pilot.md` → Payment plans.
+The broader reusable form plan is at `site-rebuild/FORMS-PLAN.md` in the monorepo.
 
 ## Governance
 

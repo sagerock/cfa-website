@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Send the T-24h session reminder if a Starlight session happens tomorrow.
+"""Send a timed reminder when a Starlight session falls in the configured window.
 
-Designed for a Friday-afternoon cron: looks for a published session starting
-20-32 hours from now. If none, exits quietly (most Fridays in a gap week).
-If one is found, composes the session line from the database (so schedule
-corrections propagate automatically) and runs the roster send.
+The day mode is designed for a Friday-afternoon cron and looks 20-32 hours
+ahead. The hour mode is designed for a Saturday 2:00 pm ET cron and looks
+45-75 minutes ahead. If no session is found, the command exits quietly.
 
 --dry-run shows what would happen without sending.
 """
@@ -38,6 +37,7 @@ def main() -> None:
     dev_root = Path(__file__).resolve().parents[2]
     parser = argparse.ArgumentParser()
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--timing", choices=["day", "hour"], default="day")
     parser.add_argument("--supabase-env", type=Path, default=dev_root / "email-marketing-tool-1/.env")
     args = parser.parse_args()
 
@@ -52,8 +52,14 @@ def main() -> None:
             return json.load(response)
 
     now = datetime.now(timezone.utc)
-    window_start = (now + timedelta(hours=20)).strftime("%Y-%m-%dT%H:%M:%SZ")
-    window_end = (now + timedelta(hours=32)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    if args.timing == "hour":
+        window_start = (now + timedelta(minutes=45)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        window_end = (now + timedelta(minutes=75)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        template = "session_1h"
+    else:
+        window_start = (now + timedelta(hours=20)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        window_end = (now + timedelta(hours=32)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        template = "session"
     course = rest(f"cfa_learn_courses?slug=eq.{COURSE_SLUG}&select=id")[0]["id"]
     sessions = rest(
         f"cfa_learn_sessions?course_id=eq.{course}&published=is.true"
@@ -74,17 +80,22 @@ def main() -> None:
     session_line = (
         f"{starts.strftime('%A, %B %-d')}, {time_part} Eastern, with {session['presenter']}"
     )
-    print(json.dumps({"result": "session_found", "session": session["slug"], "session_line": session_line}))
+    print(json.dumps({
+        "result": "session_found",
+        "timing": args.timing,
+        "session": session["slug"],
+        "session_line": session_line,
+    }))
 
     command = [
         sys.executable,
         str(Path(__file__).with_name("starlight-remind.py")),
-        "session",
+        template,
         "--session-line", session_line,
         "--session-slug", session["slug"],
     ]
     if not args.dry_run:
-        command += ["--apply", "--confirm-template", "session"]
+        command += ["--apply", "--confirm-template", template]
     completed = subprocess.run(command, capture_output=True, text=True)
     print(completed.stdout.strip())
     if completed.returncode != 0:

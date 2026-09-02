@@ -11,8 +11,9 @@ import Base from '../../layouts/Base.astro';
         <p class="cohort">2026–2027</p>
       </div>
       <p class="intro-copy">
-        Choose the complete twelve-seminar series, one featured session, or the three-session bundle.
-        Every option includes live access, its recordings, and course resources.
+        Choose the complete twelve-seminar series — paid at once or in five monthly payments — one
+        featured session, or the three-session bundle. Every option includes live access, its
+        recordings, and course resources.
       </p>
     </div>
   </header>
@@ -148,6 +149,10 @@ import Base from '../../layouts/Base.astro';
             <dt>Registration</dt>
             <dd id="summary-offer">Choose an option</dd>
           </div>
+          <div id="summary-plan" hidden>
+            <dt>Payment plan</dt>
+            <dd id="summary-plan-copy"></dd>
+          </div>
         </dl>
         <div class="summary-total">
           <span>Total</span>
@@ -189,6 +194,8 @@ import Base from '../../layouts/Base.astro';
   const summaryFormat = document.getElementById('summary-format');
   const summaryDates = document.getElementById('summary-dates');
   const summaryPrice = document.getElementById('summary-price');
+  const summaryPlan = document.getElementById('summary-plan');
+  const summaryPlanCopy = document.getElementById('summary-plan-copy');
   const sandboxNote = document.getElementById('sandbox-note');
   const productionTestNote = document.getElementById('production-test-note');
   const fragment = new URLSearchParams(location.hash.slice(1));
@@ -231,6 +238,20 @@ import Base from '../../layouts/Base.astro';
     return offer.amount_cents - discount;
   }
 
+  // Mirrors the server split (even installments, remainder on the first) so
+  // the page can describe the schedule; the server still decides the amounts.
+  function planOf(offer) {
+    const count = Number(offer?.installment_count ?? 1);
+    const total = effectiveAmountCents(offer);
+    if (!offer || count <= 1 || !total || Math.floor(total / count) < 1) return null;
+    const installment = Math.floor(total / count);
+    return { count, total, installment, first: total - installment * (count - 1) };
+  }
+
+  function planDate(value) {
+    return value ? sessionDate.format(new Date(`${value}T12:00:00Z`)) : '';
+  }
+
   const billingSection = document.getElementById('billing-section');
   const billingInputs = ['address', 'city', 'state', 'zip', 'country']
     .map((name) => form.elements.namedItem(name));
@@ -264,14 +285,23 @@ import Base from '../../layouts/Base.astro';
     if (config?.payment?.available) paymentButton.classList.toggle('AcceptUI', !free);
     billingSection.hidden = Boolean(free);
     billingInputs.forEach((input) => { input.required = !free; });
+    const plan = planOf(offer);
+    summaryPlan.hidden = !plan;
+    summaryPlanCopy.textContent = plan
+      ? `${plan.count} monthly payments · ${money.format(plan.first / 100)} today, then ${money.format(plan.installment / 100)} a month for ${plan.count - 1} months`
+      : '';
     termsCopy.textContent = free
       ? "I understand that registration is subject to CfA's cancellation policies."
+      : plan
+      ? `I authorize the Center for Anthroposophy to charge my card ${money.format(plan.first / 100)} today and ${money.format(plan.installment / 100)} on the same day of each of the next ${plan.count - 1} months (${plan.count} payments, ${money.format(plan.total / 100)} total), and I understand that registration is subject to CfA's cancellation policies.`
       : "I authorize the selected charge and understand that registration is subject to CfA's cancellation policies.";
     summaryPrice.textContent = offer ? money.format(total / 100) : '—';
     paymentButton.textContent = !offer
       ? 'Choose a registration option'
       : free
       ? 'Complete free registration'
+      : plan
+      ? `Continue to secure payment · ${money.format(plan.first / 100)} today`
       : `Continue to secure payment · ${money.format(total / 100)}`;
   }
 
@@ -401,9 +431,20 @@ import Base from '../../layouts/Base.astro';
         ? (result.email_sent
           ? 'Your registration is complete and your course access is ready. Check your email for a secure sign-in link.'
           : 'Your registration is complete and your course access is ready. Continue to the portal to request a secure sign-in link.')
+        : result.plan
+        ? (result.email_sent
+          ? 'Your first payment was approved and your course access is ready. Check your email for a secure sign-in link and your payment schedule.'
+          : 'Your first payment was approved and your course access is ready. Continue to the portal to request a secure sign-in link.')
         : result.email_sent
         ? 'Your payment was approved and your course access is ready. Check your email for a secure sign-in link.'
         : 'Your payment was approved and your course access is ready. Continue to the portal to request a secure sign-in link.';
+      const planCopy = document.createElement('p');
+      if (result.plan && !result.test_mode) {
+        const remaining = result.plan.installmentCount - 1;
+        planCopy.textContent = result.plan.scheduled
+          ? `Paid today: ${result.plan.firstAmount}. Your remaining ${remaining} payments of ${result.plan.installmentAmount} will be charged to the same card on ${planDate(result.plan.nextChargeOn)} and monthly through ${planDate(result.plan.finalChargeOn)}.`
+          : `Paid today: ${result.plan.firstAmount}. The CfA office will confirm the schedule for your remaining ${remaining} payments of ${result.plan.installmentAmount} separately.`;
+      }
       const link = document.createElement('a');
       if (result.test_mode) {
         heading.textContent = 'Production payment test complete';
@@ -416,7 +457,9 @@ import Base from '../../layouts/Base.astro';
         } else if (!result.institution) {
           link.href = result.redirect || '/learn/sign-in?registered=1';
           link.textContent = 'Continue to the learning portal';
-          success.append(eyebrow, heading, copy, link);
+          success.append(eyebrow, heading, copy);
+          if (planCopy.textContent) success.append(planCopy);
+          success.append(link);
         } else {
           success.append(eyebrow, heading, copy);
         }
@@ -532,7 +575,11 @@ import Base from '../../layouts/Base.astro';
         copy.append(name, description);
         const price = document.createElement('span');
         price.className = 'offer-price';
-        price.textContent = money.format(offer.amount_cents / 100);
+        const listPlan = planOf({ ...offer, amount_cents: offer.amount_cents });
+        price.textContent = listPlan
+          ? `${money.format(listPlan.installment / 100)} × ${listPlan.count}`
+          : money.format(offer.amount_cents / 100);
+        if (listPlan) price.title = `${money.format(offer.amount_cents / 100)} total`;
         label.append(input, copy, price);
         offerList.append(label);
       });
@@ -703,6 +750,7 @@ import Base from '../../layouts/Base.astro';
   .summary-card h2 { font-size: 25px; margin: 6px 0 24px; }
   .summary-card dl { display: grid; gap: 18px; }
   .summary-card dl div { border-bottom: 1px dotted var(--line); padding-bottom: 13px; }
+  .summary-card dl div[hidden] { display: none; }
   .summary-card dt { color: var(--soft); font: 11px var(--sans); letter-spacing: 0.12em; text-transform: uppercase; }
   .summary-card dd { margin-top: 4px; line-height: 1.35; }
   .summary-total { display: flex; justify-content: space-between; align-items: baseline; padding-top: 24px; font-family: var(--sans); }

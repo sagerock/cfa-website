@@ -5,6 +5,15 @@ export type WelcomeSession = {
   zoomUrl: string | null;
 };
 
+export type WelcomePlan = {
+  installmentCount: number;
+  firstAmount: string;
+  installmentAmount: string;
+  nextChargeOn: string | null;
+  finalChargeOn: string | null;
+  scheduled: boolean;
+};
+
 export type WelcomeEmailInput = {
   firstName: string;
   offerName: string;
@@ -12,6 +21,7 @@ export type WelcomeEmailInput = {
   transactionId: string;
   signInLink: string;
   sessions: WelcomeSession[];
+  plan?: WelcomePlan | null;
 };
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
@@ -20,6 +30,13 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
   year: "numeric",
   timeZone: "America/New_York",
+});
+
+const planDateFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+  timeZone: "UTC",
 });
 
 const timeFormatter = new Intl.DateTimeFormat("en-US", {
@@ -73,6 +90,32 @@ function sessionEmailLines(session: WelcomeSession) {
   return lines;
 }
 
+// Plan dates are calendar dates (YYYY-MM-DD) chosen server-side; format them
+// as dates, not instants, so the day never shifts with a timezone.
+function planDate(value: string | null) {
+  return value ? planDateFormatter.format(new Date(`${value}T00:00:00Z`)) : "";
+}
+
+export function planEmailLines(plan: WelcomePlan) {
+  const remaining = plan.installmentCount - 1;
+  const lines = [
+    `Payment plan: ${plan.installmentCount} monthly payments`,
+    `Paid today: ${plan.firstAmount}`,
+  ];
+  if (plan.scheduled && plan.nextChargeOn) {
+    lines.push(
+      `Remaining: ${remaining} payments of ${plan.installmentAmount}, charged automatically to the same card`,
+      `on ${planDate(plan.nextChargeOn)}${plan.finalChargeOn ? ` and monthly through ${planDate(plan.finalChargeOn)}` : ""}.`,
+    );
+  } else {
+    lines.push(
+      `Remaining: ${remaining} monthly payments of ${plan.installmentAmount}. The CfA office will confirm`,
+      "your payment schedule separately.",
+    );
+  }
+  return lines;
+}
+
 export function buildWelcomeEmailText(input: WelcomeEmailInput) {
   const sessionLines = input.sessions.length
     ? [
@@ -85,6 +128,7 @@ export function buildWelcomeEmailText(input: WelcomeEmailInput) {
       ]),
     ]
     : [];
+  const planLines = input.plan ? ["", ...planEmailLines(input.plan)] : [];
 
   return [
     `Dear ${input.firstName},`,
@@ -94,6 +138,7 @@ export function buildWelcomeEmailText(input: WelcomeEmailInput) {
     `Registration: ${input.offerName}`,
     `Amount: ${input.amount}`,
     `Transaction: ${input.transactionId}`,
+    ...planLines,
     ...sessionLines,
     "",
     "Use this secure link to open your learning portal:",

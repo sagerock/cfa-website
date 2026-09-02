@@ -120,6 +120,54 @@ extended with the learning subdomain, the Pages preview route, and local develop
 The shared magic-link template uses Supabase's token-hash callback format and the
 allow-listed `RedirectTo`, so each application receives the link at its own Auth route.
 
+## Payment plans
+
+Added 2026-09-02 at Sage's direction for the individual offer only (`individual-plan`,
+five monthly installments, same $420 total, no surcharge). A plan offer is a
+`program_offers` row with `installment_count > 1`; `amount_cents` is still the full price
+and `cfa-register` splits it evenly with the remainder on the first installment. Coupons
+apply to the total before the split.
+
+Mechanism (chosen over a pure ARB subscription so that "paid → access" stays synchronous):
+
+1. The Accept.js nonce creates an Authorize.Net customer payment profile (CIM) with
+   `validationMode: none`. Card data never reaches Supabase.
+2. Installment 1 is an `authCaptureTransaction` against that profile, through the same
+   approval, idempotency, reconciliation, and enrollment path as a one-time purchase.
+   A declined first installment deletes the profile again; an unknown result keeps it and
+   marks the plan `needs_attention`.
+3. After installment 1 settles — and before portal access is provisioned, so a portal
+   failure can never undo a real charge — an ARB subscription for the remaining
+   installments is created from the same profile, monthly, starting one month after the
+   purchase date (clamped to month end). If ARB creation fails, the plan is
+   `schedule_pending`, an alert goes to `PLAN_ALERT_EMAIL` (default office@), and the
+   office creates the schedule from the merchant interface; nothing is charged twice.
+4. `registration_payment_plans` (one per registration: profile ids, subscription id,
+   split, paid totals, status) and `registration_installments` (one row per installment)
+   are service-role only. `registrations.amount_cents` stays the full contracted total so
+   existing reports and `contacts.total_spent` reflect the commitment; `paid_cents` on the
+   plan tracks what has settled.
+5. `cfa-plan-sync` (ops-token guarded, no CORS) calls `ARBGetSubscriptionRequest` for every
+   open plan and writes each installment's result back. ARB `payNum` 1 is installment 2.
+   Subscription `suspended` → plan `past_due`; `expired` with every installment paid →
+   `completed`. It never charges, cancels, or changes anything at the gateway. Run it after
+   each billing day or on a schedule; the response counts `past_due` and `needs_attention`.
+
+Operating notes:
+
+- Authorize.Net does not retry a declined installment. The subscription is suspended and
+  the merchant account's ARB notification email fires; after the participant updates their
+  card in the merchant interface the office reactivates the subscription and re-runs the
+  sync. **Access is not revoked automatically on a missed installment** — that is a CfA
+  decision made by hand (set `enrollments.revoked_at`).
+- The production test path (`REGISTRATION_TEST_MODE`) also covers the plan offer: $1 split
+  five ways, first installment charged and voided, the ARB schedule created and immediately
+  cancelled, and the stored card deleted. The response's `plan_test` block reports each step.
+- The authorization sentence shown at checkout for a plan reads: "I authorize the Center for
+  Anthroposophy to charge my card $84 today and $84 on the same day of each of the next 4
+  months (5 payments, $420 total), and I understand that registration is subject to CfA's
+  cancellation policies." CfA has not yet reviewed this wording.
+
 ## Mux test
 
 Mux's free plan is sufficient for this pilot. After creating the account:
