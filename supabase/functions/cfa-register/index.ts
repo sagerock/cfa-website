@@ -294,8 +294,9 @@ async function voidIsConfirmed(
 
 // ---- Payment plans (CIM profile + ARB schedule) ------------------------------
 //
-// A plan offer charges installment 1 synchronously from a stored payment
-// profile, then schedules the remaining installments as an ARB subscription.
+// A plan offer charges installment 1 with the Accept.js nonce exactly like a
+// one-time purchase, builds a customer payment profile from that transaction,
+// then schedules the remaining installments as an ARB subscription on it.
 // Authorize.Net's JSON API is XML underneath: object key order is significant
 // and must follow the schema, which is why these builders spell out fields in
 // order rather than spreading.
@@ -354,47 +355,22 @@ function gatewayMessage(payload: JsonRecord | null): GatewayMessage & { ok: bool
   };
 }
 
-async function createCustomerPaymentProfile(
+async function createCustomerProfileFromTransaction(
   config: ReturnType<typeof registrationConfig>,
-  input: {
-    refId: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    organization: string;
-    billingAddress: { address: string; city: string; state: string; zip: string; country: string };
-    dataDescriptor: string;
-    dataValue: string;
-  },
+  input: { refId: string; transactionId: string; email: string },
 ) {
   const payload = await authorizeApiRequest(config, {
-    createCustomerProfileRequest: {
+    createCustomerProfileFromTransactionRequest: {
       merchantAuthentication: {
         name: config.apiLoginId,
         transactionKey: config.transactionKey,
       },
-      profile: {
+      transId: input.transactionId,
+      customer: {
         merchantCustomerId: input.refId,
         description: "Starlight Rays 2026-2027 payment plan",
         email: input.email,
-        paymentProfiles: {
-          customerType: "individual",
-          billTo: {
-            firstName: input.firstName,
-            lastName: input.lastName,
-            company: input.organization,
-            address: input.billingAddress.address,
-            city: input.billingAddress.city,
-            state: input.billingAddress.state,
-            zip: input.billingAddress.zip,
-            country: input.billingAddress.country,
-          },
-          payment: { opaqueData: { dataDescriptor: input.dataDescriptor, dataValue: input.dataValue } },
-        },
       },
-      // The immediate first-installment charge validates the card; a separate
-      // validation authorization would only add a second hold to the statement.
-      validationMode: "none",
     },
   });
   const message = gatewayMessage(payload);
@@ -484,10 +460,6 @@ async function deleteCustomerProfile(
     },
   });
   return gatewayMessage(payload).ok;
-}
-
-async function markPlan(admin: AdminClient, planId: string, status: string, note: string) {
-  await admin.from("registration_payment_plans").update({ status, notes: note }).eq("id", planId);
 }
 
 async function verifyTurnstile(token: string, remoteIp: string) {
@@ -1119,10 +1091,18 @@ Deno.serve(async (request: Request) => {
     const subscriptionCancelled = plan.subscriptionId
       ? await cancelInstallmentSubscription(config, plan.subscriptionId)
       : null;
-    const profileDeleted = await deleteCustomerProfile(config, plan.customerProfileId);
+    const profileDeleted = plan.customerProfileId
+      ? await deleteCustomerProfile(config, plan.customerProfileId)
+      : null;
+    const { data: current } = await admin
+      .from("registration_payment_plans").select("notes").eq("id", plan.id).maybeSingle();
     await admin.from("registration_payment_plans").update({
       status: "cancelled",
-      notes: "Production integration test; schedule cancelled and payment profile deleted.",
+      notes: [
+        current?.notes,
+        `Production integration test. subscription_created=${Boolean(plan.subscriptionId)} `
+          + `subscription_cancelled=${subscriptionCancelled} profile_deleted=${profileDeleted}`,
+      ].filter(Boolean).join(" || "),
     }).eq("id", plan.id);
     await admin.from("registration_installments").update({ status: "voided" }).eq("plan_id", plan.id);
     return {
@@ -1133,72 +1113,6 @@ Deno.serve(async (request: Request) => {
   }
 
   if (chargeAmountCents > 0) {
-  let paymentSource: JsonRecord = { payment: { opaqueData: { dataDescriptor, dataValue } } };
-  if (installmentCount > 1) {
-    // The nonce becomes a stored payment profile so installments 2..n can be
-    // scheduled without the card ever touching this server or database.
-    const profile = await createCustomerPaymentProfile(config, {
-      refId,
-      email,
-      firstName,
-      lastName,
-      organization,
-      billingAddress,
-      dataDescriptor,
-      dataValue,
-    });
-    if (!profile.ok) {
-      await admin.from("registrations").update({
-        status: "failed",
-        gateway_response: profile.message,
-        failure_code: profile.message.code || "payment_profile_failed",
-        failure_message: profile.message.description || "The card could not be saved for the payment plan.",
-      }).eq("id", registrationId);
-      return json({
-        error: "payment_declined",
-        message: profile.message.description
-          || "The card could not be saved for the payment plan. Please check the details and try again.",
-      }, 402, origin);
-    }
-    const { data: planRow, error: planError } = await admin
-      .from("registration_payment_plans")
-      .insert({
-        registration_id: registrationId,
-        client_id: CFA_CLIENT_ID,
-        gateway_environment: config.environment,
-        customer_profile_id: profile.customerProfileId,
-        payment_profile_id: profile.paymentProfileId,
-        total_cents: chargeAmountCents,
-        installment_count: installmentCount,
-        installment_cents: installmentCents,
-        first_installment_cents: firstInstallmentCents,
-        status: "pending",
-      })
-      .select("id")
-      .single();
-    if (planError || !planRow) {
-      await deleteCustomerProfile(config, profile.customerProfileId);
-      await admin.from("registrations").update({
-        status: "failed",
-        failure_code: "plan_record_failed",
-        failure_message: "The payment plan could not be recorded; no charge was made.",
-      }).eq("id", registrationId);
-      return json({ error: "registration_save_failed" }, 500, origin);
-    }
-    plan = {
-      id: planRow.id as string,
-      customerProfileId: profile.customerProfileId,
-      paymentProfileId: profile.paymentProfileId,
-      subscriptionId: "",
-    };
-    paymentSource = {
-      profile: {
-        customerProfileId: profile.customerProfileId,
-        paymentProfile: { paymentProfileId: profile.paymentProfileId },
-      },
-    };
-  }
-
   const chargeRequest = {
     createTransactionRequest: {
       merchantAuthentication: {
@@ -1209,7 +1123,7 @@ Deno.serve(async (request: Request) => {
       transactionRequest: {
         transactionType: "authCaptureTransaction",
         amount: (firstInstallmentCents / 100).toFixed(2),
-        ...paymentSource,
+        payment: { opaqueData: { dataDescriptor, dataValue } },
         order: {
           invoiceNumber,
           description: testAuthorized
@@ -1219,19 +1133,16 @@ Deno.serve(async (request: Request) => {
             : "Starlight Rays 2026-2027",
         },
         customer: { email },
-        // A profile transaction bills the address stored on the profile.
-        ...(plan ? {} : {
-          billTo: {
-            firstName,
-            lastName,
-            company: organization,
-            address: billingAddress.address,
-            city: billingAddress.city,
-            state: billingAddress.state,
-            zip: billingAddress.zip,
-            country: billingAddress.country,
-          },
-        }),
+        billTo: {
+          firstName,
+          lastName,
+          company: organization,
+          address: billingAddress.address,
+          city: billingAddress.city,
+          state: billingAddress.state,
+          zip: billingAddress.zip,
+          country: billingAddress.country,
+        },
         transactionSettings: {
           setting: [{ settingName: "duplicateWindow", settingValue: "300" }],
         },
@@ -1249,7 +1160,6 @@ Deno.serve(async (request: Request) => {
     const responseText = (await chargeResponse.text()).replace(/^\uFEFF/, "");
     chargePayload = JSON.parse(responseText) as JsonRecord;
   } catch {
-    if (plan) await markPlan(admin, plan.id, "needs_attention", "First charge result unknown; profile retained for review.");
     await admin.from("registrations").update({
       status: "enrollment_pending",
       failure_code: "gateway_response_unknown",
@@ -1261,10 +1171,19 @@ Deno.serve(async (request: Request) => {
   const transaction = chargePayload.transactionResponse as JsonRecord | undefined;
   const messages = chargePayload.messages as JsonRecord | undefined;
   transactionId = text(transaction?.transId, 40);
-  const approved = messages?.resultCode === "Ok"
-    && transaction?.responseCode === "1"
+  // The merchant account's fraud filter parks the $1 production test as
+  // "held for review" (responseCode 4, reason 252), which a real purchase
+  // does not trigger. A held transaction can still be voided, so in test mode
+  // it counts as approved: otherwise the harness would void and stop before
+  // exercising anything past the charge (schedule creation, cleanup).
+  const heldForReview = transaction?.responseCode === "4"
     && Boolean(transactionId)
     && transactionId !== "0";
+  const approved = (messages?.resultCode === "Ok"
+    && transaction?.responseCode === "1"
+    && Boolean(transactionId)
+    && transactionId !== "0")
+    || (testAuthorized && heldForReview);
   summary = authorizeSummary(chargePayload);
   if (!approved) {
     if (testAuthorized && transactionId && transactionId !== "0") {
@@ -1302,15 +1221,6 @@ Deno.serve(async (request: Request) => {
     }
     const definitelyDeclined = transaction?.responseCode === "2" && (!transactionId || transactionId === "0");
     const needsReview = !definitelyDeclined;
-    if (plan) {
-      if (needsReview) {
-        await markPlan(admin, plan.id, "needs_attention", "First charge needs review; profile retained.");
-      } else {
-        // A declined first installment leaves no stored card behind.
-        await deleteCustomerProfile(config, plan.customerProfileId);
-        await markPlan(admin, plan.id, "cancelled", "First installment declined; payment profile deleted.");
-      }
-    }
     await admin.from("registrations").update({
       status: needsReview ? "enrollment_pending" : "failed",
       gateway_transaction_id: transactionId && transactionId !== "0" ? transactionId : null,
@@ -1373,78 +1283,116 @@ Deno.serve(async (request: Request) => {
         plan_test: await cleanupPlanTest(),
       }, 200, origin);
     }
-    if (plan) await markPlan(admin, plan.id, "needs_attention", "First charge approved but the registration record update failed.");
     return json({ error: "payment_status_unknown", registration_id: registrationId }, 202, origin);
   }
 
-  // Installment 1 has settled. Schedule the rest now, before portal access is
-  // provisioned: the participant is on the plan regardless of whether the
-  // access step below succeeds, and a scheduling failure must never undo a
-  // real charge. A failed schedule is flagged for the office rather than
-  // charged again.
+  // Installment 1 has settled through the same nonce charge as a one-time
+  // purchase (CVV present, proven path). Now keep the card: Authorize.Net
+  // builds the customer payment profile from that transaction, and the
+  // remaining installments become an ARB subscription on it. This runs before
+  // portal access is provisioned — the participant is on the plan regardless
+  // of whether the access step succeeds — and any failure here is flagged for
+  // the office, never charged again.
   let welcomePlan: WelcomePlan | null = null;
-  if (plan) {
+  if (installmentCount > 1) {
     const purchasedOn = new Date();
     const nextChargeOn = isoDate(addMonthsClamped(purchasedOn, 1));
     const finalChargeOn = isoDate(addMonthsClamped(purchasedOn, installmentCount - 1));
-    const subscription = await createInstallmentSubscription(config, {
-      refId,
-      customerProfileId: plan.customerProfileId,
-      paymentProfileId: plan.paymentProfileId,
-      amountCents: installmentCents,
-      occurrences: installmentCount - 1,
-      startDate: nextChargeOn,
-      invoiceNumber,
-      description: testAuthorized
-        ? "Starlight production integration test (plan)"
-        : `Starlight Rays 2026-2027 · payments 2-${installmentCount} of ${installmentCount}`,
-    });
-    plan.subscriptionId = subscription.subscriptionId;
-    const settledAt = new Date().toISOString();
-    const installmentRows = Array.from({ length: installmentCount }, (_, index) => ({
-      plan_id: plan!.id,
-      sequence: index + 1,
-      amount_cents: index === 0 ? firstInstallmentCents : installmentCents,
-      due_on: isoDate(addMonthsClamped(purchasedOn, index)),
-      status: index === 0 ? "paid" : "scheduled",
-      gateway_transaction_id: index === 0 ? transactionId : null,
-      gateway_response: index === 0 ? summary : {},
-      attempted_at: index === 0 ? settledAt : null,
-      paid_at: index === 0 ? settledAt : null,
-    }));
-    const { error: installmentError } = await admin.from("registration_installments").insert(installmentRows);
-    const scheduleNote = subscription.ok
-      ? null
-      : `ARB creation failed: ${subscription.message.code} ${subscription.message.description}`.trim();
-    await admin.from("registration_payment_plans").update({
-      status: subscription.ok ? "active" : "schedule_pending",
-      subscription_id: subscription.ok ? subscription.subscriptionId : null,
-      gateway_status: subscription.ok ? "active" : null,
-      paid_installments: 1,
-      paid_cents: firstInstallmentCents,
-      next_charge_on: nextChargeOn,
-      final_charge_on: finalChargeOn,
-      notes: [scheduleNote, installmentError ? "Installment rows could not be written." : null]
-        .filter(Boolean).join(" ") || null,
-    }).eq("id", plan.id);
-    if (!subscription.ok && !testAuthorized) {
+    const profile = await createCustomerProfileFromTransaction(config, { refId, transactionId, email });
+    const { data: planRow, error: planError } = await admin
+      .from("registration_payment_plans")
+      .insert({
+        registration_id: registrationId,
+        client_id: CFA_CLIENT_ID,
+        gateway_environment: config.environment,
+        customer_profile_id: profile.ok ? profile.customerProfileId : null,
+        payment_profile_id: profile.ok ? profile.paymentProfileId : null,
+        total_cents: chargeAmountCents,
+        installment_count: installmentCount,
+        installment_cents: installmentCents,
+        first_installment_cents: firstInstallmentCents,
+        paid_installments: 1,
+        paid_cents: firstInstallmentCents,
+        next_charge_on: nextChargeOn,
+        final_charge_on: finalChargeOn,
+        status: "pending",
+      })
+      .select("id")
+      .single();
+    let subscription = { ok: false, subscriptionId: "", message: profile.message };
+    if (planError || !planRow) {
+      console.error("payment_plan_record_failed", JSON.stringify({ registration_id: registrationId }));
+    } else {
+      plan = {
+        id: planRow.id as string,
+        customerProfileId: profile.ok ? profile.customerProfileId : "",
+        paymentProfileId: profile.ok ? profile.paymentProfileId : "",
+        subscriptionId: "",
+      };
+      if (profile.ok) {
+        subscription = await createInstallmentSubscription(config, {
+          refId,
+          customerProfileId: profile.customerProfileId,
+          paymentProfileId: profile.paymentProfileId,
+          amountCents: installmentCents,
+          occurrences: installmentCount - 1,
+          startDate: nextChargeOn,
+          invoiceNumber,
+          description: testAuthorized
+            ? "Starlight production integration test (plan)"
+            : `Starlight Rays 2026-2027 · payments 2-${installmentCount} of ${installmentCount}`,
+        });
+        plan.subscriptionId = subscription.subscriptionId;
+      }
+      const settledAt = new Date().toISOString();
+      const installmentRows = Array.from({ length: installmentCount }, (_, index) => ({
+        plan_id: plan!.id,
+        sequence: index + 1,
+        amount_cents: index === 0 ? firstInstallmentCents : installmentCents,
+        due_on: isoDate(addMonthsClamped(purchasedOn, index)),
+        status: index === 0 ? "paid" : "scheduled",
+        gateway_transaction_id: index === 0 ? transactionId : null,
+        gateway_response: index === 0 ? summary : {},
+        attempted_at: index === 0 ? settledAt : null,
+        paid_at: index === 0 ? settledAt : null,
+      }));
+      const { error: installmentError } = await admin.from("registration_installments").insert(installmentRows);
+      const scheduleNote = subscription.ok
+        ? null
+        : `${profile.ok ? "ARB creation" : "Profile creation"} failed: ${subscription.message.code} ${subscription.message.description}`.trim();
+      await admin.from("registration_payment_plans").update({
+        status: subscription.ok ? "active" : "schedule_pending",
+        subscription_id: subscription.ok ? subscription.subscriptionId : null,
+        gateway_status: subscription.ok ? "active" : null,
+        notes: [scheduleNote, installmentError ? "Installment rows could not be written." : null]
+          .filter(Boolean).join(" ") || null,
+      }).eq("id", plan.id);
+    }
+    if (!subscription.ok) {
       console.error("payment_plan_schedule_failed", JSON.stringify({
         registration_id: registrationId,
-        plan_id: plan.id,
+        plan_id: plan?.id ?? null,
+        test_mode: testAuthorized,
+        profile_ok: profile.ok,
+        profile_message: profile.message,
         message: subscription.message,
       }));
+    }
+    if (!subscription.ok && !testAuthorized) {
       await sendOpsAlert(
         "Starlight payment plan needs a schedule",
         [
           `Registration ${registrationId} paid installment 1 (${formatMoney(firstInstallmentCents)}, transaction ${transactionId})`,
-          `but Authorize.Net did not create the recurring schedule for the remaining ${installmentCount - 1} payments`,
-          `of ${formatMoney(installmentCents)}.`,
+          `but the recurring schedule for the remaining ${installmentCount - 1} payments of ${formatMoney(installmentCents)}`,
+          "was not created.",
           "",
           `Gateway message: ${subscription.message.code} ${subscription.message.description}`.trim(),
-          `Customer profile: ${plan.customerProfileId} / payment profile ${plan.paymentProfileId}`,
+          plan?.customerProfileId
+            ? `Customer profile: ${plan.customerProfileId} / payment profile ${plan.paymentProfileId}`
+            : "No customer profile was created; build one from the transaction in the merchant interface.",
           "",
-          "Create the ARB subscription from that profile in the Authorize.Net merchant interface,",
-          `starting ${nextChargeOn}, then record its id on registration_payment_plans and run cfa-plan-sync.`,
+          `Create the ARB subscription from that profile, starting ${nextChargeOn}, then record its id on`,
+          "registration_payment_plans and run cfa-plan-sync.",
         ].join("\n"),
       );
     }

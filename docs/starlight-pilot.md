@@ -130,18 +130,20 @@ apply to the total before the split.
 
 Mechanism (chosen over a pure ARB subscription so that "paid → access" stays synchronous):
 
-1. The Accept.js nonce creates an Authorize.Net customer payment profile (CIM) with
-   `validationMode: none`. Card data never reaches Supabase.
-2. Installment 1 is an `authCaptureTransaction` against that profile, through the same
-   approval, idempotency, reconciliation, and enrollment path as a one-time purchase.
-   A declined first installment deletes the profile again; an unknown result keeps it and
-   marks the plan `needs_attention`.
-3. After installment 1 settles — and before portal access is provisioned, so a portal
-   failure can never undo a real charge — an ARB subscription for the remaining
-   installments is created from the same profile, monthly, starting one month after the
-   purchase date (clamped to month end). If ARB creation fails, the plan is
-   `schedule_pending`, an alert goes to `PLAN_ALERT_EMAIL` (default office@), and the
-   office creates the schedule from the merchant interface; nothing is charged twice.
+1. Installment 1 is an `authCaptureTransaction` with the Accept.js nonce — byte-for-byte
+   the proven one-time purchase charge (CVV present), through the same approval,
+   idempotency, reconciliation, and enrollment path. A decline leaves nothing behind.
+2. After installment 1 settles — and before portal access is provisioned, so a portal
+   failure can never undo a real charge — Authorize.Net builds a customer payment profile
+   **from that transaction** (`createCustomerProfileFromTransactionRequest`). Card data
+   never reaches Supabase. (The first design created the profile from the nonce and
+   charged installment 1 against it; that was changed on 2026-09-02 because a
+   profile charge carries no CVV, while every real approved charge so far had CVV matched.)
+3. An ARB subscription for the remaining installments is created on that profile, monthly,
+   starting one month after the purchase date (clamped to month end). If profile or ARB
+   creation fails, the plan is `schedule_pending`, an alert goes to `PLAN_ALERT_EMAIL`
+   (default office@), and the office creates the schedule from the merchant interface;
+   nothing is charged twice.
 4. `registration_payment_plans` (one per registration: profile ids, subscription id,
    split, paid totals, status) and `registration_installments` (one row per installment)
    are service-role only. `registrations.amount_cents` stays the full contracted total so
@@ -162,7 +164,13 @@ Operating notes:
   decision made by hand (set `enrollments.revoked_at`).
 - The production test path (`REGISTRATION_TEST_MODE`) also covers the plan offer: $1 split
   five ways, first installment charged and voided, the ARB schedule created and immediately
-  cancelled, and the stored card deleted. The response's `plan_test` block reports each step.
+  cancelled, and the stored card deleted. The response's `plan_test` block and the plan
+  row's `notes` report each step. **Known limitation:** the merchant account's fraud filter
+  holds every $1 test charge for review (`responseCode 4`, reason 252 — all four production
+  tests since 2026-08-16 look this way, while every real charge has been approved). Test
+  mode treats a held charge as approved so the run continues, but a held transaction is not
+  eligible for `createCustomerProfileFromTransaction`, so the profile + ARB steps cannot be
+  proven by the $1 test while that filter applies.
 - The authorization sentence shown at checkout for a plan reads: "I authorize the Center for
   Anthroposophy to charge my card $84 today and $84 on the same day of each of the next 4
   months (5 payments, $420 total), and I understand that registration is subject to CfA's
