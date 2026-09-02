@@ -144,7 +144,7 @@ export function buildWelcomeEmailText(input: WelcomeEmailInput) {
     "Use this secure link to open your learning portal:",
     input.signInLink,
     "",
-    "Cancellation policy: https://learn.centerforanthroposophy.org/policies/cancellation/#starlight-rays",
+    "Cancellation policy: https://learn.centerforanthroposophy.org/policies/cancellation/",
     "",
     "If you have questions, contact office@centerforanthroposophy.org.",
   ].join("\n");
