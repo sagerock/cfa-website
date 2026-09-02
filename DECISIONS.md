@@ -444,3 +444,14 @@ needs a human at the gateway. Run from the desktop cron with a Cron Monitor hear
 daily plan sync: healed/broken/needs-human → Telegram + degraded; nothing found → silent;
 missed run → monitor alert. The function never retries a charge and never touches the gateway.
 
+## 2026-09-02 — Payment plan repriced to $445; card fees built in, never itemized
+Milan (with Curtis) asked for 5 × $89 = $445 so paying in full at $420 carries an incentive, and
+asked who absorbs the ~3% card fee. Sage's decision: reprice the plan to $445 and build processing
+into every price rather than adding a card surcharge line. Reasoning: CfA already pays the
+percentage on every card charge, plan or not (the plan only adds about four extra per-transaction
+fees, roughly $1.20); a higher price for the installment product is clean everywhere, while an
+itemized "processing fee" runs into card-network rules and state surcharge bans and annoys
+customers. Suggested to CfA separately: offer eCheck/ACH for the $1,220 institution fee, where
+3% actually adds up. Data-only change to `program_offers.individual-plan`; the checkout computes
+installments from the offer, so no code changed.
+

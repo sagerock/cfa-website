@@ -123,7 +123,9 @@ allow-listed `RedirectTo`, so each application receives the link at its own Auth
 ## Payment plans
 
 Added 2026-09-02 at Sage's direction for the individual offer only (`individual-plan`,
-five monthly installments, same $420 total, no surcharge). A plan offer is a
+five monthly installments). Launched at the same $420 total; repriced the same afternoon to
+**$445 (5 × $89)** on Milan and Curtis's suggestion, so paying in full ($420) carries an
+incentive and card processing is simply built into the price rather than itemized. A plan offer is a
 `program_offers` row with `installment_count > 1`; `amount_cents` is still the full price
 and `cfa-register` splits it evenly with the remainder on the first installment. Coupons
 apply to the total before the split.
