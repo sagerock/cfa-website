@@ -5,7 +5,11 @@ import { sendInstitutionRosterConfirmation } from "../_shared/institutionRosterE
 
 const CFA_CLIENT_ID = "22500cd6-052a-42ff-a0cb-4f3ba9125dfd";
 const STARLIGHT_PROGRAM_PLATFORM_ID = "3357450";
-const PRODUCTION_TEST_AMOUNT_CENTS = 100;
+// Default $1; REGISTRATION_TEST_AMOUNT_CENTS overrides it for a single armed
+// run when the merchant fraud filter holds small charges for review.
+const PRODUCTION_TEST_AMOUNT_CENTS = Math.max(100,
+  Number(Deno.env.get("REGISTRATION_TEST_AMOUNT_CENTS")) || 100);
+const PRODUCTION_TEST_AMOUNT = (PRODUCTION_TEST_AMOUNT_CENTS / 100).toFixed(2);
 const PRODUCTION_TEST_OFFER_CODES = new Set(["individual", "individual-plan"]);
 const productionOrigin = "https://learn.centerforanthroposophy.org";
 const productionHostname = new URL(productionOrigin).hostname;
@@ -413,11 +417,12 @@ async function createInstallmentSubscription(
           totalOccurrences: String(input.occurrences),
         },
         amount: (input.amountCents / 100).toFixed(2),
+        // Schema order: order precedes profile (E00003 otherwise).
+        order: { invoiceNumber: input.invoiceNumber, description: input.description },
         profile: {
           customerProfileId: input.customerProfileId,
           customerPaymentProfileId: input.paymentProfileId,
         },
-        order: { invoiceNumber: input.invoiceNumber, description: input.description },
       },
     },
   });
@@ -682,8 +687,8 @@ Deno.serve(async (request: Request) => {
             ? "Authorized production integration test (payment plan)"
             : "Authorized production integration test",
           description: (offer.installment_count ?? 1) > 1
-            ? `$1 split ${offer.installment_count} ways: first installment charged and voided, schedule created and cancelled, stored card deleted.`
-            : "$1 charge followed by an immediate automatic void.",
+            ? `$${PRODUCTION_TEST_AMOUNT} split ${offer.installment_count} ways: first installment charged and voided, schedule created and cancelled, stored card deleted.`
+            : `$${PRODUCTION_TEST_AMOUNT} charge followed by an immediate automatic void.`,
           amount_cents: PRODUCTION_TEST_AMOUNT_CENTS,
         }))
       : offersWithSessions;

@@ -30,7 +30,10 @@ import Base from '../../layouts/Base.astro';
       </div>
 
       <form id="registration-form" novalidate>
-        <input class="honeypot" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <!-- Bot trap. Hidden from layout so password managers never fill it; bots parsing HTML still do. -->
+        <div class="honeypot" aria-hidden="true">
+          <label>Leave this field empty <input type="text" name="fax_confirm" tabindex="-1" autocomplete="off" /></label>
+        </div>
 
         <fieldset class="form-section">
           <legend><span>01</span> Choose registration</legend>
@@ -50,22 +53,22 @@ import Base from '../../layouts/Base.astro';
         <fieldset class="form-section">
           <legend><span>02</span> <span id="details-legend-text" class="legend-label">Participant details</span></legend>
           <div class="field-grid">
-            <label>
+            <label for="participant-first-name">
               First name
-              <input type="text" name="first_name" autocomplete="given-name" maxlength="100" required />
+              <input type="text" id="participant-first-name" name="first_name" autocomplete="given-name" maxlength="100" required />
             </label>
-            <label>
+            <label for="participant-last-name">
               Last name
-              <input type="text" name="last_name" autocomplete="family-name" maxlength="100" required />
+              <input type="text" id="participant-last-name" name="last_name" autocomplete="family-name" maxlength="100" required />
             </label>
-            <label class="wide">
+            <label class="wide" for="participant-email">
               Email
-              <input type="email" name="email" autocomplete="email" maxlength="254" required />
+              <input type="email" id="participant-email" name="email" autocomplete="email" maxlength="254" required />
               <span id="email-helper">Your portal access will use this address.</span>
             </label>
-            <label>
+            <label for="participant-phone">
               Phone <small>optional</small>
-              <input type="tel" name="phone" autocomplete="tel" maxlength="50" />
+              <input type="tel" id="participant-phone" name="phone" autocomplete="tel" maxlength="50" />
             </label>
             <label id="organization-field" hidden>
               School or institution
@@ -77,25 +80,25 @@ import Base from '../../layouts/Base.astro';
         <fieldset class="form-section" id="billing-section">
           <legend><span>03</span> Billing address</legend>
           <div class="field-grid">
-            <label class="wide">
+            <label class="wide" for="billing-address1">
               Street address
-              <input type="text" name="address" autocomplete="billing street-address" maxlength="200" required />
+              <input type="text" id="billing-address1" name="address1" autocomplete="billing street-address" maxlength="200" required />
             </label>
-            <label>
+            <label for="billing-city">
               City
-              <input type="text" name="city" autocomplete="billing address-level2" maxlength="100" required />
+              <input type="text" id="billing-city" name="city" autocomplete="billing address-level2" maxlength="100" required />
             </label>
-            <label>
+            <label for="billing-state">
               State or province
-              <input type="text" name="state" autocomplete="billing address-level1" maxlength="100" required />
+              <input type="text" id="billing-state" name="state" autocomplete="billing address-level1" maxlength="100" required />
             </label>
-            <label>
+            <label for="billing-zip">
               Postal code
-              <input type="text" name="zip" autocomplete="billing postal-code" maxlength="30" required />
+              <input type="text" id="billing-zip" name="zip" autocomplete="billing postal-code" maxlength="30" required />
             </label>
-            <label>
+            <label for="billing-country">
               Country
-              <select name="country" autocomplete="billing country" required>
+              <select id="billing-country" name="country" autocomplete="billing country" required>
                 <option value="US">United States</option>
                 <option value="CA">Canada</option>
               </select>
@@ -253,7 +256,7 @@ import Base from '../../layouts/Base.astro';
   }
 
   const billingSection = document.getElementById('billing-section');
-  const billingInputs = ['address', 'city', 'state', 'zip', 'country']
+  const billingInputs = ['address1', 'city', 'state', 'zip', 'country']
     .map((name) => form.elements.namedItem(name));
   const termsCopy = document.getElementById('terms-copy');
 
@@ -380,9 +383,9 @@ import Base from '../../layouts/Base.astro';
         email: data.get('email'),
         phone: data.get('phone'),
         organization: data.get('organization'),
-        company: data.get('company'),
+        company: data.get('fax_confirm'),
         billing_address: {
-          address: data.get('address'),
+          address: data.get('address1'),
           city: data.get('city'),
           state: data.get('state'),
           zip: data.get('zip'),
@@ -763,7 +766,7 @@ import Base from '../../layouts/Base.astro';
   :global(.success-card a) { display: inline-block; margin-top: 22px; font-family: var(--sans); font-weight: 650; }
   .loading-copy { color: var(--soft); font-style: italic; }
   .error-copy { color: #9e3d2d; }
-  .honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; }
+  .honeypot { display: none; }
   @media (max-width: 820px) {
     .registration-intro, .registration-layout { grid-template-columns: 1fr; }
     .registration-intro { gap: 22px; }
