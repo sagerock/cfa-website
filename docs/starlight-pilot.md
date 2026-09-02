@@ -165,12 +165,12 @@ Operating notes:
 - The production test path (`REGISTRATION_TEST_MODE`) also covers the plan offer: $1 split
   five ways, first installment charged and voided, the ARB schedule created and immediately
   cancelled, and the stored card deleted. The response's `plan_test` block and the plan
-  row's `notes` report each step. **Known limitation:** the merchant account's fraud filter
-  holds every $1 test charge for review (`responseCode 4`, reason 252 — all four production
-  tests since 2026-08-16 look this way, while every real charge has been approved). Test
-  mode treats a held charge as approved so the run continues, but a held transaction is not
-  eligible for `createCustomerProfileFromTransaction`, so the profile + ARB steps cannot be
-  proven by the $1 test while that filter applies.
+  row's `notes` report each step. The merchant account's fraud filter holds a $1 test charge
+  for review (`responseCode 4`, reason 252 — every $1 production test since 2026-08-16 looks
+  this way, while every real charge has been approved), and a held transaction cannot seed a
+  customer profile. Set `REGISTRATION_TEST_AMOUNT_CENTS` (e.g. `5000`) for the armed run so
+  the first installment is approved; test mode also treats a held charge as approved so a $1
+  run still exercises the rest of the harness. Unset it again when disarming.
 - The authorization sentence shown at checkout for a plan reads: "I authorize the Center for
   Anthroposophy to charge my card $84 today and $84 on the same day of each of the next 4
   months (5 payments, $420 total), and I understand that registration is subject to CfA's
@@ -259,6 +259,16 @@ throwaway test account.
   payment verification rests on gate 5's $1-charge-and-void production test. Failure
   paths remain code-verified only. Sandbox checkout stays disallowed against the
   shared production database.
+- **Gate 8 (payment plan) — passed 2026-09-02.** Sage ran the armed plan test in the
+  browser at `REGISTRATION_TEST_AMOUNT_CENTS=5000`: the $10 first installment was approved
+  (AVS Y, CVV M), `createCustomerProfileFromTransaction` succeeded, ARB subscription
+  `74232976` (4 × $10, 2026-10-02 → 2027-01-02) was created and then cancelled, the profile
+  deleted, the charge voided, and the plan row records
+  `subscription_created=true subscription_cancelled=true profile_deleted=true` with five
+  voided installment rows. Residue check against the pre-test baseline: zero new contacts,
+  Auth users, identities, or enrollments. Two earlier runs the same day found (a) the $1
+  charge being held by the fraud filter, which stops profile creation, and (b) the ARB
+  request's `order` element placed after `profile` (E00003); both fixed before this pass.
 - **Gate 7 — code-verified 2026-08-18; live exercise folded into gate 5.** Three
   layers prevent a second automatic charge after charge-but-no-access: replaying the
   same idempotency key against an `enrollment_pending` registration returns 409

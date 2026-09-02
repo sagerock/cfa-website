@@ -415,3 +415,23 @@ Sage asked for 10/20/30/50% coupons alongside the plan launch. Created `STARLIGH
 cap; they apply to every offer, including the plan (discount taken from the total before the
 split). Cap or expire them by updating `program_coupons` when CfA decides how they are used.
 
+## 2026-09-02 — Plan path proven live; profile built from the first charge, not the nonce
+The first plan design created the Authorize.Net customer profile from the Accept.js nonce and
+charged installment 1 against the profile. The first live test showed that profile charge would
+be the only CVV-less charge in the system (every real approved charge has CVV matched), so the
+design was changed the same afternoon: installment 1 is the same nonce charge as a one-time
+purchase, and the profile is built from that transaction. Three armed production tests were
+needed to prove the chain: the $1 test charge is held by the merchant fraud filter (as every $1
+test since gate 5 has been, unnoticed because the harness voided and reported success), a held
+transaction cannot seed a profile, and the ARB request had `order` after `profile`. The third
+run at $50 ($10 first installment) created and cancelled ARB subscription 74232976 end to end.
+Recorded as gate 8 in `docs/starlight-pilot.md`. The $1 harness's blind spot is now documented
+and the test amount is configurable per run.
+
+Also today, on Sage's report that 1Password would not offer to fill the billing address: form
+labels now pair explicitly with inputs, the street field is `address1`, and the honeypot is a
+`display:none` field with a neutral name instead of an off-screen text box named `company` —
+an autofilled company name could previously have tripped the bot trap and faked a successful
+registration. The Authorize.Net card lightbox is unchanged; moving card fields onto our page
+(Accept.js hosted by us) would change CfA's PCI footprint and was left as a separate decision.
+
