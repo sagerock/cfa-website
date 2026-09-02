@@ -16,8 +16,6 @@ import PageHeader from '../../components/PageHeader.astro';
 
   <div class="wrap policy-layout">
     <main class="policy-main">
-      <p class="status-badge">Proposed · under review by CfA, September 2026</p>
-
       <h2>Cancelling a registration</h2>
       <p>
         Cancellation requests must be made in writing to
@@ -72,14 +70,5 @@ import PageHeader from '../../components/PageHeader.astro';
   .policy-main { max-width: 68ch; }
   .policy-main h2 { font-size: 26px; margin: 34px 0 12px; }
   .policy-main p { margin-bottom: 12px; line-height: 1.55; }
-  .status-badge {
-    display: inline-block;
-    border: 1px solid var(--gold);
-    background: color-mix(in srgb, var(--gold) 10%, var(--raised));
-    padding: 5px 10px;
-    font: 600 12px var(--sans);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
   .policy-contact { color: var(--soft); font-family: var(--sans); font-size: 14px; margin-top: 34px; }
 </style>

@@ -179,9 +179,10 @@ Operating notes:
   the first installment is approved; test mode also treats a held charge as approved so a $1
   run still exercises the rest of the harness. Unset it again when disarming.
 - The authorization sentence shown at checkout for a plan reads: "I authorize the Center for
-  Anthroposophy to charge my card $84 today and $84 on the same day of each of the next 4
-  months (5 payments, $420 total), and I understand that registration is subject to CfA's
-  cancellation policies." CfA has not yet reviewed this wording.
+  Anthroposophy to charge my card $89 today and $89 on the same day of each of the next 4
+  months (5 payments, $445 total), and I understand that registration is subject to CfA's
+  cancellation policies." The checkout links the policy, and the welcome email repeats its
+  URL. Milan approved the standard policy for all programs on 2026-09-02.
 
 ## Registration self-heal
 

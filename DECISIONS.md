@@ -455,3 +455,9 @@ customers. Suggested to CfA separately: offer eCheck/ACH for the $1,220 institut
 3% actually adds up. Data-only change to `program_offers.individual-plan`; the checkout computes
 installments from the offer, so no code changed.
 
+## 2026-09-02 — CfA approves one standard cancellation policy
+Milan approved the proposed cancellation and refund policy as the standard policy for all CfA
+programs on the rebuilt site. The review label was removed from `/policies/cancellation/`. A
+program page with different terms still wins. Every current native Starlight offer uses the same
+registration form, whose required authorization links to the policy; the registration welcome
+email also includes the policy URL. Future native product checkouts should preserve both links.
