@@ -152,8 +152,13 @@ Mechanism (chosen over a pure ARB subscription so that "paid → access" stays s
 5. `cfa-plan-sync` (ops-token guarded, no CORS) calls `ARBGetSubscriptionRequest` for every
    open plan and writes each installment's result back. ARB `payNum` 1 is installment 2.
    Subscription `suspended` → plan `past_due`; `expired` with every installment paid →
-   `completed`. It never charges, cancels, or changes anything at the gateway. Run it after
-   each billing day or on a schedule; the response counts `past_due` and `needs_attention`.
+   `completed`. It never charges, cancels, or changes anything at the gateway. Deploy it with
+   `--no-verify-jwt` (like `cfa-learn-welcome`): the ops token is the gate, and the desktop
+   cron that calls it carries no Supabase key. It runs daily at 06:40 ET from Sage's desktop
+   (`sagerock/clients/center-for-anthroposophy/starlight-2026/cron-plan-sync.sh`, Cron
+   Monitor job `cfa-starlight-plan-sync`, wired 2026-09-02): healthy days are silent,
+   `past_due`/`needs_attention` plans go to Sage on Telegram and mark the heartbeat degraded,
+   and a run that never happens is caught by the monitor's missed-heartbeat alert.
 
 Operating notes:
 
