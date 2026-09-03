@@ -22,12 +22,18 @@
   window.fbq('track', 'PageView');
 
   // One call for conversion events so pages don't need to know about both vendors.
-  // kind: 'purchase' | 'lead'. data: { value, currency, transaction_id, name, id }
+  // kind: 'begin_checkout' | 'purchase' | 'lead'.
+  // data: { value, currency, transaction_id, name, id }
   window.__cfaConversion = function (kind, data) {
     data = data || {};
     try {
       var value = data.value || 0, currency = data.currency || 'USD';
-      if (kind === 'purchase') {
+      if (kind === 'begin_checkout') {
+        if (window.fbq) window.fbq('track', 'InitiateCheckout', { value: value, currency: currency,
+          content_name: data.name, content_ids: data.id ? [data.id] : undefined, content_type: 'product' });
+        if (window.gtag) gtag('event', 'begin_checkout', { value: value, currency: currency,
+          items: [{ item_id: data.id, item_name: data.name, price: value, quantity: 1 }] });
+      } else if (kind === 'purchase') {
         if (window.fbq) window.fbq('track', 'Purchase', { value: value, currency: currency,
           content_name: data.name, content_ids: data.id ? [data.id] : undefined, content_type: 'product' });
         if (window.gtag) gtag('event', 'purchase', { transaction_id: data.transaction_id, value: value, currency: currency,

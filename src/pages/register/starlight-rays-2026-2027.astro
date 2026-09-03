@@ -212,7 +212,40 @@ import Base from '../../layouts/Base.astro';
   localStorage.setItem(checkoutKeyName, idempotencyKey);
   let turnstileToken = '';
   let turnstileWidgetId;
-  const requestedOfferCode = new URLSearchParams(location.search).get('offer') || '';
+  const pageParams = new URLSearchParams(location.search);
+  const requestedOfferCode = pageParams.get('offer') || '';
+
+  function safeReferrer(value) {
+    try {
+      const referrer = new URL(value);
+      return `${referrer.origin}${referrer.pathname}`.slice(0, 500);
+    } catch {
+      return '';
+    }
+  }
+
+  function captureAttribution() {
+    const storageKey = 'cfa-registration-attribution';
+    try {
+      const stored = JSON.parse(sessionStorage.getItem(storageKey) || 'null');
+      if (stored && typeof stored === 'object' && !Array.isArray(stored)) return stored;
+    } catch {}
+
+    const captured = {
+      captured_at: new Date().toISOString(),
+      landing_path: location.pathname.slice(0, 500),
+      referrer: safeReferrer(document.referrer),
+    };
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid', 'msclkid']
+      .forEach((key) => {
+        const value = (pageParams.get(key) || '').trim();
+        if (value) captured[key] = value.slice(0, key.startsWith('utm_') ? 300 : 500);
+      });
+    try { sessionStorage.setItem(storageKey, JSON.stringify(captured)); } catch {}
+    return captured;
+  }
+
+  const attribution = captureAttribution();
 
   const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
   const sessionDate = new Intl.DateTimeFormat('en-US', {
@@ -393,6 +426,7 @@ import Base from '../../layouts/Base.astro';
         },
         terms_accepted: data.get('terms_accepted') === 'on',
         marketing_opt_in: data.get('marketing_opt_in') === 'on',
+        attribution,
         turnstile_token: turnstileToken,
         coupon_code: appliedCoupon?.code || '',
         opaque_data: opaqueData || {},
@@ -542,6 +576,22 @@ import Base from '../../layouts/Base.astro';
 
   form.addEventListener('change', updateSelection);
   form.addEventListener('submit', (event) => event.preventDefault());
+
+  let checkoutStartTracked = false;
+  function trackCheckoutStart() {
+    if (checkoutStartTracked) return;
+    checkoutStartTracked = true;
+    const offer = selectedOffer();
+    const conversion = {
+      value: (effectiveAmountCents(offer) || 0) / 100,
+      currency: 'USD',
+      name: offer ? `Starlight Rays 2026-27: ${offer.name}` : 'Starlight Rays 2026-27',
+      id: offer?.code,
+    };
+    if (window.__cfaConversion) window.__cfaConversion('begin_checkout', conversion);
+    if (window.__cfaTrack) window.__cfaTrack('checkout_started', { offer: offer?.code, value: conversion.value });
+  }
+  form.addEventListener('input', trackCheckoutStart, { once: true });
 
   async function initialize() {
     try {

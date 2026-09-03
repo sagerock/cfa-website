@@ -471,3 +471,15 @@ individual series and $1,220 institution registration, and the public program pa
 advertises the alternate offers. The underlying offers remain active and a targeted direct link
 with `?offer=<code>` renders only that requested offer, so no payment or entitlement capability
 was deleted.
+
+## 2026-09-03 — Checkout attribution is stored with the order
+Curtis asked for order and traffic tracking across the new `learn.` checkout path so HolyOps
+can measure ads. GA4 and the Meta Pixel already recorded page views and successful purchases,
+but campaign fields and click IDs disappeared after the browser event and could not be joined
+reliably to a registration. The checkout now stores first-touch UTM source, medium, campaign,
+content and term; Meta, Google and Microsoft click IDs; and a query-free landing path and
+referrer in a sanitized `registrations.attribution` object. It also sends Meta
+`InitiateCheckout` and GA4 `begin_checkout` on the visitor's first form interaction, while the
+existing purchase events retain the final value, offer and registration ID. The private hourly
+HolyOps registration sheet exposes these order-level attribution fields. Old registrations are
+not backfilled because their browser attribution was never retained.

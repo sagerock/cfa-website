@@ -60,6 +60,49 @@ function text(value: unknown, maxLength: number) {
   return value == null ? "" : String(value).trim().slice(0, maxLength);
 }
 
+const attributionFields = {
+  captured_at: 40,
+  landing_path: 500,
+  referrer: 500,
+  utm_source: 200,
+  utm_medium: 200,
+  utm_campaign: 300,
+  utm_content: 300,
+  utm_term: 300,
+  fbclid: 500,
+  gclid: 500,
+  msclkid: 500,
+} as const;
+
+function registrationAttribution(value: unknown) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+  const source = value as JsonRecord;
+  const attribution: Record<string, string> = {};
+  for (const [key, maxLength] of Object.entries(attributionFields)) {
+    const cleaned = text(source[key], maxLength);
+    if (cleaned) attribution[key] = cleaned;
+  }
+
+  if (attribution.captured_at) {
+    const parsed = new Date(attribution.captured_at);
+    if (Number.isNaN(parsed.getTime())) delete attribution.captured_at;
+    else attribution.captured_at = parsed.toISOString();
+  }
+  if (attribution.landing_path && !attribution.landing_path.startsWith("/")) {
+    delete attribution.landing_path;
+  }
+  if (attribution.referrer) {
+    try {
+      const referrer = new URL(attribution.referrer);
+      if (!['http:', 'https:'].includes(referrer.protocol)) throw new Error('invalid protocol');
+      attribution.referrer = `${referrer.origin}${referrer.pathname}`.slice(0, attributionFields.referrer);
+    } catch {
+      delete attribution.referrer;
+    }
+  }
+  return attribution;
+}
+
 function validEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
@@ -788,6 +831,7 @@ Deno.serve(async (request: Request) => {
   const organization = text(body.organization, 200);
   const marketingOptIn = body.marketing_opt_in === true;
   const termsAccepted = body.terms_accepted === true;
+  const attribution = registrationAttribution(body.attribution);
   const billing = body.billing_address && typeof body.billing_address === "object"
     ? body.billing_address as JsonRecord
     : {};
@@ -1029,6 +1073,7 @@ Deno.serve(async (request: Request) => {
     failure_code: null,
     failure_message: null,
     ip_hash: ipHash,
+    attribution,
   };
   const registrationResult = existing
     ? await admin.from("registrations").update(registrationValues)
