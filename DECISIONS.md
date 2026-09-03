@@ -483,3 +483,24 @@ referrer in a sanitized `registrations.attribution` object. It also sends Meta
 existing purchase events retain the final value, offer and registration ID. The private hourly
 HolyOps registration sheet exposes these order-level attribution fields. Old registrations are
 not backfilled because their browser attribution was never retained.
+
+## 2026-09-03 — Technical trouble on the portal goes to Sage, and a "check your inbox" that means nothing is a bug
+Carol Gregory (Azure Fields) emailed that she could not get into the Starlight portal
+two days before the first seminar. She was correctly enrolled the whole time. Her 8/31
+launch email was delivered and its durable classroom link had never been used, and her
+"enter my email" attempt left no trace at all — no sign-in event, no auth user — meaning
+the address she typed did not match her registration.
+
+The reason she was stuck rather than corrected: `/learn/sign-in` is anti-enumeration by
+design and answers "Check your inbox" to *every* well-formed address, including ones we
+have never seen. That is right for a public app. For a portal where every user is a known
+paying registrant, it converts a typo into a silent dead end with nothing on screen to act
+on. Anti-enumeration stays — the copy changes instead: the success message now says that
+nothing arriving may mean the address does not match, and both dead-end pages
+(`sign-in`, `learn/index` "no active enrollment") now name
+sage@centerforanthroposophy.org rather than the office. Every reminder email already
+routed technical trouble to Sage; the pages were the inconsistency. Program questions
+still go to office@ — the split is technical vs. programmatic, not a general redirect.
+
+Sage considered a separate AI-run support address and decided against it: one human
+address, his, is clearer for a cohort this size.
