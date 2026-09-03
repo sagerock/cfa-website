@@ -11,9 +11,9 @@ import Base from '../../layouts/Base.astro';
         <p class="cohort">2026–2027</p>
       </div>
       <p class="intro-copy">
-        Register for the complete twelve-seminar series as an individual, or bring up to twenty
-        participants from your school or institution. Registration includes live access, recordings,
-        and course resources.
+        Register for the complete twelve-seminar series as an individual — paid at once or in five
+        monthly payments — or bring up to twenty participants from your school or institution.
+        Registration includes live access, recordings, and course resources.
       </p>
     </div>
   </header>
@@ -602,7 +602,9 @@ import Base from '../../layouts/Base.astro';
       config = await response.json();
       offerList.replaceChildren();
       const requestedOffer = config.offers.find((offer) => offer.code === requestedOfferCode);
-      const publicOfferCodes = new Set(['individual', 'institution']);
+      // Public checkout: the full series (paid at once or in five monthly payments) and the
+      // institution tier. Single sessions and the bundle stay email-only (?offer=<code>).
+      const publicOfferCodes = new Set(['individual', 'individual-plan', 'institution']);
       const visibleOffers = requestedOffer
         ? [requestedOffer]
         : config.offers.filter((offer) => publicOfferCodes.has(offer.code));

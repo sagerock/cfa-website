@@ -13,7 +13,7 @@ facts:
   - label: "Dates"
     value: "September 2026 - February 2027"
   - label: "Tuition"
-    value: "$420 individual · $1,220 institution"
+    value: "$420 individual (or 5 monthly payments of $89) · $1,220 institution"
   - label: "Who"
     value: "High school teachers, administrators, staff & parents"
 director: "David Barham, M.Ed."

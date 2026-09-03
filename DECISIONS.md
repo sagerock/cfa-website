@@ -504,3 +504,11 @@ still go to office@ — the split is technical vs. programmatic, not a general r
 
 Sage considered a separate AI-run support address and decided against it: one human
 address, his, is clearer for a cohort this size.
+
+## 2026-09-03 — Amendment: the five-payment plan stays on the public checkout
+Curtis (HolyOps) clarified the same afternoon that the 5 × $89 payment plan was not meant to go.
+HolyOps' Rays lander and the returning-school notes already advertise the $89 option, so the
+checkout has to show it. The default registration page now lists the $420 individual series, the
+5 × $89 plan ($445 total), and the $1,220 institution registration; the program page's tuition line
+mentions the plan again. Single sessions and the three-session bundle remain email-only via
+`?offer=<code>`.
