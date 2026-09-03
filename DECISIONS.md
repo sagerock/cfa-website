@@ -461,3 +461,13 @@ programs on the rebuilt site. The review label was removed from `/policies/cance
 program page with different terms still wins. Every current native Starlight offer uses the same
 registration form, whose required authorization links to the policy; the registration welcome
 email also includes the policy URL. Future native product checkouts should preserve both links.
+
+## 2026-09-03 — Starlight checkout shows only the primary offers by default
+Curtis asked to remove the alternate purchase options from the public registration path because
+he and Sascha want payment plans, single sessions, and the three-session bundle offered through
+abandoned-checkout follow-up or targeted email instead of competing at checkout. Sage confirmed
+that Sascha owns this conversion decision. The default registration page now shows only the $420
+individual series and $1,220 institution registration, and the public program page no longer
+advertises the alternate offers. The underlying offers remain active and a targeted direct link
+with `?offer=<code>` renders only that requested offer, so no payment or entitlement capability
+was deleted.

@@ -13,7 +13,7 @@ facts:
   - label: "Dates"
     value: "September 2026 - February 2027"
   - label: "Tuition"
-    value: "$19 featured session · $44 three-session bundle · $420 full series (or 5 monthly payments of $89) · $1,220 institution"
+    value: "$420 individual · $1,220 institution"
   - label: "Who"
     value: "High school teachers, administrators, staff & parents"
 director: "David Barham, M.Ed."
@@ -67,17 +67,6 @@ All seminars meet online from 3:00–4:30 pm Eastern Time.
 - **January 23 — Nathan Wilcox:** *Solid Foundations: The Three Critical Skills Every Ninth Grader Needs, and How to Teach Them*
 - **February 13 — Beverly Amico:** *Education in a Time of Systemic Change: Trends, Challenges, and Possibilities for Waldorf Schools*
 - **February 27 — David Barham:** *Instilling Social Impulses in an Antisocial Age*
-
-### Featured single sessions
-
-Join one featured seminar for $19, or attend all three for $44. Each registration includes the live seminar, its recording, and related classroom resources.
-
-- **September 5 — Dr. Martyn Rawson:** [Register for this session](/register/starlight-rays-2026-2027?offer=single-rawson)
-- **October 31 — Dr. Adam Blanning:** [Register for this session](/register/starlight-rays-2026-2027?offer=single-blanning)
-- **December 19 — Dr. Constanza Kaliks:** [Register for this session](/register/starlight-rays-2026-2027?offer=single-kaliks)
-- [Register for the three-session bundle](/register/starlight-rays-2026-2027?offer=three-session-bundle)
-
-Want the complete program? [Unlock the full twelve-seminar series](/register/starlight-rays-2026-2027?offer=individual).
 
 Registered participants receive login information and links by email before each seminar, along with reminders throughout the fall and winter.
 

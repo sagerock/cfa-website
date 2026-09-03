@@ -11,9 +11,9 @@ import Base from '../../layouts/Base.astro';
         <p class="cohort">2026–2027</p>
       </div>
       <p class="intro-copy">
-        Choose the complete twelve-seminar series — paid at once or in five monthly payments — one
-        featured session, or the three-session bundle. Every option includes live access, its
-        recordings, and course resources.
+        Register for the complete twelve-seminar series as an individual, or bring up to twenty
+        participants from your school or institution. Registration includes live access, recordings,
+        and course resources.
       </p>
     </div>
   </header>
@@ -551,23 +551,20 @@ import Base from '../../layouts/Base.astro';
       if (!response.ok) throw new Error('configuration');
       config = await response.json();
       offerList.replaceChildren();
-      const requestedOfferExists = config.offers.some((offer) => offer.code === requestedOfferCode);
-      let previousScope = null;
-      config.offers.forEach((offer, index) => {
-        if (previousScope === 'all' && offer.access_scope !== 'all') {
-          const divider = document.createElement('p');
-          divider.className = 'offer-divider';
-          divider.textContent = 'Not ready to commit to the entire series yet? Choose your one-off session below and we\u2019ll see you in the room!';
-          offerList.append(divider);
-        }
-        previousScope = offer.access_scope;
+      const requestedOffer = config.offers.find((offer) => offer.code === requestedOfferCode);
+      const publicOfferCodes = new Set(['individual', 'institution']);
+      const visibleOffers = requestedOffer
+        ? [requestedOffer]
+        : config.offers.filter((offer) => publicOfferCodes.has(offer.code));
+      if (!visibleOffers.length) throw new Error('offers');
+      visibleOffers.forEach((offer, index) => {
         const label = document.createElement('label');
         label.className = 'offer-option';
         const input = document.createElement('input');
         input.type = 'radio';
         input.name = 'offer_code';
         input.value = offer.code;
-        input.checked = requestedOfferExists ? offer.code === requestedOfferCode : index === 0;
+        input.checked = index === 0;
         input.required = true;
         const copy = document.createElement('span');
         copy.className = 'offer-copy';
