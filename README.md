@@ -88,6 +88,11 @@ has been live since 2026-08-20. The individual $420 offer can also be paid as fi
 installments (added 2026-09-02): installment 1 is charged immediately from an Authorize.Net
 stored payment profile and the rest run as an ARB subscription; `cfa-plan-sync` reconciles
 gateway results back into the database. See `docs/starlight-pilot.md` → Payment plans.
+The account-wide `cfa-payment-reconcile` function separately mirrors Authorize.Net batches,
+settlements, refunds, voids, declines, and unsettled transactions into service-role-only
+reporting tables. It is intentionally limited to Authorize.Net reporting requests and cannot
+charge, refund, void, or edit a customer profile. A private operations job polls it daily with
+a seven-day overlap and rolls the results into CfA's staff Orders sheet.
 The broader reusable form plan is at `site-rebuild/FORMS-PLAN.md` in the monorepo.
 
 ## Governance

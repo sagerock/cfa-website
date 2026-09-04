@@ -512,3 +512,20 @@ checkout has to show it. The default registration page now lists the $420 indivi
 5 × $89 plan ($445 total), and the $1,220 institution registration; the program page's tuition line
 mentions the plan again. Single sessions and the three-session bundle remain email-only via
 `?offer=<code>`.
+
+## 2026-09-04 — Authorize.Net is mirrored through a read-only reporting boundary
+CfA's new checkout records successful payments locally, but that alone cannot answer the
+accounting question “what actually happened at the gateway?” An account-wide reconciliation
+function now polls Authorize.Net settlement batches, their transactions, and the unsettled
+transaction list, then stores a normalized mirror in service-role-only Supabase tables. It
+matches charges and ARB installments to native registrations and traces refunds through their
+original transaction. The function has an explicit allowlist of four reporting request types;
+it cannot charge, refund, void, alter a subscription, or edit a customer profile.
+
+The initial import covers 90 days. Ongoing operations use a daily seven-day overlap rather than
+webhooks: settlement state changes are naturally picked up, retries are idempotent, and the
+small current volume does not justify another public inbound endpoint. The private Orders sheet
+shows local collected value beside gateway net and flags mismatches, declines, voids, refunds,
+and native-looking gateway transactions with no registration. It reports discrepancies but
+never “fixes” money or registration status automatically; a human must decide which system is
+correct.
