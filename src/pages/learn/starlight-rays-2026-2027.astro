@@ -230,9 +230,25 @@ import { starlightPilot } from '../../data/starlightPilot.js';
       icon.textContent = '↗';
       const copy = document.createElement('div');
       const title = document.createElement('strong');
-      title.textContent = resource.title;
       const detail = document.createElement('span');
-      detail.textContent = resource.kind === 'page' ? 'Course page' : 'Course resource';
+      const session = resource.session_id
+        ? sessions.find((candidate) => candidate.id === resource.session_id)
+        : null;
+      if (resource.external_url) {
+        // A file or link the presenter shared (slides, handouts). Opens in a new tab.
+        const link = document.createElement('a');
+        link.href = resource.external_url;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.textContent = resource.title;
+        title.append(link);
+        detail.textContent = session
+          ? `From ${session.presenter}'s session, opens in a new tab`
+          : 'Opens in a new tab';
+      } else {
+        title.textContent = resource.title;
+        detail.textContent = resource.kind === 'page' ? 'Course page' : 'Course resource';
+      }
       copy.append(title, detail);
       item.append(icon, copy);
       resourceList.append(item);
