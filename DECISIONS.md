@@ -529,3 +529,13 @@ shows local collected value beside gateway net and flags mismatches, declines, v
 and native-looking gateway transactions with no registration. It reports discrepancies but
 never “fixes” money or registration status automatically; a human must decide which system is
 correct.
+
+## 2026-09-07 — Every native Canadian order receives an automatic 20% adjustment
+Sage confirmed Milan's proposed Canadian pricing should apply across the board to every
+order handled by CfA's system going forward, rather than only to an individual Starlight
+offer. Country pricing is therefore a client-wide, server-authoritative rule keyed to the
+billing country. Canada receives 20% off before one-time or installment amounts are
+calculated, and the checkout discloses the adjustment as soon as Canada is selected.
+Automatic and manual discounts do not stack: the larger adjustment wins, with ties going
+to the automatic rule so a limited coupon is not consumed unnecessarily. The registration
+stores both the discount amount and its automatic rule code for accounting and audit.

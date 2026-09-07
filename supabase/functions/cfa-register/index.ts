@@ -711,6 +711,18 @@ Deno.serve(async (request: Request) => {
       })),
   }));
 
+  const { data: automaticDiscountRows, error: automaticDiscountError } = await admin
+    .from("automatic_discounts")
+    .select("id, code, label, country_code, percent_off, starts_at, ends_at")
+    .eq("client_id", CFA_CLIENT_ID)
+    .eq("active", true);
+  if (automaticDiscountError) return json({ error: "pricing_unavailable" }, 503, origin);
+  const pricingNowMs = Date.now();
+  const automaticDiscounts = (automaticDiscountRows || []).filter((rule) =>
+    (!rule.starts_at || new Date(rule.starts_at).getTime() <= pricingNowMs)
+    && (!rule.ends_at || new Date(rule.ends_at).getTime() > pricingNowMs)
+  );
+
   const config = registrationConfig();
   const headerTestToken = request.headers.get("X-Registration-Test") || "";
   const headerTestAuthorized = config.testMode
@@ -758,6 +770,14 @@ Deno.serve(async (request: Request) => {
     return json({
       program: { name: program.name },
       offers: responseOffers,
+      automatic_discounts: headerTestAuthorized
+        ? []
+        : automaticDiscounts.map((rule) => ({
+          code: rule.code,
+          label: rule.label,
+          country_code: rule.country_code,
+          percent_off: rule.percent_off,
+        })),
       coupon: couponInfo,
       payment: {
         available: paymentAvailable,
@@ -903,9 +923,23 @@ Deno.serve(async (request: Request) => {
     if (!couponUsable) return json({ error: "coupon_invalid" }, 400, origin);
     coupon = { id: couponRow.id, code: couponRow.code, percent_off: couponRow.percent_off };
   }
-  const discountCents = coupon
+  const automaticDiscount = testAuthorized
+    ? null
+    : automaticDiscounts.find((rule) => rule.country_code === billingAddress.country) ?? null;
+  const couponDiscountCents = coupon
     ? Math.min(selectedOffer.amount_cents, Math.round(selectedOffer.amount_cents * coupon.percent_off / 100))
     : 0;
+  const automaticDiscountCents = automaticDiscount
+    ? Math.min(
+      selectedOffer.amount_cents,
+      Math.round(selectedOffer.amount_cents * automaticDiscount.percent_off / 100),
+    )
+    : 0;
+  // Discounts never stack. A manual coupon wins only when it is strictly
+  // better; ties remain automatic and do not consume a limited-use coupon.
+  const selectedCoupon = coupon && couponDiscountCents > automaticDiscountCents ? coupon : null;
+  const selectedAutomaticDiscount = selectedCoupon ? null : automaticDiscount;
+  const discountCents = Math.max(couponDiscountCents, automaticDiscountCents);
   const chargeAmountCents = selectedOffer.amount_cents - discountCents;
   // Installments split the (possibly discounted) total evenly, remainder on
   // the first charge. A split that would produce a sub-cent installment falls
@@ -1063,7 +1097,8 @@ Deno.serve(async (request: Request) => {
     amount_cents: chargeAmountCents,
     currency: selectedOffer.currency,
     seat_count: selectedOffer.seat_count,
-    coupon_code: coupon?.code ?? null,
+    coupon_code: selectedCoupon?.code ?? null,
+    automatic_discount_code: selectedAutomaticDiscount?.code ?? null,
     discount_cents: discountCents,
     marketing_opt_in: marketingOptIn,
     terms_accepted_at: new Date().toISOString(),
@@ -1106,9 +1141,9 @@ Deno.serve(async (request: Request) => {
     }
   }
 
-  if (coupon) {
+  if (selectedCoupon) {
     const { data: couponClaimed, error: couponClaimError } = await admin.rpc("cfa_claim_coupon", {
-      requested_coupon_id: coupon.id,
+      requested_coupon_id: selectedCoupon.id,
       requested_registration_id: registrationId,
     });
     if (couponClaimError || couponClaimed !== true) {
@@ -1125,8 +1160,10 @@ Deno.serve(async (request: Request) => {
   // transaction reference keeps completion and audit records consistent.
   let transactionId = `comp-${registrationId.replaceAll("-", "").slice(0, 16)}`;
   let summary: JsonRecord = {
-    code: "coupon_comp",
-    description: `Registered with ${coupon?.percent_off ?? 100}% coupon ${coupon?.code ?? ""}`.trim(),
+    code: "discount_comp",
+    description: selectedCoupon
+      ? `Registered with ${selectedCoupon.percent_off}% coupon ${selectedCoupon.code}`
+      : `Registered with ${selectedAutomaticDiscount?.percent_off ?? 100}% automatic discount ${selectedAutomaticDiscount?.code ?? ""}`.trim(),
   };
   // Payment-plan context outlives the charge block: schedule creation, the
   // welcome email, and test cleanup all need the profile and subscription ids.
@@ -1541,7 +1578,8 @@ Deno.serve(async (request: Request) => {
       transaction_id: transactionId,
       email_sent: confirmation.ok,
       amount_cents: chargeAmountCents,
-      coupon: coupon?.code ?? null,
+      coupon: selectedCoupon?.code ?? null,
+      automatic_discount: selectedAutomaticDiscount?.code ?? null,
       roster_url: rosterUrl,
       redirect: null,
     }, 200, origin);
@@ -1611,8 +1649,10 @@ Deno.serve(async (request: Request) => {
     emailSent = await sendWelcomeEmail({
       email,
       firstName,
-      offerName: coupon
-        ? `${selectedOffer.name} (coupon ${coupon.code}, ${coupon.percent_off}% off)`
+      offerName: selectedCoupon
+        ? `${selectedOffer.name} (coupon ${selectedCoupon.code}, ${selectedCoupon.percent_off}% off)`
+        : selectedAutomaticDiscount
+        ? `${selectedOffer.name} (${selectedAutomaticDiscount.label}, ${selectedAutomaticDiscount.percent_off}% off)`
         : selectedOffer.name,
       amountCents: chargeAmountCents,
       transactionId,
@@ -1633,7 +1673,8 @@ Deno.serve(async (request: Request) => {
     transaction_id: transactionId,
     email_sent: emailSent,
     amount_cents: chargeAmountCents,
-    coupon: coupon?.code ?? null,
+    coupon: selectedCoupon?.code ?? null,
+    automatic_discount: selectedAutomaticDiscount?.code ?? null,
     plan: welcomePlan,
     redirect: "/learn/sign-in?registered=1",
   }, 200, origin);
