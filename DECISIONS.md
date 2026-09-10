@@ -540,13 +540,17 @@ Automatic and manual discounts do not stack: the larger adjustment wins, with ti
 to the automatic rule so a limited coupon is not consumed unnecessarily. The registration
 stores both the discount amount and its automatic rule code for accounting and audit.
 
-## 2026-09-10 — OPEN: checkout billing-country list blocks non-US/Canada registrants (flagged, not decided)
-A prospective registrant based in Australia tried to register for a program and the
-billing-country selector on checkout currently offers only United States and Canada — a
-non-US/CA billing address likely can't complete checkout at all. CfA administration
-confirmed they're now marketing internationally and want the country list broadened
-significantly, not narrowly. This builds on the 2026-09-07 Canadian pricing rule above
-(country-specific handling already exists for CA); open questions are how far to broaden
-the list and whether other countries need their own pricing/discount treatment the way
-Canada does, or just checkout eligibility. Not built — Sage is discussing this directly
-with this project's session; logging it here so the context carries over.
+## 2026-09-10 — Make checkout international; Australia is the first market, USD remains the currency
+An Australian prospect exposed that checkout's two-country selector—not an established
+gateway rule—was blocking every billing address outside the United States and Canada. Sage
+approved making the cart structurally international instead of adding Australia as another
+one-off exception. The selector now contains the complete 249-code ISO country list, with
+United States, Canada, and Australia pinned first. US, Canadian, and Australian addresses get
+their own state/province/territory and postal labels and requirements; other countries keep
+flexible region and postal fields so North American assumptions do not create another block.
+The Edge Function validates the same country and address rules before calling Authorize.Net.
+
+This change enables checkout eligibility, not multi-currency settlement: every offer and
+charge remains USD and the page now says so beside the country selector. Canada's existing
+automatic 20% adjustment remains the only country pricing rule; Australia receives no new
+discount. Adding AUD prices would be a separate merchant/account and accounting decision.

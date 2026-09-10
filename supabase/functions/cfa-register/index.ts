@@ -1,6 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "@supabase/supabase-js";
 import { buildWelcomeEmailText, type WelcomePlan, type WelcomeSession } from "./email.ts";
+import { hasRequiredBillingAddressFields } from "../_shared/billingCountries.js";
 import { sendInstitutionRosterConfirmation } from "../_shared/institutionRosterEmail.ts";
 
 const CFA_CLIENT_ID = "22500cd6-052a-42ff-a0cb-4f3ba9125dfd";
@@ -860,7 +861,7 @@ Deno.serve(async (request: Request) => {
     city: text(billing.city, 100),
     state: text(billing.state, 100),
     zip: text(billing.zip, 30),
-    country: text(billing.country, 2).toUpperCase() || "US",
+    country: text(billing.country, 2).toUpperCase(),
   };
   const opaqueData = body.opaque_data && typeof body.opaque_data === "object"
     ? body.opaque_data as JsonRecord
@@ -959,9 +960,10 @@ Deno.serve(async (request: Request) => {
   if (chargeAmountCents > 0 && (dataDescriptor !== "COMMON.ACCEPT.INAPP.PAYMENT" || !dataValue)) {
     return json({ error: "invalid_payment_token" }, 400, origin);
   }
-  if (chargeAmountCents > 0
-    && (!billingAddress.address || !billingAddress.city || !billingAddress.state || !billingAddress.zip)) {
-    return json({ error: "invalid_billing_address" }, 400, origin);
+  if (chargeAmountCents > 0) {
+    if (!hasRequiredBillingAddressFields(billingAddress)) {
+      return json({ error: "invalid_billing_address" }, 400, origin);
+    }
   }
 
   if (selectedOffer.code !== "institution") {
