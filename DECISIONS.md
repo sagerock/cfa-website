@@ -539,3 +539,14 @@ calculated, and the checkout discloses the adjustment as soon as Canada is selec
 Automatic and manual discounts do not stack: the larger adjustment wins, with ties going
 to the automatic rule so a limited coupon is not consumed unnecessarily. The registration
 stores both the discount amount and its automatic rule code for accounting and audit.
+
+## 2026-09-10 — OPEN: checkout billing-country list blocks non-US/Canada registrants (flagged, not decided)
+A prospective registrant based in Australia tried to register for a program and the
+billing-country selector on checkout currently offers only United States and Canada — a
+non-US/CA billing address likely can't complete checkout at all. CfA administration
+confirmed they're now marketing internationally and want the country list broadened
+significantly, not narrowly. This builds on the 2026-09-07 Canadian pricing rule above
+(country-specific handling already exists for CA); open questions are how far to broaden
+the list and whether other countries need their own pricing/discount treatment the way
+Canada does, or just checkout eligibility. Not built — Sage is discussing this directly
+with this project's session; logging it here so the context carries over.
