@@ -91,7 +91,8 @@ const otherCountries = ISO_COUNTRY_CODES
         </fieldset>
 
         <fieldset class="form-section" id="billing-section">
-          <legend><span>03</span> Billing address</legend>
+          <legend><span>03</span> Contact and billing address</legend>
+          <p class="section-note">We'll keep this with your CfA contact record and use it to process your payment.</p>
           <div class="field-grid">
             <label class="wide" for="billing-address1">
               Street address
@@ -831,6 +832,7 @@ const otherCountries = ISO_COUNTRY_CODES
   .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
   #organization-field[hidden] { display: none; }
   .field-grid label { display: grid; gap: 7px; font-family: var(--sans); font-size: 14px; font-weight: 600; }
+  .section-note { margin: -4px 0 18px; color: var(--soft); font-size: 15px; }
   .field-grid label small { color: var(--soft); font-weight: 400; }
   .field-grid label > span { color: var(--soft); font-family: var(--serif); font-size: 14px; font-weight: 400; }
   .field-grid label > .field-heading { color: inherit; font-family: inherit; font-size: inherit; font-weight: inherit; }
