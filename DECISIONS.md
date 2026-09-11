@@ -554,3 +554,20 @@ This change enables checkout eligibility, not multi-currency settlement: every o
 charge remains USD and the page now says so beside the country selector. Canada's existing
 automatic 20% adjustment remains the only country pricing rule; Australia receives no new
 discount. Adding AUD prices would be a separate merchant/account and accounting decision.
+
+## 2026-09-11 — In-house certificate issuance starts staff-controlled
+
+Milan asked CfA to replace SimpleCert with an in-house workflow and supplied an issued
+certificate as the design reference. The first implementation lives on the existing learning
+platform: versioned templates, explicit eligibility evidence, deterministic PDF generation,
+private storage, issuance snapshots, hashes, and non-destructive revocation. The staff queue is
+`/dashboard/certificates`; it uses its own write-capable admin token rather than the dashboard's
+read-only viewer tokens.
+
+The sample's static background includes signature artwork, so it is uploaded to a private
+Supabase bucket and is never committed to this public repository. Until it is installed, the
+renderer uses a built-in fallback. Automatic issuance and delivery remain off: CfA staff must
+review eligibility and preview before issuing, and Milan must approve the recreated design before
+the first real certificate. This creates the certificate half of `cfa-growth` #40 and a stable
+handoff for attendance work in #35 without guessing that enrollment or a Zoom-name match equals
+completion. See `docs/certificate-automation.md`.

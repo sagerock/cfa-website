@@ -1,0 +1,392 @@
+---
+import '../../styles/global.css';
+import { FN } from '../../data/site.js';
+const CERTIFICATE_ENDPOINT = `${FN}/cfa-certificates`;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Certificate desk — Center for Anthroposophy</title>
+  </head>
+  <body class="certificate-desk">
+    <header class="desk-head">
+      <div class="wrap">
+        <div>
+          <p class="eyebrow">Center for Anthroposophy</p>
+          <h1>Certificate desk</h1>
+          <p>Review eligibility, preview the certificate, then issue the final PDF.</p>
+        </div>
+        <a id="dashboard-link" href="/dashboard">Website dashboard</a>
+      </div>
+    </header>
+
+    <main class="wrap desk-main">
+      <section id="gate" class="notice" hidden>
+        <h2>Certificate administrator token required</h2>
+        <p>Open this page as <code>/dashboard/certificates#your-token</code>.</p>
+      </section>
+      <section id="error" class="notice error" hidden></section>
+
+      <div id="content" hidden>
+        <section class="desk-controls">
+          <label>
+            Program
+            <select id="program"></select>
+          </label>
+          <label>
+            Template
+            <select id="template"></select>
+          </label>
+          <label>
+            Award date
+            <input id="award-date" type="date" />
+          </label>
+          <label>
+            Reviewer / issuer
+            <input id="actor" type="text" maxlength="120" placeholder="Your name" autocomplete="name" />
+          </label>
+          <button id="refresh" type="button">Refresh</button>
+        </section>
+
+        <section class="summary" aria-label="Certificate counts">
+          <div><strong id="total">0</strong><span>enrolled</span></div>
+          <div><strong id="eligible">0</strong><span>eligible</span></div>
+          <div><strong id="issued">0</strong><span>issued</span></div>
+          <div><strong id="review">0</strong><span>need review</span></div>
+        </section>
+
+        <section class="notice policy">
+          <strong>Issuance remains staff-controlled.</strong>
+          <span>The template’s automatic-issuance switch is off. Previewing never creates a certificate or sends an email.</span>
+        </section>
+
+        <section class="table-panel">
+          <div class="panel-title">
+            <h2>Certificate queue</h2>
+            <span id="background-status"></span>
+          </div>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr><th>Participant</th><th>Eligibility</th><th>Certificate</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="people"></tbody>
+            </table>
+          </div>
+          <p id="empty" class="empty" hidden>No active enrollments were found for this program.</p>
+        </section>
+      </div>
+    </main>
+
+    <script is:inline define:vars={{ endpoint: CERTIFICATE_ENDPOINT }}>
+      const $ = (id) => document.getElementById(id);
+      const token = decodeURIComponent(location.hash.replace(/^#/, '').trim());
+      let state = { programs: [], templates: [], people: [] };
+      $('award-date').value = new Date().toISOString().slice(0, 10);
+
+      function showError(message) {
+        $('error').textContent = message;
+        $('error').hidden = false;
+      }
+
+      async function api(query = '', options = {}) {
+        const response = await fetch(`${endpoint}${query}`, {
+          cache: 'no-store',
+          ...options,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            ...(options.body ? { 'Content-Type': 'application/json' } : {}),
+            ...(options.headers || {}),
+          },
+        });
+        if (!response.ok) {
+          const detail = await response.json().catch(() => ({}));
+          const error = new Error(detail.error || 'request_failed');
+          error.status = response.status;
+          throw error;
+        }
+        return response;
+      }
+
+      function option(value, label) {
+        const item = document.createElement('option');
+        item.value = value;
+        item.textContent = label;
+        return item;
+      }
+
+      function populateSelectors() {
+        const program = $('program');
+        const priorProgram = program.value;
+        program.replaceChildren(...state.programs.map((item) => option(item.id, item.name)));
+        if (state.programs.some((item) => item.id === priorProgram)) program.value = priorProgram;
+
+        const template = $('template');
+        const priorTemplate = template.value;
+        const compatible = state.templates.filter((item) => !item.program_id || item.program_id === program.value);
+        template.replaceChildren(...compatible.map((item) => option(item.id, `${item.name} · v${item.version}`)));
+        if (compatible.some((item) => item.id === priorTemplate)) template.value = priorTemplate;
+        const selected = compatible.find((item) => item.id === template.value);
+        $('background-status').textContent = selected?.background_path
+          ? 'Uses the private CfA design background when installed'
+          : 'Uses the built-in design';
+      }
+
+      function statusBadge(text, kind) {
+        const badge = document.createElement('span');
+        badge.className = `badge ${kind}`;
+        badge.textContent = text;
+        return badge;
+      }
+
+      function actionButton(label, handler, disabled = false) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = label;
+        button.disabled = disabled;
+        button.addEventListener('click', () => handler(button));
+        return button;
+      }
+
+      async function withBusy(button, label, work) {
+        const prior = button.textContent;
+        button.disabled = true;
+        button.textContent = label;
+        $('error').hidden = true;
+        try {
+          await work();
+          button.textContent = prior;
+        } catch (error) {
+          showError(error.message.replaceAll('_', ' '));
+          button.textContent = prior;
+        } finally {
+          button.disabled = false;
+        }
+      }
+
+      function payload(person, action) {
+        return {
+          action,
+          enrollment_id: person.enrollment_id,
+          template_id: $('template').value,
+          award_date: $('award-date').value,
+          issued_by: $('actor').value.trim(),
+        };
+      }
+
+      function saveBlob(blob, filename, open = false) {
+        const url = URL.createObjectURL(blob);
+        const anchor = document.createElement('a');
+        anchor.href = url;
+        anchor.download = filename;
+        if (open) anchor.target = '_blank';
+        document.body.append(anchor);
+        anchor.click();
+        anchor.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 30_000);
+      }
+
+      async function preview(person, button) {
+        await withBusy(button, 'Building…', async () => {
+          const response = await api('', { method: 'POST', body: JSON.stringify(payload(person, 'preview')) });
+          saveBlob(await response.blob(), `${person.name}-certificate-preview.pdf`, true);
+        });
+      }
+
+      async function setEligibility(person, button) {
+        const actor = $('actor').value.trim();
+        if (!actor) { showError('Enter the reviewer’s name first.'); return; }
+        const becomingEligible = !person.eligibility?.eligible;
+        const reason = prompt(
+          becomingEligible ? 'Why is this participant eligible?' : 'Why should eligibility be removed?',
+          becomingEligible ? 'Completion confirmed by program staff' : '',
+        );
+        if (!reason?.trim()) return;
+        await withBusy(button, 'Saving…', async () => {
+          await api('', {
+            method: 'POST',
+            body: JSON.stringify({
+              action: 'set_eligibility',
+              enrollment_id: person.enrollment_id,
+              eligible: becomingEligible,
+              basis: 'manual_review',
+              reviewed_by: actor,
+              evidence: { reason: reason.trim() },
+            }),
+          });
+          await loadQueue();
+        });
+      }
+
+      async function issue(person, button) {
+        const actor = $('actor').value.trim();
+        if (!actor) { showError('Enter the issuer’s name first.'); return; }
+        if (!confirm(`Issue the final certificate to ${person.name}? This creates an auditable record.`)) return;
+        await withBusy(button, 'Issuing…', async () => {
+          await api('', { method: 'POST', body: JSON.stringify(payload(person, 'issue')) });
+          await loadQueue();
+        });
+      }
+
+      async function download(person, button) {
+        await withBusy(button, 'Downloading…', async () => {
+          const response = await api(`?action=download&id=${encodeURIComponent(person.certificate.id)}`);
+          saveBlob(await response.blob(), `${person.name}-${person.certificate.certificate_number}.pdf`);
+        });
+      }
+
+      async function revoke(person, button) {
+        const actor = $('actor').value.trim();
+        if (!actor) { showError('Enter the administrator’s name first.'); return; }
+        const reason = prompt(`Why should ${person.name}’s certificate be revoked?`);
+        if (!reason?.trim()) return;
+        if (!confirm('Revoke this certificate? The audit record and PDF will be preserved.')) return;
+        await withBusy(button, 'Revoking…', async () => {
+          await api('', {
+            method: 'POST',
+            body: JSON.stringify({
+              action: 'revoke',
+              certificate_id: person.certificate.id,
+              reason: reason.trim(),
+              revoked_by: actor,
+            }),
+          });
+          await loadQueue();
+        });
+      }
+
+      function renderPeople() {
+        const people = state.people || [];
+        $('total').textContent = people.length;
+        $('eligible').textContent = people.filter((person) => person.eligibility?.eligible).length;
+        $('issued').textContent = people.filter((person) => person.certificate?.status === 'issued').length;
+        $('review').textContent = people.filter((person) => !person.eligibility?.eligible).length;
+        $('empty').hidden = people.length > 0;
+        const body = $('people');
+        body.replaceChildren();
+        for (const person of people) {
+          const row = document.createElement('tr');
+          const identity = document.createElement('td');
+          const name = document.createElement('strong');
+          name.textContent = person.name;
+          const email = document.createElement('span');
+          email.textContent = person.email || 'No email recorded';
+          identity.append(name, email);
+
+          const eligibility = document.createElement('td');
+          if (person.eligibility?.eligible) {
+            eligibility.append(statusBadge('Eligible', 'good'));
+            const evidence = document.createElement('span');
+            evidence.textContent = person.eligibility.basis.replaceAll('_', ' ');
+            eligibility.append(evidence);
+          } else {
+            eligibility.append(statusBadge('Needs review', 'waiting'));
+          }
+
+          const certificate = document.createElement('td');
+          if (person.certificate) {
+            certificate.append(statusBadge(person.certificate.status, person.certificate.status === 'issued' ? 'good' : 'muted'));
+            const number = document.createElement('span');
+            number.textContent = person.certificate.certificate_number;
+            certificate.append(number);
+          } else {
+            certificate.append(statusBadge('Not issued', 'muted'));
+          }
+
+          const actions = document.createElement('td');
+          actions.className = 'actions';
+          actions.append(actionButton('Preview', (button) => preview(person, button), !$('template').value));
+          actions.append(actionButton(
+            person.eligibility?.eligible ? 'Remove eligibility' : 'Mark eligible',
+            (button) => setEligibility(person, button),
+            person.certificate?.status === 'issued',
+          ));
+          if (person.certificate?.status === 'issued') {
+            actions.append(actionButton('Download', (button) => download(person, button)));
+            actions.append(actionButton('Revoke', (button) => revoke(person, button)));
+          } else {
+            actions.append(actionButton('Issue', (button) => issue(person, button), !person.eligibility?.eligible || !$('template').value));
+          }
+          row.append(identity, eligibility, certificate, actions);
+          body.append(row);
+        }
+      }
+
+      async function loadQueue() {
+        if (!token) { $('gate').hidden = false; return; }
+        try {
+          const programId = $('program').value;
+          const query = programId ? `?action=queue&program_id=${encodeURIComponent(programId)}` : '?action=queue';
+          state = await (await api(query)).json();
+          populateSelectors();
+          if (!programId && $('program').value) {
+            state = await (await api(`?action=queue&program_id=${encodeURIComponent($('program').value)}`)).json();
+            populateSelectors();
+          }
+          $('content').hidden = false;
+          $('gate').hidden = true;
+          $('error').hidden = true;
+          renderPeople();
+        } catch (error) {
+          if (error.status === 401) $('gate').hidden = false;
+          else showError('Could not load the certificate queue.');
+        }
+      }
+
+      $('program').addEventListener('change', loadQueue);
+      $('template').addEventListener('change', () => { populateSelectors(); renderPeople(); });
+      $('refresh').addEventListener('click', loadQueue);
+      window.addEventListener('hashchange', () => location.reload());
+      loadQueue();
+    </script>
+
+    <style is:global>
+      body.certificate-desk { background: var(--paper); }
+      .desk-head { background: var(--raised); border-bottom: 1px solid var(--line); padding: 24px 0; }
+      .desk-head .wrap { align-items: end; display: flex; gap: 24px; justify-content: space-between; }
+      .desk-head h1 { font-size: clamp(28px, 4vw, 42px); margin: 2px 0 4px; }
+      .desk-head p:last-child { color: var(--soft); font: 14px var(--sans); }
+      .desk-head a { color: var(--green-ink); font: 13px var(--sans); }
+      .desk-main { padding: 28px 24px 64px; }
+      .notice { background: var(--raised); border: 1px solid var(--line); border-radius: 6px; font: 13px var(--sans); margin-bottom: 18px; padding: 16px 18px; }
+      .notice h2 { font-size: 18px; margin-bottom: 7px; }
+      .notice.error { border-color: #a8324a; color: #a8324a; }
+      .notice.policy { align-items: baseline; display: flex; gap: 8px; }
+      .notice.policy span { color: var(--soft); }
+      .desk-controls { align-items: end; background: var(--raised); border: 1px solid var(--line); border-radius: 6px; display: grid; gap: 14px; grid-template-columns: 1.2fr 1fr .75fr 1fr auto; margin-bottom: 18px; padding: 16px; }
+      .desk-controls label { color: var(--soft); display: grid; font: 11px var(--sans); gap: 5px; letter-spacing: .05em; text-transform: uppercase; }
+      .desk-controls input, .desk-controls select, .desk-controls button { background: var(--paper); border: 1px solid var(--line); border-radius: 4px; color: var(--ink); font: 13px var(--sans); min-height: 38px; padding: 7px 9px; }
+      .desk-controls button { color: var(--green-ink); cursor: pointer; }
+      .summary { display: grid; gap: 14px; grid-template-columns: repeat(4, 1fr); margin-bottom: 18px; }
+      .summary div { background: var(--raised); border: 1px solid var(--line); border-radius: 6px; display: flex; flex-direction: column; padding: 14px 17px; }
+      .summary strong { color: var(--green-ink); font: 600 29px var(--sans); }
+      .summary span { color: var(--soft); font: 11px var(--sans); letter-spacing: .06em; text-transform: uppercase; }
+      .table-panel { background: var(--raised); border: 1px solid var(--line); border-radius: 6px; padding: 18px 20px; }
+      .panel-title { align-items: baseline; display: flex; justify-content: space-between; margin-bottom: 12px; }
+      .panel-title h2 { font: 600 15px var(--sans); letter-spacing: .06em; text-transform: uppercase; }
+      .panel-title span { color: var(--soft); font: 11px var(--sans); }
+      .table-scroll { overflow-x: auto; }
+      table { border-collapse: collapse; font: 13px var(--sans); width: 100%; }
+      th { border-bottom: 2px solid var(--line); color: var(--soft); font-size: 10px; letter-spacing: .07em; padding: 8px; text-align: left; text-transform: uppercase; }
+      td { border-bottom: 1px solid var(--line); padding: 11px 8px; vertical-align: middle; }
+      td > strong, td > span { display: block; }
+      td > span:not(.badge) { color: var(--soft); font-size: 11px; margin-top: 3px; }
+      .badge { border-radius: 20px; display: inline-block; font-size: 10px; padding: 4px 8px; text-transform: capitalize; }
+      .badge.good { background: var(--chalk); color: var(--green-ink); }
+      .badge.waiting { background: rgba(196, 162, 83, .16); color: #8b601e; }
+      .badge.muted { background: var(--paper); color: var(--soft); }
+      td.actions { display: flex; flex-wrap: wrap; gap: 6px; }
+      .actions button { background: var(--raised); border: 1px solid var(--line); border-radius: 4px; color: var(--green-ink); cursor: pointer; font: 11px var(--sans); padding: 6px 9px; }
+      .actions button:disabled { cursor: not-allowed; opacity: .42; }
+      .empty { color: var(--soft); font: 13px var(--sans); padding: 24px; text-align: center; }
+      @media (max-width: 900px) { .desk-controls { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 640px) {
+        .desk-head .wrap, .notice.policy { align-items: start; flex-direction: column; }
+        .desk-controls, .summary { grid-template-columns: 1fr; }
+      }
+    </style>
+  </body>
+</html>
