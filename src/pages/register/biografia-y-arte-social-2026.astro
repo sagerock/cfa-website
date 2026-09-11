@@ -5,18 +5,30 @@
 import Base from '../../layouts/Base.astro';
 
 const sessions = [
-  { date: '7 de octubre', topic: 'Cualidades planetarias. Introducción y el Sol, el armonizador' },
-  { date: '14 de octubre', topic: 'El Sol. Cualidades, preguntas de vida, diario y puesta en común' },
-  { date: '21 de octubre', topic: 'Los que mueven: Mercurio' },
-  { date: '28 de octubre', topic: 'Los que mueven: Júpiter' },
-  { date: '4 de noviembre', topic: 'Conversación y relación: Venus' },
-  { date: '11 de noviembre', topic: 'Conversación y relación: Marte' },
-  { date: '18 de noviembre', topic: 'Los planetas umbral: la Luna' },
-  { date: '25 de noviembre', topic: 'Los planetas umbral: Saturno' },
+  '7 de octubre',
+  '14 de octubre',
+  '21 de octubre',
+  '28 de octubre',
+  '4 de noviembre',
+  '11 de noviembre',
+  '18 de noviembre',
+  '25 de noviembre',
+];
+
+const workshopThemes = [
+  'El Sol armonizador',
+  'Los que mueven: Mercurio y Júpiter',
+  'Conversación y relación: Venus y Marte',
+  'Los planetas umbral: la Luna y Saturno',
 ];
 ---
 
-<Base title="Inscripción: Biografía y Arte Social 2026 | Center for Anthroposophy" minimal>
+<Base
+  title="Inscripción: Biografía y Arte Social 2026 | Center for Anthroposophy"
+  lang="es"
+  portalLabel="¿Ya te inscribiste? Inicia sesión"
+  minimal
+>
   <header class="registration-head">
     <div class="wrap registration-intro">
       <div>
@@ -27,8 +39,9 @@ const sessions = [
       <p class="intro-copy">
         Ocho encuentros en vivo por Zoom con Magnolia Ríos, los miércoles de 7:00 a 8:30 pm
         (hora del Este de EE. UU.), del 7 de octubre al 25 de noviembre de 2026. Un grupo
-        pequeño, de 8 a 15 participantes. Incluye el acceso en vivo, las grabaciones y los
-        materiales del curso.
+        pequeño, de 8 a 15 participantes. Incluye el acceso en vivo y los materiales del
+        curso. Para proteger las historias personales compartidas en el grupo, las sesiones
+        no se grabarán.
       </p>
     </div>
   </header>
@@ -49,7 +62,7 @@ const sessions = [
               <input type="radio" name="offer_code" value="curso-completo" checked />
               <span class="offer-copy">
                 <strong>Curso completo · 8 sesiones</strong>
-                <small>Las cuatro series de talleres: el Sol; Mercurio y Júpiter; Venus y Marte; la Luna y Saturno. Con verso, dibujo de formas, ejercicio artístico, preguntas de vida y puesta en común en cada encuentro.</small>
+                <small>Cuatro talleres desarrollados a lo largo de ocho encuentros: el Sol; Mercurio y Júpiter; Venus y Marte; la Luna y Saturno. Incluye versos, dibujo de formas, ejercicios artísticos, preguntas de vida y puesta en común.</small>
               </span>
               <span class="offer-price">Precio por confirmar</span>
             </label>
@@ -139,6 +152,7 @@ const sessions = [
           <button class="payment-button" type="button" disabled>
             Vista previa: el pago aún no está disponible
           </button>
+          <p class="payment-note">Se ofrecerá la opción de pagar en dos cuotas durante octubre y noviembre. El importe y las fechas de cobro aparecerán aquí cuando queden confirmados.</p>
           <p class="payment-note">Los datos de la tarjeta se procesan de forma segura a través de Authorize.Net y nunca pasan por este sitio web.</p>
         </fieldset>
       </form>
@@ -179,11 +193,19 @@ const sessions = [
         <p class="eyebrow">Calendario</p>
         <h2>Las ocho sesiones</h2>
         <ol class="session-list">
-          {sessions.map((session) => (
-            <li><strong>{session.date}</strong><span>{session.topic}</span></li>
+          {sessions.map((date) => (
+            <li><strong>{date}</strong><span>7:00–8:30 pm ET</span></li>
           ))}
         </ol>
-        <p class="session-note">Distribución provisional de los cuatro talleres en ocho encuentros, pendiente de confirmar con Magnolia.</p>
+        <p class="session-note">Las cuatro temáticas se desarrollarán a lo largo de estos ocho encuentros. Magnolia confirmará el ritmo y la secuencia final.</p>
+      </div>
+      <div class="summary-card themes-card">
+        <p class="eyebrow">Temáticas</p>
+        <h2>Los cuatro talleres</h2>
+        <ol class="theme-list">
+          {workshopThemes.map((theme) => <li>{theme}</li>)}
+        </ol>
+        <p class="privacy-note"><strong>Un espacio confidencial y en vivo.</strong> Debido al carácter personal del trabajo biográfico, no se harán grabaciones.</p>
       </div>
       <div class="support-card">
         <p>¿Preguntas antes de inscribirte?</p>
@@ -358,4 +380,7 @@ const sessions = [
   .session-list li { display: grid; grid-template-columns: 7.5rem 1fr; gap: 0.5rem; font-size: 0.92rem; line-height: 1.35; }
   .session-list strong { font-weight: 600; }
   .session-note { margin: 0.9rem 0 0; font-size: 0.82rem; opacity: 0.75; }
+  .themes-card { margin-top: 1rem; }
+  .theme-list { margin: 0.75rem 0 0; padding-left: 1.25rem; display: grid; gap: 0.55rem; font-size: 0.92rem; line-height: 1.35; }
+  .privacy-note { border-top: 1px dotted var(--line); margin: 1rem 0 0; padding-top: 1rem; font-size: 0.86rem; line-height: 1.45; }
 </style>
