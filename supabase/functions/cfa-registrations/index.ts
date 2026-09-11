@@ -99,7 +99,7 @@ Deno.serve(async (req: Request) => {
   const [registrationsResult, enrollmentsResult, offersResult] = await Promise.all([
     admin
       .from("registrations")
-      .select("id, created_at, paid_at, status, first_name, last_name, email, organization, offer_id, amount_cents, discount_cents, coupon_code, is_test")
+      .select("id, created_at, paid_at, status, first_name, last_name, email, organization, offer_id, amount_cents, discount_cents, coupon_code, automatic_discount_code, is_test")
       .eq("client_id", CFA_CLIENT_ID)
       .eq("program_id", course.program_id)
       .order("created_at", { ascending: false })
@@ -133,6 +133,7 @@ Deno.serve(async (req: Request) => {
       amount_cents: r.amount_cents,
       discount_cents: r.discount_cents,
       coupon_code: r.coupon_code,
+      automatic_discount_code: r.automatic_discount_code,
     }));
 
   const { data: institutionRosterRows, error: institutionRosterError } = await admin

@@ -1,5 +1,18 @@
 ---
 import Base from '../../layouts/Base.astro';
+import {
+  FEATURED_BILLING_COUNTRY_CODES,
+  ISO_COUNTRY_CODES,
+} from '../../../supabase/functions/_shared/billingCountries.js';
+
+const countryNames = new Intl.DisplayNames(['en'], { type: 'region' });
+const featuredCountryCodes = new Set(FEATURED_BILLING_COUNTRY_CODES);
+const countryOption = (code) => ({ code, name: countryNames.of(code) || code });
+const featuredCountries = FEATURED_BILLING_COUNTRY_CODES.map(countryOption);
+const otherCountries = ISO_COUNTRY_CODES
+  .filter((code) => !featuredCountryCodes.has(code))
+  .map(countryOption)
+  .sort((a, b) => a.name.localeCompare(b.name, 'en'));
 ---
 
 <Base title="Register for Starlight Rays 2026–2027 | Center for Anthroposophy" minimal>
@@ -11,9 +24,9 @@ import Base from '../../layouts/Base.astro';
         <p class="cohort">2026–2027</p>
       </div>
       <p class="intro-copy">
-        Choose the complete twelve-seminar series — paid at once or in five monthly payments — one
-        featured session, or the three-session bundle. Every option includes live access, its
-        recordings, and course resources.
+        Register for the complete twelve-seminar series as an individual — paid at once or in five
+        monthly payments — or bring up to twenty participants from your school or institution.
+        Registration includes live access, recordings, and course resources.
       </p>
     </div>
   </header>
@@ -78,7 +91,8 @@ import Base from '../../layouts/Base.astro';
         </fieldset>
 
         <fieldset class="form-section" id="billing-section">
-          <legend><span>03</span> Billing address</legend>
+          <legend><span>03</span> Contact and billing address</legend>
+          <p class="section-note">We'll keep this with your CfA contact record and use it to process your payment.</p>
           <div class="field-grid">
             <label class="wide" for="billing-address1">
               Street address
@@ -89,19 +103,22 @@ import Base from '../../layouts/Base.astro';
               <input type="text" id="billing-city" name="city" autocomplete="billing address-level2" maxlength="100" required />
             </label>
             <label for="billing-state">
-              State or province
-              <input type="text" id="billing-state" name="state" autocomplete="billing address-level1" maxlength="100" required />
+              <span class="field-heading"><span id="billing-state-label">State</span> <small id="billing-state-optional" hidden>optional</small></span>
+              <input type="text" id="billing-state" name="state" autocomplete="billing address-level1" maxlength="100" placeholder="e.g. NH" required />
             </label>
             <label for="billing-zip">
-              Postal code
-              <input type="text" id="billing-zip" name="zip" autocomplete="billing postal-code" maxlength="30" required />
+              <span class="field-heading"><span id="billing-zip-label">ZIP code</span> <small id="billing-zip-optional" hidden>optional</small></span>
+              <input type="text" id="billing-zip" name="zip" autocomplete="billing postal-code" maxlength="30" placeholder="e.g. 03431" required />
             </label>
             <label for="billing-country">
               Country
               <select id="billing-country" name="country" autocomplete="billing country" required>
-                <option value="US">United States</option>
-                <option value="CA">Canada</option>
+                {featuredCountries.map((country) => <option value={country.code}>{country.name}</option>)}
+                <option disabled>──────────</option>
+                {otherCountries.map((country) => <option value={country.code}>{country.name}</option>)}
               </select>
+              <span>All prices and card charges are in U.S. dollars (USD).</span>
+              <span id="country-discount-note" hidden>Canadian orders receive 20% off automatically.</span>
             </label>
           </div>
         </fieldset>
@@ -156,6 +173,10 @@ import Base from '../../layouts/Base.astro';
             <dt>Payment plan</dt>
             <dd id="summary-plan-copy"></dd>
           </div>
+          <div id="summary-discount" hidden>
+            <dt>Adjustment</dt>
+            <dd id="summary-discount-copy"></dd>
+          </div>
         </dl>
         <div class="summary-total">
           <span>Total</span>
@@ -173,6 +194,10 @@ import Base from '../../layouts/Base.astro';
 
 <script>
   import { supabase } from '../../lib/learnClient.js';
+  import {
+    getBillingAddressRule,
+    isSupportedBillingCountry,
+  } from '../../../supabase/functions/_shared/billingCountries.js';
 
   const endpoint = 'https://ckloewflialohuvixmvd.supabase.co/functions/v1/cfa-register';
   const form = document.getElementById('registration-form');
@@ -199,6 +224,16 @@ import Base from '../../layouts/Base.astro';
   const summaryPrice = document.getElementById('summary-price');
   const summaryPlan = document.getElementById('summary-plan');
   const summaryPlanCopy = document.getElementById('summary-plan-copy');
+  const summaryDiscount = document.getElementById('summary-discount');
+  const summaryDiscountCopy = document.getElementById('summary-discount-copy');
+  const countryDiscountNote = document.getElementById('country-discount-note');
+  const billingCountryInput = form.elements.namedItem('country');
+  const billingStateInput = form.elements.namedItem('state');
+  const billingZipInput = form.elements.namedItem('zip');
+  const billingStateLabel = document.getElementById('billing-state-label');
+  const billingZipLabel = document.getElementById('billing-zip-label');
+  const billingStateOptional = document.getElementById('billing-state-optional');
+  const billingZipOptional = document.getElementById('billing-zip-optional');
   const sandboxNote = document.getElementById('sandbox-note');
   const productionTestNote = document.getElementById('production-test-note');
   const fragment = new URLSearchParams(location.hash.slice(1));
@@ -212,7 +247,40 @@ import Base from '../../layouts/Base.astro';
   localStorage.setItem(checkoutKeyName, idempotencyKey);
   let turnstileToken = '';
   let turnstileWidgetId;
-  const requestedOfferCode = new URLSearchParams(location.search).get('offer') || '';
+  const pageParams = new URLSearchParams(location.search);
+  const requestedOfferCode = pageParams.get('offer') || '';
+
+  function safeReferrer(value) {
+    try {
+      const referrer = new URL(value);
+      return `${referrer.origin}${referrer.pathname}`.slice(0, 500);
+    } catch {
+      return '';
+    }
+  }
+
+  function captureAttribution() {
+    const storageKey = 'cfa-registration-attribution';
+    try {
+      const stored = JSON.parse(sessionStorage.getItem(storageKey) || 'null');
+      if (stored && typeof stored === 'object' && !Array.isArray(stored)) return stored;
+    } catch {}
+
+    const captured = {
+      captured_at: new Date().toISOString(),
+      landing_path: location.pathname.slice(0, 500),
+      referrer: safeReferrer(document.referrer),
+    };
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid', 'msclkid']
+      .forEach((key) => {
+        const value = (pageParams.get(key) || '').trim();
+        if (value) captured[key] = value.slice(0, key.startsWith('utm_') ? 300 : 500);
+      });
+    try { sessionStorage.setItem(storageKey, JSON.stringify(captured)); } catch {}
+    return captured;
+  }
+
+  const attribution = captureAttribution();
 
   const money = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
   const sessionDate = new Intl.DateTimeFormat('en-US', {
@@ -234,11 +302,28 @@ import Base from '../../layouts/Base.astro';
   const couponApply = document.getElementById('coupon-apply');
   const couponStatus = document.getElementById('coupon-status');
 
+  function selectedAutomaticDiscount() {
+    const country = billingCountryInput?.value || '';
+    return config?.automatic_discounts?.find((rule) => rule.country_code === country) || null;
+  }
+
+  function effectiveDiscount(offer) {
+    if (!offer) return { amount_cents: 0, source: null };
+    const automatic = selectedAutomaticDiscount();
+    const couponAmount = appliedCoupon
+      ? Math.min(offer.amount_cents, Math.round(offer.amount_cents * appliedCoupon.percent_off / 100))
+      : 0;
+    const automaticAmount = automatic
+      ? Math.min(offer.amount_cents, Math.round(offer.amount_cents * automatic.percent_off / 100))
+      : 0;
+    return couponAmount > automaticAmount
+      ? { amount_cents: couponAmount, source: appliedCoupon }
+      : { amount_cents: automaticAmount, source: automatic };
+  }
+
   function effectiveAmountCents(offer) {
     if (!offer) return null;
-    if (!appliedCoupon) return offer.amount_cents;
-    const discount = Math.min(offer.amount_cents, Math.round(offer.amount_cents * appliedCoupon.percent_off / 100));
-    return offer.amount_cents - discount;
+    return offer.amount_cents - effectiveDiscount(offer).amount_cents;
   }
 
   // Mirrors the server split (even installments, remainder on the first) so
@@ -256,9 +341,26 @@ import Base from '../../layouts/Base.astro';
   }
 
   const billingSection = document.getElementById('billing-section');
-  const billingInputs = ['address1', 'city', 'state', 'zip', 'country']
+  const baseBillingInputs = ['address1', 'city', 'country']
     .map((name) => form.elements.namedItem(name));
   const termsCopy = document.getElementById('terms-copy');
+
+  function updateBillingAddressFields(free) {
+    const country = billingCountryInput?.value || '';
+    const rule = getBillingAddressRule(country);
+    billingStateLabel.textContent = rule.regionLabel;
+    billingZipLabel.textContent = rule.postalLabel;
+    billingStateInput.placeholder = rule.regionPlaceholder;
+    billingZipInput.placeholder = rule.postalPlaceholder;
+    baseBillingInputs.forEach((input) => { input.required = !free; });
+    billingStateInput.required = !free && rule.regionRequired;
+    billingZipInput.required = !free && rule.postalRequired;
+    billingStateOptional.hidden = free || rule.regionRequired;
+    billingZipOptional.hidden = free || rule.postalRequired;
+    billingCountryInput.setCustomValidity(
+      free || isSupportedBillingCountry(country) ? '' : 'Choose a valid billing country.',
+    );
+  }
 
   function updateSelection() {
     const offer = selectedOffer();
@@ -284,10 +386,21 @@ import Base from '../../layouts/Base.astro';
       ? 'September 5, 2026 – February 27, 2027'
       : includedSessions.map((session) => sessionDate.format(new Date(session.starts_at))).join(', ');
     const total = effectiveAmountCents(offer);
+    const discount = effectiveDiscount(offer);
+    const automatic = selectedAutomaticDiscount();
+    countryDiscountNote.hidden = !automatic;
+    if (automatic) {
+      countryDiscountNote.textContent = `${automatic.label}: ${automatic.percent_off}% off every order.`;
+    }
+    const automaticApplied = automatic && discount.source?.code === automatic.code;
+    summaryDiscount.hidden = !automaticApplied;
+    summaryDiscountCopy.textContent = automaticApplied
+      ? `${automatic.label} · ${automatic.percent_off}% off (${money.format(discount.amount_cents / 100)})`
+      : '';
     const free = offer && total === 0;
     if (config?.payment?.available) paymentButton.classList.toggle('AcceptUI', !free);
     billingSection.hidden = Boolean(free);
-    billingInputs.forEach((input) => { input.required = !free; });
+    updateBillingAddressFields(free);
     const plan = planOf(offer);
     summaryPlan.hidden = !plan;
     summaryPlanCopy.textContent = plan
@@ -332,7 +445,7 @@ import Base from '../../layouts/Base.astro';
       if (payload.coupon?.valid) {
         appliedCoupon = payload.coupon;
         couponInput.value = payload.coupon.code;
-        couponStatus.textContent = `Coupon ${payload.coupon.code} applied — ${payload.coupon.percent_off}% off.`;
+        couponStatus.textContent = `Coupon ${payload.coupon.code} is valid — ${payload.coupon.percent_off}% off when it is the best available discount.`;
         couponStatus.dataset.kind = 'ok';
       } else {
         couponStatus.textContent = 'That coupon code is not valid.';
@@ -393,6 +506,7 @@ import Base from '../../layouts/Base.astro';
         },
         terms_accepted: data.get('terms_accepted') === 'on',
         marketing_opt_in: data.get('marketing_opt_in') === 'on',
+        attribution,
         turnstile_token: turnstileToken,
         coupon_code: appliedCoupon?.code || '',
         opaque_data: opaqueData || {},
@@ -543,6 +657,22 @@ import Base from '../../layouts/Base.astro';
   form.addEventListener('change', updateSelection);
   form.addEventListener('submit', (event) => event.preventDefault());
 
+  let checkoutStartTracked = false;
+  function trackCheckoutStart() {
+    if (checkoutStartTracked) return;
+    checkoutStartTracked = true;
+    const offer = selectedOffer();
+    const conversion = {
+      value: (effectiveAmountCents(offer) || 0) / 100,
+      currency: 'USD',
+      name: offer ? `Starlight Rays 2026-27: ${offer.name}` : 'Starlight Rays 2026-27',
+      id: offer?.code,
+    };
+    if (window.__cfaConversion) window.__cfaConversion('begin_checkout', conversion);
+    if (window.__cfaTrack) window.__cfaTrack('checkout_started', { offer: offer?.code, value: conversion.value });
+  }
+  form.addEventListener('input', trackCheckoutStart, { once: true });
+
   async function initialize() {
     try {
       const configHeaders = new Headers({ Accept: 'application/json' });
@@ -551,23 +681,22 @@ import Base from '../../layouts/Base.astro';
       if (!response.ok) throw new Error('configuration');
       config = await response.json();
       offerList.replaceChildren();
-      const requestedOfferExists = config.offers.some((offer) => offer.code === requestedOfferCode);
-      let previousScope = null;
-      config.offers.forEach((offer, index) => {
-        if (previousScope === 'all' && offer.access_scope !== 'all') {
-          const divider = document.createElement('p');
-          divider.className = 'offer-divider';
-          divider.textContent = 'Not ready to commit to the entire series yet? Choose your one-off session below and we\u2019ll see you in the room!';
-          offerList.append(divider);
-        }
-        previousScope = offer.access_scope;
+      const requestedOffer = config.offers.find((offer) => offer.code === requestedOfferCode);
+      // Public checkout: the full series (paid at once or in five monthly payments) and the
+      // institution tier. Single sessions and the bundle stay email-only (?offer=<code>).
+      const publicOfferCodes = new Set(['individual', 'individual-plan', 'institution']);
+      const visibleOffers = requestedOffer
+        ? [requestedOffer]
+        : config.offers.filter((offer) => publicOfferCodes.has(offer.code));
+      if (!visibleOffers.length) throw new Error('offers');
+      visibleOffers.forEach((offer, index) => {
         const label = document.createElement('label');
         label.className = 'offer-option';
         const input = document.createElement('input');
         input.type = 'radio';
         input.name = 'offer_code';
         input.value = offer.code;
-        input.checked = requestedOfferExists ? offer.code === requestedOfferCode : index === 0;
+        input.checked = index === 0;
         input.required = true;
         const copy = document.createElement('span');
         copy.className = 'offer-copy';
@@ -703,8 +832,10 @@ import Base from '../../layouts/Base.astro';
   .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; }
   #organization-field[hidden] { display: none; }
   .field-grid label { display: grid; gap: 7px; font-family: var(--sans); font-size: 14px; font-weight: 600; }
+  .section-note { margin: -4px 0 18px; color: var(--soft); font-size: 15px; }
   .field-grid label small { color: var(--soft); font-weight: 400; }
   .field-grid label > span { color: var(--soft); font-family: var(--serif); font-size: 14px; font-weight: 400; }
+  .field-grid label > .field-heading { color: inherit; font-family: inherit; font-size: inherit; font-weight: inherit; }
   .field-grid .wide { grid-column: 1 / -1; }
   input, select {
     width: 100%;

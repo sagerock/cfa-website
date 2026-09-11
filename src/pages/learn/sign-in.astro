@@ -16,7 +16,7 @@ import Learn from '../../layouts/Learn.astro';
       </form>
 
       <div id="signin-status" class="signin-status" role="status" hidden></div>
-      <p class="signin-help">Only invited participants can open course materials. If your registration uses another email, contact <a href="mailto:office@centerforanthroposophy.org">the CfA office</a>.</p>
+      <p class="signin-help">Only invited participants can open course materials. Trouble signing in, or registered under a different email? Email <a href="mailto:sage@centerforanthroposophy.org">sage@centerforanthroposophy.org</a> and he’ll sort it out.</p>
     </section>
   </div>
 </Learn>
@@ -66,7 +66,7 @@ import Learn from '../../layouts/Learn.astro';
       return;
     }
 
-    status.textContent = 'Check your inbox on this device. Open the link in this same browser; it expires soon and can be used once.';
+    status.textContent = 'Check your inbox on this device. Open the link in this same browser; it expires soon and can be used once. Nothing after a few minutes? The address may not match your registration — email sage@centerforanthroposophy.org and he’ll sort it out.';
     form.reset();
   });
 </script>

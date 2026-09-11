@@ -461,3 +461,96 @@ programs on the rebuilt site. The review label was removed from `/policies/cance
 program page with different terms still wins. Every current native Starlight offer uses the same
 registration form, whose required authorization links to the policy; the registration welcome
 email also includes the policy URL. Future native product checkouts should preserve both links.
+
+## 2026-09-03 — Starlight checkout shows only the primary offers by default
+Curtis asked to remove the alternate purchase options from the public registration path because
+he and Sascha want payment plans, single sessions, and the three-session bundle offered through
+abandoned-checkout follow-up or targeted email instead of competing at checkout. Sage confirmed
+that Sascha owns this conversion decision. The default registration page now shows only the $420
+individual series and $1,220 institution registration, and the public program page no longer
+advertises the alternate offers. The underlying offers remain active and a targeted direct link
+with `?offer=<code>` renders only that requested offer, so no payment or entitlement capability
+was deleted.
+
+## 2026-09-03 — Checkout attribution is stored with the order
+Curtis asked for order and traffic tracking across the new `learn.` checkout path so HolyOps
+can measure ads. GA4 and the Meta Pixel already recorded page views and successful purchases,
+but campaign fields and click IDs disappeared after the browser event and could not be joined
+reliably to a registration. The checkout now stores first-touch UTM source, medium, campaign,
+content and term; Meta, Google and Microsoft click IDs; and a query-free landing path and
+referrer in a sanitized `registrations.attribution` object. It also sends Meta
+`InitiateCheckout` and GA4 `begin_checkout` on the visitor's first form interaction, while the
+existing purchase events retain the final value, offer and registration ID. The private hourly
+HolyOps registration sheet exposes these order-level attribution fields. Old registrations are
+not backfilled because their browser attribution was never retained.
+
+## 2026-09-03 — Technical trouble on the portal goes to Sage, and a "check your inbox" that means nothing is a bug
+Carol Gregory (Azure Fields) emailed that she could not get into the Starlight portal
+two days before the first seminar. She was correctly enrolled the whole time. Her 8/31
+launch email was delivered and its durable classroom link had never been used, and her
+"enter my email" attempt left no trace at all — no sign-in event, no auth user — meaning
+the address she typed did not match her registration.
+
+The reason she was stuck rather than corrected: `/learn/sign-in` is anti-enumeration by
+design and answers "Check your inbox" to *every* well-formed address, including ones we
+have never seen. That is right for a public app. For a portal where every user is a known
+paying registrant, it converts a typo into a silent dead end with nothing on screen to act
+on. Anti-enumeration stays — the copy changes instead: the success message now says that
+nothing arriving may mean the address does not match, and both dead-end pages
+(`sign-in`, `learn/index` "no active enrollment") now name
+sage@centerforanthroposophy.org rather than the office. Every reminder email already
+routed technical trouble to Sage; the pages were the inconsistency. Program questions
+still go to office@ — the split is technical vs. programmatic, not a general redirect.
+
+Sage considered a separate AI-run support address and decided against it: one human
+address, his, is clearer for a cohort this size.
+
+## 2026-09-03 — Amendment: the five-payment plan stays on the public checkout
+Curtis (HolyOps) clarified the same afternoon that the 5 × $89 payment plan was not meant to go.
+HolyOps' Rays lander and the returning-school notes already advertise the $89 option, so the
+checkout has to show it. The default registration page now lists the $420 individual series, the
+5 × $89 plan ($445 total), and the $1,220 institution registration; the program page's tuition line
+mentions the plan again. Single sessions and the three-session bundle remain email-only via
+`?offer=<code>`.
+
+## 2026-09-04 — Authorize.Net is mirrored through a read-only reporting boundary
+CfA's new checkout records successful payments locally, but that alone cannot answer the
+accounting question “what actually happened at the gateway?” An account-wide reconciliation
+function now polls Authorize.Net settlement batches, their transactions, and the unsettled
+transaction list, then stores a normalized mirror in service-role-only Supabase tables. It
+matches charges and ARB installments to native registrations and traces refunds through their
+original transaction. The function has an explicit allowlist of four reporting request types;
+it cannot charge, refund, void, alter a subscription, or edit a customer profile.
+
+The initial import covers 90 days. Ongoing operations use a daily seven-day overlap rather than
+webhooks: settlement state changes are naturally picked up, retries are idempotent, and the
+small current volume does not justify another public inbound endpoint. The private Orders sheet
+shows local collected value beside gateway net and flags mismatches, declines, voids, refunds,
+and native-looking gateway transactions with no registration. It reports discrepancies but
+never “fixes” money or registration status automatically; a human must decide which system is
+correct.
+
+## 2026-09-07 — Every native Canadian order receives an automatic 20% adjustment
+Sage confirmed Milan's proposed Canadian pricing should apply across the board to every
+order handled by CfA's system going forward, rather than only to an individual Starlight
+offer. Country pricing is therefore a client-wide, server-authoritative rule keyed to the
+billing country. Canada receives 20% off before one-time or installment amounts are
+calculated, and the checkout discloses the adjustment as soon as Canada is selected.
+Automatic and manual discounts do not stack: the larger adjustment wins, with ties going
+to the automatic rule so a limited coupon is not consumed unnecessarily. The registration
+stores both the discount amount and its automatic rule code for accounting and audit.
+
+## 2026-09-10 — Make checkout international; Australia is the first market, USD remains the currency
+An Australian prospect exposed that checkout's two-country selector—not an established
+gateway rule—was blocking every billing address outside the United States and Canada. Sage
+approved making the cart structurally international instead of adding Australia as another
+one-off exception. The selector now contains the complete 249-code ISO country list, with
+United States, Canada, and Australia pinned first. US, Canadian, and Australian addresses get
+their own state/province/territory and postal labels and requirements; other countries keep
+flexible region and postal fields so North American assumptions do not create another block.
+The Edge Function validates the same country and address rules before calling Authorize.Net.
+
+This change enables checkout eligibility, not multi-currency settlement: every offer and
+charge remains USD and the page now says so beside the country selector. Canada's existing
+automatic 20% adjustment remains the only country pricing rule; Australia receives no new
+discount. Adding AUD prices would be a separate merchant/account and accounting decision.

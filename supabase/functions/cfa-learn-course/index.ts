@@ -108,7 +108,7 @@ Deno.serve(async (request: Request) => {
       .order("position"),
     admin
       .from("cfa_learn_resources")
-      .select("id, session_id, title, kind, body, position")
+      .select("id, session_id, title, kind, body, external_url, position")
       .eq("course_id", course.id)
       .eq("published", true)
       .order("position"),
