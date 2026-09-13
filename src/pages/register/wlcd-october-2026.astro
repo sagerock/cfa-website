@@ -125,7 +125,7 @@ const otherCountries = ISO_COUNTRY_CODES
         </fieldset>
 
         <fieldset class="form-section final-section">
-          <legend><span>04</span> Confirm and pay</legend>
+          <legend><span id="final-step-number">04</span> Confirm and pay</legend>
           <label class="check-row">
             <input type="checkbox" name="terms_accepted" required />
             <span><span id="terms-copy">I authorize the selected charge and understand that registration is subject to CfA's cancellation policies.</span> <a href="/policies/cancellation/" target="_blank" rel="noopener">Read the cancellation policy</a>.</span>
@@ -292,6 +292,17 @@ const otherCountries = ISO_COUNTRY_CODES
     status.dataset.kind = kind;
   }
 
+  // The `hidden` attribute is not enough here. This stylesheet sets `display`
+  // on labels by class, and a class beats the plain [hidden] reset, so a field
+  // marked hidden can still be painted — which is exactly how the seat count
+  // showed up under a single-participant registration. Toggle a class that
+  // cannot lose instead, and keep the attribute for assistive tech.
+  function setHidden(element, shouldHide) {
+    if (!element) return;
+    element.hidden = shouldHide;
+    element.classList.toggle('is-hidden', shouldHide);
+  }
+
   function selectedOffer() {
     const code = new FormData(form).get('offer_code');
     return config?.offers?.find((offer) => offer.code === code);
@@ -340,6 +351,7 @@ const otherCountries = ISO_COUNTRY_CODES
   const baseBillingInputs = ['address1', 'city', 'country']
     .map((name) => form.elements.namedItem(name));
   const termsCopy = document.getElementById('terms-copy');
+  const finalStepNumber = document.getElementById('final-step-number');
 
   function updateBillingAddressFields(free) {
     const country = billingCountryInput?.value || '';
@@ -410,14 +422,14 @@ const otherCountries = ISO_COUNTRY_CODES
     const offer = selectedOffer();
     const isGroup = Boolean(offer?.per_seat);
     const seats = selectedSeats(offer);
-    organizationField.hidden = !isGroup;
+    setHidden(organizationField, !isGroup);
     organizationInput.required = isGroup;
     detailsLegend.textContent = isGroup ? 'Who is paying' : 'Participant details';
     emailHelper.textContent = isGroup
       ? "We'll send the confirmation and residency details to this address."
       : "We'll send your confirmation and the residency details here.";
-    seatsField.hidden = !isGroup;
-    rosterBlock.hidden = !isGroup;
+    setHidden(seatsField, !isGroup);
+    setHidden(rosterBlock, !isGroup);
     if (isGroup) {
       const { min, max } = seatRange(offer);
       seatsInput.min = String(min);
@@ -427,23 +439,25 @@ const otherCountries = ISO_COUNTRY_CODES
       renderRosterRows(seats);
     }
     summaryOffer.textContent = offer?.name || 'Choose an option';
-    summarySeats.hidden = !isGroup;
+    setHidden(summarySeats, !isGroup);
     summarySeatsCopy.textContent = isGroup ? `${seats} people` : '';
     const total = effectiveAmountCents(offer);
     const discount = effectiveDiscount(offer);
     const automatic = selectedAutomaticDiscount();
-    countryDiscountNote.hidden = !automatic;
+    setHidden(countryDiscountNote, !automatic);
     if (automatic) {
       countryDiscountNote.textContent = `${automatic.label}: ${automatic.percent_off}% off every order.`;
     }
     const adjustment = discount.source;
-    summaryDiscount.hidden = !adjustment || discount.amount_cents === 0;
+    setHidden(summaryDiscount, !adjustment || discount.amount_cents === 0);
     summaryDiscountCopy.textContent = adjustment
       ? `${adjustment.label || `Coupon ${adjustment.code}`} · ${adjustment.percent_off}% off (${money.format(discount.amount_cents / 100)})`
       : '';
     const free = offer && total === 0;
     if (config?.payment?.available) paymentButton.classList.toggle('AcceptUI', !free);
-    billingSection.hidden = Boolean(free);
+    setHidden(billingSection, Boolean(free));
+    // Skipping the billing step must not leave the form counting 01, 02, 04.
+    finalStepNumber.textContent = free ? '03' : '04';
     updateBillingAddressFields(free);
     termsCopy.textContent = free
       ? "I understand that registration is subject to CfA's cancellation policies."
@@ -694,8 +708,8 @@ const otherCountries = ISO_COUNTRY_CODES
         setStatus('The registration form is ready for review, but payment credentials are not fully configured.', 'error');
         return;
       }
-      sandboxNote.hidden = config.payment.environment !== 'sandbox';
-      productionTestNote.hidden = !config.payment.test_mode;
+      setHidden(sandboxNote, config.payment.environment !== 'sandbox');
+      setHidden(productionTestNote, !config.payment.test_mode);
       paymentButton.classList.add('AcceptUI');
       paymentButton.setAttribute('data-billingAddressOptions', JSON.stringify({ show: false, required: false }));
       paymentButton.setAttribute('data-apiLoginID', config.payment.api_login_id);
@@ -885,6 +899,8 @@ const otherCountries = ISO_COUNTRY_CODES
     :global(.offer-option) { grid-template-columns: auto 1fr; }
     :global(.offer-price) { grid-column: 2; }
   }
+  /* Wins against every display rule on this page, including its own. */
+  .is-hidden { display: none !important; }
   .seats-field {
     display: block;
     margin-top: 22px;
