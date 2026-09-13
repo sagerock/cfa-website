@@ -894,7 +894,7 @@ const otherCountries = ISO_COUNTRY_CODES
   }
   @media (max-width: 560px) {
     .registration-head { padding: 38px 0 34px; }
-    .field-grid { grid-template-columns: 1fr; }
+    .field-grid, :global(.roster-row .field-grid) { grid-template-columns: 1fr; }
     .field-grid .wide { grid-column: auto; }
     :global(.offer-option) { grid-template-columns: auto 1fr; }
     :global(.offer-price) { grid-column: 2; }
@@ -914,8 +914,12 @@ const otherCountries = ISO_COUNTRY_CODES
     width: 110px;
   }
   .seats-field small { display: block; margin-top: 8px; color: var(--soft); }
+  /* The roster is built by the script, so nothing in it carries Astro's scope
+     attribute and the scoped .field-grid rules above never reach it — which is
+     how three participant rows rendered as bare browser inputs. Everything the
+     roster needs is restated here globally, the same way .offer-option is. */
   .roster-rows { margin-top: 18px; display: grid; gap: 26px; }
-  .roster-heading {
+  :global(.roster-heading) {
     font-family: var(--sans);
     font-size: 13px;
     letter-spacing: 0.12em;
@@ -923,4 +927,17 @@ const otherCountries = ISO_COUNTRY_CODES
     color: var(--soft);
     margin-bottom: 10px;
   }
+  :global(.roster-row .field-grid) { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 0; }
+  :global(.roster-row .field-grid label) { display: grid; gap: 7px; font-family: var(--sans); font-size: 14px; font-weight: 600; }
+  :global(.roster-row .field-grid .wide) { grid-column: 1 / -1; }
+  :global(.roster-row input) {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 0;
+    background: var(--raised);
+    color: var(--ink);
+    font: 16px var(--sans);
+    padding: 12px 13px;
+  }
+  :global(.roster-row input:focus) { outline: 2px solid var(--green); outline-offset: 2px; }
 </style>
