@@ -3,15 +3,85 @@ import { createClient } from "@supabase/supabase-js";
 import { buildWelcomeEmailText, type WelcomePlan, type WelcomeSession } from "./email.ts";
 import { hasRequiredBillingAddressFields } from "../_shared/billingCountries.js";
 import { sendInstitutionRosterConfirmation } from "../_shared/institutionRosterEmail.ts";
+import { buildResidencyEmailText } from "../_shared/residencyEmail.js";
+import {
+  offerBaseAmountCents,
+  recordedSeatCount,
+  resolveSeatCount,
+  seatRange,
+} from "../_shared/seatPricing.js";
 
 const CFA_CLIENT_ID = "22500cd6-052a-42ff-a0cb-4f3ba9125dfd";
-const STARLIGHT_PROGRAM_PLATFORM_ID = "3357450";
+
+// One checkout, several programs. The caller names the program in the query
+// string (`?program=`); anything unrecognised, including nothing at all, is
+// Starlight, which is the only program this function served before 2026-09-12.
+//
+// `portal` is the real fork: a Starlight registration buys access to the
+// learning portal, so it provisions a magic link and sends someone to sign in.
+// An in-person residency buys a seat in a room in Keene — there is nothing to
+// sign into, so it confirms by email and sends the reader nowhere.
+type ProgramDefinition = {
+  key: string;
+  platform: string;
+  platformId: string;
+  title: string;
+  chargeDescription: string;
+  emailSubject: string;
+  portal: boolean;
+  testOfferCodes: Set<string>;
+  signedInRedirect: string | null;
+  details: string[];
+};
+
+const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
+  "starlight-rays-2026-2027": {
+    key: "starlight-rays-2026-2027",
+    platform: "thinkific",
+    platformId: "3357450",
+    title: "Starlight Rays 2026-2027",
+    chargeDescription: "Starlight Rays 2026-2027",
+    emailSubject: "Your Starlight Rays registration",
+    portal: true,
+    testOfferCodes: new Set(["individual", "individual-plan"]),
+    signedInRedirect: "/learn/sign-in?registered=1",
+    details: [],
+  },
+  "wlcd-october-2026": {
+    key: "wlcd-october-2026",
+    platform: "native",
+    platformId: "wlcd-october-2026",
+    title: "the October residency in Keene",
+    chargeDescription: "WLCD October Residency 2026",
+    emailSubject: "Your October residency registration",
+    portal: false,
+    testOfferCodes: new Set(["residency"]),
+    signedInRedirect: null,
+    details: [
+      "Friday, October 9 through Tuesday, October 13, 2026",
+      "Gathering Waters Charter School, Keene, New Hampshire",
+      "",
+      "The residency runs Friday evening through Tuesday midday. Karen Atkinson will write",
+      "with the schedule, lodging and travel details closer to the date.",
+    ],
+  },
+};
+const DEFAULT_PROGRAM_KEY = "starlight-rays-2026-2027";
+
+function resolveProgramDefinition(request: Request): ProgramDefinition {
+  let requested = "";
+  try {
+    requested = new URL(request.url).searchParams.get("program") || "";
+  } catch {
+    requested = "";
+  }
+  return PROGRAM_DEFINITIONS[requested] || PROGRAM_DEFINITIONS[DEFAULT_PROGRAM_KEY];
+}
 // Default $1; REGISTRATION_TEST_AMOUNT_CENTS overrides it for a single armed
 // run when the merchant fraud filter holds small charges for review.
 const PRODUCTION_TEST_AMOUNT_CENTS = Math.max(100,
   Number(Deno.env.get("REGISTRATION_TEST_AMOUNT_CENTS")) || 100);
 const PRODUCTION_TEST_AMOUNT = (PRODUCTION_TEST_AMOUNT_CENTS / 100).toFixed(2);
-const PRODUCTION_TEST_OFFER_CODES = new Set(["individual", "individual-plan"]);
 const productionOrigin = "https://learn.centerforanthroposophy.org";
 const productionHostname = new URL(productionOrigin).hostname;
 const allowedOrigins = new Set([
@@ -106,6 +176,31 @@ function registrationAttribution(value: unknown) {
 
 function validEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// Who a group registration is for. The payer is one row like any other, so a
+// school can register three colleagues and none of them has to be the buyer.
+// Names only — this is a roster, not an account, and nothing here grants access.
+function registrationParticipants(value: unknown, seats: number) {
+  if (!Array.isArray(value)) return [];
+  return value
+    .slice(0, Math.max(1, seats))
+    .map((entry) => {
+      if (!entry || typeof entry !== "object") return null;
+      const person = entry as JsonRecord;
+      const firstName = text(person.first_name, 100);
+      const lastName = text(person.last_name, 100);
+      const personEmail = text(person.email, 254).toLowerCase();
+      if (!firstName && !lastName) return null;
+      return {
+        first_name: firstName,
+        last_name: lastName,
+        email: validEmail(personEmail) ? personEmail : "",
+      };
+    })
+    .filter((person): person is { first_name: string; last_name: string; email: string } =>
+      person !== null
+    );
 }
 
 function validUuid(value: string) {
@@ -597,6 +692,56 @@ async function sendWelcomeEmail(input: {
   return response.ok;
 }
 
+// Confirmation for a program someone attends in person. Same shape as the
+// welcome email, minus the portal: dates and place instead of a sign-in link.
+async function sendResidencyEmail(input: {
+  email: string;
+  firstName: string;
+  program: ProgramDefinition;
+  offerName: string;
+  amountCents: number;
+  transactionId: string;
+  seats: number;
+  participants: Array<{ first_name: string; last_name: string; email: string }>;
+}) {
+  const key = Deno.env.get("SENDGRID_API_KEY") || "";
+  if (!key) return false;
+  const from = Deno.env.get("REGISTRATION_FROM")
+    || "Center for Anthroposophy <no-reply@centerforanthroposophy.org>";
+  const amount = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(input.amountCents / 100);
+  const emailText = buildResidencyEmailText({
+    firstName: input.firstName,
+    programTitle: input.program.title,
+    offerName: input.offerName,
+    amount,
+    transactionId: input.transactionId,
+    seats: input.seats,
+    participants: input.participants,
+    details: input.program.details,
+    cancellationUrl: "https://learn.centerforanthroposophy.org/policies/cancellation/",
+    contactEmail: "office@centerforanthroposophy.org",
+  });
+  const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${key}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      personalizations: [{ to: [{ email: input.email }] }],
+      from: parseFrom(from),
+      reply_to: { email: "office@centerforanthroposophy.org", name: "Center for Anthroposophy" },
+      subject: input.program.emailSubject,
+      content: [{ type: "text/plain", value: emailText }],
+      tracking_settings: { click_tracking: { enable: false, enable_text: false } },
+    }),
+  });
+  return response.ok;
+}
+
 // Money problems must reach a person. Plan scheduling failures go to the CfA
 // office (override with PLAN_ALERT_EMAIL); delivery failure is logged, never
 // surfaced to the registrant, who has already paid and been granted access.
@@ -631,6 +776,7 @@ async function sendOpsAlert(subject: string, body: string) {
 
 Deno.serve(async (request: Request) => {
   const origin = request.headers.get("Origin");
+  const programDefinition = resolveProgramDefinition(request);
   if (request.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: corsHeaders(origin) });
   }
@@ -650,15 +796,15 @@ Deno.serve(async (request: Request) => {
     .from("programs")
     .select("id, name, client_id")
     .eq("client_id", CFA_CLIENT_ID)
-    .eq("platform", "thinkific")
-    .eq("platform_id", STARLIGHT_PROGRAM_PLATFORM_ID)
+    .eq("platform", programDefinition.platform)
+    .eq("platform_id", programDefinition.platformId)
     .maybeSingle();
   if (programError || !program) return json({ error: "program_unavailable" }, 503, origin);
 
   const now = new Date().toISOString();
   const { data: offers, error: offerError } = await admin
     .from("program_offers")
-    .select("id, code, name, description, amount_cents, currency, seat_count, access_scope, installment_count")
+    .select("id, code, name, description, amount_cents, currency, seat_count, access_scope, installment_count, per_seat, min_seats, max_seats")
     .eq("client_id", CFA_CLIENT_ID)
     .eq("program_id", program.id)
     .eq("active", true)
@@ -736,7 +882,7 @@ Deno.serve(async (request: Request) => {
     const paymentAvailable = (config.enabled && origin === productionOrigin) || headerTestAuthorized;
     const responseOffers = headerTestAuthorized
       ? offersWithSessions
-        .filter((offer) => PRODUCTION_TEST_OFFER_CODES.has(offer.code))
+        .filter((offer) => programDefinition.testOfferCodes.has(offer.code))
         .map((offer) => ({
           ...offer,
           name: (offer.installment_count ?? 1) > 1
@@ -898,11 +1044,26 @@ Deno.serve(async (request: Request) => {
 
   const requestOffers = testAuthorized
     ? offersWithSessions
-      .filter((offer) => PRODUCTION_TEST_OFFER_CODES.has(offer.code))
-      .map((offer) => ({ ...offer, amount_cents: PRODUCTION_TEST_AMOUNT_CENTS }))
+      .filter((offer) => programDefinition.testOfferCodes.has(offer.code))
+      // The production test is one $1 charge, so it never multiplies by seats.
+      .map((offer) => ({
+        ...offer,
+        amount_cents: PRODUCTION_TEST_AMOUNT_CENTS,
+        per_seat: false,
+      }))
     : offersWithSessions;
   const selectedOffer = requestOffers.find((offer) => offer.code === offerCode);
   if (!selectedOffer) return json({ error: "offer_unavailable" }, 400, origin);
+
+  // Seats, then price. The browser sends a count, never an amount.
+  const seatResult = resolveSeatCount(selectedOffer, body.seats);
+  if (!seatResult.ok) return json({ error: seatResult.error }, 400, origin);
+  const purchasedSeats = seatResult.seats;
+  const listAmountCents = offerBaseAmountCents(selectedOffer, purchasedSeats);
+  const participants = registrationParticipants(body.participants, purchasedSeats);
+  if (selectedOffer.per_seat && !organization) {
+    return json({ error: "organization_required" }, 400, origin);
+  }
 
   const couponCode = text(body.coupon_code, 40).trim().toUpperCase();
   let coupon: { id: string; code: string; percent_off: number } | null = null;
@@ -928,12 +1089,12 @@ Deno.serve(async (request: Request) => {
     ? null
     : automaticDiscounts.find((rule) => rule.country_code === billingAddress.country) ?? null;
   const couponDiscountCents = coupon
-    ? Math.min(selectedOffer.amount_cents, Math.round(selectedOffer.amount_cents * coupon.percent_off / 100))
+    ? Math.min(listAmountCents, Math.round(listAmountCents * coupon.percent_off / 100))
     : 0;
   const automaticDiscountCents = automaticDiscount
     ? Math.min(
-      selectedOffer.amount_cents,
-      Math.round(selectedOffer.amount_cents * automaticDiscount.percent_off / 100),
+      listAmountCents,
+      Math.round(listAmountCents * automaticDiscount.percent_off / 100),
     )
     : 0;
   // Discounts never stack. A manual coupon wins only when it is strictly
@@ -941,7 +1102,7 @@ Deno.serve(async (request: Request) => {
   const selectedCoupon = coupon && couponDiscountCents > automaticDiscountCents ? coupon : null;
   const selectedAutomaticDiscount = selectedCoupon ? null : automaticDiscount;
   const discountCents = Math.max(couponDiscountCents, automaticDiscountCents);
-  const chargeAmountCents = selectedOffer.amount_cents - discountCents;
+  const chargeAmountCents = listAmountCents - discountCents;
   // Installments split the (possibly discounted) total evenly, remainder on
   // the first charge. A split that would produce a sub-cent installment falls
   // back to a single charge rather than failing at the gateway.
@@ -978,7 +1139,10 @@ Deno.serve(async (request: Request) => {
     );
     if (enrollmentAccessError) return json({ error: "enrollment_lookup_failed" }, 500, origin);
     if (alreadyEnrolled === true) {
-      return json({ error: "already_enrolled", redirect: "/learn/sign-in?registered=1" }, 409, origin);
+      return json({
+        error: "already_enrolled",
+        redirect: programDefinition.signedInRedirect,
+      }, 409, origin);
     }
   }
 
@@ -1019,7 +1183,7 @@ Deno.serve(async (request: Request) => {
       registration_id: existing.id,
       email_sent: Boolean(existing.welcome_sent_at),
       institution: selectedOffer.code === "institution",
-      redirect: selectedOffer.code === "institution" ? null : "/learn/sign-in?registered=1",
+      redirect: selectedOffer.code === "institution" ? null : programDefinition.signedInRedirect,
     }, 200, origin);
   }
   if (existing && ["processing", "enrollment_pending"].includes(existing.status)) {
@@ -1078,7 +1242,10 @@ Deno.serve(async (request: Request) => {
         redirect: null,
       }, 200, origin);
     }
-    return json({ error: "already_registered", redirect: "/learn/sign-in?registered=1" }, 409, origin);
+    return json({
+      error: "already_registered",
+      redirect: programDefinition.signedInRedirect,
+    }, 409, origin);
   }
   if (pendingRegistrationResult.data) {
     return json({ error: "registration_pending", registration_id: pendingRegistrationResult.data.id }, 409, origin);
@@ -1098,7 +1265,8 @@ Deno.serve(async (request: Request) => {
     billing_address: billingAddress,
     amount_cents: chargeAmountCents,
     currency: selectedOffer.currency,
-    seat_count: selectedOffer.seat_count,
+    seat_count: recordedSeatCount(selectedOffer, purchasedSeats),
+    participants,
     coupon_code: selectedCoupon?.code ?? null,
     automatic_discount_code: selectedAutomaticDiscount?.code ?? null,
     discount_cents: discountCents,
@@ -1216,10 +1384,12 @@ Deno.serve(async (request: Request) => {
         order: {
           invoiceNumber,
           description: testAuthorized
-            ? "Starlight production integration test"
+            ? `${programDefinition.chargeDescription} production integration test`
             : plan
-            ? `Starlight Rays 2026-2027 · payment 1 of ${installmentCount}`
-            : "Starlight Rays 2026-2027",
+            ? `${programDefinition.chargeDescription} · payment 1 of ${installmentCount}`
+            : purchasedSeats > 1
+            ? `${programDefinition.chargeDescription} · ${purchasedSeats} participants`
+            : programDefinition.chargeDescription,
         },
         customer: { email },
         billTo: {
@@ -1589,33 +1759,41 @@ Deno.serve(async (request: Request) => {
 
   const redirectTo = Deno.env.get("LEARN_REDIRECT_URL")
     || `${productionOrigin}/learn/auth?next=/learn/starlight-rays-2026-2027`;
+  // Every registration gets an identity record — the completion routine links
+  // payment to a person through it. Only a portal program also gets a sign-in
+  // link; nobody logs in to attend a residency in Keene.
   await admin.auth.admin.createUser({
     email,
     email_confirm: true,
     user_metadata: { first_name: firstName, last_name: lastName },
   });
-  const { data: linkData, error: linkError } = await admin.auth.admin.generateLink({
-    type: "magiclink",
-    email,
-    options: {
-      redirectTo,
-      data: { first_name: firstName, last_name: lastName },
-    },
-  });
-  if (linkError || !linkData.user || !linkData.properties?.hashed_token) {
-    await admin.from("registrations").update({
-      status: "enrollment_pending",
-      gateway_transaction_id: transactionId,
-      gateway_response: summary,
-      failure_code: "auth_provisioning_failed",
-      failure_message: "Payment succeeded, but portal access requires manual review.",
-    }).eq("id", registrationId);
-    return json({ error: "access_pending", registration_id: registrationId }, 202, origin);
+  let signInUrl: URL | null = null;
+  if (programDefinition.portal) {
+    const { data: linkData, error: linkError } = await admin.auth.admin.generateLink({
+      type: "magiclink",
+      email,
+      options: {
+        redirectTo,
+        data: { first_name: firstName, last_name: lastName },
+      },
+    });
+    if (linkError || !linkData.user || !linkData.properties?.hashed_token) {
+      await admin.from("registrations").update({
+        status: "enrollment_pending",
+        gateway_transaction_id: transactionId,
+        gateway_response: summary,
+        failure_code: "auth_provisioning_failed",
+        failure_message: "Payment succeeded, but portal access requires manual review.",
+      }).eq("id", registrationId);
+      return json({ error: "access_pending", registration_id: registrationId }, 202, origin);
+    }
+    signInUrl = new URL(`${productionOrigin}/learn/auth`);
+    signInUrl.searchParams.set("token_hash", linkData.properties.hashed_token);
+    signInUrl.searchParams.set("type", "email");
   }
-
-  const signInUrl = new URL(`${productionOrigin}/learn/auth`);
-  signInUrl.searchParams.set("token_hash", linkData.properties.hashed_token);
-  signInUrl.searchParams.set("type", "email");
+  // A residency needs no link. If the identity above somehow failed, the
+  // completion routine below raises and the registration parks in
+  // enrollment_pending for a person to look at — the charge is never lost.
 
   const { error: completionError } = await admin.rpc("cfa_complete_registration", {
     requested_registration_id: registrationId,
@@ -1648,20 +1826,32 @@ Deno.serve(async (request: Request) => {
           zoomUrl: session!.zoom_url ? String(session!.zoom_url) : null,
         }))
       : [];
-    emailSent = await sendWelcomeEmail({
-      email,
-      firstName,
-      offerName: selectedCoupon
-        ? `${selectedOffer.name} (coupon ${selectedCoupon.code}, ${selectedCoupon.percent_off}% off)`
-        : selectedAutomaticDiscount
-        ? `${selectedOffer.name} (${selectedAutomaticDiscount.label}, ${selectedAutomaticDiscount.percent_off}% off)`
-        : selectedOffer.name,
-      amountCents: chargeAmountCents,
-      transactionId,
-      signInLink: signInUrl.toString(),
-      sessions: purchasedSessions,
-      plan: welcomePlan,
-    });
+    const offerName = selectedCoupon
+      ? `${selectedOffer.name} (coupon ${selectedCoupon.code}, ${selectedCoupon.percent_off}% off)`
+      : selectedAutomaticDiscount
+      ? `${selectedOffer.name} (${selectedAutomaticDiscount.label}, ${selectedAutomaticDiscount.percent_off}% off)`
+      : selectedOffer.name;
+    emailSent = signInUrl
+      ? await sendWelcomeEmail({
+        email,
+        firstName,
+        offerName,
+        amountCents: chargeAmountCents,
+        transactionId,
+        signInLink: signInUrl.toString(),
+        sessions: purchasedSessions,
+        plan: welcomePlan,
+      })
+      : await sendResidencyEmail({
+        email,
+        firstName,
+        program: programDefinition,
+        offerName,
+        amountCents: chargeAmountCents,
+        transactionId,
+        seats: purchasedSeats,
+        participants,
+      });
   } catch {
     emailSent = false;
   }
@@ -1678,6 +1868,7 @@ Deno.serve(async (request: Request) => {
     coupon: selectedCoupon?.code ?? null,
     automatic_discount: selectedAutomaticDiscount?.code ?? null,
     plan: welcomePlan,
-    redirect: "/learn/sign-in?registered=1",
+    seats: purchasedSeats,
+    redirect: programDefinition.signedInRedirect,
   }, 200, origin);
 });
