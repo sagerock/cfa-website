@@ -571,3 +571,32 @@ review eligibility and preview before issuing, and Milan must approve the recrea
 the first real certificate. This creates the certificate half of `cfa-growth` #40 and a stable
 handoff for attendance work in #35 without guessing that enrollment or a Zoom-name match equals
 completion. See `docs/certificate-automation.md`.
+
+## 2026-09-12 — The October residency registers here, not in Cvent
+
+Torin Finser reported that twenty-eight WLCD participants moved to the Yuba River residency,
+leaving the October 9–13 Keene residency at ten confirmed against a usual eighteen, a month
+out. He opened the weekend as a standalone $850 registration, 20% off for three or more from
+one school, and asked what could be done. The campaign to fill it was blocked on registration:
+the WLCD page's REGISTER button goes to Cvent, whose only residency-only line item still reads
+"Yuba River Residency Only - $850" for a residency that is closed and full. We hold read-only
+Cvent credentials, so relabelling it means asking CfA staff to edit a platform they are leaving
+— a reported (unconfirmed) October 31 end date, three weeks after this residency.
+
+Sage chose to build it here instead. The work that paid for itself: the checkout is no longer
+one program wide. `cfa-register` resolves a program from `?program=`, defaulting to Starlight,
+and `programs.tag` — not a string literal — decides how a paying contact is tagged. A program
+marked `portal: false` skips the magic link and sends an in-person confirmation with dates and
+a place instead of a sign-in link. That is the un-hardcoding the Biography in Spanish portal
+needs next, done once.
+
+Two smaller generic pieces came with it. `program_offers.per_seat` prices one seat and lets the
+buyer choose how many between `min_seats` and `max_seats`, so a school pays once for three
+colleagues at $680 each; the browser sends a count and the server re-derives every amount.
+`registrations.participants` records who a payment is for when the payer is not the attendee,
+and the office order email lists them.
+
+Starlight is deliberately untouched: its tag already matched the literal it replaced, per-seat
+pricing defaults to off, and the payment-plan, institution-roster and production-test paths are
+byte-identical. The WLCD program has no `cfa_learn_courses` row, so it will not appear in the
+staff registrations dashboard; the ten-minute order email is the visibility for it.
