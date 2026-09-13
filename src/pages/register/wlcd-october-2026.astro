@@ -631,7 +631,12 @@ const otherCountries = ISO_COUNTRY_CODES
       config = await response.json();
       offerList.replaceChildren();
       const requestedOffer = config.offers.find((offer) => offer.code === requestedOfferCode);
-      const visibleOffers = requestedOffer ? [requestedOffer] : config.offers;
+      // The server sorts by price, which would preselect the cheaper per-seat
+      // group rate. Most people are registering themselves, so one participant
+      // leads and the group rate follows.
+      const visibleOffers = requestedOffer
+        ? [requestedOffer]
+        : [...config.offers].sort((a, b) => Number(a.per_seat) - Number(b.per_seat));
       if (!visibleOffers.length) throw new Error('offers');
       visibleOffers.forEach((offer, index) => {
         const label = document.createElement('label');
