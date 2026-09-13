@@ -249,6 +249,10 @@ const otherCountries = ISO_COUNTRY_CODES
   let turnstileWidgetId;
   const pageParams = new URLSearchParams(location.search);
   const requestedOfferCode = pageParams.get('offer') || '';
+  // Comps and scholarships arrive as a link, not a code box: a residency page
+  // with a coupon field invites people to go hunting for one.
+  const requestedCouponCode = (pageParams.get('coupon') || '').trim().toUpperCase();
+  let appliedCoupon = null;
 
   function safeReferrer(value) {
     try {
@@ -311,14 +315,20 @@ const otherCountries = ISO_COUNTRY_CODES
     return offer.per_seat ? offer.amount_cents * selectedSeats(offer) : offer.amount_cents;
   }
 
+  // Mirrors the server: discounts never stack, and the better one wins.
   function effectiveDiscount(offer) {
-    const automatic = selectedAutomaticDiscount();
-    if (!offer || !automatic) return { amount_cents: 0, source: null };
+    if (!offer) return { amount_cents: 0, source: null };
     const list = listAmountCents(offer);
-    return {
-      amount_cents: Math.min(list, Math.round(list * automatic.percent_off / 100)),
-      source: automatic,
-    };
+    const automatic = selectedAutomaticDiscount();
+    const couponAmount = appliedCoupon
+      ? Math.min(list, Math.round(list * appliedCoupon.percent_off / 100))
+      : 0;
+    const automaticAmount = automatic
+      ? Math.min(list, Math.round(list * automatic.percent_off / 100))
+      : 0;
+    return couponAmount > automaticAmount
+      ? { amount_cents: couponAmount, source: appliedCoupon }
+      : { amount_cents: automaticAmount, source: automatic };
   }
 
   function effectiveAmountCents(offer) {
@@ -426,9 +436,10 @@ const otherCountries = ISO_COUNTRY_CODES
     if (automatic) {
       countryDiscountNote.textContent = `${automatic.label}: ${automatic.percent_off}% off every order.`;
     }
-    summaryDiscount.hidden = !automatic;
-    summaryDiscountCopy.textContent = automatic
-      ? `${automatic.label} · ${automatic.percent_off}% off (${money.format(discount.amount_cents / 100)})`
+    const adjustment = discount.source;
+    summaryDiscount.hidden = !adjustment || discount.amount_cents === 0;
+    summaryDiscountCopy.textContent = adjustment
+      ? `${adjustment.label || `Coupon ${adjustment.code}`} · ${adjustment.percent_off}% off (${money.format(discount.amount_cents / 100)})`
       : '';
     const free = offer && total === 0;
     if (config?.payment?.available) paymentButton.classList.toggle('AcceptUI', !free);
@@ -487,6 +498,7 @@ const otherCountries = ISO_COUNTRY_CODES
         marketing_opt_in: data.get('marketing_opt_in') === 'on',
         attribution,
         turnstile_token: turnstileToken,
+        coupon_code: appliedCoupon?.code || '',
         opaque_data: opaqueData || {},
       }),
     });
@@ -543,6 +555,10 @@ const otherCountries = ISO_COUNTRY_CODES
       localStorage.removeItem(checkoutKeyName);
       setStatus('This email is already registered for the October residency. Contact the CfA office if you need to change the registration.', 'error');
       return;
+    } else if (result.error === 'coupon_invalid') {
+      appliedCoupon = null;
+      updateSelection();
+      setStatus('That discount link is no longer valid. The price shown now is the standard rate.', 'error');
     } else if (result.error === 'invalid_seat_count') {
       setStatus('Please choose a number of people within the range shown.', 'error');
     } else if (result.error === 'organization_required') {
@@ -629,6 +645,17 @@ const otherCountries = ISO_COUNTRY_CODES
       const response = await fetch(endpoint, { headers: configHeaders });
       if (!response.ok) throw new Error('configuration');
       config = await response.json();
+      if (requestedCouponCode && !testToken) {
+        try {
+          const couponResponse = await fetch(`${endpoint}&coupon=${encodeURIComponent(requestedCouponCode)}`, {
+            headers: new Headers({ Accept: 'application/json' }),
+          });
+          const couponPayload = await couponResponse.json();
+          if (couponPayload.coupon?.valid) appliedCoupon = couponPayload.coupon;
+        } catch {
+          appliedCoupon = null;
+        }
+      }
       offerList.replaceChildren();
       const requestedOffer = config.offers.find((offer) => offer.code === requestedOfferCode);
       // The server sorts by price, which would preselect the cheaper per-seat
