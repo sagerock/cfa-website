@@ -600,3 +600,21 @@ Starlight is deliberately untouched: its tag already matched the literal it repl
 pricing defaults to off, and the payment-plan, institution-roster and production-test paths are
 byte-identical. The WLCD program has no `cfa_learn_courses` row, so it will not appear in the
 staff registrations dashboard; the ten-minute order email is the visibility for it.
+
+## 2026-09-14 — Indexing and page chrome are Elsy's call, not a guardrail
+The email editor validated two invariants on `src/layouts/Base.astro` on every run: a
+site-wide `noindex` meta and the "proof of concept" banner. Both had already been retired
+by CfA — the banner came out on the Elsy demo call (commit 2b39bef), and launching the
+Center & Periphery publication subdomain (7a8cce1) made robots per-page, so the literal
+`content="noindex"` the check looked for no longer exists in the source.
+
+The check ran against the layout regardless of what a request actually changed, so it
+failed edits that never went near it. It stopped Elsy's seven-article Fall 2026 Center &
+Periphery build on 9/13 and would have stopped every later request too.
+
+Sage removed it (Ask commit 3f3598a) and put the decision with the person who runs the
+newsletter: **Elsy says what is indexed and what chrome a page carries.** A guardrail is
+for things an agent must not decide alone; this was never one of those — it was a
+description of a site that no longer exists. Everything else the editor checks is intact:
+requester scope, forbidden paths, secrets, symlinks, submodules, file size, faculty
+archives, course years, and that the build produced a homepage.
