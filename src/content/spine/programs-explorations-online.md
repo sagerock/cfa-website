@@ -13,7 +13,7 @@ facts:
   - label: "Schedule"
     value: "Sat & Sun · 12–2pm ET · twice a month"
   - label: "Commitment"
-    value: "10 months · start in Spring or Fall"
+    value: "Nine months · start in Spring or Fall"
   - label: "Tuition"
     value: "$950 · group & sliding-scale discounts"
   - label: "Who"
@@ -62,7 +62,7 @@ To earn a certificate of completion — and to fulfill the entrance requirements
 
 ### Tuition & payment
 
-The tuition for the 10-month course is **$950**.
+The tuition for the nine-month course is **$950**.
 
 - **Individuals (1–2 students):** $950, minus any financial aid awarded
 - **Schools signing up 3–5 teachers:** 20% off

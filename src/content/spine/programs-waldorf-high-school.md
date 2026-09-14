@@ -10,10 +10,6 @@ order: 3
 
 ### Become the Educator Adolescents Remember!
 
-[Click Here To Learn About Our Upcoming Meet and Greet](/files/db2578c05a-february-meet-greet-high-school.pdf)
-
-We joyfully celebrate and honor your commitment to advancing Waldorf pedagogy with purpose. Apply now for an opportunity to attend the first summer residency in 2026 and 100% tuition-free!
-
 [Explore](/programs/waldorf-high-school-teacher-education/tuition/)
 
 ## Where Pedagogy Meets Purpose
@@ -93,30 +89,6 @@ And when you’re ready…
 [APPLY HERE!](https://centerforanthroposophy.org/application-to-the-waldorf-high-school-teacher-education-program/)
 
 [APPLY HERE](/application-to-the-waldorf-high-school-teacher-education-program/)
-
-[REGISTER FOR SUMMER RESIDENCY](https://courses.centerforanthroposophy.org/courses/whistep-intro-summer-residency-2025)
-
-Waldorf High School Teacher Education Program
-
-Meet & Greet 2024
-
-Join David Barham, Director of the Center for Anthroposophy’s Waldorf High School Teacher Education program, to discover how this unique program deepens the understanding and mastery of high school teachers as they help prepare adolescents for life through their work in the curriculum, classroom and wider community.
-
-READ MORE
-
-Program enrolls now for summer 2025 (class of 2027)!
-
-The virtual session will include a program overview and a Q&A to answer all your questions.
-
-Zoom Session: Tuesday November 12, 2024
-
-7:00-8:00 P.M. EDT
-
-[REGISTER NOW!](mailto:david@centerforanthroposophy.org)
-
-Attend our Virtual Open-House: Discover and Explore on *Wednesday, May 6 from 6:00–6:45 PM EDT* to discover how our unique program can deepen your study, mastery, and meet you at your path for class of 2028, beginning this summer 2026.
-
-**Register: [HERE](https://lp.constantcontactpages.com/ev/reg/ybbcyf8)**
 
 ![Portrait of David Barham](/images/0ad3ab8b39-david-barham-portrait-300x300.webp)
 

@@ -85,8 +85,6 @@ Welcome to Abbot Hill,
 
 - [Visitors Guidelines (PDF)](/files/be80879aa0-hms-visitors-guidelines-poster-cfa-2.pdf)
 - [From Farm to School, by Douglas Gerwin (PDF)](/files/e303a5b0ea-from-farm-to-school-by-douglas-gerwin.pdf)
-- [Welcome Letter from our Hosts (PDF)](/files/e753c7f6a5-hos-letter-to-cfa-participants2025.pdf)
-- [Frequently Asked Questions (PDF)](/files/9698f90970-faqs-for-waldorf-residency-2025-1.pdf)
 
 ### What's provided, and what to bring
 

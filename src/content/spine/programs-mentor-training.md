@@ -91,11 +91,7 @@ As part of the program, participants will:
 <img src="/images/55a239a0c9-giraffe1.webp" alt="" loading="lazy" />
 <img src="/images/bf23a39681-mentor-training-faculty.webp" alt="" loading="lazy" />
 <img src="/images/6da401df49-mentor-training-classroom-of-students.webp" alt="" loading="lazy" />
-</div>## Interested to join in 2026?
-
-[Program Registration](https://web.cvent.com/event/041b86d8-8cc4-47c5-9d7c-18fc70f76ca2/regProcessStep1:b7453440-5484-43f9-8e6e-0419a9855bc1)
-
-[Summer Residency Room & Board](/programs/summer-housing-meals)
+</div>## Interested in a future Mentor Training cohort?
 
 Karen Atkinson
 
@@ -200,7 +196,7 @@ Receive a 10% discount when 2 or more individuals from the same school register 
 
 Contact us to receive a discount code.
 
-[CONTACT FOR DISCOUNT CODE](#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjQyOTE4IiwidG9nZ2xlIjpmYWxzZX0%3D)
+[CONTACT FOR DISCOUNT CODE](/contact?program=Mentor%20Training)
 
 **Note:** Canadian citizens may claim their currency exchange rate adjustment discount at registration checkout.
 
@@ -218,7 +214,7 @@ For participants who are not currently teaching, please submit two letters of re
 
 Enrollment
 
-Given the high demand for this specialized professional development course and its interactive nature, enrollment places will be limited. *Register now to secure your spot!
+Enrollment for the current 2026 cohort is closed. Contact the program director to ask about future Mentor Training cohorts.
 
 Other Notes
 

@@ -36,7 +36,7 @@ Waldorf Leadership and Community Development Program & Residency — Yuba River 
 
 Please join us for this pioneering hybrid program offered on the beautiful campus of Yuba River Charter School from September 18, 19, 20, 2026: 8:30 am – 5pm daily.
 
-We welcome participants from nearby California schools!
+**Yuba River WLCD September Residency has reached its capacity and registration is now closed.**
 
 Click Here for Program Details
 
@@ -309,28 +309,6 @@ Limited Financial Aid is available upon request. To inquire, please fill out and
 ## Waldorf Leadership Development Financial Aid Application
 
 An enrolled student may withdraw from the program upon written request to [milan@centerforanthroposophy.org](mailto:milan@centerforanthroposophy.org). Such a request must be received at least 30 days prior to the beginning of the program in order to receive a refund (less $75 cancellation fee). No refunds will be granted if cancellation is received within 30 days of the program start date or while in session.
-
-## Waldorf Leadership Development Seminars and Explorations Online Descriptions
-
-## Waldorf Leadership Development
-
-[ inquire ](https://centerforanthroposophy.org/contact-us/)
-
-Through a combination of virtual and in-person classes, participants will engage in seminars designed to cultivate the capacities needed for serving in leadership positions. Beginning in May 2024, participants will attend a program orientation online, followed by a one-week online intensive from July 1-4, 2024. Virtual meetings will continue twice monthly during the 2024-25 school year, with the addition of two in-person, long weekend intensives held in Keene, NH; October 2024 and April 2025.
-
-## Explorations Online
-
-[ inquire ](https://centerforanthroposophy.org/contact-us/)
-
-Explorations takes up burning current topics along with contemplative studies and the practice of the arts through anthroposophy as a method of inquiry. This online course is offered as a supplementary seminar designed to support and inspire both independent and public Waldorf school administrators and pedagogical leaders. Exploration classes meet twice monthly during the school year beginning in March 2024.
-
-![Center-for-Anthroposophy-Explorations-Flyer-2025-to-2026_8-5x11-2-pdf-04-16-2025_01_37_PM](/images/e8f2c377b6-center-for-anthroposophy-explorations-fl.png)
-
-[DOWNLOAD THE EXPLORATIONS ONLINE POSTER](/files/79fb848b82-center-for-anthroposophy-explorations-flyer-2025-to-20268.5x)
-
-![wld-pdf-10-30-2025_12_39_PM](/images/cd83e7bcd0-wld-pdf-10-30-20251239pm-rdz6wjjvmg9d2yc.png)
-
-[DOWNLOAD THE WALDORF LEADERSHIP DEVELOPMENT POSTER](/files/858415c857-wld-25-26-pg-1-.pdf)
 
 ## Program Leadership
 

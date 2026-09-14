@@ -36,7 +36,7 @@ To apply for Financial Aid through the Center for Anthroposophy (in addition to 
 
 - [Visit the Antioch University New England website](https://www.antioch.edu/departments/education-department/)
 
-- [Summer Housing & Meals](https://cvent.me/Enm7Mm?locale=en)
+- [Summer Housing & Meals](/programs/summer-housing-meals)
 
 - [Directions & General Information](https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/general-information-2/)
 

@@ -36,11 +36,11 @@ The content of thesecourseswillinclude the option of doing our Explorations Prog
 
 Required reading for Explorations and Building Bridges: *Guided Self Study* by Torin Finser, available from [SteinerBooks.org](https://steinerbooks.presswarehouse.com/).
 
-## Our Next Location
+## Our Current Location
 
 Read More
 
-We are delighted to announce the start of our Building Bridges Program in the Denver area starting on February 12, 2026
+Our Building Bridges Program in the Denver area began on February 12, 2026.
 
 **Building Bridges** sessions are designed as engaging and inspiring in-person learning experiences consisting of a series of workshops designed to introduce the anthroposophical foundations of Waldorf education through study, group discussion, and the practice of the arts. With in-person long weekends, supplemented with some virtual learning, participants in Building Bridges will earn the equivalent of the first semester of teacher education, and upon subsequent entry in Antioch University can be awarded 7 graduate credits in advance standing.
 
@@ -87,242 +87,6 @@ Continuation of *Eurythmy and Human Development* with **Carla** and *Drawing* (a
 *Building Bridges: A Foundation Studies Program in Anthroposophy and the Arts*
 
 [ Click here to Register](https://centerforanthroposophy.org/building-bridges-registration/)
-
-## Our Current Location
-
-**Program began November 2024.**
-
-Building Bridges sessions are designed as engaging and inspiring in-person learning experiences consisting of a series of workshops designed to introduce the anthroposophical foundations of Waldorf education through study, group discussion, and the practice of the arts. With in-person long weekends, supplemented with some virtual learning, participants in Building Bridges will earn the equivalent of the first semester of teacher education, and upon subsequent entry in Antioch University can be awarded 7 graduate credits in advance standing.
-
-CLICK HERE FOR THE COMPLETE PROGRAM AND READING SCHEDULE.
-
-## November 1 – 3, 2024
-
-*Friday 9:00 am – 5:00 pm; Saturday & Sunday 8:30 am – 5:00 pm*
-
-*(November 1 class will be joined by all OCS faculty from 9:00 am – 12:00 pm)*
-
-### Human Development and Eurythmy with Carla Beebe Comey
-
-**Required Texts and Reading:**
-
-Read Preface and Chapters 1, 3, 4, and 5 in
-
-*Why on Earth? Biography and the Practice of Human Becoming*
-
-by Signe Eklund Schaefer (ISBN: 978-1621480402)
-
-Review Chapter 4 (Temperaments) in
-
-*Guided Self-Study*
-
-by Torin Finser (ISBN: 978-1621481300)
-
-**Recommended Resources:**
-
-Introduction, Premises, Chapters 1–12, and Chapter 16 of
-
-*The Recovery of Man in Childhood: A Study of the Educational Work of Rudolf Steiner*
-
-by A. C. Harwood (2nd Edition; ISBN: 978-0913098530)
-
-Part One, “The Education of the Child in Light of Spiritual Science” in
-
-*The Education of the Child: And Early Lectures on Education*
-
-by Rudolf Steiner (ISBN: 978-0880104142)
-
-### Drawing Through the Grades with Tomasa Mendoza
-
-**Required Materials:**
-
-Colored pencils (set of 12 will suffice; e.g., Berol Prisma pencils are soft and beautiful)
-
-Sets of 12–16 wax block crayons and stick crayons (need not be new)
-
-## February 15 – 17, 2025
-
-*Friday 6:00 pm – 8:30 pm; Saturday & Sunday 8:30 am – 5:00 pm*
-
-### Research and Self Development with Deborah Dornemann
-
-**Required Texts and Reading:**
-
-Review Chapters 1–4 in
-
-*Guided Self-Study*
-
-by Torin Finser (ISBN: 978-1621481300)
-
-Chapters 1–12 in
-
-*Listening to Our Teachers: Advocacy Through Research*
-
-by Torin Finser (ISBN: 978-1621483755)
-
-### Visual Arts with Nikki Moon Shoneman
-
-**Required Materials:**
-
-Blank journal for documenting work with color
-
-Colored pencils
-
-## March 5, 2025 (Via Zoom)
-
-*Wednesday 3:00 pm – 5:00 pm Pacific Time*
-
-### Research and Self Development with Deborah Dornemann
-
-*(No additional texts or materials beyond what has already been assigned.)*
-
-## March 28 – 30, 2025
-
-*Friday 6:00 pm – 8:30 pm; Saturday & Sunday 8:30 am – 5:00 pm*
-
-### Speech and Storytelling with Debbie Spitulnik
-
-**Required Text, Reading, and Assignments:**
-
-Read Chapter 1 and complete Exercises 1, 2, and 3;
-
-read Chapter 2 and complete Exercise 8;
-
-read Chapter 5 and complete Exercises 2 and 3 in
-
-*The Storyteller’s Way*
-
-by Ashley Ramsden and Sue Hollingsworth
-
-(Hawthorn Press; ISBN: 978-1907359194)
-
-**Required Materials:**
-
-A journal or notebook for notes, drawings, and space for printed texts
-
-**Preparation:**
-
-Write 1–3 sentences about your experiences with speech and storytelling and send them to Debbie by March 1 at [debbie@centerforanthroposophy.org
-
-## April 2025 (Asynchronous Work)
-
-### Human Development with Carla Beebe Comey
-
-**Required Text and Reading:**
-
-Read Chapters 6, 7, and 8 in
-
-*Why on Earth? Biography and the Practice of Human Becoming*
-
-by Signe Eklund Schaefer (ISBN: 978-1621480402)
-
-## May 16 – 18, 2025
-
-*Friday 6:00 pm – 8:30 pm; Saturday & Sunday 8:30 am – 5:00 pm*
-
-### Human Development and Eurythmy with Carla Beebe Comey
-
-**Required Text and Reading:**
-
-Read Chapters 2, 9, and 10 in
-
-*Why on Earth? Biography and the Practice of Human Becoming*
-
-by Signe Eklund Schaefer (ISBN: 978-1621480402)
-
-### Drawing Through the Grades with Tomasa Mendoza
-
-*(Required materials as noted in November 2024 session.)*
-
-## August 2025 (Asynchronous Work)
-
-### Curriculum with Alison Henry
-
-View asynchronous curriculum videos (links will be provided) as preparation for the September workshop.
-
-### Research and Self Development with Deborah Dornemann
-
-Check in via email ([deborah@centerforanthroposophy.org) about individual research questions.
-
-## September 10, 2025 (Via Zoom)
-
-*Wednesday 3:30 pm – 4:30 pm Pacific Time*
-
-### Speech and Storytelling with Debbie Spitulnik
-
-*(No additional texts or materials beyond what has already been assigned.)*
-
-## September 19 – 21, 2025
-
-*Friday 6:00 pm – 8:30 pm; Saturday & Sunday 8:30 am – 5:00 pm*
-
-### Curriculum with Alison Henry
-
-**Recommended Resources:**
-
-**NOTE:** It is recommended that all Waldorf teachers have access to these resources, either in a personal or faculty library. You do not need to bring these books to the course.
-
-*Rudolf Steiner’s Curriculum for Steiner-Waldorf Schools*
-
-by E. A. Karl Stockmeyer (ISBN: 978-1-78250-129-9)
-
-*The Tasks and Content of the Steiner-Waldorf Curriculum*
-
-edited by Martyn Rawson, Tobias Richter & Kevin Avison (ISBN: 978-1782500421)
-
-**Additional Recommended Resources:**
-
-*Practical Advice to Teachers* by Rudolf Steiner (ISBN: 978-0-88010-467-8)
-
-*Discussions with Teachers* by Rudolf Steiner (ISBN: 978-0-88010-408-1)
-
-*The Education of the Child and Early Lectures on Education (Part I)* by Rudolf Steiner (ISBN: 978-0880104142)
-
-*The Curriculum of the First Waldorf School* by Caroline von Heydebrand (trans. Daniel Hindes; ISBN: 978-160757-0172)
-
-*The Recovery of Man in Childhood* by A. C. Harwood (ISBN: 0-913098-53-1)
-
-### Drawing Through the Grades with Tomasa Mendoza
-
-*(Required materials as noted in November 2024 session.)*
-
-## November 22, 2025
-
-*Saturday 8:30 am – 5:00 pm*
-
-### Research with Torin Finser and Drawing Through the Grades with Tomasa Mendoza
-
-**Required Texts:**
-
-Chapters 4–6 plus Part II (including Appendices) in
-
-*Guided Self-Study*
-
-by Torin Finser (ISBN: 978-1621481300)
-
-Chapters 13–20 in
-
-*Listening to Our Teachers: Advocacy Through Research*
-
-by Torin Finser (ISBN: 978-1621483755)
-
-## December 10, 2025 (Via Zoom)
-
-*Wednesday 3:30 pm – 4:30 pm Pacific Time*
-
-### Research and Self Development with Deborah Dornemann
-
-*(No additional texts or materials beyond what has already been assigned.)*
-
-## February 15 – 16, 2026
-
-*Sunday 8:30 am – 5:00 pm; Monday 8:30 am – 12:30 pm*
-
-### Curriculum with Alison Henry
-
-**Required Materials:**
-
-(Same materials as noted for Curriculum workshops; see September 2025 session.)
 
 ## Past Locations Include
 
@@ -442,11 +206,12 @@ Students who have completed foundational (Explorations) studies:$3,600*
 
 Anyone who has completed Explorations in the past need not take Phase 1 but only the supplementary sessions of Phase 2 before going on to Phase 3.
 
-CANCELLATIONS: An enrolled student may withdraw from the program upon written request to [milan@centerforanthroposophy.org](mailto:info@centerforanthroposophy.org) Such a request must be received at least 30 days prior to the beginning of the program in order to receive a tuition refund (less $75 cancellation fee). No refunds will be granted if cancellation is received within 30 days of the program start date.
+CANCELLATIONS: An enrolled student may withdraw from the program upon written request to [milan@centerforanthroposophy.org](mailto:milan@centerforanthroposophy.org) Such a request must be received at least 30 days prior to the beginning of the program in order to receive a tuition refund (less $75 cancellation fee). No refunds will be granted if cancellation is received within 30 days of the program start date.
 
 Limited Financial Aid is available upon request. To inquire, please fill out and submit the form below.
 
-## Building Bridges Financial Aid Application
+Write to [milan@centerforanthroposophy.org](mailto:milan@centerforanthroposophy.org) to ask
+about financial aid, and we'll send you the application.
 
 - Part I
 

@@ -72,7 +72,7 @@ If you are interested in a vocational training in Art Therapy (painting, clay, a
 
 Kairos Celebratory Convocation *with Peter Selg*
 
-Sept 13, 2026, 1:30 PM EST
+Sept 13, 2026, 1:30 PM EDT
 
 **The Mystery of the Heart. Ita Wegman and Rudolf Steiner**
 
@@ -217,6 +217,6 @@ Second Crisis intervention under the direction and guidance of Bernd Ruf, Alicia
 <img src="/images/828c522844-cafecbcd-8624-4d87-aebd-886a3f7cdb86.jpeg" alt="" loading="lazy" />
 <img src="/images/b06931f997-pxl20241029141528304.jpg" alt="" loading="lazy" />
 <img src="/images/10113faecd-d2068b54-eede-4ade-9975-0704dcc83a37.jpeg" alt="" loading="lazy" />
-</div>[VIEW MORE PHOTOS](#elementor-action%3Aaction%3Dpopup%3Aopen%26settings%3DeyJpZCI6IjQxODY0IiwidG9nZ2xlIjpmYWxzZX0%3D)
+</div>
 
 [READ TEAM REPORT](/files/702fa2195f-ep-kairos-crisis-intervention-asheville-2024.pdf)
