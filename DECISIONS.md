@@ -600,3 +600,12 @@ Starlight is deliberately untouched: its tag already matched the literal it repl
 pricing defaults to off, and the payment-plan, institution-roster and production-test paths are
 byte-identical. The WLCD program has no `cfa_learn_courses` row, so it will not appear in the
 staff registrations dashboard; the ten-minute order email is the visibility for it.
+
+## 2026-09-14 — Spanish Biography review at a CfA URL
+
+The Spanish Biography and Social Art review page is available at
+`https://learn.centerforanthroposophy.org/biografia`, with USD 175 displayed for
+review. The longer `/register/biografia-y-arte-social-2026` path temporarily redirects
+to it. This publishes the course information only: checkout is disabled and the page
+remains noindex. The layout accepts a document language and translated portal label,
+with existing English defaults preserved for all other pages.

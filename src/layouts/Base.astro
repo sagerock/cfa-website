@@ -10,6 +10,8 @@ const {
   current = '',
   minimal = false,
   publication = false,
+  lang = 'en',
+  portalLabel = 'Already registered? Sign in',
 } = Astro.props;
 const liveSite = 'https://centerforanthroposophy.org';
 const publicationSite = 'https://news.centerforanthroposophy.org';
@@ -30,7 +32,7 @@ const canonical = publication
 const year = new Date().getFullYear();
 ---
 
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -54,7 +56,7 @@ const year = new Date().getFullYear();
           <img class="brand-logo" src="/images/cfa-logo-2024.png" alt="Center for Anthroposophy" width="532" height="344" />
         </a>
         {minimal && (
-          <a class="btn-contact" id="portal-link" href="/learn/sign-in">Already registered? Sign in</a>
+          <a class="btn-contact" id="portal-link" href="/learn/sign-in">{portalLabel}</a>
         )}
         {!minimal && (
           <div class="head-right">
