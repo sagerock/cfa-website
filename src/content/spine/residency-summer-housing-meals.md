@@ -6,21 +6,13 @@ slug: summer-housing-meals
 order: 1
 ---
 
-<p class="notice">Summer 2026 Housing &amp; Meals registration is now closed for the season. Thank you for your patronage — we look forward to welcoming you next year.</p>
+<p class="notice">Summer 2026 Housing &amp; Meals registration is closed. Dates, rates and booking for summer 2027 will be posted here once they are set. The rates below are last summer's, kept for reference.</p>
 
-Welcome to the CfA / Antioch University summer programs at the **High Mowing School** campus in Wilton, New Hampshire. Below you'll find housing and meal-plan rates by program, a sample kitchen menu, and everything you need for a comfortable stay on campus. Make your reservation using the button beneath the rates.
+Welcome to the CfA / Antioch University summer programs at the **High Mowing School** campus in Wilton, New Hampshire. Below you'll find housing and meal-plan rates by program, a sample kitchen menu, and everything you need for a comfortable stay on campus.
 
-> **Village Housing is available for female students only this summer.** On-campus housing for Week 1 (Renewal / Mentor Training) is full — [email the office](mailto:milan@centerforanthroposophy.org) for a list of nearby community housing options, or to join the waitlist.
+Questions about housing for the coming summer? [Email the office](mailto:milan@centerforanthroposophy.org).
 
-### Important booking deadlines
-
-As we approach the June 28, 2026 opening, we must submit room-and-board reservations with payment to our hosts at High Mowing School:
-
-- Those already invoiced and booked must pay **in full no later than June 15** — unpaid bookings become void after that date.
-- New reservations are accepted through **June 27, by credit card only** (no checks).
-- Dorm reservations close June 27; after that, meals are purchased on arrival at the dining-hall self-checkout kiosk.
-
-## Dorm &amp; meal-plan rates by program
+## Dorm &amp; meal-plan rates by program — summer 2026
 
 <div class="table-wrap">
 <table class="rates">
@@ -50,7 +42,7 @@ As we approach the June 28, 2026 opening, we must submit room-and-board reservat
 </table>
 </div>
 
-<p><a class="inline-btn" href="https://cvent.me/YaMM7z">Make your reservation →</a></p>
+<p class="notice">Booking for summer 2027 is not open yet.</p>
 
 <div class="photo-grid">
 <img src="/images/5c06cab030-boys-dorm-lounge-1024x678-1-300x199-1.jpg" alt="Dorm lounge" loading="lazy" />

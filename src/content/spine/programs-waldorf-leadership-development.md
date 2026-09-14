@@ -10,26 +10,6 @@ order: 9
 
 ### Cultivate your capacity to serve in leadership positions.
 
-## View Option A Schedule
-
-## View Option B Schedule
-
-Program Opening
-
-**Saturday, May 11, 2024, 3:00-4:15 ET, online**
-
-Orientation with Program Coordinator, Karen Atkinson
-
-Presentation on Agreements with Program Director, Torin Finser
-
-Summer Intensive
-
-Monday, July 1 - Thursday, July 4, 2024, 1:00-5:00 ET, online, Monday, July 1, 2024
-
-**Orientation with Program Coordinator, Karen Atkinson**
-
-Presentation on Agreements with Program Director, Torin Finser
-
 ANNOUNCING
 
 Waldorf Leadership and Community Development Program & Residency — Yuba River Charter School, Grass Valley, CA
@@ -84,7 +64,7 @@ Classes will be recorded and available for 14 days.
 
 Charles paints in the colorist style that he evolved from his initial training in England at Tobias School of Art & Therapy. His paintings can be found in private collections in North America, Europe, and New Zealand. Charles owns and operates Lazure Custom Wall Designs, a mural and decorative painting business specializing in Lazure, a unique European glazing finish that creates healing inner environments. Charles teaches fine art classes and offers Lazure and painting workshops worldwide.
 
-[REGISTER FOR YUBA RIVER PROGRAM](https://cvent.me/E0dV9m)
+[REGISTER FOR THE 2026–27 PROGRAM](https://cvent.me/E0dV9m)
 
 [VIEW / DOWLOAD DETAILED FLIER](/files/7b93fbeb61-wlcd-2026-27-yuba-river.pdf)
 
