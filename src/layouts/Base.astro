@@ -12,6 +12,7 @@ const {
   publication = false,
   lang = 'en',
   portalLabel = 'Already registered? Sign in',
+  noindex = false,
 } = Astro.props;
 const liveSite = 'https://centerforanthroposophy.org';
 const publicationSite = 'https://news.centerforanthroposophy.org';
@@ -36,7 +37,7 @@ const year = new Date().getFullYear();
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content={publication ? 'index, follow, max-image-preview:large' : 'noindex'} />
+    <meta name="robots" content={publication && !noindex ? 'index, follow, max-image-preview:large' : 'noindex'} />
     {canonical && <link rel="canonical" href={canonical} />}
     <title>{title}</title>
     <ThirdPartyTags />

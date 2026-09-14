@@ -100,9 +100,14 @@ The broader reusable form plan is at `site-rebuild/FORMS-PLAN.md` in the monorep
 CfA is a MEDIUM-governance client: this PoC has not been shown to or approved by CfA.
 Sage explicitly activated direct publishing for the private Sage-and-Milan email pilot;
 ambiguous or out-of-scope requests still stop without publishing.
-Until CfA approves the rebuild, every page carries the "proof of concept" banner and a
-`noindex` meta. Going live for real = CfA's call, plus: real domain, redirect map from old
-URLs, forms answer, and removing banner/noindex.
+The banner and the blanket `noindex` are **no longer blanket**, and that is CfA's own
+doing, not a drift: CfA asked for the "proof of concept" banner to come out on the Elsy
+demo call, and launching `news.centerforanthroposophy.org` made the robots meta per-page
+(`publication` pages index, everything else still says `noindex`). **Elsy decides what is
+indexed and what chrome a page carries** (Sage, 2026-09-14). The email editor used to
+enforce both as hard invariants on `Base.astro`; it no longer does, because it was failing
+every edit that never touched the layout. Going live for real is still CfA's call, plus:
+real domain, redirect map from old URLs, and a forms answer.
 
 ## Develop
 

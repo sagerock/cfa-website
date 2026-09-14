@@ -41,11 +41,12 @@ export function analyzeEditions(posts) {
 }
 
 /** Posts for the news index: editions + standalone posts (member articles fold
-    into their edition). Returns [{ post, articleCount }] sorted newest first. */
+    into their edition, and unlisted posts are left out entirely). Returns
+    [{ post, articleCount }] sorted newest first. */
 export function indexPosts(posts) {
   const { editions, memberOf } = analyzeEditions(posts);
   return posts
-    .filter((p) => !memberOf[p.data.slug])
+    .filter((p) => !p.data.unlisted && !memberOf[p.data.slug])
     .sort((a, b) => b.data.date.localeCompare(a.data.date))
     .map((post) => {
       const ed = editions[post.data.slug];

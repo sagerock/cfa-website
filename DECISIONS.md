@@ -609,3 +609,39 @@ review. The longer `/register/biografia-y-arte-social-2026` path temporarily red
 to it. This publishes the course information only: checkout is disabled and the page
 remains noindex. The layout accepts a document language and translated portal label,
 with existing English defaults preserved for all other pages.
+
+## 2026-09-14 — Indexing and page chrome are Elsy's call, not a guardrail
+The email editor validated two invariants on `src/layouts/Base.astro` on every run: a
+site-wide `noindex` meta and the "proof of concept" banner. Both had already been retired
+by CfA — the banner came out on the Elsy demo call (commit 2b39bef), and launching the
+Center & Periphery publication subdomain (7a8cce1) made robots per-page, so the literal
+`content="noindex"` the check looked for no longer exists in the source.
+
+The check ran against the layout regardless of what a request actually changed, so it
+failed edits that never went near it. It stopped Elsy's seven-article Fall 2026 Center &
+Periphery build on 9/13 and would have stopped every later request too.
+
+Sage removed it (Ask commit 3f3598a) and put the decision with the person who runs the
+newsletter: **Elsy says what is indexed and what chrome a page carries.** A guardrail is
+for things an agent must not decide alone; this was never one of those — it was a
+description of a site that no longer exists. Everything else the editor checks is intact:
+requester scope, forbidden paths, secrets, symlinks, submodules, file size, faculty
+archives, course years, and that the build produced a homepage.
+
+## 2026-09-14 — An edition can be published unlisted
+Elsy sends the article addresses to reviewers and builds the Constant Contact buttons
+against them before the issue is approved. Until it merges, those addresses serve the
+home page, because the site answers an unknown path with the home page rather than a
+404 — so an unpublished issue is indistinguishable from a broken site. She sent all
+seven to David and Milan on 9/14 and reported one of them as misrouted; none of them
+were.
+
+A post can now carry `unlisted: true`. The page is built and live at its real URL, so
+every link resolves and the edition's sidebar works, but it is `noindex` and
+`indexPosts` drops it, which keeps it off the News index, its pagination, and the
+Center & Periphery page. Nobody finds it without the address — the same exposure as the
+branch preview we were already sending reviewers, on the address the mailer will use.
+
+Publishing is then deleting the flag. That keeps the promise CfA makes its reviewers
+("nothing goes public until you approve it") literally true while the links work, and
+it means the approval doesn't ride on a deploy going right at the last minute.
