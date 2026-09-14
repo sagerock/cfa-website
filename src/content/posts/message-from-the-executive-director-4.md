@@ -46,7 +46,7 @@ Additionally, it is my pleasure to announce that Deborah Dornemann, CfA’s Dire
 
 Congratulations, Deborah! We know that you will continue the fabulous work begun by Torin Finser, the program’s founder and former Director.
 
-Click [here](https://drive.google.com/file/d/1fxR6ym7l16kxpyv2wgXYDWfOZfS4eftJ/view?usp=sharing) to watch a brief video introduction to Building Bridges from Deborah.
+Click [here](https://www.youtube.com/watch?v=kjWsT1JmWh4) to watch a brief video introduction to Building Bridges from Deborah.
 
 Finally, we want to dedicate this issue to our dear friend and longtime CfA adjunct faculty member, David Sloan, who passed away this summer after a lengthy illness. It is hard to imagine the world without the vibrancy of David Sloan, one who deeply embodied the practice of “true human care.” David taught for 27 years in the Waldorf High School Teacher Education, at multiple Waldorf high schools (Green Meadow, Shining Mountain, Maine Coast, Jamie York Academy), and published numerous books that helped a generation of Waldorf high school teachers. He is also a published poet. You can read more about David [here](https://centerforanthroposophy.org/david-sloan-keynote-introduction-sunday-july-27-2025/) as well as read the text of the gorgeous Graduation talk David gave to the Antioch & WHiSTEP students at the end of the live summer residency in 2025.
 
