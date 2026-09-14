@@ -12,37 +12,33 @@ order: 9
 
 ANNOUNCING
 
-Waldorf Leadership and Community Development Program & Residency — Yuba River Charter School, Grass Valley, CA
+Fall Residency — Gathering Waters Charter School, Keene, NH
 
-Please join us for this pioneering hybrid program offered on the beautiful campus of Yuba River Charter School from September 18, 19, 20, 2026: 8:30 am – 5pm daily.
+Friday, October 9 through Tuesday, October 13, 2026. This fall we are opening the residency to people who are not enrolled in the full program: four days of leadership work with Torin Finser and our faculty, with no obligation to continue afterward.
 
-**Yuba River WLCD September Residency has reached its capacity and registration is now closed.**
+**Residency only, $850. $680 each when three or more come from the same school. Acceptance is first come, first served and space is limited.**
+
+[REGISTER FOR THE OCTOBER RESIDENCY](/register/wlcd-october-2026/)
 
 Click Here for Program Details
 
-**First residency dates and times:**
+**Residency dates and times:**
 
-September 18, 19, 20, 2026: 8:30 am – 5pm daily
+Friday, October 9 through Tuesday, October 13, 2026, at Gathering Waters Charter School in Keene, NH. Friday evening through Tuesday noon.
 
-A second residency may be offered in 2027
+**What the days hold:**
 
-**Virtual sessions dates and times:**
-
-Starts May 9, 2026: 12- 1:15 pm Pacific Time
-
-Followed by a virtual residency June 30, July 1 and 2: 10 am – 2 pm PT
-
-Also 1- 2 Saturdays per month between September and March: 12 pm-1:15 pm PT
+Friday evening opens with a welcome from Torin Finser and Karen Atkinson, Karine Munk Finser's lecture on the twelve archetypal gestures of personal and professional dysfunction and pathways toward healing, and eurythmy with Leonore Russell. Saturday through Monday bring daily eurythmy, lectures with Torin, social-color work with Karine, and guest presentations from Razia Ali Hamm, Lisa Mahar, and Karen Atkinson. Tuesday closes with a review and a harvest of what participants can carry back to their schools.
 
 **Tuition:**
 
-- 1st Residency portion only, $850
+- Residency only, $850
 
-Online portion only, $1,250
+- $680 each for three or more from the same school
+
+- Online portion only, $1,250
 
 - Cost of entire program: $2,650
-
-20% discount for school groups of 3 or more
 
 Graduates of the entire program receive a WLCD certificate from CfA, a full member of AWSNA Institute.
 
@@ -64,9 +60,7 @@ Classes will be recorded and available for 14 days.
 
 Charles paints in the colorist style that he evolved from his initial training in England at Tobias School of Art & Therapy. His paintings can be found in private collections in North America, Europe, and New Zealand. Charles owns and operates Lazure Custom Wall Designs, a mural and decorative painting business specializing in Lazure, a unique European glazing finish that creates healing inner environments. Charles teaches fine art classes and offers Lazure and painting workshops worldwide.
 
-[REGISTER FOR THE 2026–27 PROGRAM](https://cvent.me/E0dV9m)
-
-[VIEW / DOWLOAD DETAILED FLIER](/files/7b93fbeb61-wlcd-2026-27-yuba-river.pdf)
+[REGISTER FOR THE FULL 2026-27 PROGRAM](https://cvent.me/E0dV9m)
 
 ## Enrolling now for the 2026-27 Cycle
 
@@ -105,12 +99,6 @@ For new hires in schools who do not have a Waldorf background, we strongly encou
 - **Certification for International Students:** Participants attending 80% or more of online sessions – including Saturday seminars and the July three-day intensive – will receive a
 
 - **Certificate of Online Participation** from Center for Anthroposophy. Other participants, such as Board Members who are unable to attend in-person residencies, may request this certificate through our program leadership.
-
-**Our next WLD cohort begins virtually May 9, 2026, 3-4:15 ET.**
-
-We do two Keene, NH residencies for each cohort, traditionally on Indigenous Weekend early October and then again at the end of April, both long weekends Friday eve to Tues noon.
-
-However, in the past two years we have started doing residencies at other sites as well: New Zealand, Mountain Phoenix in Wheat Ridge, CO, and in March 27-30, 2026 at the Ocean School in Los Angeles.
 
 If you think you might be able to host a residency at your school (15-18 student min) please contact Torin M Finser [torin@centerforanthroposophy.org](mailto:torin@centerforanthroposophy.org) for a conversation.
 
