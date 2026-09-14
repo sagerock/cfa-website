@@ -4,6 +4,7 @@ slug: "center-periphery-newsletter-fall-2026"
 date: "2026-09-14"
 excerpt: "The Fall 2026 issue: a message from the Executive Director, Laura Radefeld’s convocation address, David Barham on speaking with high school students about difficult subjects, WHiSTEP faculty on academic rigor, a letter from Brazil, the final TSHE cohort, and three alumni profiles."
 cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
+unlisted: true
 ---
 
 ![Center & Periphery](/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp)

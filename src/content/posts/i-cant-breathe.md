@@ -4,6 +4,7 @@ slug: "i-cant-breathe"
 date: "2026-09-14"
 excerpt: "As the young person approaches adolescence—moving toward what Rudolf Steiner calls “earth maturity”—we begin to see profound physiological shifts. The lungs expand in capacity,…"
 cover: "/images/posts/cp-fall-2026-george-floyd-memorial.webp"
+unlisted: true
 ---
 
 *Finding the courage to speak with our high school students about truly difficult subjects*

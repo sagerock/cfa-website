@@ -4,6 +4,7 @@ slug: "whistep-class-of-2026-alumni-profiles"
 date: "2026-09-14"
 excerpt: "Bama Mattson, Laura Hacker and Elise Woodward — three members of the WHiSTEP Class of 2026 — on the schools they teach in, the training that changed them, and their hopes for Waldorf high schools."
 cover: "/images/posts/cp-fall-2026-bama-mattson-1.webp"
+unlisted: true
 ---
 
 *Three graduates of the Waldorf High School Teacher Education Program on where they teach, what they learned, and what they hope for.*

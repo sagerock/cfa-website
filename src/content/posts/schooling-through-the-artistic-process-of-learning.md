@@ -4,6 +4,7 @@ slug: "schooling-through-the-artistic-process-of-learning"
 date: "2026-09-14"
 excerpt: "This summer marked a significant transition for us: the graduation of the seventh and final cohort of Antioch University’s Transdisciplinary Studies in Healing Education (TSHE)…"
 cover: "/images/posts/cp-fall-2026-tshe-artwork.webp"
+unlisted: true
 ---
 
 *Celebrating the End of TSHE and the Continuing Journey of Kairos*

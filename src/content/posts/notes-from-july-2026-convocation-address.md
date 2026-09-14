@@ -4,6 +4,7 @@ slug: "notes-from-july-2026-convocation-address"
 date: "2026-09-14"
 excerpt: "In the painting by Joseph Mallord William Turner- titled Snow Storm – Steam-Boat off a Harbour’s Mouth Making Signals in Shallow Water, and going by the Lead. “The Author was in…"
 cover: "/images/posts/cp-fall-2026-turner-snow-storm.webp"
+unlisted: true
 ---
 
 *By Laura Radefeld*

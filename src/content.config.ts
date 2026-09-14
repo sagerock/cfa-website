@@ -33,6 +33,10 @@ const posts = defineCollection({
     date: z.string(),
     excerpt: z.string().optional(),
     cover: z.string().optional(),
+    // published but not announced: the page is live at its real URL so a
+    // mailer link resolves, but it is noindex and absent from every index
+    // until the edition is approved. Remove the flag to launch it.
+    unlisted: z.boolean().optional(),
   }),
 });
 

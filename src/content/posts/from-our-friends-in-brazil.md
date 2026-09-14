@@ -4,6 +4,7 @@ slug: "from-our-friends-in-brazil"
 date: "2026-09-14"
 excerpt: "It has been 11 years since I first read A Second Classroom by Torin Finser, and looking back, I can hardly believe all that has happened since. Not long after that moment, at the…"
 cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
+unlisted: true
 ---
 
 *By Lívia da Costa Quezado Ribeiro*
