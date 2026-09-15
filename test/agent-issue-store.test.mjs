@@ -17,6 +17,10 @@ const cases = [
   'an expired lease is claimable by another actor',
   'agent_link keeps gmail_thread ownership global',
   'agent_recent_actor_activity honors the requested window',
+  'agent_escalate records human ownership and a Gmail draft',
+  'agent_needs_human returns the ordered owner queue',
+  'agent_issue_links_of returns Gmail draft links',
+  'agent_set_owner clears ownership',
 ];
 
 const delay = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -38,6 +42,8 @@ test('agent issue store integration', async (t) => {
   let clientId;
   let primaryIssueId;
   let claimWinner;
+  let escalatedIssueId;
+  let escalatedDraftRef;
 
   const rpc = async (name, parameters) => {
     const { data, error } = await supabase.rpc(name, parameters);
@@ -218,6 +224,152 @@ test('agent issue store integration', async (t) => {
         p_within: '1 second',
       });
       assert.ok(!outsideWindow.includes(activityActor));
+    });
+
+    await t.test(cases[6], async () => {
+      const issue = await createIssue('escalated');
+      const claimActor = `test:${runId}:claimed-before-escalation`;
+      const owner = `human:${runId}:escalation-owner`;
+      const why = 'Sage should review this draft before it is sent.';
+      escalatedDraftRef = `draft-${runId}`;
+
+      const claim = await rpc('agent_claim_issue', {
+        p_issue: issue.id,
+        p_actor: claimActor,
+        p_ttl: '45 minutes',
+      });
+      assert.equal(claim.ok, true);
+
+      const escalated = await rpc('agent_escalate', {
+        p_issue: issue.id,
+        p_actor: actorA,
+        p_why: why,
+        p_owner: owner,
+        p_draft: escalatedDraftRef,
+      });
+      escalatedIssueId = escalated.id;
+
+      assert.equal(escalated.owner, owner);
+      assert.equal(escalated.status, 'waiting');
+      assert.equal(escalated.next_action, why);
+      assert.equal(escalated.claimed_by, claimActor);
+
+      const { data: draftLink, error: draftLinkError } = await supabase
+        .from('agent_issue_links')
+        .select('kind, ref, note')
+        .eq('issue_id', issue.id)
+        .eq('kind', 'gmail_draft')
+        .eq('ref', escalatedDraftRef)
+        .single();
+      assert.equal(draftLinkError, null, `draft link lookup failed: ${draftLinkError?.message ?? 'unknown error'}`);
+      assert.deepEqual(draftLink, {
+        kind: 'gmail_draft',
+        ref: escalatedDraftRef,
+        note: why,
+      });
+
+      const { data: escalatedEvents, error: escalatedEventsError } = await supabase
+        .from('agent_issue_events')
+        .select('body, refs')
+        .eq('issue_id', issue.id)
+        .eq('kind', 'escalated');
+      assert.equal(escalatedEventsError, null, `escalated event lookup failed: ${escalatedEventsError?.message ?? 'unknown error'}`);
+      assert.equal(escalatedEvents.length, 1);
+      assert.equal(escalatedEvents[0].body, why);
+      assert.deepEqual(escalatedEvents[0].refs, {
+        owner,
+        gmail_draft: escalatedDraftRef,
+      });
+    });
+
+    await t.test(cases[7], async () => {
+      const owner = `human:${runId}:queue-owner`;
+      const otherOwner = `human:${runId}:other-owner`;
+      const nowIssue = await createIssue('human-now');
+      const soonIssue = await createIssue('human-soon');
+      const decidedIssue = await createIssue('human-decided');
+      const otherOwnerIssue = await createIssue('human-other-owner');
+
+      await rpc('agent_set_owner', {
+        p_issue: nowIssue.id,
+        p_actor: actorA,
+        p_owner: owner,
+      });
+      await rpc('agent_escalate', {
+        p_issue: soonIssue.id,
+        p_actor: actorA,
+        p_why: 'Waiting for human review.',
+        p_owner: owner,
+      });
+      await rpc('agent_set_owner', {
+        p_issue: decidedIssue.id,
+        p_actor: actorA,
+        p_owner: owner,
+      });
+      await rpc('agent_set_owner', {
+        p_issue: otherOwnerIssue.id,
+        p_actor: actorA,
+        p_owner: otherOwner,
+      });
+
+      const { error: queueSetupError } = await supabase
+        .from('agent_issues')
+        .upsert([
+          { ...nowIssue, owner, priority: 'now' },
+          { ...soonIssue, owner, status: 'waiting', priority: 'soon' },
+          { ...decidedIssue, owner, status: 'decided', priority: 'now' },
+          { ...otherOwnerIssue, owner: otherOwner, priority: 'now' },
+        ]);
+      assert.equal(queueSetupError, null, `human queue setup failed: ${queueSetupError?.message ?? 'unknown error'}`);
+
+      const queue = await rpc('agent_needs_human', {
+        p_client: clientId,
+        p_owner: owner,
+      });
+
+      assert.deepEqual(queue.map((item) => item.id), [nowIssue.id, soonIssue.id]);
+      assert.deepEqual(queue.map((item) => item.priority), ['now', 'soon']);
+      assert.ok(queue.every((item) => item.owner === owner));
+      assert.ok(queue.every((item) => ['open', 'waiting'].includes(item.status)));
+    });
+
+    await t.test(cases[8], async () => {
+      const links = await rpc('agent_issue_links_of', {
+        p_issue: escalatedIssueId,
+      });
+      const draftLink = links.find((link) => (
+        link.kind === 'gmail_draft' && link.ref === escalatedDraftRef
+      ));
+
+      assert.notEqual(draftLink, undefined);
+      assert.equal(draftLink.issue_id, escalatedIssueId);
+    });
+
+    await t.test(cases[9], async () => {
+      const issue = await createIssue('owner-clear');
+      const owner = `human:${runId}:temporary-owner`;
+
+      const assigned = await rpc('agent_set_owner', {
+        p_issue: issue.id,
+        p_actor: actorA,
+        p_owner: owner,
+      });
+      assert.equal(assigned.owner, owner);
+
+      const cleared = await rpc('agent_set_owner', {
+        p_issue: issue.id,
+        p_actor: actorB,
+        p_owner: null,
+      });
+      assert.equal(cleared.owner, null);
+
+      const { data: storedIssue, error: storedIssueError } = await supabase
+        .from('agent_issues')
+        .select('owner')
+        .eq('id', issue.id)
+        .single();
+      assert.equal(storedIssueError, null, `cleared owner lookup failed: ${storedIssueError?.message ?? 'unknown error'}`);
+      assert.equal(storedIssue.owner, null);
     });
   } finally {
     if (clientId) {
