@@ -43,7 +43,7 @@ As one program comes to a close, another continues to grow.
 
 We are grateful for all that TSHE has signified for so many, and for the many people whose lives and work have been shaped by this program. And we are excited to welcome a small number of new students into Kairos: people with a background in art, whether as Waldorf teachers, artists, healing educators, or others who feel called to develop themselves toward the work of art therapy.
 
-You are warmly invited to join us. This year's Kairos sessions open to the public, and the form to register for any of them, are [here](https://centerforanthroposophy.org/kairos-general-public-oen-course-registration/).
+You are warmly invited to join us. The next public offering is *The Organic and Psychospiritual Basis of Mental Health* with Dr. James Dyson — four Saturday afternoons beginning September 26, [details and registration here](https://centerforanthroposophy.org/mental-health-from-an-anthroposophic-perspective-with-dr-james-dyson/). This year's Kairos sessions open to the public, and the form to register for any of them, are [here](https://centerforanthroposophy.org/kairos-general-public-oen-course-registration/).
 
 There is no commitment to join the program. Feel welcome to come greet us!
 
