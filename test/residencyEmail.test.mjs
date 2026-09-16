@@ -76,3 +76,67 @@ test('an unknown locale falls back to English rather than printing nothing', () 
   assert.match(text, /Dear Karen,/);
   assert.match(text, /Amount: \$850\.00$/m);
 });
+
+test('an installment receipt says what is still owed, in Spanish', () => {
+  const text = buildResidencyEmailText({
+    ...base,
+    locale: 'es',
+    firstName: 'Ana',
+    programTitle: 'Biografía y Arte Social 2026',
+    offerName: 'Curso completo · 2 pagos',
+    amount: '$87.50',
+    plan: {
+      installmentCount: 2,
+      firstAmount: '$87.50',
+      installmentAmount: '$87.50',
+      nextChargeOn: '2026-11-01',
+      finalChargeOn: null,
+      scheduled: true,
+    },
+  });
+  assert.match(text, /Plan de pagos: 2 pagos mensuales/);
+  assert.match(text, /Pagado hoy: \$87\.50 USD/);
+  assert.match(text, /Pendiente: 1 pago de \$87\.50 USD/);
+  assert.match(text, /el 1 de noviembre de 2026\./);
+  assert.doesNotMatch(text, /Payment plan|Paid today|Remaining/);
+});
+
+test('an unscheduled plan promises a schedule instead of inventing a date', () => {
+  const text = buildResidencyEmailText({
+    ...base,
+    locale: 'es',
+    plan: {
+      installmentCount: 2,
+      firstAmount: '$87.50',
+      installmentAmount: '$87.50',
+      nextChargeOn: null,
+      finalChargeOn: null,
+      scheduled: false,
+    },
+  });
+  assert.match(text, /La oficina de CfA/);
+  assert.match(text, /te confirmará el calendario de cobros/);
+  assert.doesNotMatch(text, /Invalid Date|undefined|NaN/);
+});
+
+test('a one-payment registration has no plan section at all', () => {
+  const text = buildResidencyEmailText({ ...base, locale: 'es' });
+  assert.doesNotMatch(text, /Plan de pagos|Pendiente:/);
+});
+
+test('the English no-portal receipt prints a plan too', () => {
+  const text = buildResidencyEmailText({
+    ...base,
+    plan: {
+      installmentCount: 3,
+      firstAmount: '$100.00',
+      installmentAmount: '$100.00',
+      nextChargeOn: '2026-11-09',
+      finalChargeOn: '2026-12-09',
+      scheduled: true,
+    },
+  });
+  assert.match(text, /Payment plan: 3 monthly payments/);
+  assert.match(text, /Remaining: 2 payments of \$100\.00/);
+  assert.match(text, /on November 9, 2026 and monthly through December 9, 2026\./);
+});

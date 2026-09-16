@@ -737,6 +737,7 @@ async function sendResidencyEmail(input: {
   transactionId: string;
   seats: number;
   participants: Array<{ first_name: string; last_name: string; email: string }>;
+  plan: WelcomePlan | null;
 }) {
   const key = Deno.env.get("SENDGRID_API_KEY") || "";
   if (!key) return false;
@@ -755,6 +756,7 @@ async function sendResidencyEmail(input: {
     seats: input.seats,
     participants: input.participants,
     details: input.program.details,
+    plan: input.plan,
     locale: input.program.locale,
     cancellationUrl: "https://learn.centerforanthroposophy.org/policies/cancellation/",
     contactEmail: "office@centerforanthroposophy.org",
@@ -1886,6 +1888,7 @@ Deno.serve(async (request: Request) => {
         transactionId,
         seats: purchasedSeats,
         participants,
+        plan: welcomePlan,
       });
   } catch {
     emailSent = false;
