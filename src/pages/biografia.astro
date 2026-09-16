@@ -1,8 +1,23 @@
 ---
-// VISTA PREVIA / PREVIEW ONLY. Static mock of a Spanish-language registration page for
-// the Biography and Social Art course (Magnolia Ríos, fall 2026). Not wired to
-// cfa-register yet: no program row, no offers, no payment. USD 175 staged at Sage’s request for review.
+// Inscripción en español para Biografía y Arte Social (Magnolia Ríos, otoño 2026).
+// Wired to cfa-register with ?program=biografia-y-arte-social-2026. Every amount
+// shown here is read back from the program's own offer rows; nothing is priced
+// in this file.
 import Base from '../layouts/Base.astro';
+import { ISO_COUNTRY_CODES } from '../../supabase/functions/_shared/billingCountries.js';
+
+// The reader of this page is more likely to be paying from Mexico or Spain than
+// from Australia, so this page features its own countries rather than the
+// English checkout's list.
+const FEATURED_COUNTRY_CODES = ['US', 'MX', 'ES', 'AR', 'CL', 'CO', 'PE', 'CA'];
+const countryNames = new Intl.DisplayNames(['es'], { type: 'region' });
+const featuredCountryCodes = new Set(FEATURED_COUNTRY_CODES);
+const countryOption = (code) => ({ code, name: countryNames.of(code) || code });
+const featuredCountries = FEATURED_COUNTRY_CODES.map(countryOption);
+const otherCountries = ISO_COUNTRY_CODES
+  .filter((code) => !featuredCountryCodes.has(code))
+  .map(countryOption)
+  .sort((a, b) => a.name.localeCompare(b.name, 'es'));
 
 const sessions = [
   '7 de octubre',
@@ -26,7 +41,7 @@ const workshopThemes = [
 <Base
   title="Inscripción: Biografía y Arte Social 2026 | Center for Anthroposophy"
   lang="es"
-  portalLabel="¿Ya te inscribiste? Inicia sesión"
+  portalLabel={null}
   minimal
 >
   <header class="registration-head">
@@ -72,31 +87,25 @@ const workshopThemes = [
 
   <div class="wrap registration-layout">
     <div class="registration-main">
-      <div class="sandbox-note">
-        <strong>Vista previa</strong>
-        Esta página es un borrador para revisión interna. La inscripción y el pago se
-        activarán después de la revisión final. La matrícula propuesta es de USD 175.
+      <div id="sandbox-note" class="sandbox-note" hidden>
+        <strong>Modo de prueba</strong>
+        No se cobrará ninguna tarjeta real mientras esta página esté en modo de prueba.
+      </div>
+      <div id="production-test-note" class="sandbox-note" hidden>
+        <strong>Prueba de producción autorizada</strong>
+        Este pago cobra 1 USD y anula la transacción de inmediato. No se crea ninguna inscripción.
       </div>
 
       <form id="registration-form" novalidate>
+        <!-- Trampa para bots. Oculta en el diseño, de modo que los gestores de contraseñas nunca la rellenan. -->
+        <div class="honeypot" aria-hidden="true">
+          <label>Deja este campo vacío <input type="text" name="fax_confirm" tabindex="-1" autocomplete="off" /></label>
+        </div>
+
         <fieldset class="form-section">
           <legend><span>01</span> Elige tu inscripción</legend>
-          <div class="offer-list">
-            <label class="offer-option">
-              <input type="radio" name="offer_code" value="curso-completo" checked />
-              <span class="offer-copy">
-                <strong>Curso completo · 8 sesiones</strong>
-                <small>Cuatro talleres desarrollados a lo largo de ocho encuentros: el Sol; Mercurio y Júpiter; Venus y Marte; la Luna y Saturno. Incluye versos, dibujo de formas, ejercicios artísticos, preguntas de vida y puesta en común.</small>
-              </span>
-              <span class="offer-price">USD 175</span>
-            </label>
-          </div>
-          <div class="coupon-row">
-            <label class="coupon-label">
-              Código de descuento <small>opcional</small>
-              <input type="text" maxlength="40" autocomplete="off" autocapitalize="characters" disabled />
-            </label>
-            <button class="coupon-apply" type="button" disabled>Aplicar</button>
+          <div id="offer-list" class="offer-list" aria-live="polite">
+            <p class="loading-copy">Cargando las opciones de inscripción…</p>
           </div>
         </fieldset>
 
@@ -114,7 +123,7 @@ const workshopThemes = [
             <label class="wide" for="participant-email">
               Correo electrónico
               <input type="email" id="participant-email" name="email" autocomplete="email" maxlength="254" required />
-              <span>Usarás esta dirección para entrar al portal del curso.</span>
+              <span>Te enviaremos aquí la confirmación y el enlace de Zoom.</span>
             </label>
             <label for="participant-phone">
               Teléfono <small>opcional</small>
@@ -127,8 +136,9 @@ const workshopThemes = [
           </div>
         </fieldset>
 
-        <fieldset class="form-section">
+        <fieldset class="form-section" id="billing-section">
           <legend><span>03</span> Dirección de facturación</legend>
+          <p class="section-note">Guardaremos estos datos con tu ficha de contacto en CfA y los usaremos para procesar el pago.</p>
           <div class="field-grid">
             <label class="wide" for="billing-address1">
               Calle y número
@@ -139,45 +149,47 @@ const workshopThemes = [
               <input type="text" id="billing-city" name="city" autocomplete="billing address-level2" maxlength="100" required />
             </label>
             <label for="billing-state">
-              Estado o provincia
+              <span class="field-heading"><span id="billing-state-label">Estado o provincia</span> <small id="billing-state-optional" hidden>opcional</small></span>
               <input type="text" id="billing-state" name="state" autocomplete="billing address-level1" maxlength="100" required />
             </label>
             <label for="billing-zip">
-              Código postal
+              <span class="field-heading"><span id="billing-zip-label">Código postal</span> <small id="billing-zip-optional" hidden>opcional</small></span>
               <input type="text" id="billing-zip" name="zip" autocomplete="billing postal-code" maxlength="30" required />
             </label>
             <label for="billing-country">
               País
               <select id="billing-country" name="country" autocomplete="billing country" required>
-                <option value="US">Estados Unidos</option>
-                <option value="MX">México</option>
-                <option value="AR">Argentina</option>
-                <option value="CL">Chile</option>
-                <option value="CO">Colombia</option>
-                <option value="PE">Perú</option>
-                <option value="ES">España</option>
-                <option value="CA">Canadá</option>
-                <option value="OTHER">Otro</option>
+                {featuredCountries.map((country) => <option value={country.code}>{country.name}</option>)}
+                <option disabled>──────────</option>
+                {otherCountries.map((country) => <option value={country.code}>{country.name}</option>)}
               </select>
+              <span>Todos los precios y cargos son en dólares estadounidenses (USD).</span>
+              <span id="country-discount-note" hidden></span>
             </label>
           </div>
         </fieldset>
 
         <fieldset class="form-section final-section">
-          <legend><span>04</span> Confirmar y pagar</legend>
+          <legend><span id="final-step-number">04</span> Confirmar y pagar</legend>
           <label class="check-row">
             <input type="checkbox" name="terms_accepted" required />
-            <span>Autorizo el cargo seleccionado y entiendo que la inscripción está sujeta a la política de cancelación del Center for Anthroposophy. <a href="/policies/cancellation/" target="_blank" rel="noopener">Leer la política de cancelación</a>.</span>
+            <span><span id="terms-copy">Autorizo el cargo seleccionado y entiendo que la inscripción está sujeta a la política de cancelación del Center for Anthroposophy.</span> <a href="/policies/cancellation/" target="_blank" rel="noopener">Leer la política de cancelación</a>.</span>
           </label>
           <label class="check-row">
             <input type="checkbox" name="marketing_opt_in" />
             <span>Quiero recibir noticias ocasionales sobre los programas del Center for Anthroposophy.</span>
           </label>
-          <button class="payment-button" type="button" disabled>
-            Vista previa: el pago aún no está disponible
+          <div id="turnstile-widget" class="turnstile"></div>
+          <button
+            id="payment-button"
+            class="payment-button"
+            type="button"
+            disabled
+          >
+            Preparando el pago…
           </button>
-          <p class="payment-note">Se ofrecerá la opción de pagar en dos cuotas durante octubre y noviembre. Los importes de las cuotas y las fechas de cobro se confirmarán antes de abrir la inscripción.</p>
           <p class="payment-note">Los datos de la tarjeta se procesan de forma segura a través de Authorize.Net y nunca pasan por este sitio web.</p>
+          <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
         </fieldset>
       </form>
     </div>
@@ -205,12 +217,16 @@ const workshopThemes = [
           </div>
           <div>
             <dt>Inscripción</dt>
-            <dd>Curso completo</dd>
+            <dd id="summary-offer">Elige una opción</dd>
+          </div>
+          <div id="summary-discount" hidden>
+            <dt>Ajuste</dt>
+            <dd id="summary-discount-copy"></dd>
           </div>
         </dl>
         <div class="summary-total">
           <span>Total</span>
-          <strong>USD 175</strong>
+          <strong id="summary-price">—</strong>
         </div>
       </div>
       <div class="summary-card sessions-card">
@@ -239,6 +255,436 @@ const workshopThemes = [
     </aside>
   </div>
 </Base>
+
+<script>
+  import {
+    getBillingAddressRule,
+    isSupportedBillingCountry,
+  } from '../../supabase/functions/_shared/billingCountries.js';
+
+  // One checkout serves several programs; this page is the Spanish biography
+  // course. The server re-derives every amount from the program's own offer
+  // rows, so nothing here can quote a price the database does not agree with.
+  const PROGRAM_KEY = 'biografia-y-arte-social-2026';
+  const PROGRAM_LABEL = 'Biografía y Arte Social 2026';
+  const base = 'https://ckloewflialohuvixmvd.supabase.co/functions/v1/cfa-register';
+  const endpoint = `${base}?program=${PROGRAM_KEY}`;
+  const form = document.getElementById('registration-form');
+
+  const offerList = document.getElementById('offer-list');
+  const paymentButton = document.getElementById('payment-button');
+  const status = document.getElementById('form-status');
+  const summaryOffer = document.getElementById('summary-offer');
+  const summaryPrice = document.getElementById('summary-price');
+  const summaryDiscount = document.getElementById('summary-discount');
+  const summaryDiscountCopy = document.getElementById('summary-discount-copy');
+  const countryDiscountNote = document.getElementById('country-discount-note');
+  const billingSection = document.getElementById('billing-section');
+  const billingCountryInput = form.elements.namedItem('country');
+  const billingStateInput = form.elements.namedItem('state');
+  const billingZipInput = form.elements.namedItem('zip');
+  const billingStateLabel = document.getElementById('billing-state-label');
+  const billingZipLabel = document.getElementById('billing-zip-label');
+  const billingStateOptional = document.getElementById('billing-state-optional');
+  const billingZipOptional = document.getElementById('billing-zip-optional');
+  const termsCopy = document.getElementById('terms-copy');
+  const finalStepNumber = document.getElementById('final-step-number');
+  const sandboxNote = document.getElementById('sandbox-note');
+  const productionTestNote = document.getElementById('production-test-note');
+
+  const fragment = new URLSearchParams(location.hash.slice(1));
+  const testToken = fragment.get('test_token') || '';
+  if (testToken) history.replaceState(null, '', location.pathname + location.search);
+  let config;
+  const checkoutKeyName = testToken
+    ? `cfa-biografia-checkout-id-${testToken.slice(0, 12)}`
+    : 'cfa-biografia-checkout-id';
+  let idempotencyKey = localStorage.getItem(checkoutKeyName) || crypto.randomUUID();
+  localStorage.setItem(checkoutKeyName, idempotencyKey);
+  let turnstileToken = '';
+  let turnstileWidgetId;
+  const pageParams = new URLSearchParams(location.search);
+  // Becas y cortesías llegan por enlace, no por una casilla de código: un campo
+  // de descuento invita a todo el mundo a salir a buscar uno.
+  const requestedCouponCode = (pageParams.get('coupon') || '').trim().toUpperCase();
+  let appliedCoupon = null;
+
+  function safeReferrer(value) {
+    try {
+      const referrer = new URL(value);
+      return `${referrer.origin}${referrer.pathname}`.slice(0, 500);
+    } catch {
+      return '';
+    }
+  }
+
+  function captureAttribution() {
+    const storageKey = 'cfa-registration-attribution';
+    try {
+      const stored = JSON.parse(sessionStorage.getItem(storageKey) || 'null');
+      if (stored && typeof stored === 'object' && !Array.isArray(stored)) return stored;
+    } catch {}
+
+    const captured = {
+      captured_at: new Date().toISOString(),
+      landing_path: location.pathname.slice(0, 500),
+      referrer: safeReferrer(document.referrer),
+    };
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid', 'msclkid']
+      .forEach((key) => {
+        const value = (pageParams.get(key) || '').trim();
+        if (value) captured[key] = value.slice(0, key.startsWith('utm_') ? 300 : 500);
+      });
+    try { sessionStorage.setItem(storageKey, JSON.stringify(captured)); } catch {}
+    return captured;
+  }
+
+  const attribution = captureAttribution();
+  // Los importes se muestran en dólares estadounidenses con formato español.
+  const money = new Intl.NumberFormat('es', { style: 'currency', currency: 'USD' });
+
+  function setStatus(message, kind = '') {
+    status.textContent = message;
+    status.dataset.kind = kind;
+  }
+
+  function setHidden(element, shouldHide) {
+    if (!element) return;
+    element.hidden = shouldHide;
+    element.classList.toggle('is-hidden', shouldHide);
+  }
+
+  function selectedOffer() {
+    const code = new FormData(form).get('offer_code');
+    return config?.offers?.find((offer) => offer.code === code);
+  }
+
+  function selectedAutomaticDiscount() {
+    const country = billingCountryInput?.value || '';
+    return config?.automatic_discounts?.find((rule) => rule.country_code === country) || null;
+  }
+
+  // Igual que en el servidor: los descuentos no se acumulan y gana el mejor.
+  function effectiveDiscount(offer) {
+    if (!offer) return { amount_cents: 0, source: null };
+    const list = offer.amount_cents;
+    const automatic = selectedAutomaticDiscount();
+    const couponAmount = appliedCoupon
+      ? Math.min(list, Math.round(list * appliedCoupon.percent_off / 100))
+      : 0;
+    const automaticAmount = automatic
+      ? Math.min(list, Math.round(list * automatic.percent_off / 100))
+      : 0;
+    return couponAmount > automaticAmount
+      ? { amount_cents: couponAmount, source: appliedCoupon }
+      : { amount_cents: automaticAmount, source: automatic };
+  }
+
+  function effectiveAmountCents(offer) {
+    if (!offer) return null;
+    return offer.amount_cents - effectiveDiscount(offer).amount_cents;
+  }
+
+  const baseBillingInputs = ['address1', 'city', 'country']
+    .map((name) => form.elements.namedItem(name));
+
+  function updateBillingAddressFields(free) {
+    const country = billingCountryInput?.value || '';
+    const rule = getBillingAddressRule(country, 'es');
+    billingStateLabel.textContent = rule.regionLabel;
+    billingZipLabel.textContent = rule.postalLabel;
+    billingStateInput.placeholder = rule.regionPlaceholder;
+    billingZipInput.placeholder = rule.postalPlaceholder;
+    baseBillingInputs.forEach((input) => { input.required = !free; });
+    billingStateInput.required = !free && rule.regionRequired;
+    billingZipInput.required = !free && rule.postalRequired;
+    billingStateOptional.hidden = free || rule.regionRequired;
+    billingZipOptional.hidden = free || rule.postalRequired;
+    billingCountryInput.setCustomValidity(
+      free || isSupportedBillingCountry(country) ? '' : 'Elige un país de facturación válido.',
+    );
+  }
+
+  function updateSelection() {
+    const offer = selectedOffer();
+    summaryOffer.textContent = offer?.name || 'Elige una opción';
+    const total = effectiveAmountCents(offer);
+    const discount = effectiveDiscount(offer);
+    const automatic = selectedAutomaticDiscount();
+    setHidden(countryDiscountNote, !automatic);
+    if (automatic) {
+      countryDiscountNote.textContent = `${automatic.label}: ${automatic.percent_off}% de descuento.`;
+    }
+    const adjustment = discount.source;
+    setHidden(summaryDiscount, !adjustment || discount.amount_cents === 0);
+    summaryDiscountCopy.textContent = adjustment
+      ? `${adjustment.label || `Cupón ${adjustment.code}`} · ${adjustment.percent_off}% (${money.format(discount.amount_cents / 100)})`
+      : '';
+    const free = offer && total === 0;
+    if (config?.payment?.available) paymentButton.classList.toggle('AcceptUI', !free);
+    setHidden(billingSection, Boolean(free));
+    // Saltarse la facturación no debe dejar el formulario numerado 01, 02, 04.
+    finalStepNumber.textContent = free ? '03' : '04';
+    updateBillingAddressFields(free);
+    termsCopy.textContent = free
+      ? 'Entiendo que la inscripción está sujeta a la política de cancelación del Center for Anthroposophy.'
+      : 'Autorizo el cargo seleccionado y entiendo que la inscripción está sujeta a la política de cancelación del Center for Anthroposophy.';
+    summaryPrice.textContent = offer ? money.format(total / 100) : '—';
+    paymentButton.textContent = !offer
+      ? 'Elige una opción de inscripción'
+      : free
+      ? 'Completar la inscripción'
+      : `Continuar al pago seguro · ${money.format(total / 100)}`;
+  }
+
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.body.append(script);
+    });
+  }
+
+  async function submitRegistration(opaqueData) {
+    paymentButton.disabled = true;
+    setStatus('Autorizando el pago y confirmando tu lugar…');
+    const data = new FormData(form);
+    const offer = selectedOffer();
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        idempotency_key: idempotencyKey,
+        test_token: testToken,
+        offer_code: data.get('offer_code'),
+        seats: 1,
+        participants: [],
+        first_name: data.get('first_name'),
+        last_name: data.get('last_name'),
+        email: data.get('email'),
+        phone: data.get('phone'),
+        organization: data.get('organization'),
+        company: data.get('fax_confirm'),
+        billing_address: {
+          address: data.get('address1'),
+          city: data.get('city'),
+          state: data.get('state'),
+          zip: data.get('zip'),
+          country: data.get('country'),
+        },
+        terms_accepted: data.get('terms_accepted') === 'on',
+        marketing_opt_in: data.get('marketing_opt_in') === 'on',
+        attribution,
+        turnstile_token: turnstileToken,
+        coupon_code: appliedCoupon?.code || '',
+        opaque_data: opaqueData || {},
+      }),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (response.ok && result.ok) {
+      localStorage.removeItem(checkoutKeyName);
+      if (!result.test_mode && !result.replayed) {
+        const paidOffer = offer;
+        const conversion = {
+          value: (result.amount_cents ?? 0) / 100,
+          currency: 'USD',
+          transaction_id: result.registration_id,
+          name: paidOffer ? `${PROGRAM_LABEL}: ${paidOffer.name}` : PROGRAM_LABEL,
+          id: paidOffer?.code,
+        };
+        if (window.__cfaConversion) window.__cfaConversion('purchase', conversion);
+        if (window.__cfaTrack) {
+          window.__cfaTrack('registration', { offer: paidOffer?.code, value: conversion.value, seats: 1 });
+        }
+      }
+      form.hidden = true;
+      const success = document.createElement('section');
+      success.className = 'success-card';
+      success.tabIndex = -1;
+      const eyebrow = document.createElement('p');
+      eyebrow.className = 'eyebrow';
+      eyebrow.textContent = 'Inscripción completada';
+      const heading = document.createElement('h2');
+      heading.textContent = result.test_mode
+        ? 'Prueba de pago en producción completada'
+        : '¡Nos vemos el 7 de octubre!';
+      const copy = document.createElement('p');
+      copy.textContent = result.test_mode && result.voided
+        ? 'La transacción de prueba de 1 USD fue aprobada y anulada de inmediato. No se creó ninguna inscripción.'
+        : result.email_sent
+        ? 'Tu pago fue aprobado. Te enviamos por correo la confirmación con las fechas y el enlace de Zoom, que es el mismo para las ocho sesiones.'
+        : 'Tu pago fue aprobado y tu lugar está reservado. Si no te llega el correo de confirmación, escribe a la oficina de CfA y te lo reenviamos.';
+      success.append(eyebrow, heading, copy);
+      document.querySelector('.registration-main').append(success);
+      success.focus();
+      return;
+    }
+    if (response.status === 202) {
+      setStatus('No vuelvas a enviar el pago. El resultado necesita revisión manual. Escribe a la oficina de CfA e incluye esta referencia: ' + (result.registration_id || ''), 'error');
+      return;
+    } else if (result.error === 'registration_pending') {
+      setStatus('No vuelvas a enviar el pago. Ya hay una inscripción de este mismo proceso en revisión. Escribe a la oficina de CfA e incluye esta referencia: ' + (result.registration_id || ''), 'error');
+      return;
+    } else if (result.error === 'already_registered' || result.error === 'already_enrolled') {
+      localStorage.removeItem(checkoutKeyName);
+      setStatus('Este correo ya está inscrito en el curso. Escribe a la oficina de CfA si necesitas cambiar la inscripción.', 'error');
+      return;
+    } else if (result.error === 'coupon_invalid') {
+      appliedCoupon = null;
+      updateSelection();
+      setStatus('Ese enlace de descuento ya no es válido. El precio que ves ahora es la tarifa normal.', 'error');
+    } else if (result.error === 'verification_failed') {
+      setStatus('La verificación caducó. Complétala otra vez y vuelve a enviar.', 'error');
+    } else if (result.error === 'idempotency_conflict') {
+      idempotencyKey = crypto.randomUUID();
+      localStorage.setItem(checkoutKeyName, idempotencyKey);
+      setStatus('Este navegador guardaba una referencia de un intento anterior. Ya se reinició: vuelve a enviar.', 'error');
+    } else {
+      setStatus(result.message || 'No se pudo completar la inscripción. Revisa el formulario o escribe a la oficina de CfA antes de intentarlo de nuevo.', 'error');
+      if (result.error === 'payment_declined') {
+        idempotencyKey = crypto.randomUUID();
+        localStorage.setItem(checkoutKeyName, idempotencyKey);
+      }
+    }
+    paymentButton.disabled = false;
+    if (window.turnstile && turnstileWidgetId !== undefined) {
+      turnstileToken = '';
+      window.turnstile.reset(turnstileWidgetId);
+    }
+  }
+
+  window.responseHandler = async (response) => {
+    if (response.messages?.resultCode === 'Error') {
+      const message = response.messages.message?.map((item) => item.text).join(' ') || 'No se pudieron aceptar los datos de la tarjeta.';
+      setStatus(message, 'error');
+      return;
+    }
+    try {
+      await submitRegistration(response.opaqueData);
+    } catch {
+      setStatus('No pudimos confirmar la inscripción. No vuelvas a enviar el pago; escribe a la oficina de CfA.', 'error');
+    }
+  };
+
+  paymentButton.addEventListener('click', (event) => {
+    if (!form.reportValidity() || !selectedOffer()) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      setStatus('Completa todos los campos obligatorios antes de continuar.', 'error');
+    } else if (config?.turnstile_site_key && !turnstileToken) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      setStatus('Completa la verificación antes de continuar.', 'error');
+    } else if (effectiveAmountCents(selectedOffer()) === 0) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      submitRegistration(null).catch(() => {
+        setStatus('No pudimos confirmar la inscripción. Escribe a la oficina de CfA.', 'error');
+      });
+    } else {
+      setStatus('Introduce los datos de tu tarjeta en la ventana segura de Authorize.Net.');
+    }
+  }, true);
+
+  form.addEventListener('change', updateSelection);
+  form.addEventListener('submit', (event) => event.preventDefault());
+
+  let checkoutStartTracked = false;
+  function trackCheckoutStart() {
+    if (checkoutStartTracked) return;
+    checkoutStartTracked = true;
+    const offer = selectedOffer();
+    const conversion = {
+      value: (effectiveAmountCents(offer) || 0) / 100,
+      currency: 'USD',
+      name: offer ? `${PROGRAM_LABEL}: ${offer.name}` : PROGRAM_LABEL,
+      id: offer?.code,
+    };
+    if (window.__cfaConversion) window.__cfaConversion('begin_checkout', conversion);
+    if (window.__cfaTrack) window.__cfaTrack('checkout_started', { offer: offer?.code, value: conversion.value });
+  }
+  form.addEventListener('input', trackCheckoutStart, { once: true });
+
+  async function initialize() {
+    try {
+      const configHeaders = new Headers({ Accept: 'application/json' });
+      if (testToken) configHeaders.set('X-Registration-Test', testToken);
+      const response = await fetch(endpoint, { headers: configHeaders });
+      if (!response.ok) throw new Error('configuration');
+      config = await response.json();
+      if (requestedCouponCode && !testToken) {
+        try {
+          const couponResponse = await fetch(`${endpoint}&coupon=${encodeURIComponent(requestedCouponCode)}`, {
+            headers: new Headers({ Accept: 'application/json' }),
+          });
+          const couponPayload = await couponResponse.json();
+          if (couponPayload.coupon?.valid) appliedCoupon = couponPayload.coupon;
+        } catch {
+          appliedCoupon = null;
+        }
+      }
+      offerList.replaceChildren();
+      if (!config.offers?.length) throw new Error('offers');
+      config.offers.forEach((offer, index) => {
+        const label = document.createElement('label');
+        label.className = 'offer-option';
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = 'offer_code';
+        input.value = offer.code;
+        input.checked = index === 0;
+        input.required = true;
+        const copy = document.createElement('span');
+        copy.className = 'offer-copy';
+        const name = document.createElement('strong');
+        name.textContent = offer.name;
+        const description = document.createElement('small');
+        description.textContent = offer.description;
+        copy.append(name, description);
+        const price = document.createElement('span');
+        price.className = 'offer-price';
+        price.textContent = money.format(offer.amount_cents / 100);
+        label.append(input, copy, price);
+        offerList.append(label);
+      });
+      updateSelection();
+      if (!config.payment.available) {
+        setStatus('El formulario está listo para revisión, pero el cobro todavía no está configurado.', 'error');
+        return;
+      }
+      setHidden(sandboxNote, config.payment.environment !== 'sandbox');
+      setHidden(productionTestNote, !config.payment.test_mode);
+      paymentButton.classList.add('AcceptUI');
+      paymentButton.setAttribute('data-billingAddressOptions', JSON.stringify({ show: false, required: false }));
+      paymentButton.setAttribute('data-apiLoginID', config.payment.api_login_id);
+      paymentButton.setAttribute('data-clientKey', config.payment.public_client_key);
+      paymentButton.setAttribute('data-acceptUIFormBtnTxt', 'Autorizar el pago');
+      paymentButton.setAttribute('data-acceptUIFormHeaderTxt', 'Datos seguros de la tarjeta');
+      paymentButton.setAttribute('data-paymentOptions', JSON.stringify({ showCreditCard: true, showBankAccount: false }));
+      paymentButton.setAttribute('data-responseHandler', 'responseHandler');
+      if (config.turnstile_site_key) {
+        await loadScript('https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit');
+        turnstileWidgetId = window.turnstile.render('#turnstile-widget', {
+          sitekey: config.turnstile_site_key,
+          action: 'registration',
+          callback: (token) => { turnstileToken = token; },
+          'expired-callback': () => { turnstileToken = ''; },
+        });
+      }
+      await loadScript(config.payment.accept_script);
+      paymentButton.disabled = false;
+      updateSelection();
+    } catch {
+      offerList.innerHTML = '<p class="loading-copy error-copy">Las opciones de inscripción no están disponibles en este momento. Escribe a la oficina de CfA.</p>';
+      setStatus('No se pudo inicializar el pago seguro.', 'error');
+    }
+  }
+
+  initialize();
+</script>
 
 <style>
   .registration-head {
@@ -336,6 +782,8 @@ const workshopThemes = [
   .field-grid label { display: grid; gap: 7px; font-family: var(--sans); font-size: 14px; font-weight: 600; }
   .field-grid label small { color: var(--soft); font-weight: 400; }
   .field-grid label > span { color: var(--soft); font-family: var(--serif); font-size: 14px; font-weight: 400; }
+  .field-grid label > .field-heading { color: inherit; font-family: inherit; font-size: inherit; font-weight: inherit; }
+  .section-note { margin: -4px 0 18px; color: var(--soft); font-size: 15px; }
   .field-grid .wide { grid-column: 1 / -1; }
   input, select {
     width: 100%;
@@ -370,14 +818,6 @@ const workshopThemes = [
   .payment-button:disabled { cursor: not-allowed; opacity: 0.55; }
   .payment-note, .form-status { color: var(--soft); font-size: 14px; margin-top: 12px; }
   .form-status[data-kind='error'] { color: #9e3d2d; }
-  .coupon-row { display: flex; align-items: flex-end; gap: 10px; margin-top: 16px; }
-  .coupon-label { display: flex; flex-direction: column; gap: 6px; font-family: var(--sans); font-size: 13px; }
-  .coupon-label small { color: var(--soft); }
-  .coupon-label input { max-width: 200px; text-transform: uppercase; }
-  .coupon-apply { padding: 9px 16px; border: 1px solid var(--line); border-radius: 4px; background: var(--chalk); font-family: var(--sans); font-size: 13px; cursor: pointer; }
-  .coupon-status { margin-top: 8px; color: var(--soft); font-family: var(--sans); font-size: 13px; }
-  .coupon-status[data-kind='ok'] { color: var(--green-ink); }
-  .coupon-status[data-kind='error'] { color: #9e3d2d; }
   .turnstile { margin-top: 20px; }
   .registration-summary { position: sticky; top: 118px; }
   .summary-card { border: 1px solid var(--line); background: var(--raised); padding: 28px; }
@@ -398,6 +838,10 @@ const workshopThemes = [
   .loading-copy { color: var(--soft); font-style: italic; }
   .error-copy { color: #9e3d2d; }
   .honeypot { display: none; }
+  /* [hidden] loses to the class-based display rules above, so hiding a field
+     needs a class that cannot lose. Keep both: the attribute is what assistive
+     technology reads. */
+  .is-hidden { display: none !important; }
   @media (max-width: 820px) {
     .registration-intro, .registration-layout { grid-template-columns: 1fr; }
     .registration-intro { gap: 22px; }

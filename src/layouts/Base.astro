@@ -12,6 +12,10 @@ const {
   publication = false,
   lang = 'en',
   portalLabel = 'Already registered? Sign in',
+  // Registration pages carry a sign-in link because most CfA programs hand the
+  // buyer a portal. Pass portalLabel={null} for one that does not — a live Zoom
+  // course with no recordings has nothing behind a sign-in, and offering one
+  // sends a new registrant somewhere empty.
   noindex = false,
 } = Astro.props;
 const liveSite = 'https://centerforanthroposophy.org';
@@ -56,7 +60,7 @@ const year = new Date().getFullYear();
         <a class="brand" href={minimal || publication ? liveSite : '/'}>
           <img class="brand-logo" src="/images/cfa-logo-2024.png" alt="Center for Anthroposophy" width="532" height="344" />
         </a>
-        {minimal && (
+        {minimal && portalLabel && (
           <a class="btn-contact" id="portal-link" href="/learn/sign-in">{portalLabel}</a>
         )}
         {!minimal && (

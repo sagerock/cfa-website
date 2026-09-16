@@ -20,7 +20,13 @@ const CFA_CLIENT_ID = "22500cd6-052a-42ff-a0cb-4f3ba9125dfd";
 // `portal` is the real fork: a Starlight registration buys access to the
 // learning portal, so it provisions a magic link and sends someone to sign in.
 // An in-person residency buys a seat in a room in Keene — there is nothing to
-// sign into, so it confirms by email and sends the reader nowhere.
+// sign into, so it confirms by email and sends the reader nowhere. A live Zoom
+// course with no recordings is the same shape: the reader gets a room and dates.
+//
+// `locale` is the language the program is sold and taught in, and it decides
+// the language of the confirmation email. It is not the buyer's browser
+// language: someone who reads English can register for the Spanish course, and
+// the receipt should still match the course they will actually sit in.
 type ProgramDefinition = {
   key: string;
   platform: string;
@@ -29,6 +35,7 @@ type ProgramDefinition = {
   chargeDescription: string;
   emailSubject: string;
   portal: boolean;
+  locale: string;
   testOfferCodes: Set<string>;
   signedInRedirect: string | null;
   details: string[];
@@ -43,6 +50,7 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
     chargeDescription: "Starlight Rays 2026-2027",
     emailSubject: "Your Starlight Rays registration",
     portal: true,
+    locale: "en",
     testOfferCodes: new Set(["individual", "individual-plan"]),
     signedInRedirect: "/learn/sign-in?registered=1",
     details: [],
@@ -55,6 +63,7 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
     chargeDescription: "WLCD October Residency 2026",
     emailSubject: "Your October residency registration",
     portal: false,
+    locale: "en",
     testOfferCodes: new Set(["residency"]),
     signedInRedirect: null,
     details: [
@@ -63,6 +72,31 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
       "",
       "The residency runs Friday evening through Tuesday midday. Karen Atkinson will write",
       "with the schedule, lodging and travel details closer to the date.",
+    ],
+  },
+  "biografia-y-arte-social-2026": {
+    key: "biografia-y-arte-social-2026",
+    platform: "native",
+    platformId: "biografia-y-arte-social-2026",
+    title: "Biografía y Arte Social 2026",
+    // Authorize.Net prints this on the cardholder's statement. Plain ASCII,
+    // because accented characters are not reliably rendered there.
+    chargeDescription: "Biografia y Arte Social 2026",
+    emailSubject: "Tu inscripción a Biografía y Arte Social",
+    portal: false,
+    locale: "es",
+    testOfferCodes: new Set(["curso-completo"]),
+    signedInRedirect: null,
+    details: [
+      "Ocho miércoles, del 7 de octubre al 25 de noviembre de 2026.",
+      "De 7:00 a 8:30 pm, hora del Este de EE. UU.",
+      "",
+      "Nos reunimos por Zoom en esta sala: https://centerforanthroposophy.org/zoomroom2",
+      "Guarda este enlace: es el mismo para las ocho sesiones.",
+      "",
+      "Por el carácter personal del trabajo biográfico, los encuentros no se graban.",
+      "Magnolia Ríos escribirá antes de la primera sesión con los materiales que",
+      "conviene tener a mano.",
     ],
   },
 };
@@ -721,6 +755,7 @@ async function sendResidencyEmail(input: {
     seats: input.seats,
     participants: input.participants,
     details: input.program.details,
+    locale: input.program.locale,
     cancellationUrl: "https://learn.centerforanthroposophy.org/policies/cancellation/",
     contactEmail: "office@centerforanthroposophy.org",
   });

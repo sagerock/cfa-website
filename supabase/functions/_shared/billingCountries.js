@@ -46,9 +46,34 @@ export function isSupportedBillingCountry(value) {
   return typeof value === 'string' && ISO_COUNTRY_CODE_SET.has(value.trim().toUpperCase());
 }
 
-export function getBillingAddressRule(value) {
+// Spanish labels for the same rules. Only the words change: which fields a
+// country requires is a property of the country, not of the reader's language,
+// so a Spanish page still requires a US ZIP code.
+const ES_LABELS = Object.freeze({
+  DEFAULT: Object.freeze({
+    regionLabel: 'Estado, provincia o región',
+    postalLabel: 'Código postal',
+  }),
+  US: Object.freeze({ regionLabel: 'Estado', postalLabel: 'Código postal (ZIP)' }),
+  CA: Object.freeze({ regionLabel: 'Provincia o territorio', postalLabel: 'Código postal' }),
+  AU: Object.freeze({ regionLabel: 'Estado o territorio', postalLabel: 'Código postal' }),
+});
+
+function translateRule(rule, code) {
+  const labels = ES_LABELS[code] || ES_LABELS.DEFAULT;
+  return Object.freeze({
+    ...rule,
+    regionLabel: labels.regionLabel,
+    postalLabel: labels.postalLabel,
+    regionPlaceholder: rule.regionPlaceholder.replace('e.g. ', 'ej. '),
+    postalPlaceholder: rule.postalPlaceholder.replace('e.g. ', 'ej. '),
+  });
+}
+
+export function getBillingAddressRule(value, locale = 'en') {
   const code = typeof value === 'string' ? value.trim().toUpperCase() : '';
-  return RULES[code] || DEFAULT_RULE;
+  const rule = RULES[code] || DEFAULT_RULE;
+  return locale === 'es' ? translateRule(rule, code) : rule;
 }
 
 export function hasRequiredBillingAddressFields(address) {

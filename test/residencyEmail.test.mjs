@@ -49,3 +49,30 @@ test('a group registration says how many it covers and lists them', () => {
 test('an empty roster leaves the section out entirely', () => {
   assert.doesNotMatch(buildResidencyEmailText(base), /Registered:/);
 });
+
+test('a Spanish program gets a Spanish receipt, not a translated English one', () => {
+  const text = buildResidencyEmailText({
+    ...base,
+    locale: 'es',
+    firstName: 'Magnolia',
+    programTitle: 'Biografía y Arte Social 2026',
+    offerName: 'Curso completo · 8 sesiones',
+    amount: '$175.00',
+    details: [
+      'Ocho miércoles, del 7 de octubre al 25 de noviembre de 2026',
+      'De 7:00 a 8:30 pm, hora del Este de EE. UU.',
+    ],
+  });
+  assert.match(text, /^Hola Magnolia:/);
+  assert.match(text, /Gracias por inscribirte en Biografía y Arte Social 2026\./);
+  assert.match(text, /Inscripción: Curso completo/);
+  assert.match(text, /Importe: \$175\.00 USD$/m);
+  assert.match(text, /Ocho miércoles, del 7 de octubre/);
+  assert.doesNotMatch(text, /Dear |Thank you|Amount:|Transaction:|contact /);
+});
+
+test('an unknown locale falls back to English rather than printing nothing', () => {
+  const text = buildResidencyEmailText({ ...base, locale: 'fr' });
+  assert.match(text, /Dear Karen,/);
+  assert.match(text, /Amount: \$850\.00$/m);
+});

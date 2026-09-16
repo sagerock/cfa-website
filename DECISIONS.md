@@ -645,3 +645,27 @@ branch preview we were already sending reviewers, on the address the mailer will
 Publishing is then deleting the flag. That keeps the promise CfA makes its reviewers
 ("nothing goes public until you approve it") literally true while the links work, and
 it means the approval doesn't ride on a deploy going right at the last minute.
+
+## 2026-09-16 — A program declares its own language, and the receipt follows it
+The Spanish biography course (Magnolia Ríos, eight Wednesdays, October 7 to November 25)
+is CfA's first program sold and taught in a language other than English. The page was
+already Spanish; the checkout behind it was not. The tempting fix — detect the browser's
+language — is the wrong axis: someone who reads English can register for the Spanish
+course, and a receipt in their browser language would describe a course they are not
+taking. So `locale` is a property of the *program*, set once in `cfa-register`'s program
+definition, and it decides the confirmation email's language. `getBillingAddressRule`
+gained the same optional switch, translating labels only: which fields a country requires
+is a fact about the country, so a Spanish page still asks for a US ZIP code.
+
+The course registers like the Keene residency — one payment, a confirmation email, no
+sign-in link. Nothing sits behind a portal here: by Deborah Dornemann's decision the
+sessions are never recorded, so what a registrant needs is the Zoom room and the eight
+dates, and `Base.astro` now takes `portalLabel={null}` so a page with nothing to sign
+into stops offering a sign-in.
+
+Priced at $175: Milan Daler proposed it on 9/11, Deborah agreed on 9/15. The two-payment
+option they also agreed to is deliberately absent — the installment amounts and due dates
+have never been decided, and an offer row is the wrong place to guess. It is one insert
+with `installment_count = 2` when they are, with no code change. Note that a Spanish
+plan receipt would need the installment lines added to `residencyEmail.js`, which today
+only the portal welcome email prints.
