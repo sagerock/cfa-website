@@ -574,7 +574,7 @@ const workshopThemes = [
       event.preventDefault();
       event.stopImmediatePropagation();
       setStatus('Completa todos los campos obligatorios antes de continuar.', 'error');
-    } else if (config?.turnstile_site_key && !turnstileToken) {
+    } else if (config?.turnstile_site_key && !turnstileToken && !testToken) {
       event.preventDefault();
       event.stopImmediatePropagation();
       setStatus('Completa la verificación antes de continuar.', 'error');
@@ -665,7 +665,11 @@ const workshopThemes = [
       paymentButton.setAttribute('data-acceptUIFormHeaderTxt', 'Datos seguros de la tarjeta');
       paymentButton.setAttribute('data-paymentOptions', JSON.stringify({ showCreditCard: true, showBankAccount: false }));
       paymentButton.setAttribute('data-responseHandler', 'responseHandler');
-      if (config.turnstile_site_key) {
+      // An authorized production test carries its own one-time credential and the
+      // server skips the bot check for it, so gating the button on a Turnstile
+      // token would leave the test unrunnable — which is exactly what happened
+      // the first time this was tried, on 2026-09-16.
+      if (config.turnstile_site_key && !testToken) {
         await loadScript('https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit');
         turnstileWidgetId = window.turnstile.render('#turnstile-widget', {
           sitekey: config.turnstile_site_key,
