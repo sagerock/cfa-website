@@ -1515,7 +1515,14 @@ Deno.serve(async (request: Request) => {
         plan_test: await cleanupPlanTest(),
       }, 200, origin);
     }
-    const definitelyDeclined = transaction?.responseCode === "2" && (!transactionId || transactionId === "0");
+    // Authorize.Net responseCode 2 is a final decline. It nearly always carries a
+    // real transId (the issuer saw the attempt), so requiring "no transId" sent
+    // every ordinary decline to manual review as 'enrollment_pending' - and that
+    // status blocks any new registration from the same email (registration_pending,
+    // plus the one-active unique index). Frances Vig's CVV decline on 2026-09-04
+    // locked her out of three retries over 13 days this way. Only results that
+    // are genuinely ambiguous (held for review = 4, errors = 3) need a person.
+    const definitelyDeclined = transaction?.responseCode === "2";
     const needsReview = !definitelyDeclined;
     await admin.from("registrations").update({
       status: needsReview ? "enrollment_pending" : "failed",
