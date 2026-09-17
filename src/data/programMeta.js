@@ -2,7 +2,7 @@
 // from the old site's EAEL filterable gallery.
 
 export const PROGRAM_GROUPS = [
-  { name: 'Introductory', slugs: ['explorations-online', 'building-bridges'] },
+  { name: 'Introductory', slugs: ['explorations-online', 'building-bridges', 'biografia'] },
   { name: 'Teacher Training', slugs: ['waldorf-high-school', 'antioch-university'] },
   {
     name: 'Professional Development',
@@ -19,6 +19,19 @@ export const PROGRAM_GROUPS = [
 export const RESIDENCY_GROUP = {
   name: 'Attending a Residency',
   slugs: ['summer-housing-meals', 'directions-keene'],
+};
+
+// Rows whose page is not at /programs/<slug>. A short course with its own
+// registration page does not need a second program page repeating it, so the map
+// and the home grid link straight there. Keep a slug out of here and it resolves
+// to /programs/<slug> from the spine collection as usual.
+export const PROGRAM_HREF = {
+  biografia: '/biografia',
+};
+
+// Labels for rows that have no spine entry to read navLabel from.
+export const PROGRAM_LABEL = {
+  biografia: 'Biografía y Arte Social (en español)',
 };
 
 // site slug -> faculty.json program tag
@@ -53,6 +66,8 @@ export const BLURB = {
     'An online seminar series on contemporary topics for high school teachers, staff, and parents.',
   'waldorf-leadership-development':
     'Preparing leaders and administrators to carry the life of a Waldorf school.',
+  biografia:
+    'Un curso en español: ocho encuentros en vivo con Magnolia Ríos para explorar nuestra biografía a través del arte y la conversación.',
 };
 
 export const TAG_LABEL = {

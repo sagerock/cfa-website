@@ -17,6 +17,12 @@ const {
   // course with no recordings has nothing behind a sign-in, and offering one
   // sends a new registrant somewhere empty.
   noindex = false,
+  // The rebuilt site is noindex by default and stays that way until it launches.
+  // A single page that is genuinely public before then opts in with indexable —
+  // biografia is the first: it is a live, on-sale course linked from the WordPress
+  // home page, and Spanish-speaking buyers have to be able to find it in search.
+  // noindex still wins if both are passed.
+  indexable = false,
 } = Astro.props;
 const liveSite = 'https://centerforanthroposophy.org';
 const publicationSite = 'https://news.centerforanthroposophy.org';
@@ -41,7 +47,7 @@ const year = new Date().getFullYear();
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content={publication && !noindex ? 'index, follow, max-image-preview:large' : 'noindex'} />
+    <meta name="robots" content={!noindex && (publication || indexable) ? 'index, follow, max-image-preview:large' : 'noindex'} />
     {canonical && <link rel="canonical" href={canonical} />}
     <title>{title}</title>
     <ThirdPartyTags />

@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
-import { PROGRAM_GROUPS, RESIDENCY_GROUP, FACULTY_TAG } from '../../data/programMeta.js';
+import { PROGRAM_GROUPS, RESIDENCY_GROUP, FACULTY_TAG, PROGRAM_HREF, PROGRAM_LABEL } from '../../data/programMeta.js';
 import facultyData from '../../data/faculty.json';
 
 const spine = await getCollection('spine');
@@ -26,8 +26,8 @@ const groups = [...PROGRAM_GROUPS, RESIDENCY_GROUP];
             <ul>
               {g.slugs.map((s) => (
                 <li>
-                  <a href={`/programs/${s}`}>
-                    <span>{bySlug[s]?.data.navLabel ?? s}</span>
+                  <a href={PROGRAM_HREF[s] ?? `/programs/${s}`}>
+                    <span>{bySlug[s]?.data.navLabel ?? PROGRAM_LABEL[s] ?? s}</span>
                     {facCount(s) > 0 && <span class="facn">{facCount(s)} faculty</span>}
                   </a>
                 </li>

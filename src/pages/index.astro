@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
-import { PROGRAM_GROUPS, BLURB } from '../data/programMeta.js';
+import { PROGRAM_GROUPS, BLURB, PROGRAM_HREF, PROGRAM_LABEL } from '../data/programMeta.js';
 
 const spine = await getCollection('spine');
 const label = Object.fromEntries(spine.map((e) => [e.data.slug, e.data.navLabel]));
@@ -63,8 +63,8 @@ const label = Object.fromEntries(spine.map((e) => [e.data.slug, e.data.navLabel]
           <h3 class="iatag">{g.name}</h3>
           <div class="prog-cards">
             {g.slugs.map((s) => (
-              <a class="prog-card" href={`/programs/${s}`}>
-                <h4>{label[s] ?? s}</h4>
+              <a class="prog-card" href={PROGRAM_HREF[s] ?? `/programs/${s}`}>
+                <h4>{label[s] ?? PROGRAM_LABEL[s] ?? s}</h4>
                 {BLURB[s] && <p>{BLURB[s]}</p>}
                 <span class="prog-more">Learn more →</span>
               </a>
