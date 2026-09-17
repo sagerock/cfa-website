@@ -188,6 +188,7 @@ const workshopThemes = [
           <span>Total</span>
           <strong id="summary-price">—</strong>
         </div>
+        <p class="canada-note">Quienes se inscriben desde Canadá reciben automáticamente un 20&nbsp;% de descuento: nuestra manera de acercar el precio al dólar canadiense.</p>
       </div>
       <div class="summary-card sessions-card">
         <p class="eyebrow">Calendario</p>
@@ -754,6 +755,10 @@ const workshopThemes = [
   .summary-card dd { margin-top: 4px; line-height: 1.35; }
   .summary-total { display: flex; justify-content: space-between; align-items: baseline; padding-top: 24px; font-family: var(--sans); }
   .summary-total strong { color: var(--green-ink); font-size: 28px; }
+  /* The automatic Canadian discount is applied from the billing address, so it
+     is invisible until checkout unless the page says so. Milan asked for it to
+     be stated plainly (2026-09-17). */
+  .canada-note { margin: 12px 0 0; font-family: var(--sans); font-size: 13px; line-height: 1.5; color: var(--green-ink); opacity: 0.8; }
   .support-card { display: grid; gap: 3px; padding: 22px 4px; font-size: 15px; }
   .support-card p { color: var(--soft); font-style: italic; margin-bottom: 5px; }
   :global(.success-card) { border-top: 4px solid var(--green); background: var(--raised); padding: 42px; }

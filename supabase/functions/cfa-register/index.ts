@@ -811,6 +811,116 @@ async function sendOpsAlert(subject: string, body: string) {
   }
 }
 
+// Staff notice: one plain email to the people who run a program, every time
+// somebody registers for it. Milan asked for this on 2026-09-17 — until now a
+// registration was visible only to the registrant and in the database.
+//
+// Recipients live in the environment, never in this public repo.
+// REGISTRATION_NOTIFY_EMAILS is the default list;
+// REGISTRATION_NOTIFY_EMAILS_<PROGRAM_KEY> (upper case, non-alphanumerics to
+// underscores) overrides it for one program, so the Spanish course can reach
+// Deborah without sending her every Starlight registration.
+function notifyRecipients(program: ProgramDefinition): string[] {
+  const suffix = program.key.toUpperCase().replace(/[^A-Z0-9]+/g, "_");
+  const raw = Deno.env.get(`REGISTRATION_NOTIFY_EMAILS_${suffix}`)
+    ?? Deno.env.get("REGISTRATION_NOTIFY_EMAILS")
+    ?? "";
+  const seen = new Set<string>();
+  return raw
+    .split(",")
+    .map((value) => value.trim())
+    .filter((value) => validEmail(value))
+    .filter((value) => {
+      const key = value.toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+}
+
+// Tuition and discount are stated separately on purpose: CfA tracks tuition
+// income apart from scholarship and exchange-rate discounts.
+async function sendRegistrationNotice(input: {
+  program: ProgramDefinition;
+  offerName: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  organization: string;
+  seats?: number;
+  listAmountCents: number;
+  discountCents: number;
+  chargeAmountCents: number;
+  couponCode: string | null;
+  automaticDiscountCode: string | null;
+  automaticDiscountLabel: string | null;
+  plan: WelcomePlan | null;
+  transactionId: string;
+  registrationId: string;
+}) {
+  const recipients = notifyRecipients(input.program);
+  if (!recipients.length) return false;
+  const key = Deno.env.get("SENDGRID_API_KEY") || "";
+  if (!key) return false;
+  const from = Deno.env.get("REGISTRATION_FROM")
+    || "Center for Anthroposophy <no-reply@centerforanthroposophy.org>";
+  const discountLine = input.couponCode
+    ? `Discount: ${formatMoney(input.discountCents)} (coupon ${input.couponCode})`
+    : input.automaticDiscountCode
+    ? `Discount: ${formatMoney(input.discountCents)} (${
+      input.automaticDiscountLabel || input.automaticDiscountCode
+    }, applied automatically)`
+    : "Discount: none";
+  const paymentLine = input.plan && input.plan.installmentCount > 1
+    ? `Payment: ${input.plan.installmentCount} payments — ${input.plan.firstAmount} now, then ${input.plan.installmentAmount} on ${input.plan.nextChargeOn}${
+      input.plan.scheduled ? "" : " (the scheduled payments need a look — an alert went to the office)"
+    }`
+    : "Payment: paid in full";
+  const lines = [
+    `${input.firstName} ${input.lastName} registered for ${input.program.title}.`,
+    "",
+    `Email: ${input.email}`,
+    input.organization ? `Organization: ${input.organization}` : "",
+    (input.seats ?? 1) > 1 ? `Seats: ${input.seats}` : "",
+    `Option: ${input.offerName}`,
+    "",
+    `Tuition: ${formatMoney(input.listAmountCents)}`,
+    discountLine,
+    `Charged: ${formatMoney(input.chargeAmountCents)}`,
+    paymentLine,
+    "",
+    `Registered: ${new Date().toISOString()}`,
+    `Transaction: ${input.transactionId}`,
+    `Registration: ${input.registrationId}`,
+    "",
+    "Nothing is needed from you. This is a notice, not a task.",
+    "",
+    "Jax, Sage's assistant",
+  ].filter((line) => line !== "");
+  try {
+    const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${key}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        personalizations: [{ to: recipients.map((email) => ({ email })) }],
+        from: parseFrom(from),
+        reply_to: { email: "office@centerforanthroposophy.org", name: "Center for Anthroposophy" },
+        subject: `New registration — ${input.program.title} — ${input.firstName} ${input.lastName}`,
+        content: [{ type: "text/plain", value: lines.join("\n") }],
+        tracking_settings: { click_tracking: { enable: false, enable_text: false } },
+      }),
+    });
+    if (!response.ok) console.error("registration_notice_failed", response.status);
+    return response.ok;
+  } catch {
+    console.error("registration_notice_failed", "network");
+    return false;
+  }
+}
+
 Deno.serve(async (request: Request) => {
   const origin = request.headers.get("Origin");
   const programDefinition = resolveProgramDefinition(request);
@@ -1787,6 +1897,25 @@ Deno.serve(async (request: Request) => {
       }).eq("id", registrationId);
     }
 
+    await sendRegistrationNotice({
+      program: programDefinition,
+      offerName: selectedOffer.name,
+      firstName,
+      lastName,
+      email,
+      organization,
+      seats: purchasedSeats,
+      listAmountCents,
+      discountCents,
+      chargeAmountCents,
+      couponCode: selectedCoupon?.code ?? null,
+      automaticDiscountCode: selectedAutomaticDiscount?.code ?? null,
+      automaticDiscountLabel: selectedAutomaticDiscount?.label ?? null,
+      plan: welcomePlan,
+      transactionId,
+      registrationId,
+    });
+
     return json({
       ok: true,
       institution: true,
@@ -1903,6 +2032,27 @@ Deno.serve(async (request: Request) => {
   if (emailSent) {
     await admin.from("registrations").update({ welcome_sent_at: new Date().toISOString() }).eq("id", registrationId);
   }
+
+  // The staff notice never affects the registrant. A failure here is logged
+  // and the registration still returns ok.
+  await sendRegistrationNotice({
+    program: programDefinition,
+    offerName: selectedOffer.name,
+    firstName,
+    lastName,
+    email,
+    organization,
+    seats: purchasedSeats,
+    listAmountCents,
+    discountCents,
+    chargeAmountCents,
+    couponCode: selectedCoupon?.code ?? null,
+    automaticDiscountCode: selectedAutomaticDiscount?.code ?? null,
+    automaticDiscountLabel: selectedAutomaticDiscount?.label ?? null,
+    plan: welcomePlan,
+    transactionId,
+    registrationId,
+  });
 
   return json({
     ok: true,

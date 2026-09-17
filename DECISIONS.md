@@ -669,3 +669,24 @@ have never been decided, and an offer row is the wrong place to guess. It is one
 with `installment_count = 2` when they are, with no code change. Note that a Spanish
 plan receipt would need the installment lines added to `residencyEmail.js`, which today
 only the portal welcome email prints.
+
+## 2026-09-17 — Registrations tell staff, and the Canadian discount says its own name
+
+Milan Daler asked two things of the registration system on 9/17: let the people who run a
+program hear about each registration, and stop letting the automatic Canadian discount
+appear at checkout unexplained.
+
+`cfa-register` now sends a plain staff notice after a completed registration — tuition,
+discount (with its code and whether it was typed or automatic), what was actually charged,
+and the payment plan if there is one. Tuition and discount are separate lines because CfA
+tracks tuition income apart from scholarship and exchange-rate discounts. Recipients come
+from `REGISTRATION_NOTIFY_EMAILS`, or `REGISTRATION_NOTIFY_EMAILS_<PROGRAM_KEY>` for one
+program, and live in the function's secrets: this repo is public, and a staff list is the
+kind of thing that should not be in it. No recipients configured means no mail, so adding
+this changed nothing for the programs that did not ask for it. The notice can never cost a
+registrant their registration — it is sent after enrollment completes and its failures are
+logged, not surfaced.
+
+The automatic 20% for Canadian billing addresses (`CANADA20`) was invisible until the
+address was typed. All three registration pages now say it plainly, in the language of the
+page. Milan approved the English wording; the Spanish is the same sentence.
