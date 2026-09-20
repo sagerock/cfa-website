@@ -169,13 +169,13 @@ Operating notes:
   card in the merchant interface the office reactivates the subscription and re-runs the
   sync. **Access is not revoked automatically on a missed installment** — that is a CfA
   decision made by hand (set `enrollments.revoked_at`).
-- The production test path (`REGISTRATION_TEST_MODE`) also covers the plan offer: $1 split
+- The production test path (armed by a `payment_test_authorizations` row) also covers the plan offer: $1 split
   five ways, first installment charged and voided, the ARB schedule created and immediately
   cancelled, and the stored card deleted. The response's `plan_test` block and the plan
   row's `notes` report each step. The merchant account's fraud filter holds a $1 test charge
   for review (`responseCode 4`, reason 252 — every $1 production test since 2026-08-16 looks
   this way, while every real charge has been approved), and a held transaction cannot seed a
-  customer profile. Set `REGISTRATION_TEST_AMOUNT_CENTS` (e.g. `5000`) for the armed run so
+  customer profile. Set the row's `amount_cents` (e.g. `5000`) for the armed run so
   the first installment is approved; test mode also treats a held charge as approved so a $1
   run still exercises the rest of the harness. Unset it again when disarming.
 - The authorization sentence shown at checkout for a plan reads: "I authorize the Center for

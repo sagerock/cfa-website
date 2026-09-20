@@ -111,11 +111,19 @@ function resolveProgramDefinition(request: Request): ProgramDefinition {
   }
   return PROGRAM_DEFINITIONS[requested] || PROGRAM_DEFINITIONS[DEFAULT_PROGRAM_KEY];
 }
-// Default $1; REGISTRATION_TEST_AMOUNT_CENTS overrides it for a single armed
-// run when the merchant fraud filter holds small charges for review.
-const PRODUCTION_TEST_AMOUNT_CENTS = Math.max(100,
-  Number(Deno.env.get("REGISTRATION_TEST_AMOUNT_CENTS")) || 100);
-const PRODUCTION_TEST_AMOUNT = (PRODUCTION_TEST_AMOUNT_CENTS / 100).toFixed(2);
+// A production test run is armed by a row in payment_test_authorizations, not
+// by env secrets. Edge Function secrets only reach a running deployment on
+// redeploy, which meant every armed run needed a production deploy of this
+// payment function — too high a price for a test, and it left test mode on
+// until someone remembered to turn it off. A row instead takes effect at once
+// and expires on its own, even if whatever armed it dies.
+//
+// The row carries its own amount: default $1, raised for a run when the
+// merchant fraud filter holds small charges for review. The ceiling is a hard
+// stop so an armed row can never authorize a meaningful charge.
+const TEST_AMOUNT_FLOOR_CENTS = 100;
+const TEST_AMOUNT_CEILING_CENTS = 10000;
+const testAmountLabel = (cents: number) => (cents / 100).toFixed(2);
 const productionOrigin = "https://learn.centerforanthroposophy.org";
 const productionHostname = new URL(productionOrigin).hostname;
 const allowedOrigins = new Set([
@@ -303,10 +311,6 @@ function registrationConfig() {
   const rateLimitSalt = Deno.env.get("REGISTRATION_RATE_LIMIT_SALT") || "";
   const turnstileSiteKey = Deno.env.get("TURNSTILE_SITE_KEY") || "";
   const turnstileConfigured = Boolean(turnstileSiteKey && Deno.env.get("TURNSTILE_SECRET_KEY"));
-  const testToken = Deno.env.get("REGISTRATION_TEST_TOKEN") || "";
-  const testMode = environment === "production"
-    && Deno.env.get("REGISTRATION_TEST_MODE")?.toLowerCase() === "true"
-    && Boolean(testToken);
   const configured = Boolean(apiLoginId && transactionKey && publicClientKey && rateLimitSalt);
   const enabled = configured && turnstileConfigured && environment === "production" && liveEnabled;
   return {
@@ -318,9 +322,35 @@ function registrationConfig() {
     rateLimitSalt,
     turnstileSiteKey,
     turnstileConfigured,
-    testToken,
-    testMode,
     enabled,
+  };
+}
+
+// Arming lives in the database, service-role only: the caller proves it by
+// presenting the token whose SHA-256 digest matches an unused, unexpired row.
+// Production only — there is no test path off the production gateway.
+async function authorizeProductionTest(
+  admin: ReturnType<typeof createClient>,
+  token: string,
+  environment: string,
+): Promise<{ authorized: boolean; amountCents: number }> {
+  const denied = { authorized: false, amountCents: TEST_AMOUNT_FLOOR_CENTS };
+  if (environment !== "production" || !token) return denied;
+  const { data, error } = await admin
+    .from("payment_test_authorizations")
+    .select("amount_cents")
+    .eq("token_hash", await sha256(token))
+    .is("used_at", null)
+    .gt("expires_at", new Date().toISOString())
+    .maybeSingle();
+  if (error || !data) return denied;
+  const requested = Number(data.amount_cents) || TEST_AMOUNT_FLOOR_CENTS;
+  return {
+    authorized: true,
+    amountCents: Math.min(
+      TEST_AMOUNT_CEILING_CENTS,
+      Math.max(TEST_AMOUNT_FLOOR_CENTS, requested),
+    ),
   };
 }
 
@@ -1019,9 +1049,12 @@ Deno.serve(async (request: Request) => {
 
   const config = registrationConfig();
   const headerTestToken = request.headers.get("X-Registration-Test") || "";
-  const headerTestAuthorized = config.testMode
-    && headerTestToken.length > 0
-    && headerTestToken === config.testToken;
+  const headerTest = await authorizeProductionTest(
+    admin,
+    headerTestToken,
+    config.environment,
+  );
+  const headerTestAuthorized = headerTest.authorized;
   if (request.method === "GET") {
     const discovered = !config.publicClientKey
       ? await discoverPublicClientKey(config)
@@ -1036,9 +1069,9 @@ Deno.serve(async (request: Request) => {
             ? "Authorized production integration test (payment plan)"
             : "Authorized production integration test",
           description: (offer.installment_count ?? 1) > 1
-            ? `$${PRODUCTION_TEST_AMOUNT} split ${offer.installment_count} ways: first installment charged and voided, schedule created and cancelled, stored card deleted.`
-            : `$${PRODUCTION_TEST_AMOUNT} charge followed by an immediate automatic void.`,
-          amount_cents: PRODUCTION_TEST_AMOUNT_CENTS,
+            ? `$${testAmountLabel(headerTest.amountCents)} split ${offer.installment_count} ways: first installment charged and voided, schedule created and cancelled, stored card deleted.`
+            : `$${testAmountLabel(headerTest.amountCents)} charge followed by an immediate automatic void.`,
+          amount_cents: headerTest.amountCents,
         }))
       : offersWithSessions;
     const couponParam = text(new URL(request.url).searchParams.get("coupon") || "", 40).trim().toUpperCase();
@@ -1094,9 +1127,12 @@ Deno.serve(async (request: Request) => {
     return json({ error: "invalid_request" }, 400, origin);
   }
   const bodyTestToken = text(body.test_token, 200);
-  const testAuthorized = config.testMode
-    && bodyTestToken.length > 0
-    && bodyTestToken === config.testToken;
+  const bodyTest = await authorizeProductionTest(
+    admin,
+    bodyTestToken,
+    config.environment,
+  );
+  const testAuthorized = bodyTest.authorized;
   if (!testAuthorized && origin !== productionOrigin) {
     return json({ error: "payment_origin_not_allowed" }, 403, origin);
   }
@@ -1192,10 +1228,10 @@ Deno.serve(async (request: Request) => {
   const requestOffers = testAuthorized
     ? offersWithSessions
       .filter((offer) => programDefinition.testOfferCodes.has(offer.code))
-      // The production test is one $1 charge, so it never multiplies by seats.
+      // The production test is a single charge, so it never multiplies by seats.
       .map((offer) => ({
         ...offer,
-        amount_cents: PRODUCTION_TEST_AMOUNT_CENTS,
+        amount_cents: bodyTest.amountCents,
         per_seat: false,
       }))
     : offersWithSessions;

@@ -435,6 +435,34 @@ an autofilled company name could previously have tripped the bot trap and faked 
 registration. The Authorize.Net card lightbox is unchanged; moving card fields onto our page
 (Accept.js hosted by us) would change CfA's PCI footprint and was left as a separate decision.
 
+## 2026-09-20 — Arming a production payment test is a row, not a redeploy
+
+Sage asked for the payment gate to be runnable without him typing a card in a browser.
+Server-side tokenization turned out to work (Authorize.Net mints the same Accept.js
+nonce from a plain API call), but arming did not: Edge Function secrets only reach a
+running deployment on redeploy, so `REGISTRATION_TEST_MODE` could be set and the live
+function would keep reporting `test_mode: false`. Verified by polling for two minutes
+and then waiting four minutes idle in case a warm isolate was holding stale env.
+
+That made every armed run cost a production deploy of the payment function — and left
+test mode on until someone removed the secrets by hand. So arming moved entirely into
+`payment_test_authorizations`, which was already the hashed, expiring, one-use half of
+the check. The row now carries `amount_cents` too, and `authorizeProductionTest()`
+resolves the presented token against it per request. `REGISTRATION_TEST_MODE`,
+`REGISTRATION_TEST_TOKEN` and `REGISTRATION_TEST_AMOUNT_CENTS` are gone.
+
+Accepted trade-off, stated plainly: the env secret used to be a second factor
+alongside the row, and now the row is the whole of it. Both always required the
+service-role key, so this is the same trust boundary rather than a wider one, but it
+is one fewer lock. In exchange the amount gained a hard ceiling in both the function
+and a database check constraint (100–10000 cents), so no row, however created, can
+authorize a charge that matters, and a run disarms itself on expiry even if the
+caller dies.
+
+The runner lives at `sagerock/clients/center-for-anthroposophy/payment-gate-run.py`,
+in the private monorepo rather than here, because it names the path of the test card
+and this repo is public.
+
 ## 2026-09-02 — Charged-but-not-enrolled is now self-healing, and watched
 Sage asked whether the system checks itself after the enrollment incident. It did not: the
 incident was found by accident. Decision: an hourly `cfa-registration-heal` Edge Function
