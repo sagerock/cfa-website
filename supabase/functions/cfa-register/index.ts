@@ -336,11 +336,16 @@ async function authorizeProductionTest(
 ): Promise<{ authorized: boolean; amountCents: number }> {
   const denied = { authorized: false, amountCents: TEST_AMOUNT_FLOOR_CENTS };
   if (environment !== "production" || !token) return denied;
+  // Deliberately not filtered on `used_at`. The charge consumes the row through
+  // cfa_claim_payment_test, which is what actually enforces one use — so
+  // requiring an unused row here would make the token stop working the instant
+  // it succeeded, and `action: "void_test"` is the fallback for a charge whose
+  // automatic void did not land. That fallback has to stay reachable for the
+  // few minutes after the charge, which is what the expiry window is for.
   const { data, error } = await admin
     .from("payment_test_authorizations")
     .select("amount_cents")
     .eq("token_hash", await sha256(token))
-    .is("used_at", null)
     .gt("expires_at", new Date().toISOString())
     .maybeSingle();
   if (error || !data) return denied;
