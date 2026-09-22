@@ -1,0 +1,1021 @@
+---
+const title = 'Karen Atkinson Consulting — mentoring, leadership and renewal for Waldorf schools';
+const description =
+  'Karen Atkinson, M.Ed. accompanies Waldorf teachers, school leaders and faculties over time: mentoring and coaching, leadership partnership, appraisal, and one-day renewal retreats.';
+
+const ways = [
+  {
+    id: 'mentoring',
+    name: 'Mentoring and coaching',
+    summary: 'Focused pedagogical support for one teacher, across a full arc of practice.',
+    body:
+      'Not one-off feedback, but a rhythm: expert guidance, reflection, and something to try before the next session. Over a year a teacher builds confidence, refines classroom practice, and gains a way of working through pedagogical questions that stays with them.',
+    format: 'Twelve one-hour remote sessions',
+    includes: [
+      'A 60-minute opening consultation to clarify goals, developmental focus and classroom context',
+      'Twelve one-hour remote mentoring and coaching sessions',
+      'Reflection prompts, pedagogical resources and observation exercises chosen for this teacher',
+      'Real-time guidance as classroom dynamics shift through the year',
+      'Practical help turning insight into sustainable classroom rhythms',
+      'A closing integration session and an ongoing growth plan',
+    ],
+    tone: 'lilac',
+  },
+  {
+    id: 'leadership',
+    name: 'School leadership partnership',
+    summary: 'A steady strategic companion for a leader or a leadership team, through the school year.',
+    body:
+      'For pedagogical directors, administrative directors, College chairs and leadership teams working through growth, a governance transition, or a faculty development push. A sounding board that knows Waldorf schools from the inside, and an anchor that holds from September to June.',
+    format: 'Twelve one-hour remote sessions',
+    includes: [
+      'A 60-minute launch session with leadership to name priorities, strategic goals and desired outcomes',
+      'Twelve one-hour remote strategic sessions for the leader or the team',
+      'Ongoing leadership mentoring, coaching and pedagogical consultation',
+      'Exercises, frameworks and resources built around your school’s goals',
+      'Support moving from vision into practices and policies that hold',
+      'A closing integration session with recommendations for sustaining momentum',
+    ],
+    tone: 'sky',
+    addon: {
+      name: 'Two days on site',
+      summary: 'An optional in-person appraisal, or a whole-school assessment and immersion.',
+      body:
+        'Karen spends two days with you — observing one faculty member teaching, or the rhythms and life of the whole school — meeting leadership and faculty, and drawing the observations together into a foundation the remote work can build on.',
+      includes: [
+        'Teacher appraisal, or school assessment and immersion',
+        'A self-assessment completed by the teacher, or by leadership for a whole-school look',
+        'Pre- and post-meetings with Karen, the teacher and school leadership',
+        'A final written report of observations and recommendations, written by Karen herself',
+      ],
+    },
+  },
+  {
+    id: 'renewal',
+    name: 'A day of renewal and retreat',
+    summary: 'In-person facilitation for faculty renewal, pedagogical development, or whole-school governance.',
+    body:
+      'An immersive day built around a theme chosen with school leadership. It can be shaped for faculty development, or as a retreat that brings administration, faculty and board into one room to find shared purpose and a healthier way of working together.',
+    format: 'One day in person, facilitated by Karen',
+    includes: [
+      'A pre-retreat consultation with leadership on theme, community context and desired outcomes',
+      'Facilitation, strategic dialogue and collaborative work made for your community',
+      'Guided reflection and generative exercises that build alignment',
+      'Pedagogical inspiration and shared meaning-making across the groups in the room',
+      'A closing process that turns the day into concrete next steps',
+    ],
+    tone: 'seaglass',
+  },
+];
+
+const questions = [
+  { id: 'q1', label: 'What’s bringing you here right now?', rows: 4 },
+  { id: 'q3', label: 'What would meaningful progress look like six months from now?', rows: 4 },
+  { id: 'q4', label: 'What’s your role at the school, and who else would be part of this decision?', rows: 3 },
+  { id: 'q5', label: 'Anything else you’d like Karen to know before your conversation?', rows: 3 },
+];
+
+const exploring = [
+  'Support for an individual teacher (mentoring and coaching)',
+  'Support for myself or my leadership team (strategic partnership)',
+  'Teacher or whole-school appraisal or evaluation',
+  'A faculty or whole-school retreat or immersion',
+  'I’m not sure yet, I’d like to talk it through',
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..700,0..100,0..1&family=Work+Sans:wght@300;400;500;600&display=swap"
+    />
+  </head>
+  <body>
+    <a class="skip" href="#welcome">Skip to the welcome</a>
+
+    <header class="topbar">
+      <a class="topbar__mark" href="#top">
+        <img src="/karen/karen-atkinson-logo.png" alt="Karen Atkinson Consulting" width="1000" height="312" />
+      </a>
+      <nav class="topbar__nav" aria-label="Sections of this page">
+        <a href="#work">The work</a>
+        <a href="#ways">Ways to work together</a>
+        <a href="#about">About Karen</a>
+        <a href="#workbook">Workbook</a>
+      </nav>
+      <a class="btn btn--solid topbar__cta" href="#apply">Apply</a>
+    </header>
+
+    <main id="top">
+      <!-- ── Hero ─────────────────────────────────────────── -->
+      <section class="hero" id="welcome">
+        <div class="hero__text">
+          <h1>A steady companion for the work of teaching and leading.</h1>
+          <p class="lede">
+            Karen Atkinson has spent more than thirty years in Waldorf classrooms, faculty rooms and board
+            meetings. She now walks alongside a small number of teachers, leaders and schools each year
+            — one relationship at a time, shaped around what your school is actually carrying.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--solid" href="#apply">Apply for consultation</a>
+            <a class="btn btn--quiet" href="#ways">See the three ways to work together</a>
+          </div>
+        </div>
+        <figure class="hero__portrait">
+          <svg class="enso" viewBox="0 0 400 400" aria-hidden="true" focusable="false">
+            <path
+              d="M312 96c-30-38-80-58-129-52C112 53 62 105 55 172c-8 74 42 143 115 157 78 15 154-35 168-111"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="46"
+              stroke-linecap="round"
+            />
+          </svg>
+          <img
+            src="/karen/karen-portrait.webp"
+            width="900"
+            height="1350"
+            alt="Karen Atkinson smiling, standing outdoors in summer light"
+            fetchpriority="high"
+          />
+          <figcaption>
+            Karen Atkinson, M.Ed., Director of Renewal Courses and of Mentor Training, and Waldorf
+            Leadership Development Program Coordinator at the Center for Anthroposophy.
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- ── Welcome video ────────────────────────────────── -->
+      <section class="band band--video" id="hello">
+        <div class="wrap wrap--narrow">
+          <h2>Hello, and welcome</h2>
+          <p class="sub">
+            A short greeting from Karen before you read any further — who she is, and how she likes to work.
+          </p>
+          <div class="video" role="img" aria-label="Placeholder for Karen's welcome video">
+            <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" class="video__glyph">
+              <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <path d="M26 21l19 11-19 11z" fill="currentColor" />
+            </svg>
+            <p>Karen&rsquo;s welcome video will play here.</p>
+          </div>
+          <p class="note">Placeholder for this preview. The video is coming separately and will be dropped straight in.</p>
+        </div>
+      </section>
+
+      <!-- ── What the work is ─────────────────────────────── -->
+      <section class="band band--work" id="work">
+        <div class="wrap split">
+          <div class="split__text">
+            <h2>What this work is</h2>
+            <p>
+              Karen brings together Waldorf teaching, pedagogical leadership, mentoring, coaching,
+              appraisal, faculty development and meeting facilitation. None of it arrives as a standard
+              program. Each engagement is built around the priorities, the people, the culture and the
+              developmental moment of one school.
+            </p>
+            <p>
+              Waldorf professional development runs from standardized courses and cohort training through
+              to individual mentoring and bespoke school consulting. Karen&rsquo;s work sits firmly at
+              that second end: sustained access to an experienced pedagogical leader who stays with you
+              through implementation, rather than a recommendation delivered once and left behind.
+            </p>
+            <dl class="pillars">
+              <div>
+                <dt>Over time</dt>
+                <dd>A year-long rhythm, not a visit. Change in a school moves at the speed of trust.</dd>
+              </div>
+              <div>
+                <dt>Made for you</dt>
+                <dd>Built from your goals, your faculty, your governance, your actual difficulties.</dd>
+              </div>
+              <div>
+                <dt>Carried into practice</dt>
+                <dd>Every engagement ends with something you can keep doing without her.</dd>
+              </div>
+            </dl>
+          </div>
+          <figure class="split__figure">
+            <img
+              src="/karen/leading-mentors.webp"
+              width="1500"
+              height="1047"
+              alt="Karen leading a class of mentors in front of a chalkboard"
+              loading="lazy"
+            />
+          </figure>
+        </div>
+      </section>
+
+      <!-- ── Who / what becomes possible ──────────────────── -->
+      <section class="band band--who" id="who">
+        <div class="wrap">
+          <h2>Who Karen works with, and what becomes possible</h2>
+          <div class="who">
+            <div class="who__col">
+              <h3>You might be</h3>
+              <ul class="ticks">
+                <li>A teacher in a new grade, or a new school, looking for someone to think with.</li>
+                <li>A pedagogical or administrative director carrying more than one person should.</li>
+                <li>A leadership team in the middle of a governance change.</li>
+                <li>A faculty that needs a day together to find its shared ground again.</li>
+                <li>A school ready for an honest, generous look at itself.</li>
+              </ul>
+            </div>
+            <div class="who__col">
+              <h3>What becomes possible</h3>
+              <ul class="ticks ticks--open">
+                <li>A classroom that runs on rhythm instead of effort.</li>
+                <li>Decisions the whole leadership team can stand behind.</li>
+                <li>Feedback a teacher can actually use on Monday.</li>
+                <li>A faculty meeting people don&rsquo;t dread.</li>
+                <li>Growth that holds after the engagement ends.</li>
+              </ul>
+            </div>
+          </div>
+          <figure class="who__figure">
+            <img
+              src="/karen/community-hands.webp"
+              width="1500"
+              height="1000"
+              alt="A room full of educators with their hands lifted together during a community exercise"
+              loading="lazy"
+            />
+          </figure>
+          <blockquote class="quote">
+            <p>
+              Karen&rsquo;s wisdom and experience shined through her work with our teachers. Her upbeat
+              approach is inspiring while providing the necessary guidance for preparing and supporting
+              the teachers. Just what our school was looking for.
+            </p>
+          </blockquote>
+        </div>
+      </section>
+
+      <!-- ── Three ways ───────────────────────────────────── -->
+      <section class="band band--ways" id="ways">
+        <div class="wrap">
+          <h2>Three ways to work with Karen</h2>
+          <p class="sub sub--wide">
+            Strategic mentoring, pedagogical leadership, faculty development, and retreat facilitation
+            for Waldorf school communities. Start wherever your school actually is; the shape can change
+            once you talk.
+          </p>
+
+          {ways.map((way) => (
+            <article class:list={['way', `way--${way.tone}`]} id={way.id}>
+              <div class="way__head">
+                <h3>{way.name}</h3>
+                <p class="way__summary">{way.summary}</p>
+              </div>
+              <div class="way__body">
+                <p>{way.body}</p>
+                <p class="way__format">{way.format}</p>
+                <ul class="ticks">
+                  {way.includes.map((item) => <li>{item}</li>)}
+                </ul>
+                {way.addon && (
+                  <div class="addon">
+                    <h4>{way.addon.name}</h4>
+                    <p class="addon__summary">{way.addon.summary}</p>
+                    <p>{way.addon.body}</p>
+                    <ul class="ticks">
+                      {way.addon.includes.map((item) => <li>{item}</li>)}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </article>
+          ))}
+
+          <div class="investment">
+            <h3>Investment</h3>
+            <p>
+              Each of these containers sits in an investment range of <strong>$1,200&ndash;$1,500</strong>,
+              depending on which one and how it is shaped. For in-person work, travel and lodging are
+              arranged separately with the school or organization.
+            </p>
+            <p class="note">
+              Karen will walk you through the detail for your situation in your first conversation.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Breather ─────────────────────────────────────── -->
+      <figure class="breather">
+        <img
+          src="/karen/coastal-overlook.webp"
+          width="1500"
+          height="1000"
+          alt="Karen resting on a fence rail, looking out toward the Cape May lighthouse"
+          loading="lazy"
+        />
+        <figcaption>
+          Schools change slowly, and in the right direction, when someone stays long enough to see it
+          through.
+        </figcaption>
+      </figure>
+
+      <!-- ── Biography ────────────────────────────────────── -->
+      <section class="band band--about" id="about">
+        <div class="wrap split split--reverse">
+          <figure class="split__figure split__figure--portrait">
+            <img
+              src="/karen/karen-bio.webp"
+              width="900"
+              height="1350"
+              alt="Portrait of Karen Atkinson looking directly at the camera"
+              loading="lazy"
+            />
+          </figure>
+          <div class="split__text">
+            <h2>Karen Atkinson, M.Ed.</h2>
+            <p>
+              Karen earned her master&rsquo;s in education at Antioch University New England, with dual
+              Waldorf certification in early childhood and grades one through eight. For over thirty years
+              she has taught and led in independent, public charter and homeschooling settings, serving as
+              pedagogical director, professional development director, College chair and board member at
+              Waldorf schools across the Northeast and mid-Atlantic.
+            </p>
+            <p>
+              At the Center for Anthroposophy she directs the Mentor Training Program and the Renewal
+              Courses, and coordinates the Waldorf Leadership Development Program &mdash; three of the
+              places North American Waldorf teachers and school leaders go to keep growing. She has also
+              served on AWSNA&rsquo;s Leadership Council and as a WECAN representative, working with both
+              independent and public Waldorf education.
+            </p>
+            <p>
+              Running through all of it is one conviction: a teacher&rsquo;s development and a
+              school&rsquo;s health are the same work, seen from two distances. Colleagues describe her
+              clarity, her warmth, and a sense of humor that makes the hard conversations possible.
+            </p>
+            <blockquote class="quote quote--inline">
+              <p>
+                I really appreciated Karen&rsquo;s sense of clarity. Both her virtual and in-person
+                sessions offer tremendous support and insights &mdash; all with a sense of humor and
+                warmth. She has a wealth of knowledge and experience to share.
+              </p>
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Workbook ─────────────────────────────────────── -->
+      <section class="band band--workbook" id="workbook">
+        <div class="wrap split">
+          <div class="split__text">
+            <h2>A free workbook: pathways and best practices in professional development</h2>
+            <p>
+              Karen&rsquo;s presentation of the same name is becoming a short, practical workbook for
+              schools. It lays out how mentoring, appraisal, faculty study and retreat work fit together
+              across one year: what to ask for, what each piece is good for, who should be in the room,
+              and how to tell whether any of it is working.
+            </p>
+            <p>
+              It is written for the person who has been handed &ldquo;professional development&rdquo; and
+              a small budget, and wants it to actually develop people. It&rsquo;s free.
+            </p>
+            <form class="capture" id="workbook-form" novalidate>
+              <label for="lead-email">Where should Karen send it?</label>
+              <div class="capture__row">
+                <input
+                  id="lead-email"
+                  name="email"
+                  type="email"
+                  required
+                  autocomplete="email"
+                  placeholder="you@yourschool.org"
+                />
+                <button class="btn btn--solid" type="submit">Send me the workbook</button>
+              </div>
+              <p class="note" id="workbook-note">
+                The workbook is still in preparation. Leave your address and Karen will send it as soon as
+                it is ready.
+              </p>
+            </form>
+          </div>
+          <figure class="split__figure split__figure--portrait">
+            <img
+              src="/karen/workbook-lighthouse.webp"
+              width="1024"
+              height="1536"
+              alt="Karen standing with her arms raised in front of the Cape May lighthouse"
+              loading="lazy"
+            />
+          </figure>
+        </div>
+      </section>
+
+      <!-- ── Apply ────────────────────────────────────────── -->
+      <section class="band band--apply" id="apply">
+        <div class="wrap wrap--narrow">
+          <h2>Apply for consultation or coaching</h2>
+          <p class="sub">
+            There is no fee for the conversation, and no form letter at the other end. Tell Karen where
+            you are; she reads these herself.
+          </p>
+
+          <form class="apply" id="apply-form" novalidate>
+            <p class="field">
+              <label for="name">Your name</label>
+              <input id="name" name="name" type="text" required autocomplete="name" />
+            </p>
+            <p class="field">
+              <label for="email">Your email</label>
+              <input id="email" name="email" type="email" required autocomplete="email" />
+            </p>
+            <p class="field">
+              <label for="school">Your school or organization</label>
+              <input id="school" name="school" type="text" autocomplete="organization" />
+            </p>
+
+            <p class="field">
+              <label for="q1">What&rsquo;s bringing you here right now?</label>
+              <textarea id="q1" name="q1" rows="4" required></textarea>
+            </p>
+
+            <fieldset class="field field--choice">
+              <legend>Which of these best describes what you&rsquo;re exploring?</legend>
+              {exploring.map((option, i) => (
+                <label class="choice">
+                  <input type="radio" name="q2" value={option} required={i === 0} />
+                  <span>{option}</span>
+                </label>
+              ))}
+            </fieldset>
+
+            {questions.slice(1).map((q) => (
+              <p class="field">
+                <label for={q.id}>{q.label}</label>
+                <textarea id={q.id} name={q.id} rows={q.rows}></textarea>
+              </p>
+            ))}
+
+            <button class="btn btn--solid btn--wide" type="submit">Send my application</button>
+            <p class="closing">
+              Once you submit your application, Karen will review it personally and follow up within three
+              business days to schedule a complimentary 30-minute conversation.
+            </p>
+            <p class="note" id="apply-note">
+              In this preview, sending opens the message in your own email program so you can see exactly
+              what Karen receives. You can also write to
+              <a href="mailto:karen@centerforanthroposophy.org">karen@centerforanthroposophy.org</a> directly.
+            </p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="wrap foot__inner">
+        <img
+          class="foot__mark"
+          src="/karen/karen-atkinson-logo.png"
+          alt="Karen Atkinson Consulting"
+          width="1000"
+          height="312"
+          loading="lazy"
+        />
+        <p class="foot__contact">
+          <a href="mailto:karen@centerforanthroposophy.org">karen@centerforanthroposophy.org</a>
+        </p>
+        <p class="foot__fine">Mentoring, coaching and consulting for Waldorf school communities.</p>
+      </div>
+    </footer>
+
+    <style is:global>
+      :root {
+        --plaster: #fbfaf7;
+        --wash-lilac: #ede6f5;
+        --wash-sky: #e3ecf5;
+        --wash-seaglass: #dfeae2;
+        --wash-sand: #f4eee3;
+        --violet: #6b3fa0;
+        --violet-deep: #452a6b;
+        --ink: #332b45;
+        --ink-soft: #5d5470;
+        --coral: #d4606e;
+        --rule: rgba(51, 43, 69, 0.14);
+        --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+        --sans: 'Work Sans', 'Segoe UI', system-ui, sans-serif;
+        --measure: 62ch;
+        --gutter: clamp(1.25rem, 5vw, 4rem);
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; scroll-padding-top: 5.5rem; }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        * { animation: none !important; transition: none !important; }
+      }
+
+      body {
+        margin: 0;
+        background: var(--plaster);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-weight: 350;
+        font-size: clamp(1.02rem, 0.98rem + 0.25vw, 1.15rem);
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      img { max-width: 100%; height: auto; display: block; }
+
+      a { color: var(--violet-deep); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+      a:hover { color: var(--coral); }
+
+      :focus-visible {
+        outline: 3px solid var(--violet);
+        outline-offset: 3px;
+        border-radius: 2px;
+      }
+
+      .skip {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        background: #fff;
+        padding: 0.75rem 1rem;
+        z-index: 100;
+      }
+      .skip:focus { left: 0.5rem; top: 0.5rem; }
+
+      h1, h2, h3, h4 {
+        font-family: var(--serif);
+        font-variation-settings: 'SOFT' 60, 'WONK' 1;
+        font-weight: 400;
+        line-height: 1.12;
+        letter-spacing: -0.012em;
+        margin: 0 0 0.6em;
+        text-wrap: balance;
+      }
+
+      h1 { font-size: clamp(2.5rem, 1.6rem + 3.9vw, 4.6rem); letter-spacing: -0.022em; }
+      h2 { font-size: clamp(1.85rem, 1.35rem + 2.1vw, 3rem); }
+      h3 { font-size: clamp(1.35rem, 1.15rem + 0.9vw, 1.9rem); }
+      h4 { font-size: 1.15rem; font-variation-settings: 'SOFT' 40, 'WONK' 0; }
+
+      p { margin: 0 0 1.1em; max-width: var(--measure); }
+
+      .wrap {
+        width: min(1180px, 100%);
+        margin-inline: auto;
+        padding-inline: var(--gutter);
+      }
+      .wrap--narrow { width: min(760px, 100%); }
+
+      .sub {
+        font-size: 1.12em;
+        color: var(--ink-soft);
+        max-width: 54ch;
+        margin-bottom: 2.2rem;
+      }
+      .sub--wide { max-width: 64ch; }
+
+      .note {
+        font-size: 0.88rem;
+        color: var(--ink-soft);
+        line-height: 1.55;
+        max-width: 56ch;
+      }
+
+      /* ── buttons ───────────────────────────────── */
+      .btn {
+        display: inline-block;
+        font-family: var(--sans);
+        font-size: 0.98rem;
+        font-weight: 500;
+        letter-spacing: 0.005em;
+        padding: 0.78em 1.6em;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+      }
+      .btn--solid { background: var(--violet-deep); color: #fff; }
+      .btn--solid:hover { background: var(--violet); color: #fff; }
+      .btn--quiet {
+        background: transparent;
+        color: var(--violet-deep);
+        border-color: rgba(107, 63, 160, 0.4);
+      }
+      .btn--quiet:hover { border-color: var(--violet); background: rgba(107, 63, 160, 0.07); color: var(--violet-deep); }
+      .btn--wide { width: 100%; padding-block: 1em; font-size: 1.05rem; }
+
+      /* ── top bar ───────────────────────────────── */
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        display: flex;
+        align-items: center;
+        gap: clamp(1rem, 3vw, 2.5rem);
+        padding: 0.7rem var(--gutter);
+        background: rgba(251, 250, 247, 0.86);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--rule);
+      }
+      .topbar__mark img { width: 178px; height: auto; }
+      .topbar__nav {
+        display: flex;
+        gap: clamp(0.9rem, 2vw, 1.8rem);
+        margin-left: auto;
+        font-size: 0.92rem;
+      }
+      .topbar__nav a { color: var(--ink-soft); text-decoration: none; }
+      .topbar__nav a:hover { color: var(--violet-deep); text-decoration: underline; }
+      .topbar__cta { padding: 0.55em 1.3em; }
+      @media (max-width: 860px) {
+        .topbar__nav { display: none; }
+        .topbar__cta { margin-left: auto; }
+        .topbar__mark img { width: 146px; }
+      }
+
+      /* ── hero ──────────────────────────────────── */
+      .hero {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+        gap: clamp(2rem, 5vw, 5rem);
+        align-items: center;
+        width: min(1180px, 100%);
+        margin-inline: auto;
+        padding: clamp(3rem, 7vw, 6.5rem) var(--gutter) clamp(3.5rem, 8vw, 7rem);
+      }
+      .hero::before {
+        content: '';
+        position: absolute;
+        inset: -10% -20% 0;
+        z-index: -1;
+        background:
+          radial-gradient(60% 55% at 78% 18%, var(--wash-lilac) 0%, rgba(237, 230, 245, 0) 70%),
+          radial-gradient(55% 50% at 12% 30%, var(--wash-sky) 0%, rgba(227, 236, 245, 0) 72%),
+          radial-gradient(70% 60% at 50% 100%, var(--wash-sand) 0%, rgba(244, 238, 227, 0) 75%);
+      }
+      .hero__text .lede {
+        font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem);
+        color: var(--ink-soft);
+        max-width: 46ch;
+        margin-bottom: 2rem;
+      }
+      .hero__actions { display: flex; flex-wrap: wrap; gap: 0.85rem; }
+
+      .hero__portrait { position: relative; margin: 0; }
+      .hero__portrait img {
+        width: 100%;
+        border-radius: 46% 46% 12px 12px / 30% 30% 12px 12px;
+        box-shadow: 0 30px 60px -38px rgba(69, 42, 107, 0.55);
+      }
+      .hero__portrait figcaption {
+        margin-top: 1.1rem;
+        font-size: 0.84rem;
+        line-height: 1.5;
+        color: var(--ink-soft);
+        max-width: 34ch;
+      }
+      .enso {
+        position: absolute;
+        top: -13%;
+        left: -30%;
+        width: 156%;
+        color: var(--violet);
+        opacity: 0.26;
+        z-index: -1;
+        transform: rotate(-12deg);
+      }
+      @media (max-width: 860px) {
+        .hero { grid-template-columns: 1fr; }
+        .hero__portrait { max-width: 420px; }
+      }
+
+      /* ── bands ─────────────────────────────────── */
+      .band { padding-block: clamp(3.5rem, 8vw, 7rem); }
+      .band--video { background: linear-gradient(180deg, rgba(227, 236, 245, 0) 0%, var(--wash-sky) 45%, rgba(227, 236, 245, 0.25) 100%); }
+      .band--who { background: linear-gradient(170deg, rgba(223, 234, 226, 0) 0%, var(--wash-seaglass) 55%, rgba(223, 234, 226, 0.2) 100%); }
+      .band--ways { background: linear-gradient(185deg, rgba(237, 230, 245, 0.15) 0%, var(--wash-lilac) 40%, rgba(244, 238, 227, 0.6) 100%); }
+      .band--workbook { background: linear-gradient(175deg, rgba(244, 238, 227, 0) 0%, var(--wash-sand) 50%, rgba(237, 230, 245, 0.4) 100%); }
+      .band--apply { background: linear-gradient(180deg, rgba(227, 236, 245, 0.35) 0%, var(--wash-sky) 100%); }
+
+      /* ── video placeholder ─────────────────────── */
+      .video {
+        display: grid;
+        place-items: center;
+        align-content: center;
+        gap: 0.9rem;
+        aspect-ratio: 16 / 9;
+        border-radius: 18px;
+        border: 1px dashed rgba(107, 63, 160, 0.4);
+        background: rgba(255, 255, 255, 0.55);
+        color: var(--violet-deep);
+        margin-bottom: 1.1rem;
+      }
+      .video__glyph { width: 62px; height: 62px; opacity: 0.75; }
+      .video p { margin: 0; font-family: var(--serif); font-size: 1.15rem; }
+
+      /* ── split layout ──────────────────────────── */
+      .split {
+        display: grid;
+        grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+        gap: clamp(2rem, 5vw, 4.5rem);
+        align-items: center;
+      }
+      .split--reverse { grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.16fr); }
+      .split--reverse .split__figure { order: -1; }
+      .split__figure { margin: 0; }
+      .split__figure img {
+        width: 100%;
+        border-radius: 14px 64px 14px 64px;
+        box-shadow: 0 26px 52px -40px rgba(69, 42, 107, 0.6);
+      }
+      .split__figure--portrait img { border-radius: 64px 14px 64px 14px; }
+      @media (max-width: 820px) {
+        .split { grid-template-columns: 1fr; }
+        .split--reverse .split__figure { order: 0; }
+      }
+
+      .pillars { margin: 2rem 0 0; display: grid; gap: 1.1rem; }
+      .pillars div { border-left: 2px solid rgba(107, 63, 160, 0.35); padding-left: 1rem; }
+      .pillars dt { font-family: var(--serif); font-size: 1.1rem; margin-bottom: 0.15rem; }
+      .pillars dd { margin: 0; color: var(--ink-soft); font-size: 0.97rem; max-width: 46ch; }
+
+      /* ── who ───────────────────────────────────── */
+      .who {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
+        gap: clamp(1.75rem, 4vw, 3.5rem);
+        margin-bottom: clamp(2rem, 5vw, 3.5rem);
+      }
+      .who__figure { margin: 0 0 clamp(2rem, 5vw, 3rem); }
+      .who__figure img {
+        width: 100%;
+        border-radius: 90px 18px 90px 18px;
+        box-shadow: 0 26px 52px -42px rgba(69, 42, 107, 0.6);
+      }
+
+      .ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.85rem; }
+      .ticks li {
+        position: relative;
+        padding-left: 1.7rem;
+        max-width: 46ch;
+      }
+      .ticks li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.62em;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--violet);
+        opacity: 0.55;
+      }
+      .ticks--open li::before { background: transparent; border: 2px solid var(--coral); opacity: 0.8; }
+
+      .quote {
+        margin: 0;
+        border-top: 1px solid var(--rule);
+        padding-top: 1.6rem;
+      }
+      .quote p {
+        font-family: var(--serif);
+        font-variation-settings: 'SOFT' 80, 'WONK' 1;
+        font-size: clamp(1.2rem, 1.05rem + 0.7vw, 1.6rem);
+        line-height: 1.4;
+        color: var(--violet-deep);
+        max-width: 40ch;
+        margin: 0;
+      }
+      .quote--inline { margin-top: 2rem; }
+
+      /* ── ways ──────────────────────────────────── */
+      .way {
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+        gap: clamp(1.5rem, 4vw, 3.5rem);
+        padding: clamp(1.75rem, 4vw, 3rem);
+        margin-bottom: clamp(1.25rem, 3vw, 2rem);
+        background: rgba(255, 255, 255, 0.62);
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        box-shadow: 0 20px 44px -42px rgba(69, 42, 107, 0.7);
+      }
+      .way--lilac { border-radius: 40px 12px 40px 12px; }
+      .way--sky { border-radius: 12px 40px 12px 40px; background: rgba(255, 255, 255, 0.72); }
+      .way--seaglass { border-radius: 40px 40px 12px 12px; }
+      .way__head h3 { margin-bottom: 0.35em; }
+      .way__summary { color: var(--ink-soft); font-size: 1.02rem; max-width: 34ch; }
+      .way__body p { max-width: 54ch; }
+      .way__format {
+        font-family: var(--serif);
+        font-variation-settings: 'SOFT' 30, 'WONK' 0;
+        font-size: 1.05rem;
+        color: var(--violet-deep);
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 0.9rem;
+        margin-bottom: 1.2rem;
+      }
+      @media (max-width: 820px) {
+        .way { grid-template-columns: 1fr; }
+      }
+
+      .addon {
+        margin-top: 2rem;
+        padding: 1.4rem 1.5rem;
+        border-left: 3px solid var(--coral);
+        background: rgba(244, 238, 227, 0.6);
+        border-radius: 0 16px 16px 0;
+      }
+      .addon__summary { color: var(--ink-soft); margin-bottom: 0.9em; }
+      .addon p, .addon li { font-size: 0.96rem; }
+
+      .investment {
+        margin-top: clamp(2rem, 5vw, 3rem);
+        padding-top: 2rem;
+        border-top: 1px solid var(--rule);
+      }
+      .investment strong { font-weight: 600; color: var(--violet-deep); }
+
+      /* ── breather ──────────────────────────────── */
+      .breather { margin: 0; }
+      .breather img {
+        width: 100%;
+        max-height: 60vh;
+        object-fit: cover;
+        object-position: center 56%;
+      }
+      .breather figcaption {
+        width: min(1180px, 100%);
+        margin: 1.1rem auto 0;
+        padding-inline: var(--gutter);
+        font-family: var(--serif);
+        font-variation-settings: 'SOFT' 70, 'WONK' 1;
+        font-size: clamp(1.1rem, 1rem + 0.6vw, 1.45rem);
+        line-height: 1.45;
+        color: var(--violet-deep);
+        max-width: 46ch;
+      }
+
+      /* ── forms ─────────────────────────────────── */
+      .field { display: block; margin-bottom: 1.5rem; max-width: none; }
+      .field label, .field legend, .capture label {
+        display: block;
+        font-size: 0.95rem;
+        font-weight: 500;
+        margin-bottom: 0.45rem;
+        color: var(--ink);
+      }
+      .field--choice { border: 0; padding: 0; margin: 0 0 1.75rem; }
+      .field--choice legend { padding: 0; margin-bottom: 0.7rem; }
+
+      input[type='text'],
+      input[type='email'],
+      textarea {
+        width: 100%;
+        font: inherit;
+        color: var(--ink);
+        padding: 0.72em 0.9em;
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid rgba(51, 43, 69, 0.22);
+        border-radius: 10px;
+      }
+      textarea { resize: vertical; line-height: 1.55; }
+      input:focus, textarea:focus { border-color: var(--violet); }
+
+      .choice {
+        display: flex;
+        gap: 0.7rem;
+        align-items: flex-start;
+        padding: 0.65rem 0.8rem;
+        margin-bottom: 0.4rem;
+        background: rgba(255, 255, 255, 0.6);
+        border: 1px solid rgba(51, 43, 69, 0.14);
+        border-radius: 10px;
+        font-weight: 350;
+        font-size: 0.98rem;
+        cursor: pointer;
+      }
+      .choice:hover { border-color: rgba(107, 63, 160, 0.5); }
+      .choice input { margin-top: 0.35em; accent-color: var(--violet); }
+
+      .capture { margin-top: 2rem; }
+      .capture__row { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-bottom: 0.8rem; }
+      .capture__row input { flex: 1 1 15rem; }
+      .capture__row .btn { flex: 0 0 auto; }
+
+      .closing {
+        margin: 1.4rem 0 0.9rem;
+        font-family: var(--serif);
+        font-size: 1.06rem;
+        line-height: 1.5;
+        color: var(--violet-deep);
+      }
+
+      .form-status {
+        margin: 0.9rem 0 0;
+        padding: 0.7rem 0.9rem;
+        border-radius: 10px;
+        background: rgba(107, 63, 160, 0.1);
+        font-size: 0.93rem;
+        color: var(--violet-deep);
+      }
+      .form-status[data-state='error'] { background: rgba(212, 96, 110, 0.14); color: #8c2c3a; }
+
+      /* ── footer ────────────────────────────────── */
+      .foot {
+        padding-block: clamp(2.5rem, 6vw, 4rem);
+        background: var(--wash-sky);
+        border-top: 1px solid var(--rule);
+      }
+      .foot__inner { display: grid; gap: 0.7rem; justify-items: start; }
+      .foot__mark { width: 210px; }
+      .foot__contact { margin: 0; font-size: 1.05rem; }
+      .foot__fine { margin: 0; font-size: 0.88rem; color: var(--ink-soft); }
+    </style>
+
+    <script>
+      const LEAD_TO = 'karen@centerforanthroposophy.org';
+
+      function say(form, message, state) {
+        let el = form.querySelector('.form-status');
+        if (!el) {
+          el = document.createElement('p');
+          el.className = 'form-status';
+          el.setAttribute('role', 'status');
+          form.appendChild(el);
+        }
+        el.textContent = message;
+        if (state) el.setAttribute('data-state', state);
+        else el.removeAttribute('data-state');
+      }
+
+      function mailto(subject, body) {
+        window.location.href =
+          'mailto:' + LEAD_TO + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      }
+
+      const workbook = document.getElementById('workbook-form');
+      if (workbook) {
+        workbook.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const email = (workbook.querySelector('#lead-email')).value.trim();
+          if (!email || !email.includes('@')) {
+            say(workbook, 'Please add an email address so Karen can send the workbook.', 'error');
+            return;
+          }
+          mailto('lead interest', 'Please send me the professional development workbook.\n\nEmail: ' + email + '\n');
+          say(workbook, 'Your email program is opening with the request ready to send.');
+        });
+      }
+
+      const apply = document.getElementById('apply-form');
+      if (apply) {
+        apply.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const data = new FormData(apply);
+          const get = (key) => String(data.get(key) || '').trim();
+
+          if (!get('name') || !get('email') || !get('q1')) {
+            say(apply, 'Please add your name, your email, and what brings you here.', 'error');
+            return;
+          }
+
+          const lines = [
+            'Name: ' + get('name'),
+            'Email: ' + get('email'),
+            'School or organization: ' + (get('school') || '(not given)'),
+            '',
+            "What's bringing you here right now?",
+            get('q1'),
+            '',
+            "What I'm exploring:",
+            get('q2') || '(not chosen)',
+            '',
+            'What meaningful progress would look like in six months:',
+            get('q3') || '(not answered)',
+            '',
+            'My role, and who else is part of this decision:',
+            get('q4') || '(not answered)',
+            '',
+            'Anything else Karen should know:',
+            get('q5') || '(not answered)',
+            '',
+          ];
+          mailto('application interest', lines.join('\n'));
+          say(apply, 'Your email program is opening with your application ready to send.');
+        });
+      }
+    </script>
+  </body>
+</html>
