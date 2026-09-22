@@ -35,7 +35,7 @@ $('save-exit').onclick=()=>{save();show('welcome');};
 $('applicant-tab').onclick=()=>show('welcome');
 $('reviewer-tab').onclick=()=>{show('review');renderReview();};
 $('see-review').onclick=()=>{show('review');renderReview();};
-$('edit-example').onclick=()=>{state.submitted=false;state.application.confirmed=false;state.step=0;save();show('application');render(true);};
+$('edit-example').onclick=()=>{state.submitted=false;delete state.decision;state.application.confirmed=false;state.step=0;save();show('application');render(true);};
 $('load-sample').onclick=()=>{state={application:sampleApplication(),step:3,submitted:true,history:[{at:new Date().toISOString(),text:'Fictional example loaded for staff review.'}]};save();renderReview();};
 $('reset').onclick=()=>{state={application:emptyApplication(),step:0,submitted:false,history:[]};save();$('demo-login').hidden=false;$('demo-verify').hidden=true;$('demo-code').value='';$('login-status').textContent='';show('welcome');};
 function renderReview() {
