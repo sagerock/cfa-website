@@ -1,0 +1,36 @@
+---
+import '../../styles/global.css';
+import '../../styles/scholarships.css';
+---
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'" />
+  <title>Scholarship application preview — Center for Anthroposophy</title>
+</head>
+<body class="scholarships">
+  <div class="preview-bar">Design preview · fictional information only · no applications or emails are sent</div>
+  <header class="scholar-head">
+    <a href="/scholarships" class="brand"><img src="/images/cfa-logo-2024.png" alt="Center for Anthroposophy" width="532" height="344" /><span>Scholarship portal</span></a>
+    <nav aria-label="Preview views"><button id="applicant-tab" class="active" type="button" aria-pressed="true">Applicant view</button><button id="reviewer-tab" type="button" aria-pressed="false">Staff review</button></nav>
+  </header>
+  <main>
+    <section id="welcome" class="welcome-grid">
+      <div class="welcome-copy"><p class="eyebrow">A place to begin</p><h1>Let’s find a way<br />forward, together.</h1><p class="intro">Tell us a little about your plans and what feels financially possible. We’ll help you put your scholarship application together, one step at a time.</p><ul class="promises"><li>One application, with room for your circumstances</li><li>Save your progress and return when you’re ready</li><li>A person reviews every application</li></ul><p class="muted">This first walkthrough uses sample programs and prices. CfA’s questions and scholarship policy are still being developed.</p></div>
+      <div class="card welcome-card"><p class="eyebrow">Start or return</p><h2>Your email is your key.</h2><p>The planned sign-in sends a one-time code to your email. No password or Social Security number is needed.</p><form id="demo-login"><label for="demo-email">Example email address</label><input id="demo-email" type="email" value="alex@example.com" readonly /><button class="primary" type="submit">Preview email-code sign-in <span aria-hidden="true">→</span></button></form><form id="demo-verify" hidden><label for="demo-code">Enter the sample code</label><input id="demo-code" inputmode="numeric" autocomplete="off" pattern="[0-9]{6}" maxlength="6" required aria-describedby="code-hint" /><p id="code-hint" class="muted">For this simulation, enter <strong>123456</strong>. No email has been sent. Live codes will be generated securely.</p><button class="primary" type="submit">Continue to application →</button></form><p id="login-status" role="status"></p><button id="resume" class="text-button" hidden>Continue saved example →</button><p class="small">Please use fictional information. This preview saves only in this browser tab, until you close it.</p></div>
+    </section>
+    <section id="application" hidden>
+      <div class="section-top"><div><p class="eyebrow">Your scholarship application</p><h1>A little about your situation.</h1></div><button id="save-exit" class="secondary">Save & return later</button></div>
+      <div class="application-grid"><aside><ol id="steps" class="steps"><li>About you</li><li>What’s manageable</li><li>Your circumstances</li><li>Review & submit</li></ol><div class="aside-note"><strong>At your own pace.</strong><p>You can go back and change any answer before submitting.</p><p id="save-status" role="status">Example saved in this tab.</p></div></aside>
+      <div class="card form-card"><p class="eyebrow" id="step-count"></p><h2 id="step-title" tabindex="-1"></h2><div class="guide"><span class="guide-mark" aria-hidden="true">✦</span><p id="guide-text"></p></div><form id="application-form"><div id="fields"></div><p id="form-error" class="error" role="alert"></p><div class="form-actions"><button id="back" type="button" class="secondary">← Back</button><button id="next" type="submit" class="primary">Continue →</button></div></form></div></div>
+    </section>
+    <section id="submitted" class="card complete-card" hidden><p class="eyebrow">Walkthrough complete</p><h1>Your example is ready for review.</h1><p>In the live portal, CfA would receive your application and a person would review it. This preview has sent nothing and made no scholarship commitment.</p><button id="see-review" class="primary">See the staff review →</button><button id="edit-example" class="secondary">Edit this example</button></section>
+    <section id="review" hidden><div class="section-top"><div><p class="eyebrow">Staff workspace · sample data</p><h1>Understand the need.<br />Make a considered decision.</h1></div><button id="load-sample" class="secondary">Load fictional example</button></div><p class="review-notice">This screen demonstrates the proposed review process. Reviewer access, policy, and available funds must be confirmed before real applications open. It does not use an AI model yet.</p><div id="review-content"></div></section>
+    <div class="preview-footer"><span>Questions, criteria, and wording are open for feedback.</span><button id="reset" class="text-button">Clear example & start again</button></div>
+  </main>
+  <footer class="scholar-foot"><span>Center for Anthroposophy</span><span>Keeping the door open.</span></footer>
+  <script>import '../../lib/scholarships/preview.js';</script>
+</body>
+</html>
