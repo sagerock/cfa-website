@@ -1,6 +1,9 @@
 // Upcoming programs calendar: the one list the /calendar page and the
 // /calendar.ics subscribe feed both read. Directors' corrections land here.
 //
+// `href` is the page CfA actually sends people to today (live WordPress, the
+// HolyOps Explorations funnel, or this site for Biografía), not this site's copy.
+//
 // Each entry is one program run. `sessions` are the dated meetings; a session
 // with `end` is a multi-day block (residency, intensive). Dates are ISO
 // YYYY-MM-DD; `time` is display text, written the way the program page says it.
@@ -25,7 +28,7 @@ export const CALENDAR = [
     time: 'Saturdays, 3:00–4:30 pm ET',
     contact: 'David Barham',
     summary: 'Twelve seminars for Waldorf teachers, leaders and parents, each with a guest speaker.',
-    href: '/programs/starlight-rays',
+    href: 'https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/starlight/',
     register: '/register/starlight-rays-2026-2027',
     sessions: [
       { date: '2026-09-26', note: 'Vicki Larson and Heather Scott: Stepping Into Life' },
@@ -50,7 +53,7 @@ export const CALENDAR = [
     time: 'Saturdays, 3:00–5:00 pm ET',
     contact: 'Lisl Hofer',
     summary: 'A four-part seminar series open to the general public. $350.',
-    href: '/programs/kairos-institute',
+    href: 'https://centerforanthroposophy.org/mental-health-from-an-anthroposophic-perspective-with-dr-james-dyson/',
     register: 'https://centerforanthroposophy.org/kairos-general-public-oen-course-registration/',
     sessions: [
       { date: '2026-09-26' },
@@ -90,7 +93,7 @@ export const CALENDAR = [
     time: 'Friday evening to Tuesday noon',
     contact: 'Torin Finser',
     summary: 'The fall residency of the 2026–27 cycle, now also open on its own to people not in the full program. $850.',
-    href: '/programs/waldorf-leadership-development',
+    href: 'https://centerforanthroposophy.org/programs/waldorf-administration-and-leadership-development-program/',
     register: '/register/wlcd-october-2026',
     sessions: [{ date: '2026-10-09', end: '2026-10-13' }],
   },
@@ -103,7 +106,7 @@ export const CALENDAR = [
     time: 'Friday evening to Tuesday noon',
     contact: 'Torin Finser',
     summary: 'Dates to be confirmed.',
-    href: '/programs/waldorf-leadership-development',
+    href: 'https://centerforanthroposophy.org/programs/waldorf-administration-and-leadership-development-program/',
     sessions: [{ date: '2027-04-23', end: '2027-04-27', tentative: true }],
   },
   {
@@ -115,7 +118,7 @@ export const CALENDAR = [
     time: 'Fri 3:00–4:30 pm ET; Sat 9:00 am–4:00 pm ET',
     contact: 'Karine Munk Finser',
     summary: 'Open to the general public. $350, with an optional $45 certificate.',
-    href: '/programs/kairos-institute',
+    href: 'https://centerforanthroposophy.org/programs/kairos-institute/kairos-courses-for-general-public/',
     register: 'https://centerforanthroposophy.org/kairos-general-public-oen-course-registration/',
     sessions: [{ date: '2027-01-15', end: '2027-01-16' }],
   },
@@ -128,7 +131,7 @@ export const CALENDAR = [
     time: 'Sundays, 11:00 am–12:30 pm and 1:30–3:00 pm ET',
     contact: 'Lisl Hofer',
     summary: 'A three-part lecture series open to the general public. $350.',
-    href: '/programs/kairos-institute',
+    href: 'https://centerforanthroposophy.org/the-bridge-lectures-with-dr-michaela-gloeckler/',
     register: 'https://centerforanthroposophy.org/kairos-general-public-oen-course-registration/',
     sessions: [{ date: '2027-01-24' }, { date: '2027-02-14' }, { date: '2027-02-21' }],
   },
@@ -140,7 +143,7 @@ export const CALENDAR = [
     format: 'In person, Wilton, NH',
     contact: 'Karen Atkinson',
     summary: 'Summer courses for Waldorf teachers. Courses, tuition and registration will be announced in the new year.',
-    href: '/programs/renewal-courses',
+    href: 'https://centerforanthroposophy.org/programs/renewal-courses/',
     sessions: [{ date: '2027-06-27', end: '2027-07-02' }],
   },
   {
@@ -151,7 +154,7 @@ export const CALENDAR = [
     format: 'Online',
     contact: 'Karen Atkinson',
     summary: 'The online week of Renewal. Courses, tuition and registration will be announced in the new year.',
-    href: '/programs/renewal-courses',
+    href: 'https://centerforanthroposophy.org/programs/renewal-courses/',
     sessions: [{ date: '2027-07-05', end: '2027-07-09' }],
   },
 
@@ -183,7 +186,7 @@ export const CALENDAR = [
     format: 'In person, Mountain Phoenix Community School, Wheat Ridge, CO',
     contact: 'Torin Finser',
     summary: 'Weekend intensives for the current Building Bridges group.',
-    href: '/programs/building-bridges',
+    href: 'https://centerforanthroposophy.org/programs/building-bridges-to-waldorf-teacher-training-2/',
     sessions: [
       { date: '2026-10-08', end: '2026-10-11', note: 'Speech and Storytelling with Debbie Spitulnik' },
       { date: '2027-02-12', end: '2027-02-14' },
@@ -199,7 +202,7 @@ export const CALENDAR = [
     time: 'Saturdays, 12:00–2:00 pm ET',
     contact: 'Karen Atkinson',
     summary: 'The 2026 cohort’s closing sessions. Ask the director about future cohorts.',
-    href: '/programs/mentor-training',
+    href: 'https://centerforanthroposophy.org/programs/mentor-training/',
     sessions: [{ date: '2026-10-17' }, { date: '2026-11-14', note: 'Final session' }],
   },
   {
@@ -210,7 +213,7 @@ export const CALENDAR = [
     format: 'Online seminars, then summer intensives in southern New Hampshire',
     contact: 'David Barham',
     summary: 'The 2026 cohort’s three-summer program. Online subject seminars run in November, January and March between summers.',
-    href: '/programs/waldorf-high-school',
+    href: 'https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/whistep/',
     sessions: [
       { date: '2027-07-10', end: '2027-07-25', note: 'Summer II, two weeks in person' },
       { date: '2028-07-15', end: '2028-07-30', note: 'Summer III, three weeks in person' },
