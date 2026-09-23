@@ -77,3 +77,19 @@ review authority, exception/reconsideration process, and applicant-facing notice
 Test deployed RLS, real OTP delivery/expiry/reuse, session recovery across devices,
 concurrent writes, and reviewer access using approved test accounts. The staged
 code is a foundation, not evidence that those hosted tests have passed.
+
+## Second pass, 2026-09-23: real programs from the calendar
+
+Milan asked for CfA's actual scholarship programs. Step 1 is now one program menu in
+two groups. Professional Development lists Building Bridges, Explorations, Mentor Training,
+Renewal, Starlight Rays and Waldorf Leadership Development. Teacher Training lists Antioch
+and WHiSTEP. After a program is chosen, the applicant picks dates from `src/data/calendar.js`
+(merged in from the `program-calendar` branch). Past runs drop off at page load, and
+"a future session or cohort" is always offered. Antioch has no public dates, so it offers
+only that. Teacher Training applicants see a pointer to the Waldorf Fellowship and AWSNA
+loans and grants on the Tuition Assistance page. Those keep their own forms.
+
+The applicant now enters the program cost from the program page. No tuition is
+hard-coded here. Applicant details are still fictional; nothing else changed about what
+the preview can do. This branch now carries the calendar commits, so merge
+`program-calendar` first or together.
