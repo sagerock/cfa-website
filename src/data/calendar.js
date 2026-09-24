@@ -16,7 +16,7 @@
 //
 // Only public program dates belong here. No staff meetings, no internal dates.
 
-export const CHECKED = '2026-09-23';
+export const CHECKED = '2026-09-24';
 
 export const CALENDAR = [
   {
@@ -98,6 +98,31 @@ export const CALENDAR = [
     sessions: [{ date: '2026-10-09', end: '2026-10-13' }],
   },
   {
+    id: 'wlcd-online-sessions-2026-27',
+    title: 'Waldorf Leadership Development: Online Sessions',
+    program: 'waldorf-leadership-development',
+    status: 'cohort',
+    format: 'Online (Zoom)',
+    time: 'Saturdays, 3:00–4:15 pm ET',
+    contact: 'Karen Atkinson',
+    summary:
+      'The fall, winter and spring online sessions of the 2026–27 cycle. Part of the full program and of the online-only track.',
+    href: 'https://centerforanthroposophy.org/programs/waldorf-administration-and-leadership-development-program/',
+    sessions: [
+      { date: '2026-10-17', note: 'Mark Finser: Working with Money and Social Finance' },
+      { date: '2026-11-14', note: 'Heather Scott: DEI in the Workplace' },
+      {
+        date: '2026-12-05',
+        note: 'Caleb Buckley: Leadership for Independent and Public Waldorf Charter Schools',
+      },
+      { date: '2026-12-12', note: 'Torin Finser: Karmic Leadership' },
+      { date: '2027-01-23', note: 'Jody Spanglet: Financial Management' },
+      { date: '2027-02-06', note: 'Kim John Payne: Collegial Relationships and Social Wellbeing' },
+      { date: '2027-02-20', note: 'Cathie Foote: The Art of Leading a Difficult Conversation' },
+      { date: '2027-03-13', note: 'Valerie Colis: Effective Board Leadership' },
+    ],
+  },
+  {
     id: 'wlcd-spring-residency-2027',
     title: 'Waldorf Leadership Development: Spring Residency',
     program: 'waldorf-leadership-development',
@@ -105,9 +130,9 @@ export const CALENDAR = [
     format: 'In person, Gathering Waters Charter School, Keene, NH',
     time: 'Friday evening to Tuesday noon',
     contact: 'Torin Finser',
-    summary: 'Dates to be confirmed.',
+    summary: 'The spring residency of the 2026–27 cycle, confirmed by the program schedule.',
     href: 'https://centerforanthroposophy.org/programs/waldorf-administration-and-leadership-development-program/',
-    sessions: [{ date: '2027-04-23', end: '2027-04-27', tentative: true }],
+    sessions: [{ date: '2027-04-23', end: '2027-04-27' }],
   },
   {
     id: 'kairos-ruf-module-7',
@@ -203,7 +228,16 @@ export const CALENDAR = [
     contact: 'Karen Atkinson',
     summary: 'The 2026 cohort’s closing sessions. Ask the director about future cohorts.',
     href: 'https://centerforanthroposophy.org/programs/mentor-training/',
-    sessions: [{ date: '2026-10-17' }, { date: '2026-11-14', note: 'Final session' }],
+    sessions: [
+      {
+        date: '2026-10-17',
+        note: 'Carol Bartges: Presentation and Workshop on Producing — Translating Insights into a Professional Development Resource',
+      },
+      {
+        date: '2026-11-14',
+        note: 'Lori Kran and Karen Atkinson: Program culmination — Bringing the work into the World',
+      },
+    ],
   },
   {
     id: 'whistep-2026-cohort',
