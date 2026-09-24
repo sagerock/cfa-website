@@ -1,0 +1,188 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { upcoming, STATUS_LABEL, CHECKED } from '../data/calendar.js';
+
+// Built statically; the inline script below hides anything that has passed
+// since the last build, so the page never shows a finished date as upcoming.
+const today = new Date().toISOString().slice(0, 10);
+const entries = upcoming(today);
+
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+  'August', 'September', 'October', 'November', 'December'];
+const SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const parts = (iso) => iso.split('-').map(Number);
+const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const dow = (iso) => {
+  const [y, m, d] = parts(iso);
+  return DOW[new Date(Date.UTC(y, m - 1, d)).getUTCDay()];
+};
+const dayLabel = (s) => {
+  const [, m1, d1] = parts(s.date);
+  if (!s.end) return `${dow(s.date)} ${SHORT[m1 - 1]} ${d1}`;
+  const [, m2, d2] = parts(s.end);
+  return m1 === m2
+    ? `${SHORT[m1 - 1]} ${d1}–${d2}`
+    : `${SHORT[m1 - 1]} ${d1} – ${SHORT[m2 - 1]} ${d2}`;
+};
+
+// Month view: each month lists the programs meeting that month, with the dates.
+const months = new Map();
+for (const e of entries) {
+  for (const s of e.sessions) {
+    const key = s.date.slice(0, 7);
+    if (!months.has(key)) months.set(key, new Map());
+    const row = months.get(key);
+    if (!row.has(e.id)) row.set(e.id, { entry: e, sessions: [] });
+    row.get(e.id).sessions.push(s);
+  }
+}
+const monthList = [...months.keys()].sort().map((key) => {
+  const [y, m] = parts(key);
+  const rows = [...months.get(key).values()].sort((a, b) =>
+    a.sessions[0].date.localeCompare(b.sessions[0].date));
+  return { key, label: `${MONTHS[m - 1]} ${y}`, rows };
+});
+
+const checked = (() => {
+  const [y, m, d] = parts(CHECKED);
+  return `${MONTHS[m - 1]} ${d}, ${y}`;
+})();
+---
+
+<Base title="Program Calendar — Center for Anthroposophy" current="/calendar">
+  <PageHeader
+    eyebrow="Calendar"
+    title="Upcoming programs"
+    lede="Every program date the Center has announced, as far ahead as it is scheduled, in one place."
+  />
+
+  <section class="band cal">
+    <div class="wrap">
+      <div class="cal-tools">
+        <div class="cal-filter" role="group" aria-label="Show">
+          <button type="button" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" data-filter="open" aria-pressed="false">{STATUS_LABEL.open}</button>
+          <button type="button" data-filter="save" aria-pressed="false">{STATUS_LABEL.save}</button>
+          <button type="button" data-filter="cohort" aria-pressed="false">{STATUS_LABEL.cohort}</button>
+        </div>
+        <a class="btn btn-ghost cal-sub" href="/calendar.ics" data-track="calendar-subscribe">Add to your calendar</a>
+      </div>
+
+      {monthList.map((mo) => (
+        <div class="cal-month" data-month={mo.key}>
+          <h2>{mo.label}</h2>
+          <ul>
+            {mo.rows.map(({ entry: e, sessions }) => (
+              <li class="cal-row" data-status={e.status}>
+                <div class="cal-dates">
+                  {sessions.map((s) => (
+                    <span class="cal-day" data-end={s.end ?? s.date}>
+                      {dayLabel(s)}{s.tentative && <em> (tentative)</em>}
+                    </span>
+                  ))}
+                </div>
+                <div class="cal-body">
+                  <p class="cal-title">
+                    <a href={e.href}>{e.title}</a>
+                    <span class={`cal-tag cal-tag-${e.status}`}>{STATUS_LABEL[e.status]}</span>
+                  </p>
+                  <p class="cal-meta">
+                    {e.format}{e.time && <> · {e.time}</>}
+                  </p>
+                  {sessions.some((s) => s.note) && (
+                    <ul class="cal-notes">
+                      {sessions.filter((s) => s.note).map((s) => (
+                        <li data-end={s.end ?? s.date}>{dayLabel(s)}: {s.note}</li>
+                      ))}
+                    </ul>
+                  )}
+                  <p class="cal-meta">{e.summary}</p>
+                  <p class="cal-links">
+                    {e.register && <a href={e.register}>Register</a>}
+                    <a href={e.href}>Program page</a>
+                    {e.contact && <span>Contact: {e.contact}</span>}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+
+      <p class="cal-foot">
+        Dates are taken from each program’s page and were last checked {checked}. If something
+        here disagrees with a program page, the program page and its director have the final word;
+        write to <a href="mailto:office@centerforanthroposophy.org">office@centerforanthroposophy.org</a>.
+        “Add to your calendar” subscribes you to the programs open for registration and the
+        save-the-date announcements, and keeps itself up to date.
+      </p>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      var today = new Date();
+      var iso = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' +
+        String(today.getDate()).padStart(2, '0');
+      document.querySelectorAll('.cal [data-end]').forEach(function (el) {
+        if (el.getAttribute('data-end') < iso) el.remove();
+      });
+      document.querySelectorAll('.cal-row').forEach(function (row) {
+        if (!row.querySelector('.cal-day')) row.remove();
+      });
+      function tidy() {
+        document.querySelectorAll('.cal-month').forEach(function (m) {
+          var shown = Array.prototype.some.call(m.querySelectorAll('.cal-row'), function (r) {
+            return !r.hidden;
+          });
+          m.hidden = !shown;
+        });
+      }
+      var buttons = document.querySelectorAll('.cal-filter button');
+      buttons.forEach(function (b) {
+        b.addEventListener('click', function () {
+          var f = b.getAttribute('data-filter');
+          buttons.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+          document.querySelectorAll('.cal-row').forEach(function (r) {
+            r.hidden = f !== 'all' && r.getAttribute('data-status') !== f;
+          });
+          tidy();
+        });
+      });
+      tidy();
+    })();
+  </script>
+</Base>
+
+<style>
+  .cal-tools { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+  .cal-filter { display: flex; flex-wrap: wrap; gap: 8px; }
+  .cal-filter button {
+    font: inherit; font-size: 0.9rem; padding: 6px 14px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--raised); color: var(--ink); cursor: pointer;
+  }
+  .cal-filter button[aria-pressed='true'] { background: var(--green); border-color: var(--green); color: #fff; }
+  .cal-month { margin-bottom: 36px; }
+  .cal-month h2 { font-family: var(--serif); font-size: 1.5rem; border-bottom: 1px solid var(--line); padding-bottom: 8px; margin-bottom: 4px; }
+  .cal-month > ul { list-style: none; margin: 0; padding: 0; }
+  .cal-row { display: grid; grid-template-columns: 170px 1fr; gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .cal-row[hidden] { display: none; }
+  .cal-dates { display: flex; flex-direction: column; gap: 2px; font-weight: 600; color: var(--green-ink); }
+  .cal-dates em { font-weight: 400; color: var(--soft); }
+  .cal-title { margin: 0 0 4px; font-family: var(--serif); font-size: 1.15rem; }
+  .cal-title a { color: var(--ink); }
+  .cal-tag { display: inline-block; margin-left: 8px; font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; vertical-align: middle; }
+  .cal-tag-open { background: var(--green); color: #fff; }
+  .cal-tag-save { background: var(--gold); color: #fff; }
+  .cal-tag-cohort { background: var(--chalk); color: var(--soft); }
+  .cal-meta { margin: 0 0 4px; color: var(--soft); font-size: 0.95rem; }
+  .cal-notes { margin: 4px 0 6px; padding-left: 18px; color: var(--soft); font-size: 0.92rem; }
+  .cal-links { display: flex; flex-wrap: wrap; gap: 16px; margin: 6px 0 0; font-size: 0.92rem; }
+  .cal-links span { color: var(--soft); }
+  .cal-foot { color: var(--soft); font-size: 0.9rem; max-width: 70ch; }
+  @media (max-width: 640px) {
+    .cal-row { grid-template-columns: 1fr; gap: 6px; }
+    .cal-dates { flex-direction: row; flex-wrap: wrap; gap: 4px 12px; }
+  }
+</style>

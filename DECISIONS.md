@@ -718,3 +718,13 @@ logged, not surfaced.
 The automatic 20% for Canadian billing addresses (`CANADA20`) was invisible until the
 address was typed. All three registration pages now say it plainly, in the language of the
 page. Milan approved the English wording; the Spanish is the same sentence.
+
+## 2026-09-22 — Scholarship application review prototype
+
+Add an isolated `/scholarships` fictional-data walkthrough with applicant and staff
+views. Use email one-time codes for the planned live experience. The preview labels
+its authentication simulation and makes no network connections; real intake stays
+closed. Stage owner-scoped Supabase tables/RPCs and a closed-pilot code sender,
+without applying migrations or modifying shared auth settings. Financial output is
+an explained funding-gap calculation pending an approved rubric; no autonomous
+award decisions. See `docs/scholarship-preview.md` for scope and validation.

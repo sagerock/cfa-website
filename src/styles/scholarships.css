@@ -1,0 +1,80 @@
+.scholarships { --paper:#f7f5ee; --ink:#253c34; --soft:#59675f; --green:#315846; --line:#d9ded4; color:var(--ink); background:var(--paper); font-family:var(--sans); }
+.scholarships * { box-sizing:border-box; }
+[hidden] { display:none !important; }
+.preview-bar { background:#e6ecdf; color:#3b513c; text-align:center; padding:10px 20px; font-size:12px; letter-spacing:.025em; }
+.scholar-head { max-width:1240px; margin:auto; padding:24px 40px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line); gap:20px; }
+.brand { display:flex; gap:18px; align-items:center; text-decoration:none; color:var(--ink); font-size:13px; }
+.brand img { width:94px; height:auto; }
+.scholar-head nav { display:flex; background:#ecefe7; padding:5px; border-radius:30px; gap:3px; }
+.scholar-head nav button { border:0; border-radius:25px; background:transparent; color:var(--soft); padding:10px 18px; font:inherit; font-size:13px; cursor:pointer; }
+.scholar-head nav button.active { background:white; color:var(--ink); box-shadow:0 1px 5px #0000000b; }
+.scholarships main { max-width:1160px; margin:auto; padding:58px 36px 20px; min-height:76vh; }
+.scholarships h1,.scholarships h2,.scholarships h3 { font-family:Georgia,'Times New Roman',serif; font-weight:400; letter-spacing:-.025em; }
+.scholarships h1 { font-size:clamp(34px,4.8vw,57px); line-height:1.13; margin:14px 0 24px; }
+.scholarships h2 { font-size:31px; line-height:1.2; margin:12px 0 18px; }
+.scholarships h3 { font-size:24px; margin:0 0 20px; }
+.scholarships p { line-height:1.65; }
+.scholarships .eyebrow { font:600 11px/1.5 var(--sans); letter-spacing:.15em; text-transform:uppercase; color:#677956; }
+.welcome-grid { display:grid; grid-template-columns:1.2fr 1fr; align-items:center; gap:76px; padding:15px 0 50px; }
+.intro { font-size:17px; color:var(--soft); max-width:480px; }
+.promises { list-style:none; padding:12px 0; font-size:14px; }
+.promises li { margin:16px 0; padding-left:26px; position:relative; }
+.promises li:before { content:'✓'; position:absolute; left:0; color:#71865e; }
+.card { background:#fffefa; border:1px solid var(--line); border-radius:14px; padding:34px; box-shadow:0 14px 48px -35px #243b3066; }
+.welcome-card { border-top:4px solid #b4be99; }
+.muted,.small { color:var(--soft); font-size:13px; }
+.small { font-size:12px; margin-top:24px; }
+.scholarships label { display:block; font-weight:600; font-size:13px; margin:20px 0 8px; }
+.scholarships input,.scholarships select,.scholarships textarea { width:100%; background:#fafbf7; color:var(--ink); border:1px solid #cbd2c7; border-radius:6px; padding:12px 13px; font:15px/1.5 var(--sans); }
+.scholarships textarea { min-height:106px; resize:vertical; }
+.scholarships input[readonly] { color:var(--soft); }
+.scholarships input[type=checkbox] { width:auto; margin-right:9px; }
+.scholarships button { cursor:pointer; }
+.scholarships button:focus-visible,.scholarships input:focus-visible,.scholarships textarea:focus-visible,.scholarships select:focus-visible { outline:3px solid #a4b986; outline-offset:3px; }
+.primary,.secondary { border-radius:6px; padding:13px 19px; font:500 14px/1.4 var(--sans); border:1px solid var(--green); }
+.primary { color:white; background:var(--green); }
+.secondary { color:var(--green); background:transparent; }
+.welcome-card .primary { width:100%; margin-top:18px; display:flex; justify-content:space-between; }
+.text-button { color:var(--green); border:0; background:none; font:inherit; font-size:13px; padding:8px 0; text-decoration:underline; text-underline-offset:4px; }
+.section-top { display:flex; justify-content:space-between; align-items:center; gap:24px; margin-bottom:24px; }
+.section-top h1 { font-size:39px; margin:8px 0; }
+.application-grid { display:grid; grid-template-columns:235px 1fr; gap:42px; }
+.steps { list-style:none; padding:0; counter-reset:step; }
+.steps li { counter-increment:step; display:flex; align-items:center; gap:12px; padding:15px 0; font-size:14px; color:var(--soft); }
+.steps li:before { content:counter(step); border:1px solid var(--line); width:29px; height:29px; border-radius:50%; display:grid; place-items:center; font-size:12px; }
+.steps li.current { color:var(--green); font-weight:600; }
+.steps li.current:before { background:var(--green); color:white; border-color:var(--green); }
+.aside-note { border-top:1px solid var(--line); margin-top:25px; padding-top:25px; font-size:13px; color:var(--soft); }
+.guide { background:#edf1e7; border-radius:8px; display:flex; align-items:flex-start; gap:12px; padding:14px 18px; font-size:14px; }
+.guide p { margin:0; }
+.guide-mark { font-size:22px; color:#768950; }
+.form-actions { display:flex; justify-content:space-between; gap:20px; border-top:1px solid var(--line); margin-top:28px; padding-top:23px; }
+.field-row,.review-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.error { color:#9c3e31; font-size:14px; }
+.preview-footer { margin-top:54px; border-top:1px solid var(--line); padding:21px 0; display:flex; justify-content:space-between; align-items:center; gap:20px; color:var(--soft); font-size:12px; }
+.scholar-foot { max-width:1240px; margin:auto; padding:22px 40px; display:flex; justify-content:space-between; gap:20px; color:var(--soft); font-size:12px; }
+.complete-card { max-width:760px; margin:35px auto; }
+.complete-card button { margin:15px 10px 0 0; }
+.review-notice { background:#ecefe5; padding:16px 22px; border-radius:8px; font-size:13px; margin-bottom:28px; }
+.stats { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin:24px 0; }
+.stat { border:1px solid var(--line); border-radius:8px; padding:20px; background:#fffefa; }
+.stat strong { display:block; font:32px Georgia,serif; margin-top:7px; }
+.stat span { font-size:12px; color:var(--soft); }
+.stat.gap { background:#e8edde; border-color:#cad5b9; }
+.detail-list { margin:0; }
+.detail-list div { display:flex; justify-content:space-between; gap:18px; border-bottom:1px solid var(--line); padding:12px 0; }
+.detail-list dt { color:var(--soft); font-size:13px; }
+.detail-list dd { margin:0; font-size:14px; text-align:right; white-space:pre-wrap; overflow-wrap:anywhere; }
+.long-answer { white-space:pre-wrap; overflow-wrap:anywhere; font-size:14px; }
+.badge { display:inline-block; border:1px solid #cbd5bd; background:#eef2e8; padding:5px 10px; border-radius:18px; font-size:11px; }
+.audit { font-size:13px; padding-left:20px; }
+.audit li { margin:12px 0; white-space:pre-wrap; overflow-wrap:anywhere; }
+@media(max-width:800px) { .welcome-grid { gap:30px; grid-template-columns:1fr; } .application-grid { grid-template-columns:1fr; gap:15px; } .steps { display:flex; flex-wrap:wrap; gap:8px 18px; } .steps li { font-size:12px; padding:5px 0; } .aside-note { display:none; } .review-grid { grid-template-columns:1fr; } .section-top { align-items:flex-start; } }
+@media(max-width:520px) { .scholar-head { padding:20px; flex-direction:column; align-items:flex-start; } .scholarships main { padding:30px 18px 10px; } .card { padding:23px; } .section-top { flex-direction:column; } .section-top h1 { font-size:31px; } .field-row { grid-template-columns:1fr; gap:0; } .stats { gap:8px; } .stat { padding:13px 9px; } .stat strong { font-size:24px; } .preview-footer,.scholar-foot { flex-direction:column; align-items:flex-start; } }
+.runs { border:0; padding:0; margin:22px 0 0; }
+.runs legend { font-weight:600; font-size:13px; margin-bottom:8px; }
+.scholarships label.run { display:flex; gap:12px; align-items:flex-start; font-weight:400; font-size:14px; margin:8px 0; padding:12px 14px; border:1px solid var(--line); border-radius:8px; background:#fafbf7; cursor:pointer; }
+.scholarships label.run input { width:auto; margin-top:4px; }
+.scholarships label.run:has(input:checked) { border-color:var(--green); background:#eef2e8; }
+.run-status { font-size:12px; color:#677956; }
+.scholarships a { color:var(--green); }
