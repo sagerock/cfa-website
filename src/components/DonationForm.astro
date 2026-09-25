@@ -1,0 +1,889 @@
+---
+// The unified donation form: one form for every gift to CfA, replacing
+// WordPress Gravity Forms 97, 114, 5 and 96. Kept out of src/pages/donate.astro
+// so the appeal copy around it can be edited freely without touching the part
+// that would take money. Changes here are a desk-session job.
+//
+// PREVIEW by default. Unless the build sets PUBLIC_DONATIONS_LIVE=true, the
+// script never contacts the cfa-donate function, never loads Authorize.Net or
+// Turnstile, and submitting only simulates the confirmation screens. See
+// docs/donation-preview.md for the activation checklist.
+//
+// Every figure shown here comes from ../../supabase/functions/_shared/, the
+// same modules the edge function uses to recompute the gift server-side.
+import {
+  FEATURED_BILLING_COUNTRY_CODES,
+  ISO_COUNTRY_CODES,
+} from '../../supabase/functions/_shared/billingCountries.js';
+import { DONATION_FUND_GROUPS, DEFAULT_FUND_SLUG, activeFunds } from '../../supabase/functions/_shared/donationFunds.js';
+import {
+  CHECK_MAILING_ADDRESS,
+  CHECK_PAYABLE_TO,
+  MONTH_OPTIONS,
+  SUGGESTED_AMOUNTS,
+} from '../../supabase/functions/_shared/donationMath.js';
+
+const live = import.meta.env.PUBLIC_DONATIONS_LIVE === 'true';
+const countryNames = new Intl.DisplayNames(['en'], { type: 'region' });
+const featuredCodes = new Set(FEATURED_BILLING_COUNTRY_CODES);
+const countryOption = (code) => ({ code, name: countryNames.of(code) || code });
+const featuredCountries = FEATURED_BILLING_COUNTRY_CODES.map(countryOption);
+const otherCountries = ISO_COUNTRY_CODES
+  .filter((code) => !featuredCodes.has(code))
+  .map(countryOption)
+  .sort((a, b) => a.name.localeCompare(b.name, 'en'));
+const funds = activeFunds();
+const groups = DONATION_FUND_GROUPS
+  .map((group) => ({ ...group, funds: funds.filter((fund) => fund.group === group.id) }))
+  .filter((group) => group.funds.length);
+const usd = (n) => `$${n.toLocaleString('en-US')}`;
+---
+
+<section id="give" class="give-section" aria-labelledby="give-title" data-mode={live ? 'live' : 'preview'}>
+  <div class="wrap">
+    {!live && (
+      <p class="preview-banner" role="note">
+        <strong>Preview &ndash; no payment is taken.</strong>
+        This form is here for review. Submitting it shows the screen and email a donor would get; nothing is charged, saved or sent.
+      </p>
+    )}
+    <div class="give-layout">
+      <div class="give-main">
+        <p class="eyebrow">Make a gift</p>
+        <h2 id="give-title">Give to the Center for Anthroposophy</h2>
+
+        <form id="donation-form" novalidate>
+          <fieldset class="form-section">
+            <legend><span>01</span> Your gift</legend>
+            <div class="amount-grid" role="radiogroup" aria-label="Gift amount">
+              {SUGGESTED_AMOUNTS.map((amount, index) => (
+                <label class="chip">
+                  <input type="radio" name="amount_choice" value={String(amount)} checked={index === 2} />
+                  <span>{usd(amount)}</span>
+                </label>
+              ))}
+              <label class="chip">
+                <input type="radio" name="amount_choice" value="other" />
+                <span>Other</span>
+              </label>
+            </div>
+            <label class="other-amount" id="other-amount-field" for="other-amount" hidden>
+              Other amount (USD)
+              <span class="money-input"><span aria-hidden="true">$</span><input type="text" id="other-amount" name="other_amount" inputmode="decimal" autocomplete="off" maxlength="12" placeholder="0.00" /></span>
+            </label>
+
+            <div class="frequency" role="radiogroup" aria-label="How often">
+              <label class="toggle"><input type="radio" name="frequency" value="once" checked /><span>One time</span></label>
+              <label class="toggle"><input type="radio" name="frequency" value="monthly" /><span>Monthly</span></label>
+            </div>
+            <div id="months-field" class="months" hidden>
+              <p id="months-label" class="field-label">For how many months?</p>
+              <div class="months-grid" role="radiogroup" aria-labelledby="months-label">
+                {MONTH_OPTIONS.map((months) => (
+                  <label class="chip small"><input type="radio" name="months" value={String(months)} checked={months === 12} /><span>{months} months</span></label>
+                ))}
+              </div>
+              <p class="hint">Your card is charged today and on the same day each month after that. You can stop at any time by writing to the office.</p>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend><span>02</span> Direct your gift</legend>
+            <label class="field" for="fund">
+              Designation
+              <select id="fund" name="fund">
+                {groups.map((group) => (
+                  <optgroup label={group.label}>
+                    {group.funds.map((fund) => (
+                      <option value={fund.slug} selected={fund.slug === DEFAULT_FUND_SLUG}>
+                        {fund.slug === DEFAULT_FUND_SLUG ? `${fund.name}: where it is needed most` : fund.name}
+                      </option>
+                    ))}
+                  </optgroup>
+                ))}
+              </select>
+            </label>
+            <p id="fund-notice" class="notice" role="status" hidden></p>
+            <label class="field" for="note">
+              <span>Anything more about the purpose? <small>optional</small></span>
+              <textarea id="note" name="note" rows="2" maxlength="1000"></textarea>
+            </label>
+            <label class="check-row">
+              <input type="checkbox" id="tribute-toggle" name="tribute_toggle" aria-controls="tribute-fields" aria-expanded="false" />
+              <span>Give in honor or in memory of someone</span>
+            </label>
+            <div id="tribute-fields" class="tribute" hidden>
+              <div class="toggle-row" role="radiogroup" aria-label="Tribute type">
+                <label class="toggle"><input type="radio" name="tribute_type" value="honor" checked /><span>In honor of</span></label>
+                <label class="toggle"><input type="radio" name="tribute_type" value="memory" /><span>In memory of</span></label>
+              </div>
+              <label class="field" for="tribute-name">
+                Their name
+                <input type="text" id="tribute-name" name="tribute_name" maxlength="200" autocomplete="off" />
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend><span>03</span> About you</legend>
+            <p class="section-note">We use your mailing address for your acknowledgment letter.</p>
+            <div class="field-grid">
+              <label for="first-name">First name<input type="text" id="first-name" name="first_name" autocomplete="given-name" maxlength="100" required /></label>
+              <label for="last-name">Last name<input type="text" id="last-name" name="last_name" autocomplete="family-name" maxlength="100" required /></label>
+              <label for="email">Email<input type="email" id="email" name="email" autocomplete="email" maxlength="254" required /></label>
+              <label for="phone"><span class="field-heading">Phone <small>optional</small></span><input type="tel" id="phone" name="phone" autocomplete="tel" maxlength="50" /></label>
+              <label class="wide" for="address1">Street address<input type="text" id="address1" name="address1" autocomplete="address-line1" maxlength="200" required /></label>
+              <label class="wide" for="address2"><span class="field-heading">Apartment, suite, etc. <small>optional</small></span><input type="text" id="address2" name="address2" autocomplete="address-line2" maxlength="200" /></label>
+              <label for="city">City<input type="text" id="city" name="city" autocomplete="address-level2" maxlength="100" required /></label>
+              <label for="state"><span class="field-heading"><span id="state-label">State</span> <small id="state-optional" hidden>optional</small></span><input type="text" id="state" name="state" autocomplete="address-level1" maxlength="100" required /></label>
+              <label for="zip"><span class="field-heading"><span id="zip-label">ZIP code</span> <small id="zip-optional" hidden>optional</small></span><input type="text" id="zip" name="zip" autocomplete="postal-code" maxlength="30" required /></label>
+              <label for="country">Country
+                <select id="country" name="country" autocomplete="country" required>
+                  {featuredCountries.map((country) => <option value={country.code}>{country.name}</option>)}
+                  <option disabled>──────────</option>
+                  {otherCountries.map((country) => <option value={country.code}>{country.name}</option>)}
+                </select>
+              </label>
+            </div>
+            <div class="options">
+              <label class="check-row"><input type="checkbox" name="anonymous" /><span>Please keep my gift anonymous in anything CfA publishes.</span></label>
+              <label class="check-row"><input type="checkbox" name="newsletter" /><span>Send me CfA's email newsletter.</span></label>
+              <label class="check-row"><input type="checkbox" name="planned_giving_info" /><span>I'd like information about a bequest or planned gift.</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend><span>04</span> Payment</legend>
+            <div class="method-grid" role="radiogroup" aria-label="Payment method">
+              <label class="method">
+                <input type="radio" name="method" value="card" checked />
+                <span><strong>Credit or debit card</strong><small>Entered in Authorize.Net's secure window</small></span>
+              </label>
+              <label class="method" id="check-method">
+                <input type="radio" name="method" value="check" />
+                <span><strong>Check by mail</strong><small id="check-method-note">Pledge now, mail your check</small></span>
+              </label>
+            </div>
+
+            <div id="card-panel">
+              <label class="check-row fee-row">
+                <input type="checkbox" id="cover-fee" name="cover_fee" />
+                <span>Add <strong id="fee-amount">$3</strong><span id="fee-per"></span> to cover the 3% card processing fee, so all of my gift goes to the work. <small>Optional</small></span>
+              </label>
+            </div>
+            <div id="check-panel" class="check-panel" hidden>
+              <p>Please make your check payable to <strong>{CHECK_PAYABLE_TO}</strong> and mail it to:</p>
+              <address>{CHECK_PAYABLE_TO}<br />{CHECK_MAILING_ADDRESS.map((line) => <>{line}<br /></>)}</address>
+              <p class="hint">We'll email you a thank-you for your pledge now, and your tax receipt when the check arrives.</p>
+            </div>
+
+            <div class="hp" aria-hidden="true">
+              <label for="company">Company<input type="text" id="company" name="company" tabindex="-1" autocomplete="off" /></label>
+            </div>
+            <div id="turnstile-widget" class="turnstile"></div>
+            <button id="give-button" class="give-submit" type="button">Give $100</button>
+            <p class="payment-note" id="payment-note">
+              {live
+                ? 'Card details are collected securely by Authorize.Net and never pass through this website.'
+                : 'Preview: in the live form, a secure Authorize.Net window opens here for card details. Nothing is charged in this preview.'}
+            </p>
+            <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+          </fieldset>
+        </form>
+        <div id="confirmation" class="confirmation" tabindex="-1" hidden></div>
+      </div>
+
+      <aside class="ledger" aria-labelledby="ledger-title">
+        <div class="ledger-card">
+          <p class="eyebrow">Your gift</p>
+          <h3 id="ledger-title">Summary</h3>
+          <dl>
+            <div><dt>Gift</dt><dd id="ledger-gift">$100</dd></div>
+            <div><dt>How often</dt><dd id="ledger-frequency">One time</dd></div>
+            <div><dt>Designation</dt><dd id="ledger-fund">General Support</dd></div>
+            <div><dt>Payment</dt><dd id="ledger-method">Card</dd></div>
+            <div id="ledger-fee-row" hidden><dt>Card fee covered</dt><dd id="ledger-fee"></dd></div>
+          </dl>
+          <div class="ledger-total">
+            <span id="ledger-total-label">Total today</span>
+            <strong id="ledger-total">$100</strong>
+          </div>
+          <p id="ledger-schedule" class="ledger-note" hidden></p>
+          <p class="ledger-note">CfA is a 501(c)(3) nonprofit. Gifts are tax-deductible as allowed by law.</p>
+        </div>
+        <div class="ledger-help">
+          <p>Questions about giving?</p>
+          <a href="mailto:office@centerforanthroposophy.org" data-track="donate-email">office@centerforanthroposophy.org</a>
+          <a href="tel:+16036542566" data-track="donate-phone">603-654-2566</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { getBillingAddressRule } from '../../supabase/functions/_shared/billingCountries.js';
+  import { findFund, fundLabel } from '../../supabase/functions/_shared/donationFunds.js';
+  import {
+    computeDonation,
+    formatUsd,
+    monthlySchedule,
+    parseAmountToCents,
+    parseDonationPrefill,
+    validateDonation,
+  } from '../../supabase/functions/_shared/donationMath.js';
+  import {
+    buildCardReceipt,
+    buildCheckPledgeEmail,
+  } from '../../supabase/functions/_shared/donationEmail.js';
+
+  const section = document.getElementById('give');
+  const LIVE = section.dataset.mode === 'live';
+  const ENDPOINT = 'https://ckloewflialohuvixmvd.supabase.co/functions/v1/cfa-donate';
+  const form = document.getElementById('donation-form');
+  const $ = (id) => document.getElementById(id);
+  const button = $('give-button');
+  const status = $('form-status');
+  const field = (name) => form.elements.namedItem(name);
+  const radioValue = (name) => form.querySelector(`input[name="${name}"]:checked`)?.value || '';
+  const checked = (name) => Boolean(field(name)?.checked);
+
+  const ERROR_COPY = {
+    amount: { invalid: 'Please enter a gift amount.', too_small: 'The smallest gift we can accept online is $5.', too_large_for_card: 'For a card gift over $25,000, please give by check or call the office.', too_large: 'Please call the office about a gift of this size.' },
+    fund: { unavailable: 'Please choose where your gift should go.' },
+    frequency: { invalid: 'Please choose how often to give.', monthly_requires_card: 'Monthly gifts are made by card.' },
+    method: { invalid: 'Please choose how you would like to pay.' },
+    first_name: { required: 'Please enter your first name.' },
+    last_name: { required: 'Please enter your last name.' },
+    email: { invalid: 'Please enter a valid email address.' },
+    address: { incomplete: 'Please complete your mailing address.', country: 'Please choose your country.' },
+    tribute: { name_required: 'Please enter the name of the person you are honoring.' },
+  };
+  const FIELD_FOCUS = { amount: 'other-amount', fund: 'fund', first_name: 'first-name', last_name: 'last-name', email: 'email', address: 'address1', tribute: 'tribute-name' };
+
+  let idempotencyKey = crypto.randomUUID();
+  let turnstileToken = '';
+  let turnstileWidgetId;
+  let config = null;
+
+  function setStatus(message, kind = '') {
+    status.textContent = message;
+    status.dataset.kind = kind;
+  }
+
+  function amountInput() {
+    const choice = radioValue('amount_choice');
+    return choice === 'other' ? field('other_amount').value : choice;
+  }
+
+  // The same object the server receives; the server recomputes all of it.
+  function payload() {
+    const frequency = radioValue('frequency');
+    return {
+      amount: amountInput(),
+      fund: field('fund').value,
+      frequency,
+      months: frequency === 'monthly' ? Number(radioValue('months')) : 1,
+      method: radioValue('method'),
+      cover_fee: checked('cover_fee'),
+      first_name: field('first_name').value,
+      last_name: field('last_name').value,
+      email: field('email').value,
+      phone: field('phone').value,
+      address: {
+        address: field('address1').value,
+        address2: field('address2').value,
+        city: field('city').value,
+        state: field('state').value,
+        zip: field('zip').value,
+        country: field('country').value,
+      },
+      note: field('note').value,
+      tribute: checked('tribute_toggle') ? { type: radioValue('tribute_type'), name: field('tribute_name').value } : null,
+      anonymous: checked('anonymous'),
+      newsletter: checked('newsletter'),
+      planned_giving_info: checked('planned_giving_info'),
+    };
+  }
+
+  function currentLedger() {
+    const giftCents = parseAmountToCents(amountInput());
+    const frequency = radioValue('frequency');
+    return Number.isInteger(giftCents) && giftCents > 0
+      ? computeDonation({
+        giftCents,
+        frequency,
+        months: frequency === 'monthly' ? Number(radioValue('months')) : 1,
+        method: radioValue('method'),
+        coverFee: checked('cover_fee'),
+      })
+      : null;
+  }
+
+  function updateAddressRule() {
+    const rule = getBillingAddressRule(field('country').value);
+    $('state-label').textContent = rule.regionLabel;
+    $('zip-label').textContent = rule.postalLabel;
+    field('state').required = rule.regionRequired;
+    field('zip').required = rule.postalRequired;
+    $('state-optional').hidden = rule.regionRequired;
+    $('zip-optional').hidden = rule.postalRequired;
+  }
+
+  function update() {
+    const other = radioValue('amount_choice') === 'other';
+    $('other-amount-field').hidden = !other;
+    const monthly = radioValue('frequency') === 'monthly';
+    $('months-field').hidden = !monthly;
+
+    // A check is a one-time gift; monthly giving runs on a card.
+    const checkInput = form.querySelector('input[name="method"][value="check"]');
+    if (monthly && checkInput.checked) form.querySelector('input[name="method"][value="card"]').checked = true;
+    checkInput.disabled = monthly;
+    $('check-method').classList.toggle('is-disabled', monthly);
+    $('check-method-note').textContent = monthly ? 'Monthly gifts are made by card' : 'Pledge now, mail your check';
+
+    const method = radioValue('method');
+    $('card-panel').hidden = method !== 'card';
+    $('check-panel').hidden = method !== 'check';
+    if (LIVE && config?.payment?.available) button.classList.toggle('AcceptUI', method === 'card');
+
+    const tribute = checked('tribute_toggle');
+    $('tribute-fields').hidden = !tribute;
+    field('tribute_toggle').setAttribute('aria-expanded', String(tribute));
+
+    const fund = findFund(field('fund').value);
+    const ledger = currentLedger();
+    const giftCents = ledger?.giftCents ?? parseAmountToCents(amountInput());
+    const feeCents = Number.isInteger(giftCents) ? Math.round(giftCents * 3 / 100) : 0;
+    $('fee-amount').textContent = formatUsd(feeCents);
+    $('fee-per').textContent = monthly ? ' a month' : '';
+
+    const months = Number(radioValue('months'));
+    $('ledger-gift').textContent = ledger ? formatUsd(ledger.giftCents) : '—';
+    $('ledger-frequency').textContent = monthly ? `Monthly, ${months} months` : 'One time';
+    $('ledger-fund').textContent = fund ? fund.name : '—';
+    $('ledger-method').textContent = method === 'check' ? 'Check by mail' : 'Card';
+    $('ledger-fee-row').hidden = !ledger?.feeCents;
+    $('ledger-fee').textContent = ledger?.feeCents ? formatUsd(ledger.feeCents) : '';
+    $('ledger-total-label').textContent = method === 'check' ? 'Pledge' : monthly ? 'Charged today, then monthly' : 'Total today';
+    $('ledger-total').textContent = ledger ? formatUsd(ledger.chargeCents) : '—';
+    const scheduleNote = $('ledger-schedule');
+    scheduleNote.hidden = !(monthly && ledger);
+    if (monthly && ledger) {
+      scheduleNote.textContent = `${months} payments of ${formatUsd(ledger.chargeCents)}, ${formatUsd(ledger.scheduleTotalCents)} in all.`;
+    }
+
+    const amountLabel = ledger ? formatUsd(ledger.chargeCents) : '';
+    button.textContent = !ledger
+      ? 'Enter a gift amount'
+      : method === 'check'
+      ? `Pledge ${amountLabel} by check`
+      : monthly
+      ? `Give ${amountLabel} a month`
+      : `Give ${amountLabel}`;
+  }
+
+  function applyPrefill() {
+    const prefill = parseDonationPrefill(new URLSearchParams(location.search));
+    field('fund').value = prefill.fund;
+    if (prefill.fundNotice) {
+      const notice = $('fund-notice');
+      notice.hidden = false;
+      notice.textContent = 'The fund in your link is not taking gifts online right now, so this gift is set to General Support. Choose another designation if you prefer.';
+    }
+    if (prefill.amountCents) {
+      const dollars = prefill.amountCents / 100;
+      const preset = form.querySelector(`input[name="amount_choice"][value="${dollars}"]`);
+      if (preset) preset.checked = true;
+      else {
+        form.querySelector('input[name="amount_choice"][value="other"]').checked = true;
+        field('other_amount').value = Number.isInteger(dollars) ? String(dollars) : dollars.toFixed(2);
+      }
+    }
+    form.querySelector(`input[name="frequency"][value="${prefill.frequency}"]`).checked = true;
+    if (prefill.frequency === 'monthly') form.querySelector(`input[name="months"][value="${prefill.months}"]`).checked = true;
+    form.querySelector(`input[name="method"][value="${prefill.method}"]`).checked = true;
+  }
+
+  // Client check, same rules as the server, so the donor hears about a problem
+  // before anything opens. Returns true when the form is ready.
+  function checkForm() {
+    form.querySelectorAll('[aria-invalid="true"]').forEach((el) => el.removeAttribute('aria-invalid'));
+    const result = validateDonation(payload());
+    if (result.ok) return result;
+    const [name, code] = Object.entries(result.errors)[0];
+    const target = $(name === 'amount' && radioValue('amount_choice') !== 'other' ? 'give-title' : FIELD_FOCUS[name] || 'give-title');
+    if (target && target.tagName !== 'H2') {
+      target.setAttribute('aria-invalid', 'true');
+      target.focus();
+    }
+    setStatus(ERROR_COPY[name]?.[code] || 'Please check the form and try again.', 'error');
+    return null;
+  }
+
+  const paragraph = (className, textValue) => {
+    const el = document.createElement('p');
+    if (className) el.className = className;
+    el.textContent = textValue;
+    return el;
+  };
+
+  function showConfirmation(gift, result) {
+    const ledger = gift.ledger;
+    const box = $('confirmation');
+    box.replaceChildren();
+    const monthly = gift.frequency === 'monthly';
+    const check = gift.method === 'check';
+    const fundText = fundLabel(findFund(gift.fund));
+    box.append(paragraph('eyebrow', LIVE ? (check ? 'Pledge received' : 'Gift received') : 'Preview · nothing was charged or sent'));
+    const heading = document.createElement('h3');
+    heading.textContent = check
+      ? `Thank you for your pledge, ${gift.firstName}.`
+      : `Thank you, ${gift.firstName}.`;
+    box.append(heading);
+    if (check) {
+      box.append(
+        paragraph('', `We've recorded your pledge of ${formatUsd(ledger.giftCents)} to ${fundText}. Please make your check payable to the Center for Anthroposophy and mail it to PO Box 15, McMinnville, TN 37111.`),
+        paragraph('', "We'll send your receipt when the check arrives. The email we send you now is a thank-you, not a tax receipt."),
+      );
+    } else if (monthly) {
+      box.append(
+        paragraph('', `Your first monthly gift of ${formatUsd(ledger.chargeCents)} to ${fundText} went through today. The next ${ledger.payments - 1} will be charged on the same day each month, ${formatUsd(ledger.scheduleTotalCents)} in all.`),
+        paragraph('', 'Your receipt is on its way to your inbox. To change or stop your monthly gift, write to office@centerforanthroposophy.org.'),
+      );
+    } else {
+      box.append(
+        paragraph('', `Your gift of ${formatUsd(ledger.chargeCents)} to ${fundText} went through. Your receipt is on its way to ${gift.email}.`),
+      );
+    }
+    if (LIVE && result && result.email_sent === false) {
+      box.append(paragraph('', 'If the email does not arrive, write to office@centerforanthroposophy.org and we will send it again.'));
+    }
+    if (!LIVE) {
+      const today = new Date();
+      const iso = today.toISOString().slice(0, 10);
+      const email = check
+        ? buildCheckPledgeEmail(gift)
+        : buildCardReceipt({ ...gift, date: iso, transactionId: 'PREVIEW', cardLast4: '', schedule: monthly ? monthlySchedule(today, gift.months) : [] });
+      const details = document.createElement('details');
+      details.className = 'email-preview';
+      details.open = true;
+      const summary = document.createElement('summary');
+      summary.textContent = `The email this donor would receive: "${email.subject}"`;
+      const pre = document.createElement('pre');
+      pre.textContent = email.text;
+      details.append(summary, pre);
+      box.append(details);
+      const again = document.createElement('button');
+      again.type = 'button';
+      again.className = 'text-button';
+      again.textContent = 'Back to the form';
+      again.addEventListener('click', () => {
+        box.hidden = true;
+        form.hidden = false;
+        setStatus('');
+        button.focus();
+      });
+      box.append(again);
+    }
+    form.hidden = true;
+    box.hidden = false;
+    box.focus();
+    box.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  }
+
+  // --- Preview: simulate, never contact anything. ---------------------------
+  function simulate(gift) {
+    button.disabled = true;
+    setStatus(gift.method === 'card'
+      ? 'Preview: the secure Authorize.Net card window would open now. Simulating an approved payment…'
+      : 'Preview: recording the pledge…');
+    setTimeout(() => {
+      button.disabled = false;
+      setStatus('');
+      showConfirmation(gift, null);
+    }, 900);
+  }
+
+  // --- Live: only reachable when the build sets PUBLIC_DONATIONS_LIVE=true. --
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.body.append(script);
+    });
+  }
+
+  async function submitLive(gift, opaqueData) {
+    button.disabled = true;
+    setStatus(gift.method === 'card' ? 'Processing your gift…' : 'Recording your pledge…');
+    const response = await fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...payload(),
+        idempotency_key: idempotencyKey,
+        turnstile_token: turnstileToken,
+        company: field('company').value,
+        attribution: { landing_path: location.pathname, referrer: document.referrer.slice(0, 300), ...Object.fromEntries([...new URLSearchParams(location.search)].filter(([key]) => key.startsWith('utm_'))) },
+        opaque_data: opaqueData || {},
+      }),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (response.ok && result.ok) {
+      if (window.__cfaTrack) window.__cfaTrack('donation', { method: gift.method, frequency: gift.frequency, fund: gift.fund });
+      if (window.__cfaConversion && gift.method === 'card') {
+        window.__cfaConversion('purchase', { value: gift.ledger.chargeCents / 100, currency: 'USD', transaction_id: result.donation_id, name: `Donation: ${gift.fund}`, id: gift.fund });
+      }
+      showConfirmation(gift, result);
+      return;
+    }
+    button.disabled = false;
+    if (response.status === 202) {
+      setStatus(`Please do not give again yet. We could not confirm the result of your payment. Write to office@centerforanthroposophy.org with this reference: ${result.donation_id || ''}`, 'error');
+      button.disabled = true;
+      return;
+    }
+    if (result.error === 'payment_declined') idempotencyKey = crypto.randomUUID();
+    if (result.error === 'idempotency_conflict') idempotencyKey = crypto.randomUUID();
+    const messages = {
+      payment_declined: result.message ? `Your card was declined: ${result.message}` : 'Your card was declined.',
+      verification_failed: 'The verification check expired. Please complete it again.',
+      too_many_attempts: 'Too many attempts. Please wait a few minutes, or call the office.',
+      donation_pending: 'This gift is already being processed. Please do not submit it again.',
+      idempotency_conflict: 'Your details changed after an earlier attempt. Please submit again.',
+      invalid_donation: 'Please check the form and try again.',
+    };
+    setStatus(messages[result.error] || 'Your gift could not be completed. Please try again, or call the office.', 'error');
+    if (window.turnstile && turnstileWidgetId !== undefined) {
+      turnstileToken = '';
+      window.turnstile.reset(turnstileWidgetId);
+    }
+  }
+
+  window.donationResponseHandler = async (response) => {
+    if (response.messages?.resultCode === 'Error') {
+      setStatus(response.messages.message?.map((item) => item.text).join(' ') || 'The card details could not be accepted.', 'error');
+      return;
+    }
+    const gift = checkForm();
+    if (!gift) return;
+    try {
+      await submitLive(gift.value, response.opaqueData);
+    } catch {
+      setStatus('We could not confirm your gift. Please do not give again; write to office@centerforanthroposophy.org.', 'error');
+    }
+  };
+
+  async function initializeLive() {
+    button.disabled = true;
+    try {
+      const response = await fetch(ENDPOINT, { headers: { Accept: 'application/json' } });
+      if (!response.ok) throw new Error('config');
+      config = await response.json();
+      if (!config.payment?.available) {
+        setStatus('Online giving is not open yet. Please give by check, or call the office.', 'error');
+        return;
+      }
+      button.setAttribute('data-billingAddressOptions', JSON.stringify({ show: false, required: false }));
+      button.setAttribute('data-apiLoginID', config.payment.api_login_id);
+      button.setAttribute('data-clientKey', config.payment.public_client_key);
+      button.setAttribute('data-acceptUIFormBtnTxt', 'Give');
+      button.setAttribute('data-acceptUIFormHeaderTxt', 'Secure card details');
+      button.setAttribute('data-paymentOptions', JSON.stringify({ showCreditCard: true, showBankAccount: false }));
+      button.setAttribute('data-responseHandler', 'donationResponseHandler');
+      if (config.turnstile_site_key) {
+        await loadScript('https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit');
+        turnstileWidgetId = window.turnstile.render('#turnstile-widget', {
+          sitekey: config.turnstile_site_key,
+          action: 'donation',
+          callback: (token) => { turnstileToken = token; },
+          'expired-callback': () => { turnstileToken = ''; },
+        });
+      }
+      update();
+      await loadScript(config.payment.accept_script);
+      button.disabled = false;
+    } catch {
+      setStatus('Secure payment could not be started. Please try again later, or call the office.', 'error');
+    }
+  }
+
+  // Capture phase, like the registration checkouts: runs before AcceptUI's own
+  // click handler, so an incomplete form never opens the card window.
+  button.addEventListener('click', (event) => {
+    setStatus('');
+    const result = checkForm();
+    if (!result) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      return;
+    }
+    if (!LIVE) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      simulate(result.value);
+      return;
+    }
+    if (config?.turnstile_site_key && !turnstileToken) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      setStatus('Please complete the verification first.', 'error');
+      return;
+    }
+    if (result.value.method === 'check') {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      submitLive(result.value, null).catch(() => {
+        setStatus('We could not confirm your pledge. Please write to office@centerforanthroposophy.org.', 'error');
+      });
+      return;
+    }
+    setStatus('Enter your card details in the secure Authorize.Net window.');
+  }, true);
+
+  form.addEventListener('input', update);
+  form.addEventListener('change', (event) => {
+    if (event.target.name === 'country') updateAddressRule();
+    if (event.target.name === 'amount_choice' && event.target.value === 'other') field('other_amount').focus();
+    if (event.target.name === 'tribute_toggle' && event.target.checked) field('tribute_name').focus();
+    update();
+  });
+  form.addEventListener('submit', (event) => event.preventDefault());
+
+  applyPrefill();
+  updateAddressRule();
+  update();
+  if (LIVE) initializeLive();
+</script>
+
+<style>
+  .give-section {
+    scroll-margin-top: 90px;
+    padding: 64px 0 80px;
+    border-bottom: 1px solid var(--line);
+  }
+  .preview-banner {
+    border: 1px dashed var(--gold);
+    background: color-mix(in srgb, var(--gold) 10%, var(--raised));
+    font: 14px/1.5 var(--sans);
+    margin-bottom: 36px;
+    padding: 13px 16px;
+  }
+  .preview-banner strong { margin-right: 6px; }
+  .give-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 56px;
+    align-items: start;
+  }
+  .give-main { min-width: 0; }
+  .give-main > h2 { font-size: clamp(29px, 4vw, 40px); margin: 8px 0 12px; }
+  .form-section { border: 0; border-top: 1px solid var(--line); margin: 0; min-width: 0; padding: 28px 0 38px; }
+  .form-section legend { font-size: 24px; font-weight: 600; padding-right: 18px; }
+  .form-section legend > span {
+    color: var(--gold);
+    font: 12px var(--sans);
+    letter-spacing: 0.16em;
+    margin-right: 12px;
+    vertical-align: middle;
+  }
+  .amount-grid, .months-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .chip, .toggle, .method { position: relative; cursor: pointer; }
+  .chip input, .toggle input, .method input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+  }
+  .chip span, .toggle span {
+    display: block;
+    border: 1px solid var(--line);
+    background: var(--raised);
+    font: 650 17px var(--sans);
+    padding: 13px 8px;
+    text-align: center;
+  }
+  .chip.small span { font-size: 14.5px; padding: 11px 8px; }
+  .chip input:checked + span, .toggle input:checked + span, .method input:checked + span {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--paper);
+  }
+  .chip input:focus-visible + span, .toggle input:focus-visible + span, .method input:focus-visible + span {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+  .other-amount, .field { display: grid; gap: 7px; font: 600 14px var(--sans); margin-top: 20px; }
+  .other-amount[hidden], .months[hidden], .tribute[hidden], #card-panel[hidden], .check-panel[hidden] { display: none; }
+  .money-input { display: flex; align-items: center; gap: 8px; max-width: 260px; font-size: 19px; }
+  .frequency, .toggle-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    max-width: 420px;
+    margin-top: 22px;
+  }
+  .toggle span { font-size: 15px; font-weight: 600; }
+  .field-label { font: 600 14px var(--sans); margin-top: 18px; }
+  .months-grid { margin-top: 10px; max-width: 420px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .hint, .section-note { color: var(--soft); font-size: 14.5px; margin-top: 10px; }
+  .notice {
+    border-left: 3px solid var(--gold);
+    font: 14px/1.5 var(--sans);
+    margin-top: 12px;
+    padding: 6px 12px;
+  }
+  .field span small, .field-heading small, .fee-row small { color: var(--soft); font-weight: 400; }
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
+  .field-grid label { display: grid; gap: 7px; font: 600 14px var(--sans); }
+  .field-grid .wide { grid-column: 1 / -1; }
+  .field-heading { font: inherit; }
+  input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 0;
+    background: var(--raised);
+    color: var(--ink);
+    font: 16px var(--sans);
+    padding: 12px 13px;
+  }
+  textarea { resize: vertical; }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--green); outline-offset: 2px; }
+  [aria-invalid="true"] { border-color: #b3261e !important; }
+  .check-row {
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    gap: 12px;
+    align-items: start;
+    margin-top: 16px;
+    font: 15px/1.45 var(--sans);
+    cursor: pointer;
+  }
+  .check-row input { accent-color: var(--green); width: 18px; height: 18px; margin-top: 2px; }
+  .options { margin-top: 22px; border-top: 1px dashed var(--line); padding-top: 6px; }
+  .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; }
+  .method span {
+    display: grid;
+    gap: 4px;
+    border: 1px solid var(--line);
+    background: var(--raised);
+    height: 100%;
+    padding: 15px 16px;
+    font-family: var(--sans);
+  }
+  .method strong { font-size: 15.5px; }
+  .method small { font-size: 13px; opacity: 0.85; }
+  .method.is-disabled { cursor: not-allowed; opacity: 0.55; }
+  .fee-row { margin-top: 20px; }
+  .check-panel {
+    border: 1px solid var(--line);
+    background: var(--raised);
+    font-size: 15.5px;
+    margin-top: 18px;
+    padding: 18px 20px;
+  }
+  .check-panel address { font-style: normal; font-family: var(--sans); margin: 10px 0 4px; line-height: 1.5; }
+  .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .turnstile { margin-top: 20px; }
+  .give-submit {
+    width: 100%;
+    background: var(--green);
+    border: 1px solid var(--green);
+    color: var(--paper);
+    cursor: pointer;
+    font: 650 16px var(--sans);
+    margin-top: 24px;
+    padding: 16px 18px;
+  }
+  .give-submit:hover { opacity: 0.92; }
+  .give-submit:disabled { cursor: progress; opacity: 0.6; }
+  .give-submit:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  .payment-note { color: var(--soft); font: 12.5px/1.45 var(--sans); margin-top: 12px; }
+  .form-status { font: 14.5px/1.5 var(--sans); margin-top: 12px; min-height: 1.5em; }
+  .form-status[data-kind="error"] { color: #b3261e; }
+  .confirmation {
+    border: 1px solid var(--line);
+    border-top: 5px solid var(--gold);
+    background: var(--raised);
+    margin-top: 24px;
+    padding: clamp(22px, 4vw, 34px);
+    scroll-margin-top: 100px;
+  }
+  .confirmation :global(h3) { font-size: clamp(25px, 3.4vw, 32px); margin: 8px 0 14px; }
+  .confirmation :global(p) { font-size: 16.5px; margin-top: 10px; }
+  .confirmation :global(.email-preview) { margin-top: 24px; font-family: var(--sans); }
+  .confirmation :global(.email-preview summary) { color: var(--green-ink); cursor: pointer; font-size: 14px; font-weight: 600; }
+  .confirmation :global(.email-preview pre) {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    font: 13px/1.55 ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    margin-top: 12px;
+    padding: 16px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .confirmation :global(.text-button) {
+    background: none;
+    border: 0;
+    color: var(--green-ink);
+    cursor: pointer;
+    font: 600 14px var(--sans);
+    margin-top: 18px;
+    padding: 0;
+    text-decoration: underline;
+  }
+  .ledger { position: sticky; top: 100px; display: grid; gap: 16px; }
+  .ledger-card {
+    background: var(--raised);
+    border: 1px solid var(--line);
+    border-top: 5px solid var(--gold);
+    padding: 24px;
+  }
+  .ledger-card h3 { font-size: 24px; margin: 6px 0 14px; }
+  .ledger-card dl { display: grid; gap: 10px; font-family: var(--sans); font-size: 14px; }
+  .ledger-card dl div { display: grid; grid-template-columns: 110px 1fr; gap: 10px; }
+  .ledger-card dl div[hidden] { display: none; }
+  .ledger-card dt { color: var(--soft); }
+  .ledger-card dd { font-weight: 600; overflow-wrap: anywhere; }
+  .ledger-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    border-top: 1px solid var(--line);
+    font-family: var(--sans);
+    margin-top: 18px;
+    padding-top: 14px;
+  }
+  .ledger-total span { color: var(--soft); font-size: 13px; }
+  .ledger-total strong { font-size: 26px; letter-spacing: -0.02em; }
+  .ledger-note { color: var(--soft); font: 12.5px/1.45 var(--sans); margin-top: 10px; }
+  .ledger-note[hidden] { display: none; }
+  .ledger-help { display: grid; gap: 4px; font: 13.5px var(--sans); padding: 0 4px; }
+  .ledger-help p { color: var(--soft); }
+  .ledger-help a { color: var(--green-ink); overflow-wrap: anywhere; }
+  @media (max-width: 900px) {
+    .give-layout { grid-template-columns: 1fr; gap: 28px; }
+    .ledger { position: static; }
+    .ledger-help { display: none; }
+  }
+  @media (max-width: 560px) {
+    .give-section { padding: 44px 0 56px; }
+    .amount-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .field-grid, .method-grid { grid-template-columns: 1fr; }
+    .form-section legend { font-size: 21px; }
+  }
+</style>

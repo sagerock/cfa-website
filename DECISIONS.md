@@ -730,3 +730,18 @@ The WordPress form's 3% card fee is not carried over: the new site absorbs it. T
 stays noindex until CfA says go. Staff notices use the per-program secret
 `REGISTRATION_NOTIFY_EMAILS_KAIROS_GLOECKLER_BRIDGE_2027`, set to the list the WordPress
 Kairos form notifies.
+
+## 2026-09-25 — One unified donation form replaces four Gravity Forms (preview)
+Milan suggested one central donation form in place of GF 97, 114, 5 and 96, presented
+the way it should be on the new site; Sage approved building it. `/donate` now carries
+a native form instead of the hand-off to GF 97: suggested amounts, one-time or monthly
+for 3, 6 or 12 months, one designation from a single fund list shared by page and
+server, tribute and planned-giving options, card through Authorize.Net's hosted window
+or a check pledge (a thank-you, not a receipt, until the check arrives). The 3% card
+fee becomes an optional "cover the fee" checkbox, off by default, not a surcharge.
+Deep links (`?fund=&amount=&frequency=&months=`) let Kairos, alumni and campaign links
+use this one form. It ships as a clickable preview that contacts no backend; the
+`cfa-donate` function and `donations` migration are written and tested but not
+deployed or applied, behind their own `DONATIONS_LIVE` gate and an exact-origin
+allowlist. Three legacy GF 5 funds are kept off the form until CfA confirms them.
+Details and the activation checklist: `docs/donation-preview.md`.

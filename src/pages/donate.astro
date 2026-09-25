@@ -1,19 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
-import { CONTACT, DONATION_CHECKOUT_URL } from '../data/site.js';
+import DonationForm from '../components/DonationForm.astro';
+import { CONTACT } from '../data/site.js';
+import { DONATION_FUND_GROUPS, activeFunds } from '../../supabase/functions/_shared/donationFunds.js';
 
-const designations = [
-  'General Support',
-  'Building Bridges',
-  'Diversity Scholarships',
-  'Douglas Gerwin High School Teacher Education Scholarship Fund',
-  'Explorations',
-  'Georg Locher Elementary Teacher Education Scholarship Fund',
-  'Kairos Institute',
-  'Mentor Training',
-  'Renewal Courses',
-  'Waldorf Leadership Development',
-];
+// One list for the page, the form and the server: _shared/donationFunds.js.
+const fundGroups = DONATION_FUND_GROUPS
+  .map((group) => ({ ...group, funds: activeFunds().filter((fund) => fund.group === group.id) }))
+  .filter((group) => group.funds.length);
+const live = import.meta.env.PUBLIC_DONATIONS_LIVE === 'true';
 ---
 
 <Base title="Support the Center for Anthroposophy" current="/donate">
@@ -40,29 +35,29 @@ const designations = [
           or a scholarship fund.
         </p>
         <ul class="checkout-features" aria-label="Donation options">
-          <li>One-time and recurring gifts</li>
+          <li>One-time or monthly gifts</li>
           <li>Credit card or check</li>
-          <li>Optional fund designation</li>
+          <li>General support, a program, or a scholarship fund</li>
         </ul>
-        <a
-          class="give-button"
-          href={DONATION_CHECKOUT_URL}
-          data-track="donate-checkout"
-        >
-          Continue to the secure donation form
-          <span aria-hidden="true">&rarr;</span>
+        <a class="give-button" href="#give" data-track="donate-form">
+          Give now
+          <span aria-hidden="true">&darr;</span>
         </a>
         <p class="secure-note">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <rect x="5" y="10" width="14" height="11" rx="2"></rect>
             <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
           </svg>
-          Checkout continues on CfA's current website while the rebuilt site is in preview.
+          {live
+            ? 'Card details are collected securely by Authorize.Net.'
+            : 'Preview: the form below takes no payment yet.'}
         </p>
         <p class="tax-note">All donations to CfA are tax-deductible.</p>
       </aside>
     </div>
   </section>
+
+  <DonationForm />
 
   <section class="impact-section" aria-labelledby="impact-title">
     <div class="wrap impact-grid">
@@ -129,9 +124,18 @@ const designations = [
       </div>
       <details class="designation-list">
         <summary>See all current gift designations</summary>
-        <ul>
-          {designations.map((designation) => <li>{designation}</li>)}
-        </ul>
+        <div class="designation-groups">
+          {fundGroups.map((group) => (
+            <div>
+              <h3>{group.label}</h3>
+              <ul>
+                {group.funds.map((fund) => (
+                  <li><a href={`?fund=${fund.slug}#give`} data-track="donate-designation">{fund.name}</a></li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </details>
     </div>
   </section>
@@ -167,11 +171,11 @@ const designations = [
       <div class="ways-list">
         <article>
           <h3>Give monthly</h3>
-          <p>Recurring gifts give the Center dependable support throughout the year. Select recurring giving in the secure form.</p>
+          <p>Recurring gifts give the Center dependable support throughout the year. Choose monthly in the form above, for 3, 6 or 12 months.</p>
         </article>
         <article>
           <h3>Give by check</h3>
-          <p>The secure form includes the Center's current check instructions and lets CfA prepare an accurate receipt.</p>
+          <p>Choose check in the form above to pledge your gift and see where to mail it. Your receipt follows when the check arrives.</p>
         </article>
         <article>
           <h3>Discuss a planned gift</h3>
@@ -191,9 +195,9 @@ const designations = [
         <p class="eyebrow">Thank you</p>
         <h2>Keep the path open for the next teacher</h2>
       </div>
-      <a class="give-button" href={DONATION_CHECKOUT_URL} data-track="donate-checkout-bottom">
-        Make a secure gift
-        <span aria-hidden="true">&rarr;</span>
+      <a class="give-button" href="#give" data-track="donate-form-bottom">
+        Make a gift
+        <span aria-hidden="true">&uarr;</span>
       </a>
     </div>
   </section>
@@ -386,15 +390,16 @@ const designations = [
     font-size: 14px;
     font-weight: 600;
   }
-  .designation-list ul {
-    columns: 2;
-    column-gap: 36px;
-    color: var(--soft);
-    font-size: 13px;
-    list-style-position: inside;
+  .designation-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 8px 36px;
     margin-top: 15px;
   }
-  .designation-list li { break-inside: avoid; margin: 7px 0; }
+  .designation-groups h3 { font: 600 12px var(--sans); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 10px; }
+  .designation-groups ul { color: var(--soft); font-size: 13px; list-style: none; padding: 0; }
+  .designation-groups li { margin: 7px 0; }
+  .designation-groups a { color: inherit; }
   .appeal-section { padding: 82px 0; }
   .appeal-grid {
     display: grid;
@@ -471,7 +476,6 @@ const designations = [
     .impact-section, .funds-section, .appeal-section, .other-ways { padding: 52px 0; }
     .impact-stats { grid-template-columns: 1fr; }
     .impact-stats div { grid-template-columns: 92px 1fr; align-items: baseline; }
-    .designation-list ul { columns: 1; }
     .final-give { padding-top: 52px; }
   }
 </style>
