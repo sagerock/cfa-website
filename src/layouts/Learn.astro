@@ -79,6 +79,9 @@ const year = new Date().getFullYear();
   }
   supabase.auth.onAuthStateChange((event) => {
     if (event !== 'SIGNED_OUT') return;
+    // /learn/go signs out a previous session on purpose before signing the
+    // link's owner in; bouncing to sign-in here would abort that handoff.
+    if (location.pathname.startsWith('/learn/go')) return;
     document.querySelector('main')?.replaceChildren();
     location.replace('/learn/sign-in');
   });

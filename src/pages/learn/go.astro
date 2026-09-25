@@ -31,7 +31,7 @@ import Learn from '../../layouts/Learn.astro';
       // Already signed in as someone? A personal link always opens its own
       // classroom as its own person, so clear any existing session first.
       const { data: existing } = await supabase.auth.getSession();
-      if (existing.session) await supabase.auth.signOut();
+      if (existing.session) await supabase.auth.signOut({ scope: 'local' });
 
       const response = await fetch(
         'https://ckloewflialohuvixmvd.supabase.co/functions/v1/cfa-learn-access',
