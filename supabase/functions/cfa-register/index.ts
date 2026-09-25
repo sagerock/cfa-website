@@ -99,6 +99,33 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
       "conviene tener a mano.",
     ],
   },
+  // Kairos Institute public course. Same shape as the Spanish course: a live
+  // Zoom series, one payment, a confirmation email, no sign-in link. The Zoom
+  // link is not known yet, so the receipt says it will come before the first
+  // session and promises nothing else.
+  "kairos-gloeckler-bridge-2027": {
+    key: "kairos-gloeckler-bridge-2027",
+    platform: "native",
+    platformId: "kairos-gloeckler-bridge-2027",
+    title: "The Bridge Lectures with Dr. Michaela Glöckler",
+    // Statement descriptor: plain ASCII, as above.
+    chargeDescription: "Kairos Bridge Lectures 2027",
+    emailSubject: "Your Bridge Lectures registration",
+    portal: false,
+    locale: "en",
+    testOfferCodes: new Set(["series"]),
+    signedInRedirect: null,
+    details: [
+      "Three Sunday seminars, each in two parts:",
+      "  Sunday, January 24, 2027",
+      "  Sunday, February 14, 2027",
+      "  Sunday, February 21, 2027",
+      "Morning part 11:00 AM - 12:30 PM EST; afternoon part 1:30 - 3:00 PM EST.",
+      "",
+      "The seminars are online. The Zoom details will be sent to this email address",
+      "before the first session on January 24.",
+    ],
+  },
 };
 const DEFAULT_PROGRAM_KEY = "starlight-rays-2026-2027";
 

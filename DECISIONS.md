@@ -718,3 +718,15 @@ logged, not surfaced.
 The automatic 20% for Canadian billing addresses (`CANADA20`) was invisible until the
 address was typed. All three registration pages now say it plainly, in the language of the
 page. Milan approved the English wording; the Spanish is the same sentence.
+
+## 2026-09-25 — The Bridge Lectures register on the native checkout (preview)
+The Kairos public course with Dr. Michaela Glöckler (three Sundays, January 24,
+February 14 and February 21, 2027, $350 for six online sessions) gets a page at
+`/kairos/gloeckler-bridge-lectures`, built as a copy of the Biografía pattern in English:
+a lander, a separate checkout component, a `cfa-register` program definition
+(`kairos-gloeckler-bridge-2027`) and one `series` offer. One payment, a confirmation
+email, no sign-in link; the receipt says the Zoom details come before the first session.
+The WordPress form's 3% card fee is not carried over: the new site absorbs it. The page
+stays noindex until CfA says go. Staff notices use the per-program secret
+`REGISTRATION_NOTIFY_EMAILS_KAIROS_GLOECKLER_BRIDGE_2027`, set to the list the WordPress
+Kairos form notifies.

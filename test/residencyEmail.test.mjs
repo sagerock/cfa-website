@@ -140,3 +140,29 @@ test('the English no-portal receipt prints a plan too', () => {
   assert.match(text, /Remaining: 2 payments of \$100\.00/);
   assert.match(text, /on November 9, 2026 and monthly through December 9, 2026\./);
 });
+
+test('the Kairos Bridge Lectures receipt is English, one payment, and promises only the Zoom details', () => {
+  const text = buildResidencyEmailText({
+    ...base,
+    locale: 'en',
+    firstName: 'Lisl',
+    programTitle: 'The Bridge Lectures with Dr. Michaela Glöckler',
+    offerName: 'The Bridge Lectures · all six sessions',
+    amount: '$350.00',
+    details: [
+      'Three Sunday seminars, each in two parts:',
+      '  Sunday, January 24, 2027',
+      '  Sunday, February 14, 2027',
+      '  Sunday, February 21, 2027',
+      'Morning part 11:00 AM - 12:30 PM EST; afternoon part 1:30 - 3:00 PM EST.',
+      '',
+      'The seminars are online. The Zoom details will be sent to this email address',
+      'before the first session on January 24.',
+    ],
+  });
+  assert.match(text, /^Dear Lisl,/);
+  assert.match(text, /Thank you for registering for The Bridge Lectures with Dr\. Michaela Glöckler\./);
+  assert.match(text, /Amount: \$350\.00$/m);
+  assert.match(text, /Zoom details will be sent/);
+  assert.doesNotMatch(text, /Payment plan|Remaining:|sign in|sign-in|portal|token_hash/i);
+});
