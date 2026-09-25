@@ -4,7 +4,6 @@ slug: "educating-adolescents-nurturing-the-eternal-in-the-human-being"
 date: "2026-09-14"
 excerpt: "Waldorf high school educators engage both their understanding of human development and the depth of their academic disciplines to meet adolescent students where they are and help…"
 cover: "/images/posts/cp-fall-2026-whistep-graduation.webp"
-unlisted: true
 ---
 
 *Center for Anthroposophy’s Waldorf High School Teacher Education Program (WHiSTEP)*

@@ -3,11 +3,12 @@ title: "From Our Friends in Brazil"
 slug: "from-our-friends-in-brazil"
 date: "2026-09-14"
 excerpt: "It has been 11 years since I first read A Second Classroom by Torin Finser, and looking back, I can hardly believe all that has happened since. Not long after that moment, at the…"
-cover: "/images/posts/bf3434d18b-centerperipherylogocolorbkgroundcreamnodate.webp"
-unlisted: true
+cover: "/images/posts/cp-fall-2026-integridade-organizacional-launch.webp"
 ---
 
 *By Lívia da Costa Quezado Ribeiro*
+
+![Launch flyer for Integridade Organizacional, the Portuguese edition of Torin M. Finser's Organizational Integrity, from Bem Viver Editora](/images/posts/cp-fall-2026-integridade-organizacional-launch.webp)
 
 It has been 11 years since I first read A Second Classroom by Torin Finser, and looking back, I can hardly believe all that has happened since. Not long after that moment, at the end of 2015, we translated the book, published it, and launched it with Torin present in Brazil. And when I say we, I mean all the people connected to this because I really feel this was a huge collective effort. We then ran two years of a Brazilian edition of the Waldorf Leadership & Community Development (WLCD) program from the Center for Anthroposophy (CfA), with Portuguese simultaneous translation. We went on to translate the next book: Organizational Integrity, publish it, and — after almost launching it in early 2026 — we're now planning to launch it online in September 2026, with Torin returning to Brazil in person in February 2027.
 

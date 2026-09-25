@@ -4,7 +4,6 @@ slug: "message-from-the-executive-director-4"
 date: "2026-09-14"
 excerpt: "In her most recent bestselling book, Nurturing Connection, Curiosity & Lifelong Learning in the Age of AI © 2026, Dana Susskind, Professor of Surgery & Pediatrics at the…"
 cover: "/images/posts/cp-fall-2026-whiteboard-lesson.webp"
-unlisted: true
 ---
 
 *by David Barham, Executive Director*
