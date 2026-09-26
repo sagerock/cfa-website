@@ -77,19 +77,49 @@ Active (offered on the form):
 | Kairos Institute | Kairos Institute (all the work we do: art therapy and traumatology training) | `kairos-institute` (alias `kairos`) | GF 97, GF 114 |
 | Kairos Institute | Kairos Scholarships | `kairos-scholarships` | GF 114 |
 | Scholarship funds | Diversity Scholarships | `diversity-scholarships` | GF 97 |
+| Scholarship funds | Karine Munk Finser Renewal Scholarship Fund | `karine-munk-finser-renewal-scholarship` (aliases `kmf-renewal`, `kmf`) | GF 5, confirmed by Torin 2026-09-26 |
 | Scholarship funds | Douglas Gerwin High School Teacher Education Scholarship Fund | `douglas-gerwin-scholarship` | GF 97 |
 | Scholarship funds | Georg Locher Elementary Teacher Education Scholarship Fund | `georg-locher-scholarship` | GF 97 |
 
-On record but **not offered until CfA confirms** (`active: false, confirm: true`),
-all from the legacy GF 5 only:
+On record but **not offered until CfA confirms** (`active: false, confirm: true`):
 
-- Creative Speech (`creative-speech`)
-- Karine Munk Finser Renewal Scholarship Fund (`karine-munk-finser-renewal-scholarship`)
-- Explorations International "Pay Forward" Fund (`explorations-pay-forward`)
+- Creative Speech (`creative-speech`) — legacy GF 5
+- Explorations International "Pay Forward" Fund (`explorations-pay-forward`) — legacy GF 5
+- Research (`research`) — new, no Gravity Form ever; see below
 
-Questions for CfA: is each GF 97/114 designation still current? Should any of
-the three GF 5 funds come back? Are the groupings and the order right? GF 5 may
+Questions for CfA: is each GF 97/114 designation still current? Should either
+remaining GF 5 fund come back? Are the groupings and the order right? GF 5 may
 have had further purposes beyond those three; check the form before retiring it.
+
+### The five named funds (Torin Finser, 2026-09-26)
+
+Torin owns CfA's development guidelines. After a recent Finance Committee
+decision CfA has five **named funds**, and he gave them as: Locher, KMF Renewal,
+Gerwin, Kairos and Research. They carry `named: true` in the fund list, and
+`namedFunds()` returns them; a test pins the set so nobody changes it without
+CfA saying so.
+
+Two things this is not:
+
+- **It is not the whole designation list.** Programs (Building Bridges,
+  Explorations, Mentor Training, Renewal Courses, Waldorf Leadership
+  Development) and Diversity Scholarships are current GF 97 designations that
+  simply are not named funds. Nothing was retired.
+- **It is not a form change.** Torin declined the unified form on timing: the
+  board ratifies strategic goals **October 17** and the annual appeal goes out
+  at the **end of October**, and the appeal is what articulates all five. He
+  asked that the program lead's authority be respected. So the page design is
+  untouched and `named` changes nothing a donor sees yet.
+
+What did change in the data, on his word alone: **KMF Renewal is active** (his
+answer to the `confirm: true` question that had been open on it), and **Research
+was added inactive** — it is real, but we do not have CfA's own wording for it
+and a donor-facing fund should not carry a name we invented. Both wait on the
+October appeal.
+
+Still open for Torin, after October 17: Research's public name and one-line
+purpose; whether Diversity Scholarships stays offered; Creative Speech and the
+"Pay Forward" Fund; whether the five should be visually highlighted on the page.
 
 ## Backend (staged, not live)
 

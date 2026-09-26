@@ -12,6 +12,14 @@
 // `confirm: true` is waiting on CfA to say whether it is still taking gifts; see
 // docs/donation-preview.md. Do not flip one to active without that answer.
 //
+// `named: true` marks the five named funds CfA highlights, per Torin Finser
+// (2026-09-26, a recent Finance Committee decision): Locher, KMF Renewal,
+// Gerwin, Kairos and Research. That is a highlight list, NOT the whole list of
+// designations - the Programs and Diversity Scholarships designations are still
+// current and are simply not "named funds". Torin's wording for all five is
+// articulated in the annual appeal at the end of October, after the board
+// ratifies strategic goals on October 17, so nothing here changes the page yet.
+//
 // `aliases` are extra slugs a deep link may use (?fund=kairos).
 // Slugs are stored on every donation row, so never rename one: add an alias.
 
@@ -19,6 +27,7 @@ export const DONATION_FUND_GROUPS = [
   { id: 'general', label: 'Where it is needed most' },
   { id: 'programs', label: 'Programs' },
   { id: 'kairos', label: 'Kairos Institute' },
+  { id: 'research', label: 'Research' },
   { id: 'scholarships', label: 'Scholarship funds' },
 ];
 
@@ -94,6 +103,7 @@ export const DONATION_FUNDS = [
     group: 'kairos',
     active: true,
     confirm: false,
+    named: true,
     sources: ['GF 97', 'GF 114'],
     aliases: ['kairos'],
   },
@@ -107,6 +117,22 @@ export const DONATION_FUNDS = [
     aliases: [],
   },
   {
+    // New with the same FC decision (Torin Finser, 2026-09-26), so it exists but
+    // has never had a Gravity Form. Held inactive on purpose: we do not yet have
+    // CfA's own wording for it, and a donor-facing fund should not carry a name
+    // we invented. Torin: the appeal at the end of October articulates all five.
+    slug: 'research',
+    name: 'Research',
+    group: 'research',
+    active: false,
+    confirm: true,
+    named: true,
+    sources: [],
+    aliases: ['research-fund'],
+  },
+  {
+    // Not one of the five named funds, and not retired either - a current GF 97
+    // designation, like the Programs. Torin has not been asked to confirm it.
     slug: 'diversity-scholarships',
     name: 'Diversity Scholarships',
     group: 'scholarships',
@@ -121,6 +147,7 @@ export const DONATION_FUNDS = [
     group: 'scholarships',
     active: true,
     confirm: false,
+    named: true,
     sources: ['GF 97'],
     aliases: ['gerwin', 'high-school-scholarship'],
   },
@@ -130,17 +157,21 @@ export const DONATION_FUNDS = [
     group: 'scholarships',
     active: true,
     confirm: false,
+    named: true,
     sources: ['GF 97'],
     aliases: ['locher', 'elementary-scholarship'],
   },
   {
+    // Torin Finser, 2026-09-26: one of CfA's five named funds after a recent FC
+    // decision, so the "is it still taking gifts?" question is answered yes.
     slug: 'karine-munk-finser-renewal-scholarship',
     name: 'Karine Munk Finser Renewal Scholarship Fund',
     group: 'scholarships',
-    active: false,
-    confirm: true,
+    active: true,
+    confirm: false,
+    named: true,
     sources: ['GF 5'],
-    aliases: [],
+    aliases: ['kmf-renewal', 'kmf'],
   },
   {
     slug: 'explorations-pay-forward',
@@ -157,6 +188,13 @@ export const DEFAULT_FUND_SLUG = 'general-support';
 
 export function activeFunds() {
   return DONATION_FUNDS.filter((fund) => fund.active);
+}
+
+// CfA's five named funds, in Torin's order. Not the same as the offered list:
+// Research is on record but not offered yet, and the Programs and Diversity
+// Scholarships designations are offered but are not named funds.
+export function namedFunds() {
+  return DONATION_FUNDS.filter((fund) => fund.named);
 }
 
 // Resolves a slug or alias to a fund record, active or not. Case-insensitive.

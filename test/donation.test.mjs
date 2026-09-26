@@ -6,6 +6,7 @@ import {
   DONATION_FUND_GROUPS,
   activeFunds,
   findFund,
+  namedFunds,
 } from '../supabase/functions/_shared/donationFunds.js';
 import {
   MIN_GIFT_CENTS,
@@ -156,6 +157,21 @@ test('the fund list is well formed', () => {
   assert.equal(findFund('general-support').active, true);
   assert.ok(activeFunds().every((fund) => fund.active));
   assert.ok(DONATION_FUNDS.filter((fund) => fund.confirm).every((fund) => !fund.active));
+});
+
+// Torin Finser owns CfA's development guidelines; these five are his (2026-09-26).
+// If this fails, someone changed the named funds without CfA saying so.
+test('the five named funds are the ones CfA named', () => {
+  assert.deepEqual(namedFunds().map((fund) => fund.slug), [
+    'kairos-institute',
+    'research',
+    'douglas-gerwin-scholarship',
+    'georg-locher-scholarship',
+    'karine-munk-finser-renewal-scholarship',
+  ]);
+  // Research is named but deliberately not offered until CfA gives us its wording.
+  assert.equal(findFund('research').active, false);
+  assert.equal(findFund('diversity-scholarships').named, undefined);
 });
 
 const cardGift = () => ({
