@@ -6,6 +6,7 @@ import {
   batchTotals,
   cents,
   detailTransaction,
+  isException,
   isRecord,
   type JsonRecord,
   type LocalMatch,
@@ -364,13 +365,7 @@ Deno.serve(async (request: Request) => {
       all[result.status] = (all[result.status] || 0) + 1;
       return all;
     }, {});
-    const exceptions = results.filter((result) =>
-      (["amount_mismatch", "declined", "error"].includes(result.status) && result.matched)
-      || (["refunded", "voided"].includes(result.status)
-        && result.matched
-        && !["refunded", "cancelled"].includes(result.localStatus))
-      || (!result.matched && result.nativeInvoice)
-    ).length;
+    const exceptions = results.filter(isException).length;
     return json({
       ok: true,
       environment: environment(),

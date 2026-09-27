@@ -4,6 +4,7 @@ import {
   batchRecords,
   batchTotals,
   cents,
+  isException,
   lastFour,
   reconcileStatus,
   reconciliationNote,
@@ -80,6 +81,45 @@ test("refunds match through the original transaction without amount comparison",
   }), "refunded");
   assert.equal(reconciliationNote({ status: "refunded", match, amountCents: 4400 }),
     "Matched through the original transaction being refunded.");
+});
+
+test("a decline the local record already calls failed is not an exception", () => {
+  // 2026-09-26: two $378 Starlight attempts from one registrant were declined at
+  // 01:14 and 01:15 UTC and captured on the third try at 01:18. Both declines are
+  // matched to registrations already marked "failed", so the gateway and the
+  // database agree — yet the rolling 7-day window re-flagged them every morning.
+  const declined = { status: "declined", matched: true, nativeInvoice: true };
+  assert.equal(isException({ ...declined, localStatus: "failed" }), false);
+  assert.equal(isException({ ...declined, localStatus: "cancelled" }), false);
+  // A decline against a registration we believe is paid is real disagreement.
+  assert.equal(isException({ ...declined, localStatus: "paid" }), true);
+  assert.equal(isException({ ...declined, localStatus: "" }), true);
+  assert.equal(isException({ ...declined, status: "error", localStatus: "failed" }), false);
+  assert.equal(isException({ ...declined, status: "error", localStatus: "paid" }), true);
+});
+
+test("the other exception rules are unchanged by the decline suppression", () => {
+  assert.equal(isException({
+    status: "amount_mismatch", matched: true, nativeInvoice: false, localStatus: "failed",
+  }), true);
+  assert.equal(isException({
+    status: "refunded", matched: true, nativeInvoice: false, localStatus: "paid",
+  }), true);
+  assert.equal(isException({
+    status: "refunded", matched: true, nativeInvoice: false, localStatus: "refunded",
+  }), false);
+  assert.equal(isException({
+    status: "voided", matched: true, nativeInvoice: false, localStatus: "cancelled",
+  }), false);
+  assert.equal(isException({
+    status: "gateway_only", matched: false, nativeInvoice: true, localStatus: "",
+  }), true);
+  assert.equal(isException({
+    status: "gateway_only", matched: false, nativeInvoice: false, localStatus: "",
+  }), false);
+  assert.equal(isException({
+    status: "settled", matched: true, nativeInvoice: true, localStatus: "paid",
+  }), false);
 });
 
 test("unmatched account activity is reviewable but not called an application error", () => {

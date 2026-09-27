@@ -114,6 +114,30 @@ export function reconcileStatus(input: {
   return input.matched ? "matched" : "gateway_only";
 }
 
+// A local registration status that already records the charge as not having
+// succeeded. The reconciler exists to surface gateway/local *disagreement*, so a
+// declined transaction whose registration is already "failed" is agreement, not
+// an exception — the stuck-registrant case is the Starlight registration-failure
+// watch's job, and it suppresses the same retry-succeeded pattern.
+const LOCAL_NOT_COLLECTED = ["failed", "cancelled", "voided"];
+
+export function isException(result: {
+  status: string;
+  matched: boolean;
+  nativeInvoice: boolean;
+  localStatus: string;
+}) {
+  const localStatus = result.localStatus.toLowerCase();
+  if (result.status === "amount_mismatch" && result.matched) return true;
+  if (["declined", "error"].includes(result.status) && result.matched) {
+    return !LOCAL_NOT_COLLECTED.includes(localStatus);
+  }
+  if (["refunded", "voided"].includes(result.status) && result.matched) {
+    return !["refunded", "cancelled"].includes(localStatus);
+  }
+  return !result.matched && result.nativeInvoice;
+}
+
 export function reconciliationNote(input: {
   status: string;
   match: LocalMatch | null;
