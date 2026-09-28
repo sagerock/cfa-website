@@ -98,6 +98,7 @@ import { starlightPilot } from '../../data/starlightPilot.js';
 
 <script>
   import { getCoursePayload, getPlaybackTokens } from '../../lib/learnClient.js';
+  import { muxPlayerUrl } from '../../lib/muxPlayerUrl.js';
 
   const dateFormat = new Intl.DateTimeFormat('en-US', {
     weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', timeZone: 'America/New_York',
@@ -150,11 +151,14 @@ import { starlightPilot } from '../../data/starlightPilot.js';
     async function showRecording(session) {
       const playback = await getPlaybackTokens('starlight-rays-2026-2027', session.id);
       if (playback.status !== 'ok') return;
-      const { playback_id, tokens } = playback.data;
-      const src = `https://player.mux.com/${encodeURIComponent(playback_id)}`
-        + `?playback-token=${encodeURIComponent(tokens.video)}`
-        + `&thumbnail-token=${encodeURIComponent(tokens.thumbnail)}`
-        + `&storyboard-token=${encodeURIComponent(tokens.storyboard)}`;
+      const { playback_id, tokens, viewer_id } = playback.data;
+      const src = muxPlayerUrl({
+        playbackId: playback_id,
+        tokens,
+        viewerId: viewer_id,
+        sessionId: session.id,
+        title: session.title,
+      });
       let frame = playerCard.querySelector('iframe');
       if (!frame) {
         frame = document.createElement('iframe');

@@ -132,6 +132,16 @@ Deno.serve(async (request: Request) => {
   if (sessionError) return json({ error: "session_lookup_failed" }, 500, origin);
   if (!session || !session.mux_playback_id) return json({ error: "recording_not_available" }, 404, origin);
 
+  // Record who opened which recording, for certificate attendance (2026-09-28). A failed
+  // insert is logged and never blocks playback.
+  const { error: eventError } = await admin.from("cfa_learn_playback_events").insert({
+    client_id: program.client_id,
+    enrollment_id: enrollment.id,
+    session_id: session.id,
+    contact_id: identity.contact_id,
+  });
+  if (eventError) console.error("playback_event_insert_failed", eventError.message);
+
   const privateKeyPem = atob(signingPrivateKeyBase64);
   const privateKey = await importPKCS8(privateKeyPem, "RS256");
   const expiresAt = Math.floor(now / 1000) + TOKEN_TTL_SECONDS;
@@ -148,6 +158,8 @@ Deno.serve(async (request: Request) => {
 
   return json({
     playback_id: session.mux_playback_id,
+    // Tags the Mux Data view so watch time can be tied to this enrollment.
+    viewer_id: enrollment.id,
     tokens: { video, thumbnail, storyboard },
     expires_at: new Date(expiresAt * 1000).toISOString(),
   }, 200, origin);

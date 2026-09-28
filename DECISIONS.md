@@ -730,3 +730,12 @@ The WordPress form's 3% card fee is not carried over: the new site absorbs it. T
 stays noindex until CfA says go. Staff notices use the per-program secret
 `REGISTRATION_NOTIFY_EMAILS_KAIROS_GLOECKLER_BRIDGE_2027`, set to the list the WordPress
 Kairos form notifies.
+
+## 2026-09-28 — Track who watches Starlight recordings
+Certificates count 80% of sessions (David, for Mountain Phoenix), and many people watch
+recordings instead of joining live. Until today a recording view couldn't be tied to a
+person. Now `cfa-learn-playback` writes a `cfa_learn_playback_events` row each time an
+enrolled person opens a recording, and the player tags each Mux Data view with
+`viewer_user_id` = enrollment id and `video_id` = session id, so Mux Data gives watch time
+per person. Only the opaque enrollment id goes to Mux, never a name or email. Views before
+2026-09-28 stay anonymous. The function change is backward compatible with the old page.
