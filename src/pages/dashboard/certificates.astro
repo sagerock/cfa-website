@@ -238,6 +238,24 @@ const CERTIFICATE_ENDPOINT = `${FN}/cfa-certificates`;
         });
       }
 
+      async function send(person, button) {
+        const actor = $('actor').value.trim();
+        if (!actor) { showError('Enter your name first — it is recorded as the sender.'); return; }
+        if (!person.email) { showError(`No email on file for ${person.name}.`); return; }
+        if (!confirm(`Email ${person.name}’s certificate to ${person.email}, from the program director’s address?\n\nThis goes to the participant.`)) return;
+        await withBusy(button, 'Sending…', async () => {
+          await api('', {
+            method: 'POST',
+            body: JSON.stringify({
+              action: 'send',
+              certificate_id: person.certificate.id,
+              sent_by: actor,
+            }),
+          });
+          await loadQueue();
+        });
+      }
+
       async function revoke(person, button) {
         const actor = $('actor').value.trim();
         if (!actor) { showError('Enter the administrator’s name first.'); return; }
@@ -292,6 +310,17 @@ const CERTIFICATE_ENDPOINT = `${FN}/cfa-certificates`;
             const number = document.createElement('span');
             number.textContent = person.certificate.certificate_number;
             certificate.append(number);
+            const delivery = person.certificate.delivery;
+            if (delivery?.status === 'sent') {
+              certificate.append(statusBadge('Sent', 'good'));
+              const sent = document.createElement('span');
+              sent.textContent = `to ${delivery.to_email} by ${delivery.sent_by}`;
+              certificate.append(sent);
+            } else if (delivery?.status === 'failed') {
+              certificate.append(statusBadge('Send failed', 'waiting'));
+            } else if (person.certificate.status === 'issued') {
+              certificate.append(statusBadge('Not sent', 'muted'));
+            }
           } else {
             certificate.append(statusBadge('Not issued', 'muted'));
           }
@@ -306,6 +335,11 @@ const CERTIFICATE_ENDPOINT = `${FN}/cfa-certificates`;
           ));
           if (person.certificate?.status === 'issued') {
             actions.append(actionButton('Download', (button) => download(person, button)));
+            actions.append(actionButton(
+              'Send to participant',
+              (button) => send(person, button),
+              person.certificate.delivery?.status === 'sent' || !person.email,
+            ));
             actions.append(actionButton('Revoke', (button) => revoke(person, button)));
           } else {
             actions.append(actionButton('Issue', (button) => issue(person, button), !person.eligibility?.eligible || !$('template').value));

@@ -71,6 +71,58 @@ function safeFilename(value: string) {
   return `${clean || "certificate"}.pdf`;
 }
 
+function base64(bytes: Uint8Array) {
+  // btoa on a whole certificate blows the argument limit; chunk it.
+  let binary = "";
+  const chunk = 0x8000;
+  for (let index = 0; index < bytes.length; index += chunk) {
+    binary += String.fromCharCode(...bytes.subarray(index, index + chunk));
+  }
+  return btoa(binary);
+}
+
+function fillCoverLetter(template: string, values: Record<string, string>) {
+  // Only these three placeholders are honoured. Anything else stays literal
+  // rather than silently resolving to an empty string in a letter to a student.
+  return template.replace(/\{\{(first_name|recipient_name|program_title)\}\}/g, (_match, key) => values[key] ?? "");
+}
+
+async function sendCertificateEmail(input: {
+  toEmail: string;
+  fromName: string;
+  fromEmail: string;
+  subject: string;
+  body: string;
+  pdfBytes: Uint8Array;
+  filename: string;
+}) {
+  const key = Deno.env.get("SENDGRID_API_KEY") || "";
+  if (!key) return { ok: false, providerMessageId: null, detail: "sendgrid_not_configured" };
+  const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
+    method: "POST",
+    headers: { "Authorization": `Bearer ${key}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      personalizations: [{ to: [{ email: input.toEmail }] }],
+      from: { email: input.fromEmail, name: input.fromName },
+      reply_to: { email: input.fromEmail, name: input.fromName },
+      subject: input.subject,
+      content: [{ type: "text/plain", value: input.body }],
+      attachments: [{
+        content: base64(input.pdfBytes),
+        type: "application/pdf",
+        filename: input.filename,
+        disposition: "attachment",
+      }],
+      tracking_settings: { click_tracking: { enable: false, enable_text: false } },
+    }),
+  });
+  if (!response.ok) {
+    const detail = await response.text().catch(() => "");
+    return { ok: false, providerMessageId: null, detail: detail.slice(0, 400) || `sendgrid_${response.status}` };
+  }
+  return { ok: true, providerMessageId: response.headers.get("X-Message-Id"), detail: null };
+}
+
 async function getAdmin() {
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
@@ -136,10 +188,32 @@ async function loadBackground(admin: ReturnType<typeof createClient>, template: 
   };
 }
 
+// Signature images live beside the backgrounds in the private asset bucket. A
+// missing file is not fatal: the renderer falls back to the printed name, which
+// beats refusing to produce a certificate someone is waiting on.
+async function loadSignatures(admin: ReturnType<typeof createClient>, template: Record<string, unknown>) {
+  const configured = Array.isArray(template.signatures) ? template.signatures : [];
+  if (!configured.length) return [];
+  return await Promise.all(configured.map(async (entry: Record<string, unknown>) => {
+    const path = String(entry?.image_path || "").trim();
+    if (!path) return entry;
+    const { data, error } = await admin.storage
+      .from(String(template.background_bucket || "cfa-certificate-assets"))
+      .download(path);
+    if (error || !data) return entry;
+    return {
+      ...entry,
+      imageBytes: new Uint8Array(await data.arrayBuffer()),
+      imageMime: data.type || (/\.jpe?g$/i.test(path) ? "image/jpeg" : "image/png"),
+    };
+  }));
+}
+
 async function renderPdf(admin: ReturnType<typeof createClient>, context: Awaited<ReturnType<typeof getContext>>, body: Record<string, unknown>, certificateNumber: string) {
   const recipientName = cleanOptional(body.recipient_name, 160)
     || `${context.contact.first_name || ""} ${context.contact.last_name || ""}`.trim();
   const background = await loadBackground(admin, context.template);
+  const signatures = await loadSignatures(admin, context.template);
   const bytes = await buildCertificatePdf(pdfLib, {
     recipientName,
     programTitle: cleanOptional(body.program_title, 240)
@@ -153,6 +227,7 @@ async function renderPdf(admin: ReturnType<typeof createClient>, context: Awaite
     layout: context.template.layout,
     backgroundBytes: background.bytes,
     backgroundMime: background.mime,
+    signatures,
   });
   return { bytes, usedFallbackBackground: background.fallback, recipientName };
 }
@@ -211,6 +286,24 @@ async function listQueue(admin: ReturnType<typeof createClient>, programId: stri
   const certificates = new Map();
   for (const certificate of certificatesResult.data || []) {
     if (!certificates.has(certificate.enrollment_id)) certificates.set(certificate.enrollment_id, certificate);
+  }
+  // Whether a certificate has reached the person is the thing the desk most
+  // needs to see; issued-but-unsent and sent look identical without it.
+  const certificateIds = [...certificates.values()].map((row) => row.id);
+  const deliveriesResult = certificateIds.length
+    ? await admin
+      .from("cfa_certificate_deliveries")
+      .select("certificate_id, status, to_email, sent_by, created_at")
+      .in("certificate_id", certificateIds)
+      .order("created_at", { ascending: false })
+    : { data: [], error: null };
+  if (deliveriesResult.error) throw new Error("queue_lookup_failed");
+  const deliveries = new Map();
+  for (const delivery of deliveriesResult.data || []) {
+    if (!deliveries.has(delivery.certificate_id)) deliveries.set(delivery.certificate_id, delivery);
+  }
+  for (const certificate of certificates.values()) {
+    certificate.delivery = deliveries.get(certificate.id) || null;
   }
   const people = (enrollments || []).map((enrollment) => {
     const contact = contacts.get(enrollment.contact_id);
@@ -395,6 +488,93 @@ Deno.serve(async (request: Request) => {
         await admin.from("cfa_certificates").update({ status: "failed" }).eq("id", draft.id);
         return json({ error: "certificate_render_failed", detail: error instanceof Error ? error.message : "unknown" }, 500, origin);
       }
+    }
+
+    // Milan's review-and-send step. Deliberately narrow: the certificate must
+    // already be issued (which itself required a named reviewer and a named
+    // issuer), a human has to name themselves again as the sender, and the
+    // program has to have nominated a director address. There is no bulk path
+    // and no automatic path — auto_issue stays false and nothing here reads it.
+    if (action === "send") {
+      const certificateId = String(body.certificate_id || "");
+      const sentBy = cleanOptional(body.sent_by, 120);
+      if (!uuidPattern.test(certificateId)) return json({ error: "invalid_certificate" }, 400, origin);
+      if (!sentBy) return json({ error: "sender_required" }, 400, origin);
+
+      const { data: certificate, error: certificateError } = await admin
+        .from("cfa_certificates")
+        .select("id, status, enrollment_id, template_id, recipient_name, program_title, certificate_number, pdf_bucket, pdf_path")
+        .eq("id", certificateId)
+        .eq("client_id", CFA_CLIENT_ID)
+        .maybeSingle();
+      if (certificateError || !certificate || certificate.status !== "issued" || !certificate.pdf_path) {
+        return json({ error: "issued_certificate_not_found" }, 404, origin);
+      }
+
+      const { data: priorSend } = await admin
+        .from("cfa_certificate_deliveries")
+        .select("id, to_email, created_at, sent_by")
+        .eq("certificate_id", certificateId)
+        .eq("status", "sent")
+        .maybeSingle();
+      if (priorSend) return json({ error: "already_sent", delivery: priorSend }, 409, origin);
+
+      const context = await getContext(admin, certificate.enrollment_id, certificate.template_id);
+      const toEmail = cleanOptional(body.to_email, 240) || context.contact.email;
+      if (!toEmail) return json({ error: "recipient_email_missing" }, 400, origin);
+
+      const fromEmail = context.template.sender_email;
+      const fromName = context.template.sender_name || "Center for Anthroposophy";
+      if (!fromEmail) return json({ error: "sender_address_not_configured" }, 409, origin);
+
+      const values = {
+        first_name: String(context.contact.first_name || "").trim() || certificate.recipient_name,
+        recipient_name: certificate.recipient_name,
+        program_title: certificate.program_title,
+      };
+      const subject = fillCoverLetter(
+        cleanOptional(body.subject, 240) || context.template.cover_letter_subject || "Your {{program_title}} certificate",
+        values,
+      );
+      const letter = fillCoverLetter(
+        cleanOptional(body.body, 4000) || context.template.cover_letter_body || "",
+        values,
+      );
+      if (!letter.trim()) return json({ error: "cover_letter_missing" }, 409, origin);
+
+      const stored = await admin.storage.from(certificate.pdf_bucket).download(certificate.pdf_path);
+      if (stored.error || !stored.data) return json({ error: "certificate_file_missing" }, 404, origin);
+      const pdfBytes = new Uint8Array(await stored.data.arrayBuffer());
+
+      const delivery = await sendCertificateEmail({
+        toEmail,
+        fromName,
+        fromEmail,
+        subject,
+        body: letter,
+        pdfBytes,
+        filename: safeFilename(`${certificate.recipient_name}-${certificate.certificate_number}`),
+      });
+      // The attempt is recorded either way; a failed send has to be visible on
+      // the desk, not swallowed into a log nobody reads.
+      const { data: record, error: recordError } = await admin.from("cfa_certificate_deliveries").insert({
+        client_id: CFA_CLIENT_ID,
+        certificate_id: certificateId,
+        to_email: toEmail,
+        from_name: fromName,
+        from_email: fromEmail,
+        subject,
+        body: letter,
+        sent_by: sentBy,
+        status: delivery.ok ? "sent" : "failed",
+        provider_message_id: delivery.providerMessageId,
+        error_detail: delivery.detail,
+      }).select("id, status, to_email, from_email, created_at").single();
+      if (recordError) {
+        return json({ error: "delivery_record_failed", detail: recordError.message, sent: delivery.ok }, 500, origin);
+      }
+      if (!delivery.ok) return json({ error: "certificate_send_failed", delivery: record }, 502, origin);
+      return json({ delivery: record }, 201, origin);
     }
 
     if (action === "revoke") {

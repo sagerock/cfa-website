@@ -1,8 +1,17 @@
+// title_y and completion_y exist because the fallback background drew both at
+// hardcoded heights. "has successfully completed" sat at y=360 while the stored
+// CfA Classic layout puts the program title at y=345 in 33pt — the title's
+// ascenders ran through the completion line and both became unreadable. They are
+// layout keys now, and the completion default clears a 33pt program title.
 const DEFAULT_LAYOUT = Object.freeze({
   page_width: 792,
   page_height: 612,
+  title_y: 500,
+  title_size: 38,
   name_y: 431,
   name_size: 38,
+  completion_y: 385,
+  completion_size: 25,
   program_y: 345,
   program_size: 33,
   detail_y: 307,
@@ -96,6 +105,83 @@ function drawCentered(page, font, text, y, preferredSize, maxWidth, color, minim
   });
 }
 
+// CfA Classic v1 carries David Barham's and Lisa Mahar's signatures inside the
+// artwork, so this block stays empty for that template. It exists for the case
+// the artwork cannot cover: a background whose printed title is wrong for the
+// program on it (the baked "WHiSTEP Program Director" is not Starlight's title),
+// or a design with no signatures at all. Configured per template; drawn only
+// when configured, so an unconfigured template renders exactly as it did before.
+export function normalizeSignatures(signatures) {
+  if (!Array.isArray(signatures)) return [];
+  return signatures.slice(0, 4).map((entry, index) => {
+    const source = entry && typeof entry === "object" ? entry : {};
+    const name = String(source.name || "").trim();
+    const title = String(source.title || "").trim();
+    if (!name) throw new Error(`signature ${index + 1} requires a name`);
+    if (name.length > 120 || title.length > 120) throw new Error(`signature ${index + 1} text is too long`);
+    return {
+      name,
+      title: title || null,
+      imagePath: String(source.image_path || "").trim() || null,
+      imageBytes: source.imageBytes?.length ? source.imageBytes : null,
+      imageMime: source.imageMime || null,
+      x: finiteNumber(source.x, 600),
+      y: finiteNumber(source.y, 150),
+      width: Math.max(40, finiteNumber(source.width, 190)),
+      nameSize: finiteNumber(source.name_size, 13),
+      titleSize: finiteNumber(source.title_size, 11),
+      rule: source.rule !== false,
+    };
+  });
+}
+
+// Layout mirrors the printed artwork: signed ink above the rule, the signer's
+// role below it. With no signature image the name goes above the rule instead,
+// so the block still reads as a signature line rather than a stray caption.
+async function drawSignatures(pdf, page, pdfLib, signatures, fonts, ink) {
+  const { rgb } = pdfLib;
+  for (const signature of signatures) {
+    const half = signature.width / 2;
+    let inkDrawn = false;
+    if (signature.imageBytes?.length) {
+      try {
+        const mime = String(signature.imageMime || "image/png").toLowerCase();
+        const image = mime === "image/jpeg" || mime === "image/jpg"
+          ? await pdf.embedJpg(signature.imageBytes)
+          : await pdf.embedPng(signature.imageBytes);
+        // Scale to the block width and sit the ink on the rule, never through it.
+        const drawWidth = signature.width * 0.86;
+        const drawHeight = (image.height / image.width) * drawWidth;
+        page.drawImage(image, {
+          x: signature.x - drawWidth / 2,
+          y: signature.y + 4,
+          width: drawWidth,
+          height: Math.min(drawHeight, 58),
+        });
+        inkDrawn = true;
+      } catch {
+        // A signature image that will not embed must not cost the certificate
+        // its name and title; the printed lines still identify the signer.
+      }
+    }
+    if (!inkDrawn) {
+      drawCentered(page, fonts.italic, signature.name, signature.y + 10, signature.nameSize + 6, signature.width + 40, ink, 9);
+    }
+    if (signature.rule) {
+      page.drawLine({
+        start: { x: signature.x - half, y: signature.y },
+        end: { x: signature.x + half, y: signature.y },
+        thickness: 0.9,
+        color: rgb(0.28, 0.2, 0.26),
+      });
+    }
+    const below = signature.title || (inkDrawn ? signature.name : null);
+    if (below) {
+      drawCentered(page, fonts.serif, below, signature.y - 15, signature.titleSize, signature.width + 60, ink, 8);
+    }
+  }
+}
+
 function drawFallbackBackground(page, pdfLib, layout, title, completionText) {
   const { rgb } = pdfLib;
   const width = page.getWidth();
@@ -150,8 +236,8 @@ export async function buildCertificatePdf(pdfLib, input) {
 
   if (!backgroundDrawn) {
     drawFallbackBackground(page, pdfLib, layout, title, completionText);
-    drawCentered(page, italic, title, 500, 38, page.getWidth() - 160, accent, 24);
-    drawCentered(page, italic, completionText, 360, 25, page.getWidth() - 220, accent, 16);
+    drawCentered(page, italic, title, layout.title_y, layout.title_size, page.getWidth() - 160, accent, 24);
+    drawCentered(page, italic, completionText, layout.completion_y, layout.completion_size, page.getWidth() - 220, accent, 16);
     page.drawText("Center", { x: 92, y: 78, size: 19, font: serifBold, color: accent });
     page.drawText("for Anthroposophy", { x: 92, y: 57, size: 14, font: serif, color: accent });
   }
@@ -162,6 +248,11 @@ export async function buildCertificatePdf(pdfLib, input) {
     drawCentered(page, serif, values.detailText, layout.detail_y, layout.detail_size, page.getWidth() - 190, ink, 12);
   }
   drawCentered(page, serif, values.awardDate, layout.date_y, layout.date_size, 260, ink, 13);
+
+  const signatures = normalizeSignatures(input?.signatures);
+  if (signatures.length) {
+    await drawSignatures(pdf, page, pdfLib, signatures, { serif, serifBold, italic, sans }, ink);
+  }
 
   const verification = `Certificate ${values.certificateNumber}`;
   drawCentered(
