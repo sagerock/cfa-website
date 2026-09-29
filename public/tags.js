@@ -21,6 +21,18 @@
   window.fbq('init', META_PIXEL_ID);
   window.fbq('track', 'PageView');
 
+  // Meta's browser ids, sent with a registration so the server-side Conversions API
+  // event (cfa-register, added 2026-09-29) matches the same person and ad click.
+  window.__cfaMetaIds = function () {
+    var ids = { source_url: location.origin + location.pathname };
+    document.cookie.split(';').forEach(function (part) {
+      var kv = part.trim().split('=');
+      if (kv[0] === '_fbp') ids.fbp = kv.slice(1).join('=');
+      if (kv[0] === '_fbc') ids.fbc = kv.slice(1).join('=');
+    });
+    return ids;
+  };
+
   // One call for conversion events so pages don't need to know about both vendors.
   // kind: 'begin_checkout' | 'purchase' | 'lead'.
   // data: { value, currency, transaction_id, name, id }
@@ -34,8 +46,10 @@
         if (window.gtag) gtag('event', 'begin_checkout', { value: value, currency: currency,
           items: [{ item_id: data.id, item_name: data.name, price: value, quantity: 1 }] });
       } else if (kind === 'purchase') {
+        // event_id matches the server-side Conversions API event so Meta dedupes.
         if (window.fbq) window.fbq('track', 'Purchase', { value: value, currency: currency,
-          content_name: data.name, content_ids: data.id ? [data.id] : undefined, content_type: 'product' });
+          content_name: data.name, content_ids: data.id ? [data.id] : undefined, content_type: 'product' },
+          data.event_id ? { eventID: data.event_id } : undefined);
         if (window.gtag) gtag('event', 'purchase', { transaction_id: data.transaction_id, value: value, currency: currency,
           items: [{ item_id: data.id, item_name: data.name, price: value, quantity: 1 }] });
       } else if (kind === 'lead') {

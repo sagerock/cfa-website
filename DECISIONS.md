@@ -739,3 +739,14 @@ enrolled person opens a recording, and the player tags each Mux Data view with
 `viewer_user_id` = enrollment id and `video_id` = session id, so Mux Data gives watch time
 per person. Only the opaque enrollment id goes to Mux, never a name or email. Views before
 2026-09-28 stay anonymous. The function change is backward compatible with the old page.
+## 2026-09-29 — Meta Conversions API on every native checkout
+HolyOps asked for it and Sage said go: browser-only pixel events were being lost to ad
+blockers and Safari, and Meta could not see Biografía registrations its ads drove.
+`cfa-register` now sends a server-side `Purchase` to the CFA Pixel after every real
+(non-test) paid or free registration, from `_shared/metaCapi.ts`. Email, phone, name and
+billing address go only as SHA-256 hashes; IP, user agent and the `_fbp`/`_fbc` cookies go
+as Meta expects (a missing `_fbc` is rebuilt from the landing `fbclid`). The browser
+Purchase now carries `eventID: purchase-<registration id>`, the same id the server sends,
+so Meta dedupes rather than double-counts. A Meta failure is logged and never affects the
+registration (2.5 s cap). Secret `META_CAPI_TOKEN` is the SageRock system-user token; with
+no secret the call is skipped. `META_CAPI_TEST_EVENT_CODE` routes events to Test Events.

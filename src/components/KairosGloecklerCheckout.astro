@@ -415,6 +415,7 @@ const sessions = [
         terms_accepted: data.get('terms_accepted') === 'on',
         marketing_opt_in: data.get('marketing_opt_in') === 'on',
         attribution,
+        meta: window.__cfaMetaIds ? window.__cfaMetaIds() : {},
         turnstile_token: turnstileToken,
         coupon_code: appliedCoupon?.code || '',
         opaque_data: opaqueData || {},
@@ -429,6 +430,7 @@ const sessions = [
           value: (result.amount_cents ?? 0) / 100,
           currency: 'USD',
           transaction_id: result.registration_id,
+          event_id: `purchase-${result.registration_id}`,
           name: paidOffer ? `${PROGRAM_LABEL}: ${paidOffer.name}` : PROGRAM_LABEL,
           id: paidOffer?.code,
         };

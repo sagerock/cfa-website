@@ -4,6 +4,7 @@ import { buildWelcomeEmailText, type WelcomePlan, type WelcomeSession } from "./
 import { hasRequiredBillingAddressFields } from "../_shared/billingCountries.js";
 import { sendInstitutionRosterConfirmation } from "../_shared/institutionRosterEmail.ts";
 import { buildResidencyEmailText } from "../_shared/residencyEmail.js";
+import { metaCookieIds, sendMetaPurchase } from "../_shared/metaCapi.ts";
 import {
   offerBaseAmountCents,
   recordedSeatCount,
@@ -1238,6 +1239,39 @@ Deno.serve(async (request: Request) => {
   }
 
   const remoteIp = text(request.headers.get("CF-Connecting-IP") || "unknown", 100);
+  const meta = body.meta && typeof body.meta === "object" && !Array.isArray(body.meta)
+    ? body.meta as JsonRecord
+    : {};
+  const metaIds = metaCookieIds(meta, attribution.fbclid, attribution.captured_at);
+  const metaSourceUrl = (() => {
+    try {
+      const url = new URL(text(meta.source_url, 500));
+      return url.protocol === "https:" ? `${url.origin}${url.pathname}` : "";
+    } catch {
+      return "";
+    }
+  })() || origin || "https://learn.centerforanthroposophy.org/";
+  // Server-side twin of the browser Purchase; same event id so Meta dedupes.
+  const reportMetaPurchase = (registrationId: string, amountCents: number, offerName: string) =>
+    testAuthorized ? Promise.resolve() : sendMetaPurchase({
+      eventId: `purchase-${registrationId}`,
+      sourceUrl: metaSourceUrl,
+      email,
+      phone,
+      firstName,
+      lastName,
+      city: billingAddress.city,
+      state: billingAddress.state,
+      zip: billingAddress.zip,
+      country: billingAddress.country,
+      clientIp: remoteIp,
+      userAgent: text(request.headers.get("User-Agent"), 500),
+      fbp: metaIds.fbp,
+      fbc: metaIds.fbc,
+      valueCents: amountCents,
+      contentName: `${programDefinition.title}: ${offerName}`,
+      contentId: offerCode,
+    });
   if (config.liveEnabled && !testAuthorized) {
     const turnstileToken = text(body.turnstile_token, 2048);
     if (!turnstileToken || !(await verifyTurnstile(turnstileToken, remoteIp))) {
@@ -1984,6 +2018,8 @@ Deno.serve(async (request: Request) => {
       registrationId,
     });
 
+    await reportMetaPurchase(registrationId, chargeAmountCents, selectedOffer.name);
+
     return json({
       ok: true,
       institution: true,
@@ -2121,6 +2157,8 @@ Deno.serve(async (request: Request) => {
     transactionId,
     registrationId,
   });
+
+  await reportMetaPurchase(registrationId, chargeAmountCents, selectedOffer.name);
 
   return json({
     ok: true,
