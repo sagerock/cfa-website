@@ -57,9 +57,9 @@ All seminars meet online from 3:00–4:30 pm Eastern Time.
 
 - **September 5 — Dr. Martyn Rawson:** *Steiner Frequently Called the Waldorf School a Method School. Oh Really? Which Methods Are Those?*
 - **September 26 — Vicki Larson and Heather Scott:** *Stepping Into Life: Cultivating Student Leadership*
-- **October 10 — Carol Bärtges:** *What Have They Been Doing in the Lower School?*
+- **October 10 — Alison Davis:** *Let's Get Real About Burnout*
 - **October 31 — Dr. Adam Blanning:** *What Does a Healthy Sensory Diet Look Like for the Modern Adolescent?*
-- **November 7 — Alison Davis:** *Let's Get Real About Burnout*
+- **November 7 — Carol Bärtges:** *What Have They Been Doing in the Lower School?*
 - **November 21 — Sven Saar:** *Does Spirit Matter?*
 - **December 12 — Cedar Oliver:** *“True Equality”: How and Why We Sort Our Students*
 - **December 19 — Dr. Constanza Kaliks:** *Citizenship and the Search for Knowledge on the Human Being as Fundamentals for the Teachers' Work*
