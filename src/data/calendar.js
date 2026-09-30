@@ -32,9 +32,9 @@ export const CALENDAR = [
     register: '/register/starlight-rays-2026-2027',
     sessions: [
       { date: '2026-09-26', note: 'Vicki Larson and Heather Scott: Stepping Into Life' },
-      { date: '2026-10-10', note: 'Carol Bärtges: What Have They Been Doing in the Lower School?' },
+      { date: '2026-10-10', note: "Alison Davis: Let's Get Real About Burnout" },
       { date: '2026-10-31', note: 'Dr. Adam Blanning: A Healthy Sensory Diet for the Modern Adolescent' },
-      { date: '2026-11-07', note: "Alison Davis: Let's Get Real About Burnout" },
+      { date: '2026-11-07', note: 'Carol Bärtges: What Have They Been Doing in the Lower School?' },
       { date: '2026-11-21', note: 'Sven Saar: Does Spirit Matter?' },
       { date: '2026-12-12', note: 'Cedar Oliver: “True Equality”' },
       { date: '2026-12-19', note: 'Dr. Constanza Kaliks: Citizenship and the Search for Knowledge' },
