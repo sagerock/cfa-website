@@ -310,12 +310,10 @@
   {
    "name": "Paul Gierlach, M.A.",
    "slug": "paul-gierlach,-m.a.",
-   "programs": [
-    "waldorf-high-school-teacher-education"
-   ],
+   "programs": [],
    "photo": "/images/307732b864-paul-gierlach-1-300x300.jpg",
    "bio": "Involved in Waldorf education for nearly forty years, first as a class teacher in Detroit; a high school teacher on the east coast, mid-west, and west coast of United States; lead teacher in Honolulu high school. Taught in teacher training programs and worked with faculties in the Mexico, Argentina and, currently, the United States and China. Created Dynamic Drawing for use in high school classrooms. Special interest lies in creating classroom environments that supports teacher\u2019s work with students with different learning styles.",
-   "active": true
+   "active": false
   },
   {
    "name": "Marisha Plotnik, M.A.",
