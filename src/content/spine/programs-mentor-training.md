@@ -138,7 +138,7 @@ We’ll meet virtually once a month on Saturdays from 12:00-2:00 ET, 9:00-11:00 
 
 ## Professional Development Advisory and Group Work Session
 
-*with Karen Atkinson and Jason Child*
+*with Karen Atkinson*
 
 *Artistic Engagement with Malina Stoychev*
 
@@ -168,7 +168,7 @@ Presentations, Workshops, Artistic Engagement, and Working Groups on Circulating
 
 ## Professional Development Advisory and Group Work Session
 
-*with Karen Atkinson and Jason Child*
+*with Karen Atkinson*
 
 *Artistic Engagement with Malina Stoychev*
 
