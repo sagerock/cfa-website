@@ -126,7 +126,7 @@ Curriculum Modules
 
 - Fine & Practical Arts with Michal Noer
 
-- History & Civics with Paul Gierlach
+- History & Civics with Alison Davis
 
 - Life Science & Earth Science with Jake Gerber
 
@@ -150,7 +150,7 @@ Curriculum Modules
 
 ###### Studies in adolescent development with David Barham,
 
-anthroposophical core texts with Paul Gierlach, Cedar Oliver, Marisha Plotnik
+anthroposophical core texts with Cedar Oliver & Alison Davis
 
 ### Module 2: Fall I and Spring I
 
