@@ -222,10 +222,6 @@ As a first year WHiSTEP student, I came away with so many new curriculum ideas, 
 
 **I came away with so many new curriculum ideas, new perspectives...** Bill Ogonowski, First Year WHiSTEP Student
 
-In this program students have the time and opportunity to DWELL ON THOUGHTS about their subject or Anthroposophy; where else are they surrounded by like-minded colleagues?
-
-**In this program students have the time and opportunity to DWELL ON THOUGHTS about their subject or Anthroposophy...** Paul Gierlach, Instructor
-
 I appreciated all of the variety. There was a nice balance of hands-on work and abstract thinking. Classes felt stimulating and exciting. There was a clear structure and flexibility based on student contributions. I learned a great deal. I can’t believe how much we covered.
 
 **I can’t believe how much we covered.** (Physical Sciences)
