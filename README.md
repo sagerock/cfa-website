@@ -42,7 +42,7 @@ src/data/
                       faculty-tag mapping
 src/pages/            routes: home, programs/+[slug], faculty, about/+[slug], news, donate
 src/layouts/Base.astro   site chrome: PoC banner, sticky header, footer (real contact
-                         info: PO Box 545 Wilton NH, 603-654-2566, office@)
+                         info: 29 N. Lincoln St., Keene NH, 603-654-2566, office@)
 src/components/PageHeader.astro   standard page opening (eyebrow/title/lede)
 src/styles/global.css  the design system (see below)
 public/images/         all 170 images referenced by content — downloaded, zero
