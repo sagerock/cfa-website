@@ -11,8 +11,9 @@ test('submission requires applicant confirmation',()=>{assert.ok(validateStep(em
 test('universal form lists the six short programs; teacher training is its own form (Milan, 2026-10-04)',()=>{
   assert.deepEqual(programs.map(p=>p.id),['building-bridges','explorations-online','mentor-training','renewal-courses','starlight-rays','waldorf-leadership-development']);
   for (const p of programs) assert.ok(CALENDAR.some(e=>e.program===p.calendar), `${p.id} has no calendar entry`);
-  assert.deepEqual(ttPrograms.map(p=>p.id),['antioch','whistep','tshe']);
-  assert.equal(STEPS[1],'What’s manageable');
+  assert.deepEqual(ttPrograms.map(p=>p.id),['antioch','whistep']);
+  assert.equal(STEPS[1],'Your path');
+  assert.equal(STEPS[2],'What’s manageable');
 });
 test('universal step three asks the existing aid-form questions',()=>{
   const a=sampleApplication();
@@ -23,11 +24,15 @@ test('universal step three asks the existing aid-form questions',()=>{
 test('teacher training form: every step validates for the sample and blocks when empty',()=>{
   const s=sampleTT();
   for (let i=0;i<STEPS.length;i++) assert.equal(validateTT(s,i),'',`step ${i}`);
-  for (const i of [0,1,2,3,4]) assert.ok(validateTT(emptyTT(),i),`empty step ${i}`);
-  assert.match(validateTT({...s,bankruptcy:'Yes'},2),/explanation/);
-  assert.equal(validateTT({...s,bankruptcy:'Yes',explain:'2015, discharged.'},2),'');
-  assert.match(validateTT({...s,monthly:'-5'},1),/monthly/);
-  assert.match(validateTT({...s,affirmed:false},4),/confirm/);
+  for (const i of [0,1,2,3,4,5]) assert.ok(validateTT(emptyTT(),i),`empty step ${i}`);
+  assert.match(validateTT({...s,bankruptcy:'Yes'},3),/explanation/);
+  assert.equal(validateTT({...s,bankruptcy:'Yes',explain:'2015, discharged.'},3),'');
+  assert.match(validateTT({...s,monthly:'-5'},2),/monthly/);
+  assert.match(validateTT({...s,affirmed:false},5),/confirm/);
+  assert.match(validateTT({...s,program:'tshe'},0),/program/);
+  assert.match(validateTT({...s,year:''},0),/year of study/);
+  assert.match(validateTT({...s,graduation:'2029'},0),/graduation/);
+  assert.match(validateTT({...s,involvement:'  '},1),/anthroposophy/);
 });
 test('dates come from the calendar, past sessions drop off, next cohort is always offered',()=>{
   const wlcd=runsFor('waldorf-leadership-development','2026-09-23');

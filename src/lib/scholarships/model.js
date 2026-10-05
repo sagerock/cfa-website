@@ -1,7 +1,7 @@
 // Programs are CfA's real scholarship programs (Milan, 2026-09-23). Their dates come
 // from the program calendar (src/data/calendar.js), so a director's correction there
 // shows up here too. Applicant details in the preview are still fictional.
-// Milan, 2026-10-04: the multi-year teacher trainings (Antioch, WHiSTEP, TSHE) have
+// Milan, 2026-10-04: the multi-year teacher trainings (Antioch, WHiSTEP) have
 // their own, more in-depth application (teacher-training.js) and are not listed here.
 import { CALENDAR, STATUS_LABEL } from '../../data/calendar.js';
 

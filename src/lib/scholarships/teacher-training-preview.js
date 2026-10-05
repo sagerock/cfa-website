@@ -1,4 +1,4 @@
-import { ttPrograms, STAGES, INCOME_RANGES, HOUSING, TAX_FILED, YES_NO, STEPS, emptyTT, sampleTT, validateTT, ttGuidance, assessment, money } from './teacher-training.js';
+import { ttPrograms, YEARS, STAGES, INCOME_RANGES, HOUSING, TAX_FILED, YES_NO, STEPS, emptyTT, sampleTT, validateTT, ttGuidance, assessment, money } from './teacher-training.js';
 const $ = (id) => document.getElementById(id);
 const escape = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const key = 'cfa-tt-scholarship-preview-v1';
@@ -11,7 +11,7 @@ function show(view) { ['welcome','application','submitted','review'].forEach(id 
 const a = () => state.application;
 const input = (name, label, type = 'text', attrs = '') => `<label for="field-${name}">${label}</label><input id="field-${name}" name="${name}" type="${type}" value="${escape(a()[name])}" ${attrs}/>`;
 const money$ = (name, label, attrs = 'min="0" max="100000000" step="1" required') => input(name, label, 'number', attrs);
-const textarea = (name, label) => `<label for="field-${name}">${label}</label><textarea id="field-${name}" name="${name}" maxlength="3000">${escape(a()[name])}</textarea>`;
+const textarea = (name, label, attrs = '') => `<label for="field-${name}">${label}</label><textarea id="field-${name}" name="${name}" maxlength="3000" ${attrs}>${escape(a()[name])}</textarea>`;
 const select = (name, label, choices) => `<label for="field-${name}">${label}</label><select id="field-${name}" name="${name}" required><option value="" ${a()[name] ? '' : 'selected'} disabled>Choose one…</option>${choices.map(c => `<option ${a()[name] === c ? 'selected' : ''}>${escape(c)}</option>`).join('')}</select>`;
 const radios = (name, legend, choices) => `<fieldset class="runs"><legend>${legend}</legend>${choices.map(([value, text]) => `<label class="run"><input type="radio" name="${name}" value="${escape(value)}" ${a()[name] === value ? 'checked' : ''} required /><span><strong>${escape(text)}</strong></span></label>`).join('')}</fieldset>`;
 const row = (...cells) => `<div class="field-row">${cells.map(c => `<div>${c}</div>`).join('')}</div>`;
@@ -28,9 +28,13 @@ const FIELDS = [
   () => input('name', 'Your name', 'text', 'required maxlength="120" autocomplete="off"') + row(input('email', 'Email', 'email', 'required maxlength="200" autocomplete="off"'), input('phone', 'Phone (optional)', 'tel', 'maxlength="40" autocomplete="off"'))
     + radios('program', 'Which program?', ttPrograms.map(p => [p.id, p.name]))
     + select('stage', 'Are you starting or continuing?', STAGES)
+    + row(select('year', 'Year of study for this application', YEARS), input('graduation', 'Anticipated graduation (month and year)', 'month', 'required'))
     + radios('diversity', 'Do you wish to apply for a Diversity Scholarship?', YES_NO.map(v => [v, v]))
     + row(input('employer', 'Current employer (optional)', 'text', 'maxlength="200"'), input('position', 'Position (optional)', 'text', 'maxlength="200"'))
     + input('yearsThere', 'How many years there? (optional)', 'number', 'min="0" max="60" step="1"'),
+  () => textarea('plans', 'What are your plans after graduating?', 'required')
+    + textarea('background', 'Tell us about your employment and educational background.', 'required')
+    + textarea('involvement', 'What has been your involvement with Waldorf education and anthroposophy?', 'required'),
   () => input('tuition', 'Program cost you are applying for help with (USD)', 'number', 'min="1" max="100000" step="0.01" required') + `<p class="muted">${costHint()}</p>`
     + row(input('monthly', 'What could you contribute each month?', 'number', 'min="0" max="100000" step="0.01" required'), input('months', 'Over how many months?', 'number', 'min="1" max="24" step="1" required'))
     + input('support', 'Confirmed support from your school or elsewhere (total)', 'number', 'min="0" max="1000000" step="0.01" required') + '<p class="muted">Enter 0 if none. A proposed payment schedule is subject to CfA’s review.</p>',
@@ -50,20 +54,20 @@ const FIELDS = [
   () => summary() + '<div class="review-notice"><p>By submitting, I affirm that the information in this application is true, complete and correct, and I acknowledge that the Center for Anthroposophy is relying on it if it grants aid. CfA does not discriminate on the basis of race, color, age, gender, ancestry, religion, national origin, sexual orientation, family status or disability in awarding financial aid.</p></div>'
     + `<label><input name="affirmed" type="checkbox" ${a().affirmed ? 'checked' : ''} required />I affirm the statement above (fictional example).</label>`,
 ];
-const TITLES = ['First, you and your program.', 'What would feel manageable?', 'Your household and finances.', 'Documents and a reference.', 'Does this look right?'];
-const GUIDES = [() => 'Use a fictional name as you explore. Antioch, WHiSTEP and TSHE share this application.', () => ttGuidance(a()), () => 'These follow the Waldorf Fellowship form, shortened. Estimates are fine. No account numbers.', () => 'A reference is optional in this draft. CfA will tell you if anything else is needed.', () => 'You can go back and correct anything before submitting.'];
+const TITLES = ['First, you and your program.', 'Your path so far, in your own words.', 'What would feel manageable?', 'Your household and finances.', 'Documents and a reference.', 'Does this look right?'];
+const GUIDES = [() => 'Use a fictional name as you explore. Antioch and WHiSTEP share this application.', () => 'A few sentences each is plenty. AWSNA’s loan and grant forms ask the same three questions.', () => ttGuidance(a()), () => 'These follow the Waldorf Fellowship form, shortened. Estimates are fine. No account numbers.', () => 'A reference is optional in this draft. CfA will tell you if anything else is needed.', () => 'You can go back and correct anything before submitting.'];
 
 function summary() {
   const x = a(); const calc = assessment(x, x.tuition);
   return details([
-    ['Name', x.name], ['Email', x.email], ['Program', program()?.name || 'Not selected'], ['Starting or continuing', orNone(x.stage)], ['Diversity Scholarship', orNone(x.diversity)],
+    ['Name', x.name], ['Email', x.email], ['Program', program()?.name || 'Not selected'], ['Starting or continuing', orNone(x.stage)], ['Year of study', orNone(x.year)], ['Anticipated graduation', orNone(x.graduation, (v) => new Date(`${v}-15T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' }))], ['Diversity Scholarship', orNone(x.diversity)],
     ['Employer / position', [x.employer, x.position].filter(Boolean).join(', ') || 'Not provided'],
     ['Program cost', orNone(x.tuition, money)], ['Monthly contribution', orNone(x.monthly, money)], ['Number of months', x.months], ['Confirmed outside support', orNone(x.support, money)],
     ['Dependents', orNone(x.dependents)], ['Housing', orNone(x.housing)], ['Annual household income', orNone(x.income)], ['Annual living expenses', orNone(x.expenses, money)], ['Children’s school tuition', orNone(x.schoolTuition, money)],
     ['Total assets', orNone(x.assets, money)], ['Total debts', orNone(x.liabilities, money)], ['Student loan default', orNone(x.defaulted)], ['Bankruptcy', orNone(x.bankruptcy)],
     ['Last tax return filed', orNone(x.taxFiled)], ['Reference', [x.referenceName, x.referenceRelation, x.referenceContact].filter(Boolean).join(' · ') || 'Not provided'],
     ['Remaining funding gap', calc ? money(calc.gap) : 'More information needed'],
-  ]) + (x.explain ? `<h3 style="margin-top:24px">Explanation</h3><p class="long-answer">${escape(x.explain)}</p>` : '') + `<h3 style="margin-top:24px">Notes</h3><p class="long-answer">${escape(x.notes || 'Not provided')}</p>`;
+  ]) + [['Plans after graduating', x.plans], ['Employment and educational background', x.background], ['Involvement with Waldorf education and anthroposophy', x.involvement]].map(([h, v]) => `<h3 style="margin-top:24px">${h}</h3><p class="long-answer">${escape(v || 'Not provided')}</p>`).join('') + (x.explain ? `<h3 style="margin-top:24px">Explanation</h3><p class="long-answer">${escape(x.explain)}</p>` : '') + `<h3 style="margin-top:24px">Notes</h3><p class="long-answer">${escape(x.notes || 'Not provided')}</p>`;
 }
 
 function render(focus = false) {
