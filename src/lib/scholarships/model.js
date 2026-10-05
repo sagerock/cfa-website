@@ -1,24 +1,25 @@
 // Programs are CfA's real scholarship programs (Milan, 2026-09-23). Their dates come
 // from the program calendar (src/data/calendar.js), so a director's correction there
 // shows up here too. Applicant details in the preview are still fictional.
+// Milan, 2026-10-04: the multi-year teacher trainings (Antioch, WHiSTEP, TSHE) have
+// their own, more in-depth application (teacher-training.js) and are not listed here.
 import { CALENDAR, STATUS_LABEL } from '../../data/calendar.js';
 
-export const GROUPS = ['Professional Development', 'Teacher Training'];
-
-// `calendar` is the program key in calendar.js. Antioch has no public dates on the
-// calendar, so it offers only "next cohort".
 export const programs = [
-  { id: 'building-bridges', name: 'Building Bridges', group: 'Professional Development', calendar: 'building-bridges', href: 'https://centerforanthroposophy.org/programs/building-bridges-to-waldorf-teacher-training-2/' },
-  { id: 'explorations-online', name: 'Explorations Online', group: 'Professional Development', calendar: 'explorations-online', href: 'https://centerforanthroposophy.org/programs/explorations-online/' },
-  { id: 'mentor-training', name: 'Mentor Training', group: 'Professional Development', calendar: 'mentor-training', href: 'https://centerforanthroposophy.org/programs/mentor-training/' },
-  { id: 'renewal-courses', name: 'Renewal Courses', group: 'Professional Development', calendar: 'renewal-courses', href: 'https://centerforanthroposophy.org/programs/renewal-courses/' },
-  { id: 'starlight-rays', name: 'Starlight Rays', group: 'Professional Development', calendar: 'starlight-rays', href: 'https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/starlight/' },
-  { id: 'waldorf-leadership-development', name: 'Waldorf Leadership Development', group: 'Professional Development', calendar: 'waldorf-leadership-development', href: 'https://centerforanthroposophy.org/programs/waldorf-administration-and-leadership-development-program/' },
-  { id: 'antioch', name: 'Antioch Waldorf Teacher Training', group: 'Teacher Training', calendar: null, href: 'https://centerforanthroposophy.org/programs/antioch-university-waldorf-teacher-education-program/' },
-  { id: 'whistep', name: 'Waldorf High School Teacher Education (WHiSTEP)', group: 'Teacher Training', calendar: 'waldorf-high-school', href: 'https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/whistep/' },
+  { id: 'building-bridges', name: 'Building Bridges', calendar: 'building-bridges', href: 'https://centerforanthroposophy.org/programs/building-bridges-to-waldorf-teacher-training-2/' },
+  { id: 'explorations-online', name: 'Explorations Online', calendar: 'explorations-online', href: 'https://centerforanthroposophy.org/programs/explorations-online/' },
+  { id: 'mentor-training', name: 'Mentor Training', calendar: 'mentor-training', href: 'https://centerforanthroposophy.org/programs/mentor-training/' },
+  { id: 'renewal-courses', name: 'Renewal Courses', calendar: 'renewal-courses', href: 'https://centerforanthroposophy.org/programs/renewal-courses/' },
+  { id: 'starlight-rays', name: 'Starlight Rays', calendar: 'starlight-rays', href: 'https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/starlight/' },
+  { id: 'waldorf-leadership-development', name: 'Waldorf Leadership Development', calendar: 'waldorf-leadership-development', href: 'https://centerforanthroposophy.org/programs/waldorf-administration-and-leadership-development-program/' },
 ];
 
-export const TUITION_ASSISTANCE_URL = 'https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/tuition/tuition-assistance/';
+export const TEACHER_TRAINING_URL = '/scholarships/teacher-training/';
+
+// Income ranges and the teacher-training question follow CfA's existing per-program
+// financial aid forms (Gravity Forms 11, 84-87, 125).
+export const INCOME_RANGES = ['Under $30,000', '$30,000 – $39,999', '$40,000 – $49,999', '$50,000 – $74,999', '$75,000 – $99,999', '$100,000 – $150,000', 'Over $150,000', 'Prefer not to answer'];
+export const TEACHER_TRAINING_PLANS = ['Yes', 'No', 'Not sure yet', 'Already teaching or working in a Waldorf school'];
 export const NEXT_RUN = 'next';
 
 const fmt = (iso, opts) => new Date(`${iso}T12:00:00`).toLocaleDateString('en-US', { timeZone: 'UTC', ...opts });
@@ -40,7 +41,7 @@ export function runsFor(programId, today) {
   return [...runs, { id: NEXT_RUN, label: 'A future session or cohort (dates not yet announced)', status: 'Not yet scheduled' }];
 }
 
-export const emptyApplication = () => ({ name: '', school: '', program: '', run: '', tuition: '', monthly: '', months: '10', support: '', household: '', income: '', circumstances: '', purpose: '', confirmed: false });
+export const emptyApplication = () => ({ name: '', school: '', program: '', run: '', tuition: '', monthly: '', months: '10', support: '', income: '', household: '', expenses: '', assets: '', teacherTraining: '', minimumAid: '', circumstances: '', confirmed: false });
 export function money(value) {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(value);
 }
@@ -59,10 +60,12 @@ export function validateStep(application, step, today) {
   if (step === 0 && !runsFor(application.program, today).some(r => r.id === application.run)) return 'Please choose the dates you are applying for.';
   if (step === 1 && !(Number(application.tuition) > 0 && Number.isFinite(Number(application.tuition)))) return 'Please enter the program cost you are applying for help with.';
   if (step === 1 && !assessment(application, application.tuition)) return 'Enter a monthly contribution and outside support of zero or more, and a whole number of months from 1 to 24.';
+  if (step === 2 && !INCOME_RANGES.includes(application.income)) return 'Please choose an annual family income range. “Prefer not to answer” is fine.';
+  if (step === 2 && !TEACHER_TRAINING_PLANS.includes(application.teacherTraining)) return 'Please tell us whether you plan to pursue Waldorf teacher training.';
   if (step === 3 && !application.confirmed) return 'Please confirm that you have reviewed your answers.';
   return '';
 }
-export const sampleApplication = () => ({ ...emptyApplication(), name: 'Alex Sample', school: 'Example Community School', program: 'waldorf-leadership-development', run: 'wlcd-fall-residency-2026', tuition: '850', monthly: '50', months: '6', support: '200', household: '3', income: 'Prefer to discuss privately', circumstances: 'Reduced work hours this year. A predictable monthly payment would help.', purpose: 'To bring new approaches into my work as a school leader.', confirmed: true });
+export const sampleApplication = () => ({ ...emptyApplication(), name: 'Alex Sample', school: 'Example Community School', program: 'waldorf-leadership-development', run: 'wlcd-fall-residency-2026', tuition: '850', monthly: '50', months: '6', support: '200', income: '$40,000 – $49,999', household: '3', expenses: '38000', assets: '6000', teacherTraining: 'Already teaching or working in a Waldorf school', minimumAid: '400', circumstances: 'Reduced work hours this year. A predictable monthly payment would help.', confirmed: true });
 export function guidance(application) {
   if (application.tuition === '') return 'Start with the cost shown on the program page for the dates you chose. If you are not sure, give your best estimate and say so in your notes.';
   if (application.monthly === '') return 'What monthly contribution would feel manageable? Zero is an acceptable answer.';

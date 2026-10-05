@@ -93,3 +93,16 @@ The applicant now enters the program cost from the program page. No tuition is
 hard-coded here. Applicant details are still fictional; nothing else changed about what
 the preview can do. This branch now carries the calendar commits, so merge
 `program-calendar` first or together.
+
+## Third pass, 2026-10-04 (Milan: keep teacher training separate)
+
+- `/scholarships/` lists only the six short programs. Step 3 now asks the same questions as
+  CfA's per-program aid forms (GF 11, 84-87, 125): income range, family size, annual expenses,
+  family assets, plans for Waldorf teacher training, minimum aid hoped for, anything else.
+- `/scholarships/teacher-training/` is the separate application for Antioch, WHiSTEP and TSHE
+  (`src/lib/scholarships/teacher-training.js` + `teacher-training-preview.js`). Five steps: you and
+  your program (incl. Diversity Scholarship), "What would feel manageable?" (kept at Milan's
+  request), household and finances (Fellowship form GF 16, condensed to totals), documents and
+  a reference (1040 upload described, not enabled), review with the Fellowship affirmation.
+- Dropped from GF 16 in this draft: age, marital status/spouse, citizenship, time at address,
+  closest relative, itemized assets/liabilities, credit-check authorization. Easy to restore.
