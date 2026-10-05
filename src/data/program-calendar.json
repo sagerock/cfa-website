@@ -1,12 +1,7 @@
 {
  "source": "CfA Programs and Events (Google Calendar)",
- "synced": "2026-10-05T18:24:34.950Z",
+ "synced": "2026-10-05T20:12:05.236Z",
  "events": [
-  {
-   "title": "Kairos: Goethe's Color Combinations with Nikki Shoneman",
-   "start": "2026-10-06T20:30:00-03:00",
-   "end": "2026-10-06T22:30:00-03:00"
-  },
   {
    "title": "Biografía y Arte Social with Magnolia Ríos",
    "start": "2026-10-07T20:00:00-03:00",
@@ -71,11 +66,6 @@
    "title": "Kairos: Dr. James Dyson, Mental Health Seminar 3",
    "start": "2026-10-31T16:00:00-03:00",
    "end": "2026-10-31T18:00:00-03:00"
-  },
-  {
-   "title": "Starlight Rays: Dr. Adam Blanning",
-   "start": "2026-10-31T16:00:00-03:00",
-   "end": "2026-10-31T17:30:00-03:00"
   },
   {
    "title": "Biografía y Arte Social with Magnolia Ríos",
@@ -201,16 +191,6 @@
    "title": "Explorations Online: 2026-27 Cycle",
    "start": "2027-01-10T13:00:00-04:00",
    "end": "2027-01-10T15:00:00-04:00"
-  },
-  {
-   "title": "Kairos: Emergency Pedagogy Module 7 with Bernd Ruf (Day 1)",
-   "start": "2027-01-15T16:00:00-04:00",
-   "end": "2027-01-15T17:30:00-04:00"
-  },
-  {
-   "title": "Kairos: Emergency Pedagogy Module 7 with Bernd Ruf (Day 2)",
-   "start": "2027-01-16T10:00:00-04:00",
-   "end": "2027-01-16T17:00:00-04:00"
   },
   {
    "title": "WHiSTEP: Online Subject Seminars",
@@ -373,11 +353,6 @@
    "end": "2027-04-11T15:00:00-03:00"
   },
   {
-   "title": "Kairos: Art Therapy Spring Residency (Keene, NH)",
-   "start": "2027-04-23",
-   "end": "2027-05-01"
-  },
-  {
    "title": "WLD: Spring Residency (Keene, NH)",
    "start": "2027-04-23",
    "end": "2027-04-27"
@@ -408,11 +383,6 @@
    "end": "2027-07-04"
   },
   {
-   "title": "Kairos: Summer Residency (Wilton, NH)",
-   "start": "2027-07-04",
-   "end": "2027-07-10"
-  },
-  {
    "title": "Renewal Week 2: Online",
    "start": "2027-07-05",
    "end": "2027-07-10"
@@ -421,11 +391,6 @@
    "title": "WHiSTEP: Summer II Residency",
    "start": "2027-07-10",
    "end": "2027-07-26"
-  },
-  {
-   "title": "WHiSTEP: Summer III Residency",
-   "start": "2028-07-15",
-   "end": "2028-07-31"
   }
  ]
 }

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { isPublic, normalize, months, programHref } from '../src/lib/program-calendar.js';
+import { isPublic, isHeld, publicEvents, normalize, months, programHref } from '../src/lib/program-calendar.js';
 import data from '../src/data/program-calendar.json' with { type: 'json' };
 
 test('internal entries never show (Caitlin, 2026-10-05)', () => {
@@ -37,4 +37,20 @@ test('months group a program’s dates and drop what has passed', () => {
 const NO_PAGE_YET = [/^The Karma of Money\b/];
 test('every program in the snapshot links to a program page', () => {
   for (const e of data.events) if (!NO_PAGE_YET.some((re) => re.test(e.title))) assert.ok(programHref(e.title), e.title);
+});
+
+test('entries with a "confirm" note are held back, with their series (Caitlin, 2026-10-05)', () => {
+  assert.equal(isHeld('Lisl\'s calendar blocks Apr 23-30; confirm exact end date.'), true);
+  assert.equal(isHeld('CONFIRM DATE: website weekdays match 2026.'), true);
+  assert.equal(isHeld('Apr 23-26, 2027, confirmed by Torin.'), false);
+  assert.equal(isHeld(undefined), false);
+  const raw = [
+    { title: 'Kairos: Emergency Pedagogy Module 7 with Bernd Ruf (Day 1)', start: '2027-01-15', end: '2027-01-16', description: 'confirm these are the final dates.' },
+    { title: 'Kairos: Emergency Pedagogy Module 7 with Bernd Ruf (Day 2)', start: '2027-01-16', end: '2027-01-17', description: '' },
+    { title: 'WLD: Spring Residency (Keene, NH)', start: '2027-04-23', end: '2027-04-27', description: 'confirmed by Torin' },
+  ];
+  assert.deepEqual(publicEvents(raw).map((e) => e.title), ['WLD: Spring Residency (Keene, NH)']);
+});
+test('the committed snapshot holds no event descriptions', () => {
+  for (const e of data.events) assert.equal(e.description, undefined, e.title);
 });

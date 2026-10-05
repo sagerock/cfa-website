@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // Refresh src/data/program-calendar.json from Caitlin's "CfA Programs and Events"
 // Google Calendar. Only public run dates are written (isPublic in
-// src/lib/program-calendar.js); internal entries never reach this repository.
+// src/lib/program-calendar.js), minus anything her notes say to confirm (isHeld);
+// internal entries and event descriptions never reach this repository.
 //
 //   node scripts/sync-program-calendar.mjs                 # live: Google Calendar API
 //   node scripts/sync-program-calendar.mjs --from raw.json # offline: a saved event list
@@ -13,7 +14,7 @@
 //                      with the service account directly.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createSign } from 'node:crypto';
-import { isPublic } from '../src/lib/program-calendar.js';
+import { publicEvents } from '../src/lib/program-calendar.js';
 
 export const CALENDAR_ID = 'c_ce3389186d8654df7bf71697589899840e805bfa218fb5b3d824424574193b05@group.calendar.google.com';
 const OUT = new URL('../src/data/program-calendar.json', import.meta.url);
@@ -46,7 +47,7 @@ async function live() {
     const body = await res.json();
     for (const e of body.items ?? []) {
       if (e.status === 'cancelled' || e.visibility === 'private') continue;
-      events.push({ title: e.summary ?? '', start: e.start.dateTime ?? e.start.date, end: e.end.dateTime ?? e.end.date });
+      events.push({ title: e.summary ?? '', start: e.start.dateTime ?? e.start.date, end: e.end.dateTime ?? e.end.date, description: e.description ?? '' });
     }
     page = body.nextPageToken ?? '';
   } while (page);
@@ -55,7 +56,7 @@ async function live() {
 
 const from = process.argv.indexOf('--from');
 const raw = from > -1 ? JSON.parse(readFileSync(process.argv[from + 1], 'utf8')) : await live();
-const events = raw.filter((e) => isPublic(e.title))
+const events = publicEvents(raw)
   .map(({ title, start, end }) => ({ title, start, end }))
   .sort((a, b) => a.start.localeCompare(b.start) || a.title.localeCompare(b.title));
 writeFileSync(OUT, JSON.stringify({ source: 'CfA Programs and Events (Google Calendar)', synced: new Date().toISOString(), events }, null, 1) + '\n');

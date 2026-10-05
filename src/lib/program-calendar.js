@@ -13,6 +13,18 @@ const INTERNAL = [
 ];
 export const isPublic = (title) => !!title && !INTERNAL.some((re) => re.test(title));
 
+// Caitlin, 2026-10-05 (jax@ 1a10d829a1e19239): "hold off on anything I have a 'confirm'
+// note attached to." A "confirm" in an event's private description holds it back, and
+// with it the rest of that series ("(Day 2)", "(3 of 4)"), since her note on one session
+// is about the program's dates. Descriptions are read only by the sync script and are
+// never written into this repository. "Confirmed" alone does not hold an entry.
+export const isHeld = (description) => /\bconfirm\b/i.test(description ?? '');
+export const seriesKey = (title) => title.replace(/\s*\((Day \d+|\d+ of \d+)\)\s*$/i, '').trim();
+export function publicEvents(raw) {
+  const held = new Set(raw.filter((e) => isHeld(e.description)).map((e) => seriesKey(e.title)));
+  return raw.filter((e) => isPublic(e.title) && !held.has(seriesKey(e.title)));
+}
+
 // Where each program's "program page" link goes: the live page CfA sends people to.
 const PROGRAMS = [
   [/^Starlight Rays\b/i, 'https://centerforanthroposophy.org/programs/waldorf-high-school-teacher-education/starlight/'],
