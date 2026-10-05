@@ -4,7 +4,7 @@ const escape = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&a
 const key = 'cfa-tt-scholarship-preview-v1';
 const LAST = STEPS.length - 1;
 let state = { application: emptyTT(), step: 0, submitted: false, history: [] };
-try { const saved = JSON.parse(sessionStorage.getItem(key)); if (saved?.application && Number.isInteger(saved.step) && saved.step >= 0 && saved.step <= LAST && Array.isArray(saved.history)) state = saved; } catch { /* Storage is optional for the demo. */ }
+try { const saved = JSON.parse(sessionStorage.getItem(key)); if (saved?.application && Number.isInteger(saved.step) && saved.step >= 0 && saved.step <= LAST && Array.isArray(saved.history)) state = { ...saved, application: { ...emptyTT(), ...saved.application } }; } catch { /* Storage is optional for the demo. */ }
 function save() { let ok = true; try { sessionStorage.setItem(key, JSON.stringify(state)); } catch { ok = false; } $('save-status').textContent = ok ? 'Example saved in this tab.' : 'Browser storage is unavailable. Keep this page open to retain your example.'; }
 function show(view) { ['welcome','application','submitted','review'].forEach(id => $(id).hidden = id !== view); const reviewing = view === 'review'; $('reviewer-tab').classList.toggle('active', reviewing); $('applicant-tab').classList.toggle('active', !reviewing); $('reviewer-tab').setAttribute('aria-pressed', String(reviewing)); $('applicant-tab').setAttribute('aria-pressed', String(!reviewing)); if (view === 'welcome') $('resume').hidden = !state.application.name; }
 
