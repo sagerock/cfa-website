@@ -1,0 +1,91 @@
+---
+// Public program calendar. Source: Caitlin's "CfA Programs and Events" Google Calendar
+// (CfA's master calendar, Sage 2026-10-02), refreshed by scripts/sync-program-calendar.mjs.
+// Run dates only (Caitlin 2026-10-05); the filter lives in src/lib/program-calendar.js.
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import data from '../data/program-calendar.json';
+import { months } from '../lib/program-calendar.js';
+
+const today = new Date().toISOString().slice(0, 10);
+const monthList = months(data.events, today);
+
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const parts = (iso) => iso.split('-').map(Number);
+const dow = (iso) => { const [y, m, d] = parts(iso); return DOW[new Date(Date.UTC(y, m - 1, d)).getUTCDay()]; };
+const dayLabel = (s) => {
+  const [, m1, d1] = parts(s.date);
+  if (!s.end) return `${dow(s.date)} ${SHORT[m1 - 1]} ${d1}`;
+  const [, m2, d2] = parts(s.end);
+  return m1 === m2 ? `${SHORT[m1 - 1]} ${d1}–${d2}` : `${SHORT[m1 - 1]} ${d1} – ${SHORT[m2 - 1]} ${d2}`;
+};
+const monthLabel = (key) => { const [y, m] = parts(key); return `${MONTHS[m - 1]} ${y}`; };
+---
+
+<Base title="Program Calendar — Center for Anthroposophy" current="/calendar">
+  <PageHeader
+    eyebrow="Calendar"
+    title="Upcoming programs"
+    lede="When the Center’s programs meet, as far ahead as they are scheduled. Times are Eastern."
+  />
+
+  <section class="band cal">
+    <div class="wrap">
+      {monthList.map((mo) => (
+        <div class="cal-month" data-month={mo.key}>
+          <h2>{monthLabel(mo.key)}</h2>
+          <ul>
+            {mo.rows.map((row) => (
+              <li class="cal-row">
+                <div class="cal-dates">
+                  {row.sessions.map((s) => (
+                    <span class="cal-day" data-end={s.end ?? s.date}>
+                      {dayLabel(s)}{s.time && <span class="cal-time"> · {s.time}</span>}
+                    </span>
+                  ))}
+                </div>
+                <div class="cal-body">
+                  <p class="cal-title">{row.href ? <a href={row.href}>{row.title}</a> : row.title}</p>
+                  {row.href && <p class="cal-links"><a href={row.href}>Program page</a></p>}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+
+      <p class="cal-foot">
+        Program pages have the details and registration. Questions:
+        <a href="mailto:office@centerforanthroposophy.org">office@centerforanthroposophy.org</a>.
+      </p>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      var t = new Date();
+      var iso = t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
+      document.querySelectorAll('.cal [data-end]').forEach(function (el) { if (el.getAttribute('data-end') < iso) el.remove(); });
+      document.querySelectorAll('.cal-row').forEach(function (r) { if (!r.querySelector('.cal-day')) r.remove(); });
+      document.querySelectorAll('.cal-month').forEach(function (m) { if (!m.querySelector('.cal-row')) m.remove(); });
+    })();
+  </script>
+</Base>
+
+<style>
+  .cal-month { margin-bottom: 36px; }
+  .cal-month h2 { font-family: var(--serif); font-size: 1.5rem; border-bottom: 1px solid var(--line); padding-bottom: 8px; margin-bottom: 4px; }
+  .cal-month > ul { list-style: none; margin: 0; padding: 0; }
+  .cal-row { display: grid; grid-template-columns: 290px 1fr; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .cal-dates { display: flex; flex-direction: column; gap: 2px; font-weight: 600; color: var(--green-ink); }
+  .cal-time { font-weight: 400; color: var(--soft); }
+  .cal-title { margin: 0 0 4px; font-family: var(--serif); font-size: 1.15rem; }
+  .cal-title a { color: var(--ink); }
+  .cal-links { margin: 4px 0 0; font-size: 0.92rem; }
+  .cal-foot { color: var(--soft); font-size: 0.9rem; max-width: 70ch; }
+  @media (max-width: 720px) {
+    .cal-row { grid-template-columns: 1fr; gap: 6px; }
+  }
+</style>
