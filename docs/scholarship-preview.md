@@ -106,3 +106,15 @@ the preview can do. This branch now carries the calendar commits, so merge
   a reference (1040 upload described, not enabled), review with the Fellowship affirmation.
 - Dropped from GF 16 in this draft: age, marital status/spouse, citizenship, time at address,
   closest relative, itemized assets/liabilities, credit-check authorization. Easy to restore.
+
+## Universal form, 2026-10-05 (Milan)
+
+No "What would feel manageable?" step: people often apply close to the program.
+Step 1 adds the country; the cost fills in from the program's published tuition
+(`programs[].tuition` in `model.js`, checked against the live pages 2026-10-05;
+Renewal 2027 is unpublished, so CfA confirms it). Step 2 asks the aid requested
+(at most the cost). Step 3 asks employment and monthly income, monthly expenses and
+savings/assets. Applicants outside the US get "Finances at home": the same figures in
+their own currency, plus what they could pay in US dollars and how the exchange rate
+affects them. Staff see cost, aid requested and the applicant's share; foreign
+figures are shown as given, not converted.
