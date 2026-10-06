@@ -1,4 +1,5 @@
-import { ttPrograms, YEARS, STAGES, INCOME_RANGES, HOUSING, TAX_FILED, YES_NO, STEPS, emptyTT, sampleTT, validateTT, ttGuidance, assessment, money } from './teacher-training.js';
+import { ttPrograms, YEARS, STAGES, INCOME_RANGES, HOUSING, TAX_FILED, YES_NO, STEPS, TT_MONEY_FIELDS, emptyTT, sampleTT, validateTT, ttGuidance, parseMonthYear, assessment, money } from './teacher-training.js';
+import { cleanAmount } from './model.js';
 const $ = (id) => document.getElementById(id);
 const escape = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const key = 'cfa-tt-scholarship-preview-v1';
@@ -10,7 +11,8 @@ function show(view) { ['welcome','application','submitted','review'].forEach(id 
 
 const a = () => state.application;
 const input = (name, label, type = 'text', attrs = '') => `<label for="field-${name}">${label}</label><input id="field-${name}" name="${name}" type="${type}" value="${escape(a()[name])}" ${attrs}/>`;
-const money$ = (name, label, attrs = 'min="0" max="100000000" step="1" required') => input(name, label, 'number', attrs);
+// Text boxes, not type=number, so "10,000" can be typed (David, 2026-10-06); cleanAmount stores 10000.
+const money$ = (name, label, attrs = 'required') => input(name, label, 'text', `inputmode="decimal" autocomplete="off" ${attrs}`);
 const textarea = (name, label, attrs = '') => `<label for="field-${name}">${label}</label><textarea id="field-${name}" name="${name}" maxlength="3000" ${attrs}>${escape(a()[name])}</textarea>`;
 const select = (name, label, choices) => `<label for="field-${name}">${label}</label><select id="field-${name}" name="${name}" required><option value="" ${a()[name] ? '' : 'selected'} disabled>Choose one…</option>${choices.map(c => `<option ${a()[name] === c ? 'selected' : ''}>${escape(c)}</option>`).join('')}</select>`;
 const radios = (name, legend, choices) => `<fieldset class="runs"><legend>${legend}</legend>${choices.map(([value, text]) => `<label class="run"><input type="radio" name="${name}" value="${escape(value)}" ${a()[name] === value ? 'checked' : ''} required /><span><strong>${escape(text)}</strong></span></label>`).join('')}</fieldset>`;
@@ -28,19 +30,19 @@ const FIELDS = [
   () => input('name', 'Your name', 'text', 'required maxlength="120" autocomplete="off"') + row(input('email', 'Email', 'email', 'required maxlength="200" autocomplete="off"'), input('phone', 'Phone (optional)', 'tel', 'maxlength="40" autocomplete="off"'))
     + radios('program', 'Which program?', ttPrograms.map(p => [p.id, p.name]))
     + select('stage', 'Are you starting or continuing?', STAGES)
-    + row(select('year', 'Year of study for this application', YEARS), input('graduation', 'Anticipated graduation (month and year)', 'month', 'required'))
+    + row(select('year', 'Year of study for this application', YEARS), input('graduation', 'Anticipated graduation (month and year)', 'text', 'required maxlength="20" placeholder="e.g. July 2028" autocomplete="off"'))
     + radios('diversity', 'Do you wish to apply for a Diversity Scholarship?', YES_NO.map(v => [v, v]))
     + row(input('employer', 'Current employer (optional)', 'text', 'maxlength="200"'), input('position', 'Position (optional)', 'text', 'maxlength="200"'))
     + input('yearsThere', 'How many years there? (optional)', 'number', 'min="0" max="60" step="1"'),
   () => textarea('plans', 'What are your plans after graduating?', 'required')
     + textarea('background', 'Tell us about your employment and educational background.', 'required')
     + textarea('involvement', 'What has been your involvement with Waldorf education and anthroposophy?', 'required'),
-  () => input('tuition', 'Program cost you are applying for help with (USD)', 'number', 'min="1" max="100000" step="0.01" required') + `<p class="muted">${costHint()}</p>`
-    + row(input('monthly', 'What could you contribute each month?', 'number', 'min="0" max="100000" step="0.01" required'), input('months', 'Over how many months?', 'number', 'min="1" max="24" step="1" required'))
-    + input('support', 'Confirmed support from your school or elsewhere (total)', 'number', 'min="0" max="1000000" step="0.01" required') + '<p class="muted">Enter 0 if none. A proposed payment schedule is subject to CfA’s review.</p>',
+  () => money$('tuition', 'Program cost you are applying for help with (USD)') + `<p class="muted">${costHint()}</p>`
+    + row(money$('monthly', 'What could you contribute each month?'), input('months', 'Over how many months?', 'number', 'min="1" max="24" step="1" required'))
+    + money$('support', 'Confirmed support from your school or elsewhere (total)') + '<p class="muted">Enter 0 if none. A proposed payment schedule is subject to CfA’s review.</p>',
   () => row(input('dependents', 'Number of dependents (optional)', 'number', 'min="0" max="20" step="1"'), select('housing', 'Housing (optional)', HOUSING).replace(' required', ''))
     + select('income', 'Annual household income', INCOME_RANGES)
-    + row(money$('expenses', 'Estimated annual living expenses'), money$('schoolTuition', 'Children’s school tuition per year (optional)', 'min="0" max="10000000" step="1"'))
+    + row(money$('expenses', 'Estimated annual living expenses'), money$('schoolTuition', 'Children’s school tuition per year (optional)', ''))
     + row(money$('assets', 'Total assets (savings, investments, property, vehicles)'), money$('liabilities', 'Total debts (mortgage, loans, credit cards)'))
     + '<p class="muted">Rough current values are fine. Enter 0 if none.</p>'
     + row(radios('defaulted', 'Have you ever defaulted on a student loan?', YES_NO.map(v => [v, v])), radios('bankruptcy', 'Have you ever declared bankruptcy?', YES_NO.map(v => [v, v])))
@@ -60,7 +62,7 @@ const GUIDES = [() => 'Use a fictional name as you explore. Antioch and WHiSTEP 
 function summary() {
   const x = a(); const calc = assessment(x, x.tuition);
   return details([
-    ['Name', x.name], ['Email', x.email], ['Program', program()?.name || 'Not selected'], ['Starting or continuing', orNone(x.stage)], ['Year of study', orNone(x.year)], ['Anticipated graduation', orNone(x.graduation, (v) => new Date(`${v}-15T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' }))], ['Diversity Scholarship', orNone(x.diversity)],
+    ['Name', x.name], ['Email', x.email], ['Program', program()?.name || 'Not selected'], ['Starting or continuing', orNone(x.stage)], ['Year of study', orNone(x.year)], ['Anticipated graduation', orNone(parseMonthYear(x.graduation) || x.graduation, (v) => !/^\d{4}-\d{2}$/.test(v) ? v : new Date(`${v}-15T12:00:00Z`).toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' }))], ['Diversity Scholarship', orNone(x.diversity)],
     ['Employer / position', [x.employer, x.position].filter(Boolean).join(', ') || 'Not provided'],
     ['Program cost', orNone(x.tuition, money)], ['Monthly contribution', orNone(x.monthly, money)], ['Number of months', x.months], ['Confirmed outside support', orNone(x.support, money)],
     ['Dependents', orNone(x.dependents)], ['Housing', orNone(x.housing)], ['Annual household income', orNone(x.income)], ['Annual living expenses', orNone(x.expenses, money)], ['Children’s school tuition', orNone(x.schoolTuition, money)],
@@ -79,7 +81,7 @@ function render(focus = false) {
   if (focus) $('step-title').focus();
 }
 
-$('application-form').addEventListener('input', (event) => { const t = event.target; if (!t.name || !(t.name in state.application)) return; state.application[t.name] = t.type === 'checkbox' ? t.checked : t.value; if (t.name !== 'affirmed') state.application.affirmed = false; save(); if (state.step === 1) $('guide-text').textContent = ttGuidance(a()); });
+$('application-form').addEventListener('input', (event) => { const t = event.target; if (!t.name || !(t.name in state.application)) return; state.application[t.name] = t.type === 'checkbox' ? t.checked : TT_MONEY_FIELDS.includes(t.name) ? cleanAmount(t.value) : t.value; if (t.name !== 'affirmed') state.application.affirmed = false; save(); if (state.step === 1) $('guide-text').textContent = ttGuidance(a()); });
 $('application-form').addEventListener('submit', (event) => { event.preventDefault(); const error = validateTT(a(), state.step); if (error) { $('form-error').textContent = error; return; } if (state.step < LAST) { state.step++; save(); render(true); } else { state.submitted = true; state.history.push({ at: new Date().toISOString(), text: 'Applicant submitted this fictional example.' }); save(); show('submitted'); } });
 $('back').onclick = () => { state.step--; save(); render(true); };
 $('demo-login').onsubmit = (event) => { event.preventDefault(); $('demo-login').hidden = true; $('demo-verify').hidden = false; $('demo-code').focus(); };

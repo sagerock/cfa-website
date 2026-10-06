@@ -73,3 +73,16 @@ test('step one needs a country, program, dates and tuition option',()=>{
   assert.match(validateStep({...a,run:''},0,'2026-09-23'),/dates/);
   assert.match(validateStep({...a,run:'starlight-2026-27'},0,'2026-09-23'),/dates/);
 });
+test('money fields take commas and dollar signs (David, 2026-10-06)',async()=>{
+  const { cleanAmount } = await import('../../src/lib/scholarships/model.js');
+  assert.equal(cleanAmount('10,000'),'10000'); assert.equal(cleanAmount('$10,000.50'),'10000.50'); assert.equal(cleanAmount(' 1.500.000 '),'1500000'); assert.equal(cleanAmount('0'),'0');
+  const a=sampleApplication(); assert.equal(validateStep({...a,income:cleanAmount('3,200'),assets:cleanAmount('$6,000')},2,'2026-10-06'),'');
+  assert.match(validateStep({...a,income:cleanAmount('lots')},2,'2026-10-06'),/income/);
+  const s=sampleTT(); assert.equal(validateTT({...s,tuition:cleanAmount('6,400'),support:cleanAmount('1,500')},2),'');
+});
+test('graduation takes July 2028, 07/2028 and 07/28 (David, 2026-10-06)',async()=>{
+  const { parseMonthYear } = await import('../../src/lib/scholarships/teacher-training.js');
+  for (const v of ['July 2028','july 2028','Jul 2028','Jul. 2028',"Jul '28",'07/2028','7/2028','07/28','07-2028','2028-07']) assert.equal(parseMonthYear(v),'2028-07',v);
+  for (const v of ['','2028','13/2028','July','00/28','Julember 2028']) assert.equal(parseMonthYear(v),null,v);
+  const s=sampleTT(); for (const v of ['July 2028','07/2028','07/28']) assert.equal(validateTT({...s,graduation:v},0),'',v);
+});

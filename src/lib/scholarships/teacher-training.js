@@ -35,6 +35,25 @@ export const emptyTT = () => ({
   affirmed: false,
 });
 
+export const TT_MONEY_FIELDS = ['tuition', 'monthly', 'support', 'expenses', 'schoolTuition', 'assets', 'liabilities'];
+
+// David, 2026-10-06: Safari and Firefox show the month picker as a plain text box, so
+// "July 2028", "07/2028" and "07/28" were all refused. Accept the ways people write a
+// month and year; returns "YYYY-MM" or null.
+const MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
+export function parseMonthYear(value) {
+  const s = String(value ?? '').trim().toLowerCase();
+  let month; let year;
+  let m = s.match(/^(\d{4})[-/.](\d{1,2})$/);
+  if (m) { year = m[1]; month = Number(m[2]); }
+  else if ((m = s.match(/^(\d{1,2})\s*[-/.]\s*(\d{2}|\d{4})$/))) { month = Number(m[1]); year = m[2]; }
+  else if ((m = s.match(/^([a-z]{3,})\.?,?\s*(?:of\s+)?'?(\d{2}|\d{4})$/))) { month = MONTHS.findIndex(name => name.startsWith(m[1]) || (m[1] === 'sept' && name === 'september')) + 1; year = m[2]; }
+  else return null;
+  if (year.length === 2) year = `20${year}`;
+  if (!(month >= 1 && month <= 12) || Number(year) < 2000 || Number(year) > 2099) return null;
+  return `${year}-${String(month).padStart(2, '0')}`;
+}
+
 const nonNegative = (v) => v !== '' && v != null && Number.isFinite(Number(v)) && Number(v) >= 0;
 
 export function validateTT(a, step) {
@@ -44,7 +63,7 @@ export function validateTT(a, step) {
     if (!ttPrograms.some(p => p.id === a.program)) return 'Please choose a program.';
     if (!STAGES.includes(a.stage)) return 'Please tell us whether you are starting or continuing.';
     if (!YEARS.includes(a.year)) return 'Please choose your year of study.';
-    if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(a.graduation)) return 'Please enter your anticipated graduation month and year.';
+    if (!parseMonthYear(a.graduation)) return 'Please enter your anticipated graduation month and year, for example July 2028.';
     if (!YES_NO.includes(a.diversity)) return 'Please answer the Diversity Scholarship question.';
   }
   if (step === 1) {

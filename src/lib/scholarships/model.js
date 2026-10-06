@@ -63,6 +63,15 @@ export const STEPS = ['About you', 'Your request', 'Your finances', 'Review & su
 export const isInternational = (a) => !!a.country && a.country !== US;
 
 export const emptyApplication = () => ({ name: '', school: '', country: '', otherCountry: '', program: '', run: '', option: '', aid: '', employment: '', household: '', income: '', expenses: '', assets: '', currency: '', payUsd: '', exchange: '', teacherTraining: '', circumstances: '', confirmed: false });
+// David, 2026-10-06: "10,000" was refused. Money fields are plain text boxes now, and
+// what the applicant types is stored as a bare number: $, spaces and thousands commas
+// go, and so do dots when there are several (1.500.000 written abroad).
+export const MONEY_FIELDS = ['aid', 'income', 'expenses', 'assets', 'payUsd'];
+export function cleanAmount(value) {
+  let s = String(value ?? '').replace(/[\s$,]/g, '');
+  if ((s.match(/\./g) || []).length > 1) s = s.replace(/\./g, '');
+  return s;
+}
 export function money(value) {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(value);
 }

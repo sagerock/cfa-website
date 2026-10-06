@@ -1,4 +1,4 @@
-import { programs, runsFor, TEACHER_TRAINING_URL, TEACHER_TRAINING_PLANS, COUNTRIES, EMPLOYMENT, STEPS, TUITION_CHECKED, isInternational, tuitionFor, costOf, request, emptyApplication, sampleApplication, sampleInternational, money, amount, validateStep, guidance } from './model.js';
+import { programs, runsFor, TEACHER_TRAINING_URL, TEACHER_TRAINING_PLANS, COUNTRIES, EMPLOYMENT, STEPS, TUITION_CHECKED, isInternational, tuitionFor, costOf, request, emptyApplication, sampleApplication, sampleInternational, money, amount, validateStep, guidance, MONEY_FIELDS, cleanAmount } from './model.js';
 const $ = (id) => document.getElementById(id);
 const escape = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const key = 'cfa-scholarship-preview-v4';
@@ -12,6 +12,8 @@ function show(view) { ['welcome','application','submitted','review'].forEach(id 
 const input = (name, label, type = 'text', attrs = '') => `<label for="field-${name}">${label}</label><input id="field-${name}" name="${name}" type="${type}" value="${escape(state.application[name])}" ${attrs}/>`;
 const textarea = (name, label) => `<label for="field-${name}">${label}</label><textarea id="field-${name}" name="${name}" maxlength="3000">${escape(state.application[name])}</textarea>`;
 const select = (name, label, choices) => `<label for="field-${name}">${label}</label><select id="field-${name}" name="${name}" required><option value="" ${state.application[name] ? '' : 'selected'} disabled>Choose one…</option>${choices.map(c => `<option ${state.application[name] === c ? 'selected' : ''}>${escape(c)}</option>`).join('')}</select>`;
+// Money boxes are text so "10,000" can be typed (David, 2026-10-06); cleanAmount stores 10000.
+const CASH = 'required inputmode="decimal" autocomplete="off"';
 const orNone = (v, f = (x) => x) => v === '' || v == null ? 'Not provided' : f(v);
 const details = (rows) => `<dl class="detail-list">${rows.map(([label,value]) => `<div><dt>${escape(label)}</dt><dd>${escape(value)}</dd></div>`).join('')}</dl>`;
 const chosen = (a) => { const program = programs.find(p => p.id === a.program); return { program, run: program ? runsFor(a.program, today).find(r => r.id === a.run) : null }; };
@@ -59,20 +61,20 @@ function render(focus = false) {
   document.querySelectorAll('#steps li').forEach((el,i) => { el.classList.toggle('current',i===state.step); if(i===state.step) el.setAttribute('aria-current','step'); else el.removeAttribute('aria-current'); });
   $('back').hidden = state.step === 0; $('next').textContent = state.step === 3 ? 'Submit example →' : 'Continue →'; $('form-error').textContent = '';
   if(state.step === 0) $('fields').innerHTML = input('name','Your name','text','required maxlength="120" autocomplete="off"') + input('school','School or organization (optional)','text','maxlength="200" autocomplete="off"') + countryField(a) + programFields(a);
-  if(state.step === 1) { const cost = costOf(a); $('fields').innerHTML = (cost ? `<p class="cost-line">Program cost: <strong>${money(cost)}</strong></p>` : '<p class="cost-line">Program cost: <strong>to be confirmed by CfA</strong></p>') + input('aid','How much financial aid are you asking for? (USD)','number',`min="1" ${cost ? `max="${cost}"` : 'max="100000"'} step="0.01" required`) + select('teacherTraining','Do you intend to pursue Waldorf teacher training?',TEACHER_TRAINING_PLANS); }
+  if(state.step === 1) { const cost = costOf(a); $('fields').innerHTML = (cost ? `<p class="cost-line">Program cost: <strong>${money(cost)}</strong></p>` : '<p class="cost-line">Program cost: <strong>to be confirmed by CfA</strong></p>') + input('aid','How much financial aid are you asking for? (USD)','text',CASH) + select('teacherTraining','Do you intend to pursue Waldorf teacher training?',TEACHER_TRAINING_PLANS); }
   if(state.step === 2) {
     const unit = intl ? (a.currency ? ` (${escape(a.currency)})` : ' (your currency)') : ' (USD)';
     $('fields').innerHTML = select('employment','Are you currently employed?',EMPLOYMENT) + input('household','How many in the family? (optional)','number','min="1" max="50" step="1"')
       + (intl ? input('currency','Which currency are you paid in?','text','required maxlength="60" placeholder="e.g. Mexican peso (MXN)" autocomplete="off"') : '')
-      + `<div class="field-row"><div>${input('income',`Monthly family income${unit}`,'number','min="0" step="1" required')}</div><div>${input('expenses',`Monthly family expenses${unit}`,'number','min="0" step="1" required')}</div></div>`
-      + input('assets',`Savings, investments and other assets${unit}`,'number','min="0" step="1" required')
-      + (intl ? input('payUsd','What could you pay toward the cost in US dollars?','number','min="0" step="1" required') + textarea('exchange','How does the exchange rate affect what you can pay? (optional)') : '')
+      + `<div class="field-row"><div>${input('income',`Monthly family income${unit}`,'text',CASH)}</div><div>${input('expenses',`Monthly family expenses${unit}`,'text',CASH)}</div></div>`
+      + input('assets',`Savings, investments and other assets${unit}`,'text',CASH)
+      + (intl ? input('payUsd','What could you pay toward the cost in US dollars?','text',CASH) + textarea('exchange','How does the exchange rate affect what you can pay? (optional)') : '')
       + textarea('circumstances','Anything else you wish to share in support of your request? (optional)') + '<p class="muted">Zero is an acceptable answer. No uploads, tax returns or account numbers on this form.</p>';
   }
   if(state.step === 3) $('fields').innerHTML = summary() + `<label><input name="confirmed" type="checkbox" ${a.confirmed ? 'checked' : ''} required />I have reviewed these fictional answers.</label>`;
   if(focus) $('step-title').focus();
 }
-$('application-form').addEventListener('input',event=>{ const target=event.target; if(!target.name || !(target.name in state.application)) return; state.application[target.name] = target.type === 'checkbox' ? target.checked : target.value; if(target.name !== 'confirmed') state.application.confirmed = false; if(target.name === 'program') { state.application.run = ''; state.application.option = ''; render(); $('field-program').focus(); } if(target.name === 'country') { render(); $('field-country').focus(); } save(); if(state.step===1) $('guide-text').textContent = guidance(state.application); });
+$('application-form').addEventListener('input',event=>{ const target=event.target; if(!target.name || !(target.name in state.application)) return; state.application[target.name] = target.type === 'checkbox' ? target.checked : MONEY_FIELDS.includes(target.name) ? cleanAmount(target.value) : target.value; if(target.name !== 'confirmed') state.application.confirmed = false; if(target.name === 'program') { state.application.run = ''; state.application.option = ''; render(); $('field-program').focus(); } if(target.name === 'country') { render(); $('field-country').focus(); } save(); if(state.step===1) $('guide-text').textContent = guidance(state.application); });
 $('application-form').addEventListener('submit',event=>{ event.preventDefault(); const error=validateStep(state.application,state.step,today); if(error) { $('form-error').textContent=error; return; } if(state.step<3) { state.step++; save(); render(true); } else { state.submitted=true; state.history.push({at:new Date().toISOString(),text:'Applicant submitted this fictional example.'}); save(); show('submitted'); } });
 $('back').onclick=()=>{state.step--;save();render(true);};
 $('demo-login').onsubmit=event=>{event.preventDefault();$('demo-login').hidden=true;$('demo-verify').hidden=false;$('demo-code').focus();};
