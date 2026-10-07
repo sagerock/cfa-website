@@ -136,7 +136,7 @@ Curriculum Modules
 
 ###### Plus artistic courses in:
 
-- Creative Speech with Debbie Spitulnik & Rachel Cohen
+- Creative Speech with Rachel Cohen
 
 - Drama with Nathan Wilcox
 
@@ -225,10 +225,6 @@ As a first year WHiSTEP student, I came away with so many new curriculum ideas, 
 I appreciated all of the variety. There was a nice balance of hands-on work and abstract thinking. Classes felt stimulating and exciting. There was a clear structure and flexibility based on student contributions. I learned a great deal. I can’t believe how much we covered.
 
 **I can’t believe how much we covered.** (Physical Sciences)
-
-As a member of the WHiSTEP faculty for the past 25 years, I can say with some longer-range perspective that the program has helped to cultivate an entire generation of teachers, many of whom now anchor Waldorf high schools across North America. Although these trainees have come to Wilton with varying degrees of teaching experience, they nearly always leave with the tools to strengthen their grasp of the philosophical and pedagogical underpinnings of Waldorf education. This past summer I was most impressed by the nearly seamless transition crafted by Douglas Gerwin, founder and long-time “Captain” of the program, and David Barham, current director. Both remain committed to building upon the foundational principles of Waldorf education while adapting the program to meet today’s urgent challenges.
-
-**The program has helped to cultivate an entire generation of teachers.** David Sloan
 
 The class felt like a pure learning experience. I learned a really incredible amount.
 
