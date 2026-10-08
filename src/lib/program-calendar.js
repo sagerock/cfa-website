@@ -20,8 +20,13 @@ export const isPublic = (title) => !!title && !INTERNAL.some((re) => re.test(tit
 // never written into this repository. "Confirmed" alone does not hold an entry.
 export const isHeld = (description) => /\bconfirm\b/i.test(description ?? '');
 export const seriesKey = (title) => title.replace(/\s*\((Day \d+|\d+ of \d+)\)\s*$/i, '').trim();
+// Entries Caitlin has cleared in writing even though her "confirm" note is still on them.
+// The nightly sync re-reads her notes, so a cleared entry must be listed here to stay shown.
+//   Caitlin, 2026-10-08 (jax@ 1a11c2845fa0e304): "The Blanning sessions are, in fact,
+//   different sessions. So include both."
+export const CLEARED = new Set(['Starlight Rays: Dr. Adam Blanning']);
 export function publicEvents(raw) {
-  const held = new Set(raw.filter((e) => isHeld(e.description)).map((e) => seriesKey(e.title)));
+  const held = new Set(raw.filter((e) => isHeld(e.description) && !CLEARED.has(seriesKey(e.title))).map((e) => seriesKey(e.title)));
   return raw.filter((e) => isPublic(e.title) && !held.has(seriesKey(e.title)));
 }
 

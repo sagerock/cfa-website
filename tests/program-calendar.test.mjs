@@ -51,6 +51,10 @@ test('entries with a "confirm" note are held back, with their series (Caitlin, 2
   ];
   assert.deepEqual(publicEvents(raw).map((e) => e.title), ['WLD: Spring Residency (Keene, NH)']);
 });
+test('an entry Caitlin cleared stays shown despite its "confirm" note (Caitlin, 2026-10-08)', () => {
+  const raw = [{ title: 'Starlight Rays: Dr. Adam Blanning', start: '2026-10-31T16:00:00-03:00', end: '2026-10-31T17:30:00-03:00', description: 'Confirm whether that is this session or a separate one.' }];
+  assert.deepEqual(publicEvents(raw).map((e) => e.title), ['Starlight Rays: Dr. Adam Blanning']);
+});
 test('the committed snapshot holds no event descriptions', () => {
   for (const e of data.events) assert.equal(e.description, undefined, e.title);
 });
