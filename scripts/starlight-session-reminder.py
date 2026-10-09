@@ -11,15 +11,36 @@ ahead. The hour mode is designed for a Saturday 2:00 pm ET cron and looks
 from __future__ import annotations
 
 import argparse
+import http.client
 import json
+import socket
+import ssl
 import subprocess
 import sys
+import time
+import urllib.error
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
 COURSE_SLUG = "starlight-rays-2026-2027"
+# Same lesson as starlight-remind.py (2026-10-09): one TLS handshake timeout to
+# Supabase must not cost a client-facing send that only gets one chance.
+LOOKUP_ATTEMPTS = 4
+LOOKUP_BACKOFF_SECONDS = (2, 6, 15)
+TRANSIENT_EXCEPTIONS = (
+    urllib.error.URLError,
+    socket.timeout,
+    ssl.SSLError,
+    http.client.HTTPException,
+    ConnectionError,
+    TimeoutError,
+)
+# The send itself is retried once as a whole. starlight-remind.py skips anyone it
+# already sent to in the last few hours, so a second pass finishes an interrupted
+# roster and sends nobody a duplicate.
+SEND_RETRY_WAIT_SECONDS = 60
 
 
 def parse_env(path: Path) -> dict[str, str]:
@@ -47,9 +68,21 @@ def main() -> None:
     headers = {"apikey": service_key, "Authorization": f"Bearer {service_key}"}
 
     def rest(path: str):
-        request = urllib.request.Request(f"{supabase_url}/rest/v1/{path}", headers=headers)
-        with urllib.request.urlopen(request, timeout=60) as response:
-            return json.load(response)
+        for attempt in range(1, LOOKUP_ATTEMPTS + 1):
+            request = urllib.request.Request(f"{supabase_url}/rest/v1/{path}", headers=headers)
+            try:
+                with urllib.request.urlopen(request, timeout=60) as response:
+                    return json.load(response)
+            except TRANSIENT_EXCEPTIONS as error:
+                if attempt >= LOOKUP_ATTEMPTS:
+                    raise
+                wait = LOOKUP_BACKOFF_SECONDS[min(attempt - 1, len(LOOKUP_BACKOFF_SECONDS) - 1)]
+                print(
+                    f"lookup retry {attempt + 1}/{LOOKUP_ATTEMPTS} in {wait}s after "
+                    f"{type(error).__name__}: {error}",
+                    file=sys.stderr,
+                )
+                time.sleep(wait)
 
     now = datetime.now(timezone.utc)
     if args.timing == "hour":
@@ -98,6 +131,16 @@ def main() -> None:
         command += ["--apply", "--confirm-template", template]
     completed = subprocess.run(command, capture_output=True, text=True)
     print(completed.stdout.strip())
+    if completed.returncode != 0 and not args.dry_run:
+        print(completed.stderr.strip(), file=sys.stderr)
+        print(
+            f"send exited {completed.returncode}; retrying the roster once in "
+            f"{SEND_RETRY_WAIT_SECONDS}s (already-sent recipients are skipped)",
+            file=sys.stderr,
+        )
+        time.sleep(SEND_RETRY_WAIT_SECONDS)
+        completed = subprocess.run(command, capture_output=True, text=True)
+        print(completed.stdout.strip())
     if completed.returncode != 0:
         print(completed.stderr.strip(), file=sys.stderr)
         sys.exit(1)
