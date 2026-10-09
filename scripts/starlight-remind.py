@@ -16,11 +16,15 @@ Example session line: "September 5, 3:00-4:30 pm Eastern, with Dr. Martyn Rawson
 from __future__ import annotations
 
 import argparse
+import http.client
 import json
+import socket
+import ssl
+import sys
 import time
 import urllib.error
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -45,19 +49,60 @@ def parse_env(path: Path) -> dict[str, str]:
     return values
 
 
-def request_json(url: str, headers: dict[str, str], method: str = "GET", body: Any | None = None) -> tuple[int, Any]:
+# A transient network blip used to end the whole send. On 2026-10-09 the Friday
+# T-24h run reached recipient 139 of 263 and a single TLS handshake timeout to
+# Supabase raised URLError out of the loop, so the remaining 125 people got no
+# Zoom link for a session the next afternoon and the summary that names who was
+# missed was never printed either. Transport failures and 429/5xx are retried in
+# place; everything else (401, 404, a real 400 from the function) still fails on
+# the first try, because those are not going to get better by waiting.
+RETRY_ATTEMPTS = 4
+RETRY_BACKOFF_SECONDS = (2, 6, 15)  # 23s of waiting, 4 x 60s of timeout worst case
+TRANSIENT_EXCEPTIONS = (
+    urllib.error.URLError,  # covers the ssl handshake timeout that broke 2026-10-09
+    socket.timeout,
+    ssl.SSLError,
+    http.client.HTTPException,
+    ConnectionError,
+    TimeoutError,
+)
+
+
+def request_json(
+    url: str,
+    headers: dict[str, str],
+    method: str = "GET",
+    body: Any | None = None,
+    attempts: int = RETRY_ATTEMPTS,
+) -> tuple[int, Any]:
     data = json.dumps(body).encode() if body is not None else None
-    request = urllib.request.Request(url, headers=headers, method=method, data=data)
-    try:
-        with urllib.request.urlopen(request, timeout=60) as response:
-            raw = response.read()
-            return response.status, json.loads(raw) if raw.strip() else {}
-    except urllib.error.HTTPError as error:
-        detail = error.read().decode("utf-8", errors="replace")
+    last_error: Exception | None = None
+    for attempt in range(1, attempts + 1):
+        request = urllib.request.Request(url, headers=headers, method=method, data=data)
         try:
-            return error.code, json.loads(detail)
-        except json.JSONDecodeError:
-            return error.code, {"raw": detail[:200]}
+            with urllib.request.urlopen(request, timeout=60) as response:
+                raw = response.read()
+                return response.status, json.loads(raw) if raw.strip() else {}
+        except urllib.error.HTTPError as error:
+            detail = error.read().decode("utf-8", errors="replace")
+            try:
+                payload: Any = json.loads(detail)
+            except json.JSONDecodeError:
+                payload = {"raw": detail[:200]}
+            if error.code in (408, 425, 429, 500, 502, 503, 504) and attempt < attempts:
+                last_error = error
+            else:
+                return error.code, payload
+        except TRANSIENT_EXCEPTIONS as error:  # noqa: PERF203 - retry is the point
+            if attempt >= attempts:
+                raise
+            last_error = error
+        time.sleep(RETRY_BACKOFF_SECONDS[min(attempt - 1, len(RETRY_BACKOFF_SECONDS) - 1)])
+        print(
+            f"retry {attempt + 1}/{attempts} after {type(last_error).__name__}: {last_error}",
+            file=sys.stderr,
+        )
+    raise RuntimeError(f"{method} {url.split('?')[0]} failed after {attempts} attempts: {last_error}")
 
 
 def main() -> None:
@@ -72,6 +117,10 @@ def main() -> None:
                         help="send one real email (first enrollee's content) to this address")
     parser.add_argument("--apply", action="store_true", help="send to the full active roster")
     parser.add_argument("--confirm-template", help="must repeat the template name when using --apply")
+    parser.add_argument("--skip-sent-within-hours", type=float, default=6.0,
+                        help="with --apply, skip anyone already sent this message type in the last "
+                             "N hours, so a run that died mid-roster can be re-run without "
+                             "double-sending. 0 disables the guard.")
     parser.add_argument("--supabase-env", type=Path, default=dev_root / "email-marketing-tool-1/.env")
     parser.add_argument("--ops-token-env", type=Path, default=Path("/mnt/d/dev/secrets/cfa-learn-ops.env"))
     args = parser.parse_args()
@@ -196,21 +245,56 @@ def main() -> None:
     if args.confirm_template != args.template:
         raise RuntimeError("--apply requires --confirm-template to repeat the template name")
 
+    # Resume guard. cfa-learn-remind is not idempotent - it sends whatever it is
+    # asked to send - so re-running after a partial failure would give the people
+    # who already got the email a second copy. Anyone recorded as sent inside the
+    # window is skipped, which makes a re-run finish the interrupted roster and
+    # nothing more. The window is short enough that Saturday's T-1h send (about
+    # 23.5 hours after the Friday T-24h send, same message_type) is never
+    # suppressed by it.
+    message_type = "welcome" if args.template == "launch" else "session_reminder"
+    already_sent: set[str] = set()
+    if args.skip_sent_within_hours > 0:
+        cutoff = (now - timedelta(hours=args.skip_sent_within_hours)).strftime("%Y-%m-%dT%H:%M:%SZ")
+        already_sent = {
+            row["enrollment_id"]
+            for row in rest(
+                f"cfa_learn_email_events?message_type=eq.{message_type}"
+                f"&status=eq.sent&sent_at=gte.{cutoff}"
+                "&select=enrollment_id&limit=5000"
+            )
+        }
+    pending = [row for row in roster if row["enrollment_id"] not in already_sent]
+    skipped = len(roster) - len(pending)
+
+    # One recipient's network failure must not discard everybody after them in the
+    # roster; it is recorded as a failure and the loop keeps going, so the summary
+    # always names exactly who did not get the email.
     sent, failed = 0, []
-    for row in roster:
-        status, result = send(row["enrollment_id"])
-        if status == 200 and result.get("ok"):
-            sent += 1
+    for index, row in enumerate(pending, start=1):
+        try:
+            status, result = send(row["enrollment_id"])
+        except Exception as error:  # noqa: BLE001 - any send failure is one person, not the run
+            failed.append({"email": row["email"], "status": None, "error": f"{type(error).__name__}: {error}"})
+            print(f"{index}/{len(pending)} {row['email']} FAILED: {error}", file=sys.stderr)
         else:
-            failed.append({"email": row["email"], "status": status, "error": result.get("error")})
+            if status == 200 and result.get("ok"):
+                sent += 1
+            else:
+                failed.append({"email": row["email"], "status": status, "error": result.get("error")})
         time.sleep(0.4)  # stay well under SendGrid and function rate limits
     print(json.dumps({
         "mode": "applied",
         "template": args.template,
         "sent": sent,
         "failed": failed,
+        "skipped_already_sent": skipped,
         "total": len(roster),
     }, indent=2))
+    if failed:
+        # A partial send is not a healthy run: somebody is missing the Zoom link
+        # and the wrapper should page rather than report success.
+        sys.exit(3)
 
 
 if __name__ == "__main__":
