@@ -35,7 +35,7 @@ To donate:
 
 - You may select to give using your credit card (3% processing fee)
 
-- Or you may mail your check made out to Center for Anthroposophy (not Kairos please), to: Center for Anthroposophy, PO Box 15, McMinnville, TN 37111 and put in the memo: *Crisis Intervention*
+- Or you may mail your check made out to Center for Anthroposophy (not Kairos please), to: Center for Anthroposophy, 29 N. Lincoln St., Keene, NH 03431 and put in the memo: *Crisis Intervention*
 
 - All donations to the Center for Anthroposophy are tax deductible and you will receive confirmation and receipt for your files.
 
