@@ -1,0 +1,261 @@
+{
+  "updated": "2026-10-11",
+  "policies": {
+    "cancellation_url": "https://learn.centerforanthroposophy.org/policies/cancellation/",
+    "cancellation": "Applies to every CfA program unless the program page says otherwise. Cancel in writing to office@centerforanthroposophy.org. At least 30 days before the start: full refund less a $75 cancellation fee. Within 30 days of the start or once in session: no refund, but the registration can be transferred to a colleague by emailing the office. Payment plans are a commitment to the full fee; the same 30-day rule applies. Access pauses if an installment is more than 30 days late and resumes when the plan is current; the balance can be paid early through the office. Single-session tickets and bundles include the recording and are not refundable, but can be transferred before the session. If CfA cancels a program, full refund.",
+    "payment_methods": "Card through the program sign-up page. Checks payable to the Center for Anthroposophy, mailed to 29 N. Lincoln St., Keene, NH 03431 (never a PO Box).",
+    "canada": "On the learn.centerforanthroposophy.org sign-up pages, Canadian participants receive 20% off automatically from the billing address; nothing to enter. For programs that register elsewhere, Canadian visitors should ask the program director or jax@centerforanthroposophy.org.",
+    "contacts": {
+      "registration_and_payments": "jax@centerforanthroposophy.org",
+      "office": "office@centerforanthroposophy.org",
+      "phone": "603-654-2566",
+      "communications": "communications@centerforanthroposophy.org"
+    },
+    "request_info_url": "https://learn.centerforanthroposophy.org/contact/"
+  },
+  "programs": [
+    {
+      "key": "explorations-online",
+      "name": "Explorations Online",
+      "one_line": "A nine-month online course in the anthroposophical foundations of Waldorf education, with live weekend sessions that are all recorded.",
+      "who_its_for": "Parents, teachers, administrators, and anyone who wants to learn more about Waldorf (Steiner) education and anthroposophy. It meets the foundation-studies requirement for further Waldorf teacher training and can be taken alongside Building Bridges, Waldorf Leadership Development, and the Center's other teacher-training programs.",
+      "format": "online",
+      "schedule_text": "2026–27 cycle runs August 2026 – May 2027. Classes meet twice a month on Saturdays and Sundays, 12:00–2:00 p.m. ET (9:00–11:00 a.m. PT). Each class opens with 30 minutes of artistic work. All 30 sessions are recorded.",
+      "director": {
+        "name": "Deborah Dornemann",
+        "email": "deborah@centerforanthroposophy.org"
+      },
+      "page_url": "https://learn.centerforanthroposophy.org/programs/explorations-online/",
+      "register": {
+        "kind": "thinkific",
+        "checkout_url": "https://courses.centerforanthroposophy.org/enroll/3734011?price_id=4686265",
+        "course_url": "https://courses.centerforanthroposophy.org/courses/explorations-online-2026-2027-fall-cohort"
+      },
+      "kairos": false,
+      "open": true,
+      "notes_for_jax": "The page states tuition as \"$950\" for the nine-month course, with 20% off for schools signing up 3–5 teachers and 50% off for 6+; Canadian students email the director for a discount code. The 2026–27 fall cycle began August 22, 2026, so anyone registering now joins mid-cycle; check with Deborah before promising a late start. The page mentions a spring start option, but no spring registration link is posted. A certificate of completion requires attending at least 80% of live sessions with camera on; international students outside North American time zones can ask the director about a Certificate of Participation from recordings. Limited financial aid: contact the director before registering."
+    },
+    {
+      "key": "building-bridges",
+      "name": "Building Bridges to Waldorf Teacher Training",
+      "one_line": "A 12-month foundation studies program in anthroposophy and the arts, with in-person long weekends in a host community plus some online learning.",
+      "who_its_for": "Practicing teachers who want an introduction to the anthroposophical foundations of Waldorf education, often using occasional professional days. Combined with Explorations, it can lead to advanced standing (7 graduate credits) in Antioch University's Waldorf Teacher Education Program.",
+      "format": "hybrid",
+      "schedule_text": "Current location: Mountain Phoenix Community School, Wheat Ridge (Denver area), Colorado; this cohort began February 12, 2026. Remaining dates listed on the page: October 8–11, 2026; two follow-up Zoom sessions in November/December 2026; February 12–14, 2027; make-up session April 30–May 1, 2027 if needed. Most in-person classes run Thursday 7–9 pm and Friday–Sunday 8:30 am–4:30 pm.",
+      "director": {
+        "name": "Torin Finser",
+        "email": "torin@centerforanthroposophy.org"
+      },
+      "page_url": "https://learn.centerforanthroposophy.org/programs/building-bridges/",
+      "register": {
+        "kind": "external",
+        "url": "https://centerforanthroposophy.org/building-bridges-registration/"
+      },
+      "kairos": false,
+      "open": false,
+      "notes_for_jax": "The page states tuition as \"Students taking all 12 months (Including Explorations): $4,450\" and \"Students who have completed foundational (Explorations) studies: $3,600\", with a 3% processing fee on online card payments. The Denver cohort has been running since February 2026 and no next location or start date is posted, so treat new enrollment as an inquiry for the director even though the registration form is still linked. Required reading is Guided Self Study by Torin Finser."
+    },
+    {
+      "key": "waldorf-high-school",
+      "name": "Waldorf High School Teacher Education Program (WHiSTEP)",
+      "one_line": "A part-time, graduate-level, low-residency certificate program for Waldorf high school teachers, held over three consecutive Julys with online study in between.",
+      "who_its_for": "High school teachers who want to deepen their Waldorf preparation, professionals seeking a career change, and practicing educators. Applicants need a university degree or equivalent and preparatory foundational studies in anthroposophy and the arts (available through Explorations); experience with adolescents is preferred.",
+      "format": "hybrid",
+      "schedule_text": "A new three-summer cycle begins each July in southern New Hampshire. Each cohort does three summer intensives plus two years of online seminars, mentoring, a research project, and an internship in a Waldorf high school. For the cohort that began in July 2026, Summer II is July 10–25, 2027 and Summer III is July 15–30, 2028.",
+      "director": {
+        "name": "David Barham",
+        "email": "david@centerforanthroposophy.org"
+      },
+      "page_url": "https://learn.centerforanthroposophy.org/programs/waldorf-high-school/",
+      "register": {
+        "kind": "external",
+        "url": "https://centerforanthroposophy.org/application-to-the-waldorf-high-school-teacher-education-program/"
+      },
+      "kairos": false,
+      "open": true,
+      "notes_for_jax": "This is an application, not instant registration. The application page asks for \"an application fee of $100.00\", followed by an interview with the program director and a financial review. The page advises applying early so preferred subject specializations are available. Graduates receive a Certificate in Waldorf High School Teacher Education. Tuition, payment plans and tuition assistance are on the program's WordPress pages; send detailed tuition questions to David."
+    },
+    {
+      "key": "antioch-university",
+      "name": "Antioch University Waldorf Teacher Education Program",
+      "one_line": "An M.Ed. degree in Waldorf (elementary) teacher education at Antioch University New England, taught in part by Center for Anthroposophy faculty.",
+      "who_its_for": "People who want a master's degree and Waldorf teacher credentials. Building Bridges and Explorations can lead to advanced standing in the program.",
+      "format": "hybrid",
+      "schedule_text": "Schedule and admissions are set by Antioch University New England; see Antioch's Waldorf Programs site.",
+      "director": {
+        "name": null,
+        "email": null
+      },
+      "page_url": "https://learn.centerforanthroposophy.org/programs/antioch-university/",
+      "register": {
+        "kind": "external",
+        "url": "https://www.antioch.edu/apply/"
+      },
+      "kairos": false,
+      "open": true,
+      "notes_for_jax": "Admissions, applications and degree questions belong to Antioch University; the page says \"For questions about the program, please contact Antioch University.\" Antioch's Waldorf site is https://sites.google.com/antioch.edu/waldorf/home. Financial aid through the Center for Anthroposophy is available in addition to Antioch's own aid. Don't state Antioch deadlines or tuition."
+    },
+    {
+      "key": "kairos-institute",
+      "name": "Kairos Institute",
+      "one_line": "Courses for the general public and longer professional training in artistic therapy and trauma (emergency) pedagogy.",
+      "who_its_for": "The public courses are open to anyone. The immersive trainings are for people in or preparing for the healing professions.",
+      "format": "hybrid",
+      "schedule_text": "Public courses and immersive programs run on their own schedules; see the Kairos page.",
+      "director": {
+        "name": "Karine Munk Finser",
+        "email": "karine@centerforanthroposophy.org"
+      },
+      "page_url": "https://learn.centerforanthroposophy.org/programs/kairos-institute/",
+      "register": {
+        "kind": "external",
+        "url": "https://centerforanthroposophy.org/kairos-general-public-oen-course-registration/"
+      },
+      "kairos": true,
+      "open": true,
+      "notes_for_jax": "Kairos questions go to Lisl Hofer (lisl@centerforanthroposophy.org) and Karine Munk Finser (karine@centerforanthroposophy.org). Point people to the Kairos page and to them. Don't describe course content, eligibility or schedules beyond what is listed here."
+    },
+    {
+      "key": "kairos-gloeckler-bridge-2027",
+      "name": "The Bridge Lectures with Dr. Michaela Glöckler",
+      "one_line": "A Kairos Institute public course: three Sunday seminars online with Dr. Michaela Glöckler in January and February 2027.",
+      "who_its_for": "Open to the public.",
+      "format": "online",
+      "schedule_text": "Sundays January 24, February 14 and February 21, 2027, on Zoom. Each seminar has two parts: 11:00 AM–12:30 PM and 1:30–3:00 PM EST (six sessions in all).",
+      "director": {
+        "name": "Karine Munk Finser",
+        "email": "karine@centerforanthroposophy.org"
+      },
+      "page_url": "https://learn.centerforanthroposophy.org/kairos/gloeckler-bridge-lectures/",
+      "register": {
+        "kind": "native",
+        "program_key": "kairos-gloeckler-bridge-2027",
+        "page": "https://learn.centerforanthroposophy.org/kairos/gloeckler-bridge-lectures/"
+      },
+      "kairos": true,
+      "open": true,
+      "notes_for_jax": "Kairos program: questions go to Lisl Hofer (lisl@centerforanthroposophy.org) and Karine Munk Finser (karine@centerforanthroposophy.org). The course page names Lisl as the contact for questions about the course."
+    },
+    {
+      "key": "mentor-training",
+      "name": "Mentor Training",
+      "one_line": "A ten-month, low-residency certificate program in pedagogical mentoring, coaching and professional evaluation for experienced Waldorf teachers.",
+      "who_its_for": "Experienced Waldorf educators and pedagogical leaders. Prerequisites listed on the page: a Waldorf teacher training certificate from an AWSNA member institute or equivalent, at least five full-time years teaching in an independent or public Waldorf school, and a letter of recommendation from current school leadership (two letters for those not currently teaching).",
+      "format": "hybrid",
+      "schedule_text": "The current cohort runs January 24 – November 14, 2026: monthly Saturday sessions online plus a week-long in-person residency (June 28 – July 3, 2026). No next cohort dates are posted.",
+      "director": {
+        "name": "Karen Atkinson",
+        "email": "karen@centerforanthroposophy.org"
+      },
+      "page_url": "https://learn.centerforanthroposophy.org/programs/mentor-training/",
+      "register": {
+        "kind": "inquire"
+      },
+      "kairos": false,
+      "open": false,
+      "notes_for_jax": "The page says: \"Enrollment for the current 2026 cohort is closed. Contact the program director to ask about future Mentor Training cohorts.\" For the 2026 cohort the page listed tuition as \"$2,600\" (travel and lodging for the residency not included), with 10% off when two or more people from the same school register together. Limited scholarships: contact the director."
+    },
+    {
+      "key": "renewal-courses",
+      "name": "Renewal Courses",
+      "one_line": "Week-long, certificate-earning summer courses for Waldorf educators, in person in New Hampshire or online.",
+      "who_its_for": "Class teachers, special subject teachers, pedagogical leaders, homeschool parents, mentors and teacher trainees in independent and public Waldorf education, grades 1–8 plus special subjects and movement. The courses build on foundational Waldorf teacher training rather than replace it.",
+      "format": "hybrid",
+      "schedule_text": "Renewal 2027: in person June 27 – July 2, 2027 in Wilton, New Hampshire; online July 5–9, 2027.",
+      "director": {
+        "name": "Karen Atkinson",
+        "email": "karen@centerforanthroposophy.org"
+      },
+      "page_url": "https://learn.centerforanthroposophy.org/programs/renewal-courses/",
+      "register": {
+        "kind": "inquire"
+      },
+      "kairos": false,
+      "open": false,
+      "notes_for_jax": "Registration, courses and tuition for 2027 will be announced in the new year. People can join the interest list now through the contact form on the page; there's no obligation and nothing to pay. Financial aid questions go to Karen."
+    },
+    {
+      "key": "starlight-rays-2026-2027",
+      "name": "Starlight Rays 2026–2027: Seminars on Contemporary Topics",
+      "one_line": "An online series of twelve seminars on contemporary topics for Waldorf high school teachers, administrators, staff and parents.",
+      "who_its_for": "High school teachers, administrators, staff members and parents who want to explore today's adolescents and the issues facing them with experienced colleagues from CfA's Waldorf High School Teacher Education Program.",
+      "format": "online",
+      "schedule_text": "September 5, 2026 – February 27, 2027, Saturdays 3:00–4:30 pm Eastern. Remaining seminars: Oct 31 (Dr. Adam Blanning), Nov 7 (Carol Bärtges), Nov 21 (Sven Saar), Dec 12 (Cedar Oliver), Dec 19 (Dr. Constanza Kaliks), Jan 9 (Liz Beaven), Jan 23 (Nathan Wilcox), Feb 13 (Beverly Amico), Feb 27 (David Barham).",
+      "director": {
+        "name": "David Barham",
+        "email": "david@centerforanthroposophy.org"
+      },
+      "page_url": "https://learn.centerforanthroposophy.org/programs/starlight-rays/",
+      "register": {
+        "kind": "native",
+        "program_key": "starlight-rays-2026-2027",
+        "page": "https://learn.centerforanthroposophy.org/register/starlight-rays-2026-2027/"
+      },
+      "kairos": false,
+      "open": true,
+      "notes_for_jax": "The series is under way (it began September 5). Registration includes live access, recordings and course resources, so earlier seminars are available as recordings. Registered participants get login information and links by email before each seminar. Options (individual, payment plan, institution, single sessions, bundles) come from the live registration data."
+    },
+    {
+      "key": "waldorf-leadership-development",
+      "name": "Waldorf Leadership and Community Development (WLD)",
+      "one_line": "An online and low-residency leadership program for Waldorf school administrators, staff, trustees and pedagogical leaders.",
+      "who_its_for": "Newly hired and experienced administrators and staff (admissions, HR, business, development, marketing), pedagogical leaders and chairs, trustees, lead parents, and Explorations or Building Bridges graduates who want to focus on Waldorf administration. New hires without a Waldorf background are encouraged to take Explorations at the same time.",
+      "format": "hybrid",
+      "schedule_text": "2026–27 cycle (May 2026 – April 2027): began online May 9, 2026; online Saturday sessions 1–2 times a month, 12:00–1:15 pm PT; fall residency at Gathering Waters Charter School, Keene, NH, October 9–13, 2026; spring residency in Keene to be confirmed, possibly April 23–27, 2027.",
+      "director": {
+        "name": "Torin Finser",
+        "email": "torin@centerforanthroposophy.org"
+      },
+      "page_url": "https://learn.centerforanthroposophy.org/programs/waldorf-leadership-development/",
+      "register": {
+        "kind": "external",
+        "url": "https://cvent.me/E0dV9m"
+      },
+      "kairos": false,
+      "open": true,
+      "notes_for_jax": "The page states 2026–27 tuition as \"$2,650 for the full program\" and \"$1,250 for Online Classes only\", with group discounts for three or more from the same school. The cycle has been running since May 2026 and the fall residency is happening now, so anyone registering now joins mid-cycle; check with the program before promising what they can still complete. A WLD certificate needs full attendance at in-person residencies and at least 80% of online sessions; a Certificate of Online Participation is available for those who can't attend residencies. The page lists Karen Atkinson, Program Coordinator (karen@centerforanthroposophy.org), for program questions and group discounts. The September Yuba River (Grass Valley, CA) residency is full and closed."
+    },
+    {
+      "key": "wlcd-october-2026",
+      "name": "WLCD October Residency (Keene, NH)",
+      "one_line": "The fall Waldorf Leadership and Community Development residency, offered this year on its own without joining the full program.",
+      "who_its_for": "Waldorf school leaders, administrators and staff who want the long-weekend residency alongside colleagues from other schools.",
+      "format": "residency",
+      "schedule_text": "Friday, October 9 – Tuesday, October 13, 2026, at Gathering Waters Charter School, Keene, New Hampshire.",
+      "director": {
+        "name": "Torin Finser",
+        "email": "torin@centerforanthroposophy.org"
+      },
+      "page_url": "https://learn.centerforanthroposophy.org/register/wlcd-october-2026/",
+      "register": {
+        "kind": "native",
+        "program_key": "wlcd-october-2026",
+        "page": "https://learn.centerforanthroposophy.org/register/wlcd-october-2026/"
+      },
+      "kairos": false,
+      "open": false,
+      "notes_for_jax": "This residency is under way now (October 9–13, 2026), and registration is closed. For the full WLD program, see the waldorf-leadership-development entry."
+    },
+    {
+      "key": "biografia-y-arte-social-2026",
+      "name": "Biografía y Arte Social (en español)",
+      "one_line": "Un curso en español: ocho encuentros en vivo por Zoom con Magnolia Ríos para explorar nuestra biografía a través del arte y la conversación.",
+      "who_its_for": "Spanish speakers who want to explore their own biography through reflection, form drawing, artistic exercises and conversation. Group of 8–15 participants.",
+      "format": "online",
+      "schedule_text": "Wednesdays, October 7 – November 25, 2026, 7:00–8:30 pm U.S. Eastern Time, on Zoom (eight sessions).",
+      "director": {
+        "name": "Magnolia Ríos",
+        "email": null
+      },
+      "page_url": "https://learn.centerforanthroposophy.org/biografia/",
+      "register": {
+        "kind": "native",
+        "program_key": "biografia-y-arte-social-2026",
+        "page": "https://learn.centerforanthroposophy.org/biografia/"
+      },
+      "kairos": false,
+      "open": true,
+      "notes_for_jax": "The course is taught in Spanish; answer in Spanish when the visitor writes in Spanish. Sessions are not recorded because the biographical work is personal. The course began October 7, 2026, so anyone who registers now has missed sessions that can't be watched later. Magnolia Ríos is the facilitator; no email for her is published, so questions go to the office."
+    }
+  ]
+}

@@ -252,6 +252,20 @@ const otherCountries = ISO_COUNTRY_CODES
   let turnstileWidgetId;
   const pageParams = new URLSearchParams(location.search);
   const requestedOfferCode = pageParams.get('offer') || '';
+  const requestedCouponCode = (pageParams.get('coupon') || '').trim().toUpperCase().slice(0, 40);
+
+  // The site assistant can hand out a prefilled link (?email=&first_name=&last_name=).
+  // Fill only an empty field, trimmed and capped; an email has to look like one.
+  function prefillField(name, maxLength, pattern) {
+    const field = form.elements.namedItem(name);
+    const value = (pageParams.get(name) || '').trim();
+    if (!field || field.value || !value) return;
+    if (pattern && (value.length > maxLength || !pattern.test(value))) return;
+    field.value = value.slice(0, maxLength);
+  }
+  prefillField('email', 254, /^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  prefillField('first_name', 80);
+  prefillField('last_name', 80);
 
   function safeReferrer(value) {
     try {
@@ -722,6 +736,12 @@ const otherCountries = ISO_COUNTRY_CODES
         offerList.append(label);
       });
       updateSelection();
+      // A ?coupon= link goes through the Apply button's own path, so it is
+      // validated and shown exactly as if the visitor had typed it.
+      if (requestedCouponCode && !couponInput.value) {
+        couponInput.value = requestedCouponCode;
+        applyCoupon();
+      }
       if (!config.payment.available) {
         setStatus('The registration form is ready for review, but payment credentials are not fully configured.', 'error');
         return;

@@ -255,6 +255,19 @@ const otherCountries = ISO_COUNTRY_CODES
   const requestedCouponCode = (pageParams.get('coupon') || '').trim().toUpperCase();
   let appliedCoupon = null;
 
+  // The site assistant can hand out a prefilled link (?email=&first_name=&last_name=).
+  // Fill only an empty field, trimmed and capped; an email has to look like one.
+  function prefillField(name, maxLength, pattern) {
+    const field = form.elements.namedItem(name);
+    const value = (pageParams.get(name) || '').trim();
+    if (!field || field.value || !value) return;
+    if (pattern && (value.length > maxLength || !pattern.test(value))) return;
+    field.value = value.slice(0, maxLength);
+  }
+  prefillField('email', 254, /^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  prefillField('first_name', 80);
+  prefillField('last_name', 80);
+
   function safeReferrer(value) {
     try {
       const referrer = new URL(value);
