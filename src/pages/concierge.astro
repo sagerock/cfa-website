@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+// Test page for the site concierge (Milan's go 2026-10-10). Unlinked and noindex.
+// The widget is the same script the WordPress home page will load later; the
+// data-concierge-test attribute tags these sessions as test traffic.
+---
+<Base title="Ask Jax (test) | Center for Anthroposophy" minimal noindex portalLabel={null}>
+  <PageHeader
+    eyebrow="Test page"
+    title="Ask Jax (test)"
+    lede="Jax is CfA's AI assistant for registrations and payments. This page is for CfA staff to try it before it goes anywhere public."
+  />
+  <div class="wrap concierge-test">
+    <h2>What it can do</h2>
+    <ul>
+      <li>Talk through the programs and suggest one or two that fit.</li>
+      <li>Give current prices and options for programs sold on this site, and check a discount code you already have.</li>
+      <li>Hand over a sign-up link with the option, code, name and email already filled in.</li>
+      <li>After you confirm your email with a six-digit code: show your own registration, your next session's Zoom link, your payment plan, or send a fresh sign-in link.</li>
+      <li>Pass anything else to the registration desk at jax@centerforanthroposophy.org.</li>
+    </ul>
+    <h2>What it won't do</h2>
+    <ul>
+      <li>Take payments, or decide refunds, scholarships, admissions or exceptions.</li>
+      <li>Teach or explain course content.</li>
+      <li>Answer Kairos questions; it points to Lisl Hofer and Karine Munk Finser.</li>
+      <li>Say whether someone is on file before they've confirmed their email.</li>
+    </ul>
+    <p class="concierge-note">The chat opens in the corner of this page. Conversations here are saved and marked as tests.</p>
+  </div>
+  <script is:inline src="/concierge/widget.js" data-concierge-test data-open defer></script>
+</Base>
+
+<style>
+  .concierge-test { padding-top: 32px; padding-bottom: 96px; max-width: 68ch; }
+  .concierge-test h2 { font-size: 24px; margin: 28px 0 10px; }
+  .concierge-test ul { padding-left: 1.2em; }
+  .concierge-test li { margin-bottom: 8px; line-height: 1.5; }
+  .concierge-note { margin-top: 28px; color: var(--soft); font-family: var(--sans); font-size: 14px; }
+</style>

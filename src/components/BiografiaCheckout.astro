@@ -264,10 +264,24 @@ const workshopThemes = [
   let turnstileToken = '';
   let turnstileWidgetId;
   const pageParams = new URLSearchParams(location.search);
+  const requestedOfferCode = pageParams.get('offer') || '';
   // Becas y cortesías llegan por enlace, no por una casilla de código: un campo
   // de descuento invita a todo el mundo a salir a buscar uno.
   const requestedCouponCode = (pageParams.get('coupon') || '').trim().toUpperCase();
   let appliedCoupon = null;
+
+  // The site assistant can hand out a prefilled link (?email=&first_name=&last_name=).
+  // Fill only an empty field, trimmed and capped; an email has to look like one.
+  function prefillField(name, maxLength, pattern) {
+    const field = form.elements.namedItem(name);
+    const value = (pageParams.get(name) || '').trim();
+    if (!field || field.value || !value) return;
+    if (pattern && (value.length > maxLength || !pattern.test(value))) return;
+    field.value = value.slice(0, maxLength);
+  }
+  prefillField('email', 254, /^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  prefillField('first_name', 80);
+  prefillField('last_name', 80);
 
   function safeReferrer(value) {
     try {
@@ -590,6 +604,8 @@ const workshopThemes = [
       }
       offerList.replaceChildren();
       if (!config.offers?.length) throw new Error('offers');
+      // ?offer=<code> preselects that option when it exists; otherwise the first stays selected.
+      const preselectedIndex = Math.max(0, config.offers.findIndex((offer) => offer.code === requestedOfferCode));
       config.offers.forEach((offer, index) => {
         const label = document.createElement('label');
         label.className = 'offer-option';
@@ -597,7 +613,7 @@ const workshopThemes = [
         input.type = 'radio';
         input.name = 'offer_code';
         input.value = offer.code;
-        input.checked = index === 0;
+        input.checked = index === preselectedIndex;
         input.required = true;
         const copy = document.createElement('span');
         copy.className = 'offer-copy';
