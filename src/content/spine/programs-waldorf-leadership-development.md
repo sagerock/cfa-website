@@ -80,7 +80,7 @@ This highly-regarded **online and low-residency** Educational Leadership Program
 
 ## Spring 2027 Residency
 
-- Gathering Waters Charter School in Keene, NH – TBD – possibly Friday, April 23 – Tuesday, April 27, 2027
+- Gathering Waters Charter School in Keene, NH: Friday, April 23 – Monday, April 26, 2027
 
 **Please select your preferred location at registration.**
 
