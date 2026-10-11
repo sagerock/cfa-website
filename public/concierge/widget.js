@@ -253,6 +253,9 @@
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ history: true, session_id: id }),
     }).then(function (res) { return res.json(); }).then(function (out) {
+      var early = Array.prototype.slice.call(log.children);
+      early.forEach(function (node) { log.removeChild(node); });
+      setTimeout(function () { early.forEach(function (node) { log.appendChild(node); }); log.scrollTop = log.scrollHeight; }, 0);
       turnstileKey = out.turnstile_site_key || null;
       if (turnstileKey) prepareTurnstile();
       var turns = out.turns || [];
@@ -281,8 +284,10 @@
       turnstileId = window.turnstile.render(box, {
         sitekey: turnstileKey,
         action: 'concierge',
-        execution: 'execute',
+        // Runs as soon as the page loads, so a token is usually ready before the first
+        // message; expired tokens refresh on their own.
         appearance: 'interaction-only',
+        'refresh-expired': 'auto',
         callback: function (token) {
           turnstileToken = token;
           turnstileWaiters.splice(0).forEach(function (fn) { fn(token); });
@@ -302,8 +307,7 @@
     if (turnstileToken) return Promise.resolve(turnstileToken);
     return new Promise(function (resolve) {
       turnstileWaiters.push(resolve);
-      try { if (window.turnstile && turnstileId !== null) window.turnstile.execute(turnstileId); } catch (e) {}
-      setTimeout(function () { resolve(''); }, 30000);
+      setTimeout(function () { resolve(''); }, 45000);
     });
   }
   function spendTurnstileToken() {
