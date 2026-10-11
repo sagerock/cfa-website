@@ -4,6 +4,8 @@
    Optional attributes on the script tag:
      data-concierge-test   tag sessions from this page as test traffic
      data-open             open the panel on load
+     data-mount="#id"      render as a full-page chat inside that element instead of a
+                           corner pop-up (no launcher, no close button, starter questions)
    The transcript lives on the server; the browser keeps only the session id. */
 (function () {
   'use strict';
@@ -16,6 +18,14 @@
   var script = document.currentScript || document.querySelector('script[src*="concierge/widget.js"]');
   var isTest = !!(script && script.hasAttribute('data-concierge-test'));
   var openOnLoad = !!(script && script.hasAttribute('data-open'));
+  var mountSelector = script ? script.getAttribute('data-mount') : null;
+  var inline = !!mountSelector;
+  var STARTERS = [
+    'Help me find a program that fits me',
+    'What does Starlight Rays cost?',
+    'Where is my Zoom link?',
+    'I have a question about my payment plan',
+  ];
   var GREETING = "Hi, I'm Jax, CfA's AI assistant. I can help you pick a program, get registered, or find your Zoom or sign-in link. What brings you here today?";
   var MAX_CHARS = 4000;
 
@@ -58,6 +68,27 @@
     '.cfa-cc-send{border:0;border-radius:8px;padding:0 14px;background:var(--cc-green);color:var(--cc-on-green);font:inherit;font-weight:600;cursor:pointer;}',
     '.cfa-cc-send:disabled{opacity:.5;cursor:default;}',
     '.cfa-cc-foot{padding:0 12px 8px;font-size:11.5px;color:var(--cc-soft);background:var(--cc-raised);}',
+    '.cfa-cc-typing{align-self:flex-start;font-size:13px;color:var(--cc-soft);font-style:italic;}',
+    '.cfa-cc-chips{display:none;}',
+    '.cfa-cc-reset{border:0;background:transparent;color:var(--cc-green);font:inherit;font-size:12.5px;text-decoration:underline;cursor:pointer;padding:0;}',
+    /* Full-page mode: a centred conversation column, composer pinned at the bottom. */
+    '.cfa-cc-inline{height:100%;}',
+    '.cfa-cc-inline .cfa-cc-panel{position:static;width:100%;height:100%;border:0;border-radius:0;box-shadow:none;background:transparent;z-index:auto;}',
+    '.cfa-cc-inline .cfa-cc-head{display:none;}',
+    '.cfa-cc-inline .cfa-cc-person{display:block;max-width:780px;width:100%;margin:0 auto;padding:8px 16px;border:0;}',
+    '.cfa-cc-inline .cfa-cc-reset{float:right;margin-left:12px;}',
+    '.cfa-cc-inline .cfa-cc-log{width:100%;padding:20px max(16px,calc((100% - 780px)/2)) 24px;gap:16px;font-size:16px;line-height:1.55;}',
+    '.cfa-cc-inline .cfa-cc-msg{max-width:100%;}',
+    '.cfa-cc-inline .cfa-cc-bot{background:transparent;border:0;padding:2px 0;}',
+    '.cfa-cc-inline .cfa-cc-me{max-width:80%;padding:10px 14px;border-radius:16px;}',
+    '.cfa-cc-inline .cfa-cc-chips{display:flex;flex-wrap:wrap;gap:8px;max-width:780px;width:100%;margin:0 auto;padding:0 16px 10px;}',
+    '.cfa-cc-inline .cfa-cc-chips[hidden]{display:none;}',
+    '.cfa-cc-chip{border:1px solid var(--cc-line);border-radius:999px;background:var(--cc-raised);color:var(--cc-ink);font:inherit;font-size:14px;padding:8px 14px;cursor:pointer;}',
+    '.cfa-cc-chip:hover{border-color:var(--cc-green);}',
+    '.cfa-cc-inline .cfa-cc-form{max-width:780px;width:calc(100% - 24px);margin:0 auto;padding:8px;border:1px solid var(--cc-line);border-radius:16px;background:var(--cc-raised);}',
+    '.cfa-cc-inline .cfa-cc-form textarea{border:0;background:transparent;font-size:16px;}',
+    '.cfa-cc-inline .cfa-cc-send{border-radius:12px;}',
+    '.cfa-cc-inline .cfa-cc-foot{max-width:780px;width:100%;margin:0 auto;padding:8px 16px 12px;text-align:center;background:transparent;}',
     '.cfa-cc-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}',
   ].join('');
 
@@ -85,6 +116,7 @@
     '<button type="button" class="cfa-cc-close" aria-label="Close chat">×</button></div>' +
     '<span class="cfa-cc-person">Talk to a person: <a href="mailto:jax@centerforanthroposophy.org,office@centerforanthroposophy.org">email us</a> or call <a href="tel:+16036542566">603-654-2566</a></span>' +
     '<div class="cfa-cc-log" role="log" aria-live="polite" aria-relevant="additions" tabindex="0"></div>' +
+    '<div class="cfa-cc-chips" role="group" aria-label="Suggested questions"></div>' +
     '<form class="cfa-cc-form"><label class="cfa-cc-sr" for="cfa-cc-input">Message Jax</label>' +
     '<textarea id="cfa-cc-input" rows="1" maxlength="' + MAX_CHARS + '" placeholder="Type your question"></textarea>' +
     '<button type="submit" class="cfa-cc-send">Send</button></form>' +
@@ -96,6 +128,54 @@
   var input = panel.querySelector('textarea');
   var send = panel.querySelector('.cfa-cc-send');
   var closeBtn = panel.querySelector('.cfa-cc-close');
+  var chips = panel.querySelector('.cfa-cc-chips');
+  var typing = null;
+
+  if (inline) {
+    root.classList.add('cfa-cc-inline');
+    panel.setAttribute('role', 'region');
+    panel.removeAttribute('aria-modal');
+    panel.setAttribute('aria-label', 'Chat with Jax, CfA\u2019s AI Assistant');
+    STARTERS.forEach(function (question) {
+      var chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'cfa-cc-chip';
+      chip.textContent = question;
+      chip.addEventListener('click', function () {
+        if (busy) return;
+        input.value = question;
+        form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit'));
+      });
+      chips.appendChild(chip);
+    });
+    // A fresh conversation: forget the session id and clear the screen.
+    var reset = document.createElement('button');
+    reset.type = 'button';
+    reset.className = 'cfa-cc-reset';
+    reset.textContent = 'Start over';
+    reset.addEventListener('click', function () {
+      if (busy) return;
+      try { sessionStorage.removeItem(SKEY); } catch (e) {}
+      log.textContent = '';
+      chips.hidden = false;
+      bubble('bot', GREETING);
+      input.focus();
+    });
+    var person = panel.querySelector('.cfa-cc-person');
+    person.insertBefore(reset, person.firstChild);
+  }
+
+  function showTyping() {
+    typing = document.createElement('div');
+    typing.className = 'cfa-cc-typing';
+    typing.textContent = 'Jax is writing\u2026';
+    log.appendChild(typing);
+    log.scrollTop = log.scrollHeight;
+  }
+  function hideTyping() {
+    if (typing && typing.parentNode) typing.parentNode.removeChild(typing);
+    typing = null;
+  }
   var busy = false;
   var greeted = false;
 
@@ -169,7 +249,8 @@
   launch.addEventListener('click', openPanel);
   closeBtn.addEventListener('click', closePanel);
   panel.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') { closePanel(); return; }
+    if (e.key === 'Escape' && !inline) { closePanel(); return; }
+    if (inline) return;
     if (e.key !== 'Tab') return;
     var focusable = panel.querySelectorAll('a[href],button:not([disabled]),textarea,[tabindex="0"]');
     if (!focusable.length) return;
@@ -194,7 +275,9 @@
     busy = true;
     send.disabled = true;
     input.value = '';
+    if (chips) chips.hidden = true;
     bubble('me', message);
+    showTyping();
     track('concierge_message');
     var reply = null, replyText = '';
 
@@ -209,6 +292,7 @@
       var type = res.headers.get('content-type') || '';
       if (type.indexOf('text/event-stream') < 0) {
         return res.json().catch(function () { return {}; }).then(function (out) {
+          hideTyping();
           if (out.session_id) setSessionId(out.session_id);
           bubble('bot', out.message || "Sorry, I'm having trouble right now. Please email jax@centerforanthroposophy.org and a person at CfA will help.");
         });
@@ -220,13 +304,13 @@
         if (event === 'session') setSessionId(data.session_id);
         else if (event === 'token') {
           replyText += data.text;
-          if (!reply) { if (!replyText.trim()) return; reply = bubble('bot', ''); }
+          if (!reply) { if (!replyText.trim()) return; hideTyping(); reply = bubble('bot', ''); }
           render(reply, replyText.replace(/^\s+/, ''));
           log.scrollTop = log.scrollHeight;
-        } else if (event === 'link') { reply = null; replyText = ''; linkCard(data); }
+        } else if (event === 'link') { hideTyping(); reply = null; replyText = ''; linkCard(data); }
         else if (event === 'verify_prompt') track('concierge_verify');
         else if (event === 'handoff') track('concierge_handoff', { filed: !!data.filed });
-        else if (event === 'error') bubble('bot', data.message);
+        else if (event === 'error') { hideTyping(); bubble('bot', data.message); }
       }
       function pump() {
         return reader.read().then(function (chunk) {
@@ -247,11 +331,21 @@
       }
       return pump();
     }).catch(function () {
+      hideTyping();
       bubble('bot', "Sorry, I couldn't reach the server. Please email jax@centerforanthroposophy.org and a person at CfA will help.");
-    }).then(function () { if (timer) clearTimeout(timer); finish(); });
+    }).then(function () { hideTyping(); if (timer) clearTimeout(timer); finish(); });
   });
 
   function mount() {
+    var target = inline ? document.querySelector(mountSelector) : null;
+    if (target) {
+      launch.hidden = true;
+      target.appendChild(root);
+      openPanel();
+      return;
+    }
+    inline = false;
+    root.classList.remove('cfa-cc-inline');
     document.body.appendChild(root);
     if (openOnLoad) openPanel();
   }
