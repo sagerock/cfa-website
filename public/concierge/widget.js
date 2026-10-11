@@ -244,8 +244,10 @@
   // On open: redraw this tab's conversation (a reload or a phone switching apps keeps it),
   // and learn whether a spam check is needed before a new conversation starts.
   var turnstileKey = null, turnstileId = null, turnstileWaiters = [], turnstileToken = '';
+  var markReady, ready = new Promise(function (resolve) { markReady = resolve; });
   function loadHistory() {
     var id = sessionId();
+    setTimeout(function () { markReady(); }, 8000);  // never hold a message longer than this
     fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -266,7 +268,7 @@
         else if (turn.who === 'jax') bubble('bot', turn.text);
         else if (turn.who === 'link' && turn.link) linkCard(turn.link, true);
       });
-    }).catch(function () { bubble('bot', GREETING); });
+    }).catch(function () { bubble('bot', GREETING); }).then(function () { markReady(); });
   }
 
   // Cloudflare Turnstile, invisible unless Cloudflare wants a click. Only loaded when the
@@ -351,15 +353,30 @@
 
     var controller = window.AbortController ? new AbortController() : null;
     var timer = null;
-    var newConversation = !sessionId();
-    turnstileTokenFor(newConversation).then(function (token) {
-      if (newConversation && token) spendTurnstileToken();
-      timer = controller ? setTimeout(function () { controller.abort(); }, 90000) : null;
+    var newConversation;
+    function post(token) {
       return fetch(ENDPOINT, {
         method: 'POST',
         signal: controller ? controller.signal : undefined,
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ session_id: sessionId(), message: message, page_path: location.pathname, test: isTest, turnstile_token: token || undefined }),
+      });
+    }
+    // Wait until the page knows whether a spam check is needed; a refused first message is
+    // retried once with a fresh check.
+    ready.then(function () {
+      newConversation = !sessionId();
+      return turnstileTokenFor(newConversation);
+    }).then(function (token) {
+      if (newConversation && token) spendTurnstileToken();
+      timer = controller ? setTimeout(function () { controller.abort(); }, 90000) : null;
+      return post(token).then(function (res) {
+        if (res.status !== 403 || !turnstileKey) return res;
+        return turnstileTokenFor(true).then(function (retry) {
+          if (!retry) return res;
+          spendTurnstileToken();
+          return post(retry);
+        });
       });
     }).then(function (res) {
       var type = res.headers.get('content-type') || '';
