@@ -1,0 +1,227 @@
+---
+import '../../styles/global.css';
+import { FN } from '../../data/site.js';
+const ADMIN_ENDPOINT = `${FN}/cfa-concierge-admin`;
+// Staff transcript viewer for the site concierge. Its own token (CONCIERGE_ADMIN_TOKENS),
+// supplied in the URL hash and never embedded here.
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Ask Jax conversations — Center for Anthroposophy</title>
+  </head>
+  <body class="concierge-log">
+    <header class="log-head">
+      <div class="wrap">
+        <div>
+          <p class="eyebrow">Center for Anthroposophy</p>
+          <h1>Ask Jax conversations</h1>
+          <p>Every conversation visitors have had with the website assistant, newest first.</p>
+        </div>
+        <label class="test-toggle"><input type="checkbox" id="include-test" /> Show test-page chats</label>
+      </div>
+    </header>
+
+    <main class="wrap log-main">
+      <section id="gate" class="notice" hidden>
+        <h2>Access token required</h2>
+        <p>Open this page as <code>/dashboard/concierge#your-token</code>.</p>
+      </section>
+      <section id="error" class="notice error" hidden></section>
+
+      <div id="content" hidden>
+        <section class="summary" aria-label="Last 30 days">
+          <div><strong id="s-conversations">–</strong><span>Conversations, 30 days</span></div>
+          <div><strong id="s-messages">–</strong><span>Visitor messages</span></div>
+          <div><strong id="s-verified">–</strong><span>Verified their email</span></div>
+          <div><strong id="s-handoffs">–</strong><span>Handed to a person</span></div>
+        </section>
+
+        <div class="log-grid">
+          <section class="list-panel" aria-label="Conversations">
+            <ul id="sessions" class="sessions"></ul>
+            <p id="empty" class="empty" hidden>No conversations yet.</p>
+            <button id="more" type="button" class="more" hidden>Load older</button>
+          </section>
+          <section class="transcript-panel" aria-live="polite">
+            <p id="pick" class="empty">Choose a conversation to read it.</p>
+            <div id="transcript" hidden>
+              <div class="t-meta" id="t-meta"></div>
+              <ol class="turns" id="turns"></ol>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script is:inline define:vars={{ endpoint: ADMIN_ENDPOINT }}>
+      const $ = (id) => document.getElementById(id);
+      let token = '';
+      let nextBefore = null;
+      let selected = null;
+
+      function when(iso) {
+        if (!iso) return '';
+        return new Date(iso).toLocaleString('en-US', {
+          timeZone: 'America/New_York', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit',
+        }) + ' ET';
+      }
+      function el(tag, className, text) {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text !== undefined) node.textContent = text;
+        return node;
+      }
+      function showError(message) {
+        $('error').textContent = message;
+        $('error').hidden = false;
+      }
+      async function call(params) {
+        const query = new URLSearchParams({ token, ...params });
+        const res = await fetch(`${endpoint}?${query}`, { cache: 'no-store' });
+        if (res.status === 401) throw new Error('That token was not accepted.');
+        if (!res.ok) throw new Error('Could not load conversations. Try again in a moment.');
+        return res.json();
+      }
+
+      function sessionItem(row) {
+        const li = el('li');
+        const button = el('button', 'session');
+        button.type = 'button';
+        button.append(el('strong', '', row.first_message || '(no message)'));
+        const meta = el('span', 'meta', `${when(row.last_message_at)} · ${row.message_count} message${row.message_count === 1 ? '' : 's'}`);
+        button.append(meta);
+        const badges = el('span', 'badges');
+        if (row.verified_email) badges.append(el('span', 'badge verified', 'Verified'));
+        if (row.handed_off_at) badges.append(el('span', 'badge handoff', 'Hand-off'));
+        if (row.is_test) badges.append(el('span', 'badge test', 'Test'));
+        if (badges.childNodes.length) button.append(badges);
+        button.addEventListener('click', () => {
+          document.querySelectorAll('.session[aria-current]').forEach((node) => node.removeAttribute('aria-current'));
+          button.setAttribute('aria-current', 'true');
+          openSession(row.id);
+        });
+        li.append(button);
+        return li;
+      }
+
+      async function loadList(reset) {
+        try {
+          const params = {};
+          if ($('include-test').checked) params.include_test = '1';
+          if (!reset && nextBefore) params.before = nextBefore;
+          const data = await call(params);
+          if (reset) {
+            $('sessions').replaceChildren();
+            const s = data.summary_30_days;
+            $('s-conversations').textContent = s.conversations;
+            $('s-messages').textContent = s.visitor_messages;
+            $('s-verified').textContent = s.verified;
+            $('s-handoffs').textContent = s.handed_off;
+          }
+          data.sessions.forEach((row) => $('sessions').append(sessionItem(row)));
+          $('empty').hidden = $('sessions').children.length > 0;
+          nextBefore = data.next_before;
+          $('more').hidden = !nextBefore;
+          $('content').hidden = false;
+          $('error').hidden = true;
+        } catch (error) {
+          showError(error.message);
+        }
+      }
+
+      const LABEL = { visitor: 'Visitor', jax: 'Jax', tool: 'Lookup', result: 'Result', link: 'Sign-up button' };
+      async function openSession(id) {
+        selected = id;
+        $('pick').hidden = true;
+        $('transcript').hidden = false;
+        $('turns').replaceChildren(el('li', 'empty', 'Loading…'));
+        try {
+          const data = await call({ session: id });
+          if (selected !== id) return;
+          const s = data.session;
+          const facts = [
+            `Started ${when(s.created_at)}`,
+            s.page_path ? `on ${s.page_path}` : '',
+            s.verified_email ? `Verified as ${s.verified_email}` : 'Not verified',
+            s.handed_off_at ? `Handed off ${when(s.handed_off_at)}` : '',
+            s.is_test ? 'Test page' : '',
+            `About $${Number(s.approx_cost_usd).toFixed(3)} in model use`,
+          ].filter(Boolean);
+          $('t-meta').replaceChildren(...facts.map((fact) => el('span', '', fact)));
+          $('turns').replaceChildren(...data.turns.map((turn) => {
+            const li = el('li', `turn ${turn.who}${turn.error ? ' error' : ''}`);
+            li.append(el('span', 'who', LABEL[turn.who] || turn.who));
+            li.append(el('p', '', turn.text));
+            return li;
+          }));
+        } catch (error) {
+          $('turns').replaceChildren(el('li', 'empty', error.message));
+        }
+      }
+
+      function start() {
+        token = decodeURIComponent(location.hash.replace(/^#/, '').trim());
+        if (!token) { $('gate').hidden = false; $('content').hidden = true; return; }
+        $('gate').hidden = true;
+        nextBefore = null;
+        loadList(true);
+      }
+      $('more').addEventListener('click', () => loadList(false));
+      $('include-test').addEventListener('change', () => { nextBefore = null; loadList(true); });
+      window.addEventListener('hashchange', start);
+      start();
+    </script>
+
+    <style is:global>
+      body.concierge-log { background: var(--paper); }
+      .log-head { background: var(--raised); border-bottom: 1px solid var(--line); padding: 24px 0; }
+      .log-head .wrap { align-items: end; display: flex; gap: 24px; justify-content: space-between; }
+      .log-head h1 { font-size: clamp(28px, 4vw, 42px); margin: 2px 0 4px; }
+      .log-head p:last-child { color: var(--soft); font: 14px var(--sans); }
+      .test-toggle { color: var(--soft); font: 13px var(--sans); white-space: nowrap; }
+      .log-main { padding: 28px 24px 64px; }
+      .notice { background: var(--raised); border: 1px solid var(--line); border-radius: 6px; font: 13px var(--sans); margin-bottom: 18px; padding: 16px 18px; }
+      .notice h2 { font-size: 18px; margin-bottom: 7px; }
+      .notice.error { border-color: #a8324a; color: #a8324a; }
+      .summary { display: grid; gap: 14px; grid-template-columns: repeat(4, 1fr); margin-bottom: 18px; }
+      .summary div { background: var(--raised); border: 1px solid var(--line); border-radius: 6px; display: flex; flex-direction: column; padding: 14px 17px; }
+      .summary strong { color: var(--green-ink); font: 600 29px var(--sans); }
+      .summary span { color: var(--soft); font: 11px var(--sans); letter-spacing: .06em; text-transform: uppercase; }
+      .log-grid { display: grid; gap: 18px; grid-template-columns: minmax(260px, 1fr) 2fr; align-items: start; }
+      .list-panel, .transcript-panel { background: var(--raised); border: 1px solid var(--line); border-radius: 6px; padding: 10px; }
+      .transcript-panel { padding: 18px 20px; position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; }
+      .sessions { list-style: none; margin: 0; padding: 0; max-height: 70vh; overflow-y: auto; }
+      .session { background: transparent; border: 0; border-bottom: 1px solid var(--line); color: var(--ink); cursor: pointer; display: block; font: 13px var(--sans); padding: 10px 8px; text-align: left; width: 100%; }
+      .session:hover, .session[aria-current] { background: var(--chalk); }
+      .session strong { display: block; font-weight: 600; line-height: 1.35; }
+      .session .meta { color: var(--soft); display: block; font-size: 11px; margin-top: 4px; }
+      .badges { display: flex; gap: 6px; margin-top: 6px; }
+      .badge { border-radius: 999px; font-size: 10px; letter-spacing: .05em; padding: 2px 8px; text-transform: uppercase; }
+      .badge.verified { background: var(--chalk); color: var(--green-ink); }
+      .badge.handoff { background: rgba(176, 126, 34, .14); color: var(--gold); }
+      .badge.test { border: 1px solid var(--line); color: var(--soft); }
+      .more { background: var(--paper); border: 1px solid var(--line); border-radius: 4px; color: var(--green-ink); cursor: pointer; font: 13px var(--sans); margin: 10px 8px 4px; padding: 7px 12px; }
+      .empty { color: var(--soft); font: 13px var(--sans); padding: 8px; }
+      .t-meta { color: var(--soft); display: flex; flex-wrap: wrap; font: 12px var(--sans); gap: 6px 14px; margin-bottom: 16px; }
+      .turns { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+      .turn { border-radius: 8px; font: 14px/1.5 var(--sans); padding: 9px 12px; max-width: 92%; }
+      .turn p { margin: 0; white-space: pre-wrap; }
+      .turn .who { color: var(--soft); display: block; font-size: 10px; letter-spacing: .07em; margin-bottom: 3px; text-transform: uppercase; }
+      .turn.visitor { align-self: flex-end; background: var(--chalk); }
+      .turn.jax { align-self: flex-start; background: var(--paper); border: 1px solid var(--line); }
+      .turn.tool, .turn.result { align-self: flex-start; color: var(--soft); font-size: 12px; padding: 2px 12px; }
+      .turn.result.error { color: #a8324a; }
+      .turn.link { align-self: flex-start; border: 1px solid var(--green); font-size: 13px; }
+      @media (max-width: 800px) {
+        .log-grid, .summary { grid-template-columns: 1fr 1fr; }
+        .log-grid { grid-template-columns: 1fr; }
+        .transcript-panel { position: static; max-height: none; }
+      }
+    </style>
+  </body>
+</html>

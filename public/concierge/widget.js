@@ -88,7 +88,7 @@
     '<form class="cfa-cc-form"><label class="cfa-cc-sr" for="cfa-cc-input">Message Jax</label>' +
     '<textarea id="cfa-cc-input" rows="1" maxlength="' + MAX_CHARS + '" placeholder="Type your question"></textarea>' +
     '<button type="submit" class="cfa-cc-send">Send</button></form>' +
-    '<div class="cfa-cc-foot">Jax is an AI and can make mistakes. Don’t share card numbers or passwords here.</div>';
+    '<div class="cfa-cc-foot">Jax is an AI and can make mistakes. Conversations are saved so CfA staff can help you and improve this service. Don’t share card numbers or passwords here.</div>';
   root.appendChild(panel);
 
   var log = panel.querySelector('.cfa-cc-log');
