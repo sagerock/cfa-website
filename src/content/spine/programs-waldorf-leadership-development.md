@@ -250,7 +250,7 @@ Program Director
 
 #### Program Schedule May 2026 - April 2027
 
-[ Download Full schedule](/files/wlcd-2026-27-program-schedule-rev-2026-10-26.pdf)
+[ Download Full schedule](/files/wlcd-2026-27-program-schedule-rev-2026-10.pdf)
 
 - Tuition
 
