@@ -178,9 +178,9 @@ Recommended reading:
 
 ## Program Leadership
 
-![Portrait of Torin Finser](/images/911b9a0c34-torin-finser-cropped-1.jpg)
+![Portrait of Deborah Dornemann](/images/3c459419f1-deborah-dornemann-200x200-1.png)
 
-## Torin Finser, Ph.D.
+## Deborah Dornemann, M.Ed.
 
 Program Director
 

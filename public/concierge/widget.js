@@ -49,6 +49,14 @@
     '@media (max-width:480px){.cfa-cc-panel{right:0;bottom:0;width:100vw;height:100dvh;border-radius:0;}}',
     '.cfa-cc-head{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--cc-raised);border-bottom:1px solid var(--cc-line);}',
     '.cfa-cc-title{flex:1;margin:0;font-size:15px;font-weight:600;}',
+    // WordPress/Elementor theme rules for h2 and button outrank the plain classes above (seen on the
+    // live home page 10/11: a 36px title, uppercase purple buttons). Pin the few that leak.
+    '.cfa-cc h2.cfa-cc-title{font-family:inherit!important;font-size:15px!important;line-height:1.3!important;letter-spacing:normal!important;text-transform:none!important;color:var(--cc-ink)!important;padding:0!important;}',
+    '.cfa-cc h2.cfa-cc-title .cfa-cc-sub{font-size:12.5px!important;color:var(--cc-soft)!important;}',
+    '.cfa-cc button{font-family:inherit!important;text-transform:none!important;letter-spacing:normal!important;}',
+    '.cfa-cc button.cfa-cc-launch{background:var(--cc-green)!important;color:var(--cc-on-green)!important;}',
+    '.cfa-cc button.cfa-cc-close{background:transparent!important;color:var(--cc-ink)!important;}',
+    '.cfa-cc button.cfa-cc-send{background:var(--cc-green)!important;color:var(--cc-on-green)!important;}',
     '.cfa-cc-sub{display:block;font-size:12.5px;font-weight:400;color:var(--cc-soft);}',
     '.cfa-cc-close{border:0;background:transparent;color:var(--cc-ink);font-size:22px;line-height:1;cursor:pointer;padding:2px 6px;}',
     '.cfa-cc-person{display:block;padding:6px 14px;font-size:12.5px;color:var(--cc-soft);border-bottom:1px solid var(--cc-line);}',
