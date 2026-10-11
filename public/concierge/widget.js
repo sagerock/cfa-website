@@ -211,7 +211,7 @@
     return el;
   }
 
-  function linkCard(data) {
+  function linkCard(data, replay) {
     var card = document.createElement('div');
     card.className = 'cfa-cc-card';
     var name = document.createElement('strong');
@@ -231,14 +231,82 @@
     card.appendChild(a);
     log.appendChild(card);
     log.scrollTop = log.scrollHeight;
-    track('concierge_link', { kind: data.kind });
+    if (!replay) track('concierge_link', { kind: data.kind });
   }
 
   function openPanel() {
     panel.hidden = false;
     launch.hidden = true;
-    if (!greeted) { greeted = true; bubble('bot', GREETING); track('concierge_open'); }
+    if (!greeted) { greeted = true; track('concierge_open'); loadHistory(); }
     input.focus();
+  }
+
+  // On open: redraw this tab's conversation (a reload or a phone switching apps keeps it),
+  // and learn whether a spam check is needed before a new conversation starts.
+  var turnstileKey = null, turnstileId = null, turnstileWaiters = [], turnstileToken = '';
+  function loadHistory() {
+    var id = sessionId();
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ history: true, session_id: id }),
+    }).then(function (res) { return res.json(); }).then(function (out) {
+      turnstileKey = out.turnstile_site_key || null;
+      if (turnstileKey) prepareTurnstile();
+      var turns = out.turns || [];
+      if (!turns.length) {
+        if (id) { try { sessionStorage.removeItem(SKEY); } catch (e) {} }
+        bubble('bot', GREETING);
+        return;
+      }
+      if (chips) chips.hidden = true;
+      bubble('bot', GREETING);
+      turns.forEach(function (turn) {
+        if (turn.who === 'visitor') bubble('me', turn.text);
+        else if (turn.who === 'jax') bubble('bot', turn.text);
+        else if (turn.who === 'link' && turn.link) linkCard(turn.link, true);
+      });
+    }).catch(function () { bubble('bot', GREETING); });
+  }
+
+  // Cloudflare Turnstile, invisible unless Cloudflare wants a click. Only loaded when the
+  // server says it is required.
+  function prepareTurnstile() {
+    var box = document.createElement('div');
+    box.className = 'cfa-cc-ts';
+    panel.insertBefore(box, form);
+    function render() {
+      turnstileId = window.turnstile.render(box, {
+        sitekey: turnstileKey,
+        action: 'concierge',
+        execution: 'execute',
+        appearance: 'interaction-only',
+        callback: function (token) {
+          turnstileToken = token;
+          turnstileWaiters.splice(0).forEach(function (fn) { fn(token); });
+        },
+        'error-callback': function () { turnstileWaiters.splice(0).forEach(function (fn) { fn(''); }); },
+      });
+    }
+    if (window.turnstile) { render(); return; }
+    var tag = document.createElement('script');
+    tag.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    tag.async = true;
+    tag.onload = render;
+    document.head.appendChild(tag);
+  }
+  function turnstileTokenFor(needed) {
+    if (!needed || !turnstileKey) return Promise.resolve('');
+    if (turnstileToken) return Promise.resolve(turnstileToken);
+    return new Promise(function (resolve) {
+      turnstileWaiters.push(resolve);
+      try { if (window.turnstile && turnstileId !== null) window.turnstile.execute(turnstileId); } catch (e) {}
+      setTimeout(function () { resolve(''); }, 30000);
+    });
+  }
+  function spendTurnstileToken() {
+    turnstileToken = '';
+    try { if (window.turnstile && turnstileId !== null) window.turnstile.reset(turnstileId); } catch (e) {}
   }
   function closePanel() {
     panel.hidden = true;
@@ -282,12 +350,17 @@
     var reply = null, replyText = '';
 
     var controller = window.AbortController ? new AbortController() : null;
-    var timer = controller ? setTimeout(function () { controller.abort(); }, 90000) : null;
-    fetch(ENDPOINT, {
-      method: 'POST',
-      signal: controller ? controller.signal : undefined,
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ session_id: sessionId(), message: message, page_path: location.pathname, test: isTest }),
+    var timer = null;
+    var newConversation = !sessionId();
+    turnstileTokenFor(newConversation).then(function (token) {
+      if (newConversation && token) spendTurnstileToken();
+      timer = controller ? setTimeout(function () { controller.abort(); }, 90000) : null;
+      return fetch(ENDPOINT, {
+        method: 'POST',
+        signal: controller ? controller.signal : undefined,
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ session_id: sessionId(), message: message, page_path: location.pathname, test: isTest, turnstile_token: token || undefined }),
+      });
     }).then(function (res) {
       var type = res.headers.get('content-type') || '';
       if (type.indexOf('text/event-stream') < 0) {

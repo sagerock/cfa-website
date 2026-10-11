@@ -72,6 +72,32 @@ async function sha256(value: string) {
   return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 
+const turnstileHostnames = new Set([
+  "learn.centerforanthroposophy.org",
+  "centerforanthroposophy.org",
+  "www.centerforanthroposophy.org",
+]);
+
+async function verifyTurnstile(token: string, remoteIp: string) {
+  const secret = Deno.env.get("TURNSTILE_SECRET_KEY") || "";
+  if (!secret || !token) return false;
+  try {
+    const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      signal: AbortSignal.timeout(10_000),
+      body: new URLSearchParams({ secret, response: token, remoteip: remoteIp }),
+    });
+    if (!response.ok) return false;
+    const result = await response.json() as { success?: boolean; hostname?: string; action?: string; "error-codes"?: string[] };
+    const ok = result.success === true && turnstileHostnames.has(result.hostname || "") && result.action === "concierge";
+    if (!ok) console.error("concierge_turnstile_failed", JSON.stringify({ hostname: result.hostname, action: result.action, error_codes: result["error-codes"] }));
+    return ok;
+  } catch {
+    return false;
+  }
+}
+
 function text(value: unknown, maxLength: number) {
   return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
 }
@@ -277,7 +303,9 @@ type ToolContext = {
   emit: (event: string, data: unknown) => void;
 };
 
-type ToolOutcome = { result: unknown; isError?: boolean };
+// `link` is what the visitor saw as a sign-up button; it is stored with the tool result (as
+// `_link`, stripped before replay) so a reloaded chat can show the button again.
+type ToolOutcome = { result: unknown; isError?: boolean; link?: JsonRecord };
 
 const offersCache = new Map<string, { at: number; value: JsonRecord }>();
 
@@ -474,8 +502,9 @@ async function runTool(name: string, input: JsonRecord, ctx: ToolContext): Promi
       } else {
         return { result: { kind: "inquire", page_url: entry.page_url, director: entry.director } };
       }
-      ctx.emit("link", { name: entry.name, url, price_line: priceLine, kind: register.kind });
-      return { result: { shown_to_visitor: true, kind: register.kind, price_line: priceLine, note } };
+      const link = { name: entry.name, url, price_line: priceLine, kind: register.kind };
+      ctx.emit("link", link);
+      return { result: { shown_to_visitor: true, kind: register.kind, price_line: priceLine, note }, link };
     }
 
     case "send_verification_code": {
@@ -830,7 +859,13 @@ function sanitizeAssistantContent(content: JsonRecord[]) {
 
 // A crash between a tool call and its result would leave the transcript unreplayable;
 // answer any dangling tool_use with an error result before continuing.
-function repairTranscript(rows: StoredRow[]) {
+function repairTranscript(storedRows: StoredRow[]) {
+  // Our own bookkeeping keys (`_link`) never go to the API.
+  const rows = storedRows.map((row) => row.role !== "user" ? row : {
+    ...row,
+    content: (row.content as JsonRecord[]).map((block) => block.type !== "tool_result" ? block
+      : Object.fromEntries(Object.entries(block).filter(([key]) => !key.startsWith("_")))),
+  } as StoredRow);
   const messages: StoredRow[] = [];
   for (let index = 0; index < rows.length; index += 1) {
     const row = rows[index];
@@ -876,14 +911,46 @@ Deno.serve(async (request: Request) => {
   } catch {
     return json({ error: "invalid_request" }, 400, origin);
   }
-  const visitorText = typeof body.message === "string" ? body.message.trim() : "";
-  if (!visitorText) return json({ error: "empty_message" }, 400, origin);
-  if (visitorText.length > MESSAGE_MAX_CHARS) return json({ error: "message_too_long", limit: MESSAGE_MAX_CHARS }, 400, origin);
-
   const admin = createClient(supabaseUrl, serviceRoleKey, { auth: { persistSession: false, autoRefreshToken: false } });
   const remoteIp = (request.headers.get("cf-connecting-ip") || request.headers.get("x-forwarded-for") || "")
     .split(",")[0].trim();
   const ipHash = await sha256(`${salt}:concierge:${remoteIp}`);
+  const turnstileRequired = Deno.env.get("CONCIERGE_REQUIRE_TURNSTILE") === "1";
+
+  // Page load: what the visitor already said in this tab's conversation, and whether a
+  // spam check is needed before a new one starts. Same-IP rule as messages.
+  if (body.history === true) {
+    const turns: JsonRecord[] = [];
+    const sessionId = text(body.session_id, 64);
+    if (/^[0-9a-f-]{36}$/i.test(sessionId)) {
+      const { data: owned } = await admin.from("cfa_concierge_sessions").select("id, ip_hash")
+        .eq("id", sessionId).eq("client_id", CFA_CLIENT_ID).maybeSingle();
+      if (owned && owned.ip_hash === ipHash) {
+        const { data: rows } = await admin.from("cfa_concierge_messages").select("role, content, visitor_text")
+          .eq("session_id", sessionId).order("id");
+        for (const row of rows || []) {
+          if (row.role === "user") {
+            if (row.visitor_text) turns.push({ who: "visitor", text: row.visitor_text });
+            for (const block of (row.content || []) as JsonRecord[]) {
+              if (block.type === "tool_result" && block._link) turns.push({ who: "link", link: block._link });
+            }
+            continue;
+          }
+          const said = ((row.content || []) as JsonRecord[])
+            .filter((block) => block.type === "text").map((block) => String(block.text || "")).join("").trim();
+          if (said) turns.push({ who: "jax", text: said });
+        }
+      }
+    }
+    return json({
+      turns,
+      turnstile_site_key: turnstileRequired ? Deno.env.get("TURNSTILE_SITE_KEY") || null : null,
+    }, 200, origin);
+  }
+
+  const visitorText = typeof body.message === "string" ? body.message.trim() : "";
+  if (!visitorText) return json({ error: "empty_message" }, 400, origin);
+  if (visitorText.length > MESSAGE_MAX_CHARS) return json({ error: "message_too_long", limit: MESSAGE_MAX_CHARS }, 400, origin);
 
   // Per-IP hourly limit across sessions.
   const hourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
@@ -916,6 +983,15 @@ Deno.serve(async (request: Request) => {
     if (data && data.ip_hash === ipHash) session = data as Session;
   }
   const isFirstTurn = !session;
+  if (!session && turnstileRequired) {
+    // A new conversation needs a passed Cloudflare Turnstile check, so bots can't spend the
+    // budget. Our own eval runner carries a secret header instead.
+    const evalToken = Deno.env.get("CONCIERGE_EVAL_TOKEN") || "";
+    const isEval = evalToken.length >= 24 && request.headers.get("x-concierge-eval") === evalToken;
+    if (!isEval && !(await verifyTurnstile(text(body.turnstile_token, 4096), remoteIp))) {
+      return json({ error: "verification_required", message: "Please confirm you're not a robot, then send your message again." }, 403, origin);
+    }
+  }
   if (!session) {
     const { data, error } = await admin
       .from("cfa_concierge_sessions")
@@ -1047,6 +1123,7 @@ Deno.serve(async (request: Request) => {
               tool_use_id: String(block.id),
               content: JSON.stringify(outcome.result),
               ...(outcome.isError ? { is_error: true } : {}),
+              ...(outcome.link ? { _link: outcome.link } : {}),
             };
           }));
           await admin.from("cfa_concierge_messages").insert({
@@ -1054,7 +1131,10 @@ Deno.serve(async (request: Request) => {
             role: "user",
             content: results,
           });
-          messages.push({ role: "user", content: results as unknown as Anthropic.Beta.BetaContentBlockParam[] });
+          const apiResults = results.map((block) =>
+            Object.fromEntries(Object.entries(block).filter(([key]) => !key.startsWith("_")))
+          );
+          messages.push({ role: "user", content: apiResults as unknown as Anthropic.Beta.BetaContentBlockParam[] });
           if (spokeText) emit("token", { text: "\n\n" });
           spokeText = false;
         }
