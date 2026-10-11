@@ -750,3 +750,16 @@ Purchase now carries `eventID: purchase-<registration id>`, the same id the serv
 so Meta dedupes rather than double-counts. A Meta failure is logged and never affects the
 registration (2.5 s cap). Secret `META_CAPI_TOKEN` is the SageRock system-user token; with
 no secret the call is skipped. `META_CAPI_TEST_EVENT_CODE` routes events to Test Events.
+## 2026-10-11 — Site concierge (Jax chat), Phase 0 on a hidden test page
+CfA's executive director said go on 10/10 to an on-site assistant that recommends programs, hands
+over prefilled sign-up links and answers a verified person's "am I registered / Zoom link / payment
+plan" questions. Built as Edge Function `cfa-concierge` (Claude Opus 5.5, low effort, strict tools,
+on its own Anthropic key and spend-capped workspace) with `public/concierge/widget.js` and an
+unlinked, noindex `/concierge` test page. The operating rules live in the `cfa_concierge_config`
+table, not this public repo; the program facts live in `src/data/concierge-programs.json`, which
+the function bundles, so editing that file needs a function redeploy. Personal lookups need an
+emailed six-digit code, cover only the learn.* platform, and never include Kairos. Coupons are
+only checked, never listed or created; no payment happens in chat. Register pages now accept
+`?offer=&coupon=&email=&first_name=&last_name=` so the assistant's links arrive filled in; a bad
+coupon fails soft to list price. Putting the widget on the WordPress home page is a later,
+separate switch.
