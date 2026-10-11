@@ -158,7 +158,7 @@
       try { sessionStorage.removeItem(SKEY); } catch (e) {}
       log.textContent = '';
       chips.hidden = false;
-      bubble('bot', GREETING);
+      greetingNode = bubble('bot', GREETING);
       input.focus();
     });
     var person = panel.querySelector('.cfa-cc-person');
@@ -237,7 +237,7 @@
   function openPanel() {
     panel.hidden = false;
     launch.hidden = true;
-    if (!greeted) { greeted = true; track('concierge_open'); loadHistory(); }
+    if (!greeted) { greeted = true; track('concierge_open'); greetingNode = bubble('bot', GREETING); loadHistory(); }
     input.focus();
   }
 
@@ -245,6 +245,7 @@
   // and learn whether a spam check is needed before a new conversation starts.
   var turnstileKey = null, turnstileId = null, turnstileWaiters = [], turnstileToken = '';
   var markReady, ready = new Promise(function (resolve) { markReady = resolve; });
+  var greetingNode = null;
   function loadHistory() {
     var id = sessionId();
     setTimeout(function () { markReady(); }, 8000);  // never hold a message longer than this
@@ -253,25 +254,25 @@
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ history: true, session_id: id }),
     }).then(function (res) { return res.json(); }).then(function (out) {
-      var early = Array.prototype.slice.call(log.children);
-      early.forEach(function (node) { log.removeChild(node); });
-      setTimeout(function () { early.forEach(function (node) { log.appendChild(node); }); log.scrollTop = log.scrollHeight; }, 0);
       turnstileKey = out.turnstile_site_key || null;
       if (turnstileKey) prepareTurnstile();
       var turns = out.turns || [];
       if (!turns.length) {
         if (id) { try { sessionStorage.removeItem(SKEY); } catch (e) {} }
-        bubble('bot', GREETING);
         return;
       }
+      // The greeting is already showing; earlier turns go under it, and anything typed
+      // while they loaded moves below them.
+      var early = Array.prototype.slice.call(log.children).filter(function (node) { return node !== greetingNode; });
+      early.forEach(function (node) { log.removeChild(node); });
+      setTimeout(function () { early.forEach(function (node) { log.appendChild(node); }); log.scrollTop = log.scrollHeight; }, 0);
       if (chips) chips.hidden = true;
-      bubble('bot', GREETING);
       turns.forEach(function (turn) {
         if (turn.who === 'visitor') bubble('me', turn.text);
         else if (turn.who === 'jax') bubble('bot', turn.text);
         else if (turn.who === 'link' && turn.link) linkCard(turn.link, true);
       });
-    }).catch(function () { bubble('bot', GREETING); }).then(function () { markReady(); });
+    }).catch(function () {}).then(function () { markReady(); });
   }
 
   // Cloudflare Turnstile, invisible unless Cloudflare wants a click. Only loaded when the
