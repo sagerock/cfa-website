@@ -26,6 +26,8 @@ const otherCountries = ISO_COUNTRY_CODES
       <p class="intro-copy">
         Register for the complete twelve-seminar series as an individual — paid at once or in five
         monthly payments — or bring up to twenty participants from your school or institution.
+        You can also join Dr. Adam Blanning’s October 31 seminar on its own, or the three-session
+        bundle with Blanning, Sven Saar and Constanza Kaliks.
         Registration includes live access, recordings, and course resources.
       </p>
     </div>
@@ -685,9 +687,10 @@ const otherCountries = ISO_COUNTRY_CODES
       config = await response.json();
       offerList.replaceChildren();
       const requestedOffer = config.offers.find((offer) => offer.code === requestedOfferCode);
-      // Public checkout: the full series (paid at once or in five monthly payments) and the
-      // institution tier. Single sessions and the bundle stay email-only (?offer=<code>).
-      const publicOfferCodes = new Set(['individual', 'individual-plan', 'institution']);
+      // Public checkout: the full series (paid at once or in five monthly payments), the
+      // institution tier, and (David 10/10) the Blanning single and the three-session bundle.
+      // Other single sessions stay email-only (?offer=<code>).
+      const publicOfferCodes = new Set(['individual', 'individual-plan', 'institution', 'single-blanning', 'three-session-bundle']);
       const visibleOffers = requestedOffer
         ? [requestedOffer]
         : config.offers.filter((offer) => publicOfferCodes.has(offer.code));
