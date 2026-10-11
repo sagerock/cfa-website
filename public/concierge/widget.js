@@ -198,8 +198,11 @@
     track('concierge_message');
     var reply = null, replyText = '';
 
+    var controller = window.AbortController ? new AbortController() : null;
+    var timer = controller ? setTimeout(function () { controller.abort(); }, 90000) : null;
     fetch(ENDPOINT, {
       method: 'POST',
+      signal: controller ? controller.signal : undefined,
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ session_id: sessionId(), message: message, page_path: location.pathname, test: isTest }),
     }).then(function (res) {
@@ -245,7 +248,7 @@
       return pump();
     }).catch(function () {
       bubble('bot', "Sorry, I couldn't reach the server. Please email jax@centerforanthroposophy.org and a person at CfA will help.");
-    }).then(finish);
+    }).then(function () { if (timer) clearTimeout(timer); finish(); });
   });
 
   function mount() {

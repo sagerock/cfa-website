@@ -275,7 +275,6 @@ type ToolContext = {
   session: Session;
   salt: string;
   emit: (event: string, data: unknown) => void;
-  counters: { coupon: number };
 };
 
 type ToolOutcome = { result: unknown; isError?: boolean };
@@ -401,10 +400,17 @@ async function runTool(name: string, input: JsonRecord, ctx: ToolContext): Promi
 
     case "check_coupon": {
       if (!nativeEntry(programKey)) return { result: { error: "not_a_native_program" }, isError: true };
-      if (ctx.counters.coupon >= COUPON_CHECKS_PER_SESSION) {
+      // Counted from the stored transcript so the limit holds across messages; the
+      // call being handled is already stored, so it counts itself.
+      const { count: checks } = await admin
+        .from("cfa_concierge_messages")
+        .select("id", { count: "exact", head: true })
+        .eq("session_id", session.id)
+        .eq("role", "assistant")
+        .contains("content", [{ type: "tool_use", name: "check_coupon" }]);
+      if ((checks || 0) > COUPON_CHECKS_PER_SESSION) {
         return { result: { error: "too_many_checks", say: "Ask them to write to jax@centerforanthroposophy.org." }, isError: true };
       }
-      ctx.counters.coupon += 1;
       const code = text(input.code, 40).toUpperCase();
       if (!code) return { result: { valid: false } };
       const coupon = await couponValid(admin, programKey, code);
@@ -770,7 +776,7 @@ async function runTool(name: string, input: JsonRecord, ctx: ToolContext): Promi
       const filed = await sendMail({
         to: HANDOFF_TO,
         replyTo: isEmail(visitorEmail) ? visitorEmail : null,
-        subject: `Site concierge hand-off: ${reason}`,
+        subject: `${session.is_test ? "[Concierge test] " : ""}Site concierge hand-off: ${reason}`,
         body: [
           `Reason: ${reason}`,
           `Visitor email: ${visitorEmail || "not given"}${session.verified_email === visitorEmail && visitorEmail ? " (verified in chat)" : ""}`,
@@ -978,7 +984,7 @@ Deno.serve(async (request: Request) => {
         controller.enqueue(encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`));
       };
       emit("session", { session_id: activeSession.id });
-      const ctx: ToolContext = { admin, session: activeSession, salt, emit, counters: { coupon: 0 } };
+      const ctx: ToolContext = { admin, session: activeSession, salt, emit };
       let spokeText = false;
       try {
         for (let round = 0; round <= MAX_TOOL_ROUNDS; round += 1) {
