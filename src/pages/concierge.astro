@@ -1,9 +1,16 @@
 ---
 import '../styles/global.css';
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 // Ask Jax as a full-page chat (Sage, 2026-10-11: "an actual chat window like ChatGPT",
 // better on phones than a corner pop-up). Same widget script as the pop-up, mounted
 // inline with data-mount. Still a test page: unlinked, noindex, and
 // data-concierge-test tags these sessions as test traffic.
+// The script URL carries a hash of its contents, so a browser holding an older
+// copy (it is cached for a while) fetches the new one as soon as it changes.
+const widgetVersion = createHash('sha256')
+  .update(readFileSync(new URL('../../public/concierge/widget.js', import.meta.url)))
+  .digest('hex').slice(0, 10);
 ---
 
 <html lang="en">
@@ -41,7 +48,7 @@ import '../styles/global.css';
       </header>
       <main id="ask-chat" class="ask-chat"></main>
     </div>
-    <script is:inline src="/concierge/widget.js" data-mount="#ask-chat" data-concierge-test defer></script>
+    <script is:inline src={`/concierge/widget.js?v=${widgetVersion}`} data-mount="#ask-chat" data-concierge-test defer></script>
 
     <style is:global>
       html, body.ask-body { height: 100%; margin: 0; }

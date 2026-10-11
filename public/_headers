@@ -19,3 +19,7 @@
   Referrer-Policy: no-referrer
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
+
+# The concierge widget changes often during the pilot; keep browser copies short-lived.
+/concierge/*
+  Cache-Control: public, max-age=300, must-revalidate
