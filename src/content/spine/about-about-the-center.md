@@ -143,6 +143,3 @@ During this winter season at the Center for Anthroposophy (CfA), the directors o
 [READ ALL](/news)
 
 ## Sign up for our Newsletter!
-
-Questions about the Center are always welcome at
-office@centerforanthroposophy.org.
