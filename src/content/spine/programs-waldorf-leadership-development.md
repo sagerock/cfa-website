@@ -72,6 +72,8 @@ Charles paints in the colorist style that he evolved from his initial training i
 
 This highly-regarded **online and low-residency** Educational Leadership Program is designed to support independent and public Waldorf school administrators, staff, trustees, and pedagogical leaders to develop, expand, and deepen leadership skills. With a blend of face-to-face and online professional development and training, attendees build skills, capacities, and understanding of their vital roles in Waldorf schools.
 
+The next cycle begins May 8, 2027, with registration opening in January 2027.
+
 ## Fall 2026 Residency
 
 - Gathering Waters Charter School in Keene, NH: Friday, October 9 – Tuesday, October 13, 2026
