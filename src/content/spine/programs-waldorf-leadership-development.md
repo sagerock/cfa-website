@@ -72,7 +72,11 @@ Charles paints in the colorist style that he evolved from his initial training i
 
 This highly-regarded **online and low-residency** Educational Leadership Program is designed to support independent and public Waldorf school administrators, staff, trustees, and pedagogical leaders to develop, expand, and deepen leadership skills. With a blend of face-to-face and online professional development and training, attendees build skills, capacities, and understanding of their vital roles in Waldorf schools.
 
-The next cycle begins May 8, 2027, with registration opening in January 2027.
+The next cycle begins May 8, 2027, with registration opening January 4, 2027.
+
+## Upcoming cohort: WLCD 2027-28
+
+The 2027-28 cohort begins May 8, 2027. Registration opens January 4, 2027, giving four months to plan before the cycle begins.
 
 ## Fall 2026 Residency
 
