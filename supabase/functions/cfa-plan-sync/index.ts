@@ -163,6 +163,35 @@ Deno.serve(async (request: Request) => {
       }).eq("plan_id", plan.id).eq("sequence", sequence);
     }
 
+    // ARBGetSubscription never lists a declined payment that has not settled,
+    // so a suspended subscription can carry a failed installment the loop above
+    // cannot see (Elena Magallanes, 2026-10-05: declined, installment still
+    // "scheduled"). Authorize.Net suspends on the first failure, so the earliest
+    // scheduled installment already due is the one that failed. Marked as
+    // inferred; the daily payment reconciliation holds the gateway's own record.
+    if (gatewayStatus === "suspended") {
+      const today = new Date().toISOString().slice(0, 10);
+      const overdue = await admin
+        .from("registration_installments")
+        .select("id, sequence")
+        .eq("plan_id", plan.id)
+        .eq("status", "scheduled")
+        .lte("due_on", today)
+        .order("sequence")
+        .limit(1)
+        .maybeSingle();
+      if (overdue.data) {
+        await admin.from("registration_installments").update({
+          status: "failed",
+          gateway_response: {
+            response: "declined (inferred: subscription suspended)",
+            inferred: true,
+          },
+          attempted_at: new Date().toISOString(),
+        }).eq("id", overdue.data.id);
+      }
+    }
+
     const allPaid = paidRemaining >= Number(plan.installment_count) - 1;
     const status = planStatusFor(gatewayStatus, allPaid);
     const nextScheduled = await admin
