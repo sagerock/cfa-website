@@ -12,6 +12,8 @@ order: 6
 
 ### 2026
 
+![Lighthouse](https://sagerock-email-images.s3.us-east-2.amazonaws.com/center-for-anthroposophy/center-periphery/2026/10/7cf1f9b9adc8024a-lighthouse-image-mentor-training.webp)
+
 ## Wisdom into Practice: Pedagogical Leadership for Waldorf Teachers
 
 ### Become a Mentor, Coach, and Professional Appraiser for Waldorf Teachers

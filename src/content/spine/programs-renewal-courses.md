@@ -6,7 +6,7 @@ slug: renewal-courses
 order: 7
 category: "Professional Development"
 tagline: "Week-long, certificate-earning summer courses to nourish and inspire your body, soul, and spirit."
-heroImage: "/images/44290642bc-renewal-circle-1-copy-scaled.webp"
+heroImage: "https://sagerock-email-images.s3.us-east-2.amazonaws.com/center-for-anthroposophy/center-periphery/2026/10/7eb292cbe50403fe-renewal-image.webp"
 facts:
   - label: "In person"
     value: "June 27 – July 2, 2027 · Wilton, NH"
