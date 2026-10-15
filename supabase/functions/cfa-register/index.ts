@@ -127,6 +127,33 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
       "before the first session on January 24.",
     ],
   },
+  // Ten-month, low-residency certificate program (Karen Atkinson). Online
+  // Saturdays plus a summer residency in Wilton, NH; no portal. The session
+  // times are not set yet, so the receipt gives dates only and says Karen will
+  // write with the rest. Two offers: one payment, or ten monthly payments.
+  "mentor-training-2027": {
+    key: "mentor-training-2027",
+    platform: "native",
+    platformId: "mentor-training-2027",
+    title: "Mentor Training 2027",
+    chargeDescription: "Mentor Training 2027",
+    emailSubject: "Your Mentor Training 2027 registration",
+    portal: false,
+    locale: "en",
+    testOfferCodes: new Set(["tuition"]),
+    signedInRedirect: null,
+    details: [
+      "Mentor Training Program, January 23 - November 13, 2027.",
+      "",
+      "Online Saturdays: January 23, February 20, March 13, April 17, May 8,",
+      "September 25, October 23 and November 13, 2027.",
+      "",
+      "In-person residency: Sunday, June 27 - Friday, July 2, 2027, in Wilton, NH.",
+      "Travel and lodging for the residency are not included in tuition.",
+      "",
+      "Karen Atkinson will write with session times, the residency details and what to prepare.",
+    ],
+  },
 };
 const DEFAULT_PROGRAM_KEY = "starlight-rays-2026-2027";
 
@@ -636,6 +663,7 @@ async function createInstallmentSubscription(
     startDate: string;
     invoiceNumber: string;
     description: string;
+    name: string;
   },
 ) {
   const payload = await authorizeApiRequest(config, {
@@ -646,7 +674,8 @@ async function createInstallmentSubscription(
       },
       refId: input.refId,
       subscription: {
-        name: "Starlight Rays 2026-27 plan",
+        // Authorize.Net caps a subscription name at 50 characters.
+        name: input.name.slice(0, 50),
         paymentSchedule: {
           interval: { length: "1", unit: "months" },
           startDate: input.startDate,
@@ -1853,9 +1882,14 @@ Deno.serve(async (request: Request) => {
           occurrences: installmentCount - 1,
           startDate: nextChargeOn,
           invoiceNumber,
+          // Until 2026-10-15 these two strings were hard-coded to Starlight,
+          // the only program with a plan. Starlight keeps its exact wording.
+          name: programDefinition.key === DEFAULT_PROGRAM_KEY
+            ? "Starlight Rays 2026-27 plan"
+            : `${programDefinition.chargeDescription} plan`,
           description: testAuthorized
-            ? "Starlight production integration test (plan)"
-            : `Starlight Rays 2026-2027 · payments 2-${installmentCount} of ${installmentCount}`,
+            ? `${programDefinition.key === DEFAULT_PROGRAM_KEY ? "Starlight" : programDefinition.chargeDescription} production integration test (plan)`
+            : `${programDefinition.chargeDescription} · payments 2-${installmentCount} of ${installmentCount}`,
         });
         plan.subscriptionId = subscription.subscriptionId;
       }

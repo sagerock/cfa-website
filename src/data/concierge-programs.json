@@ -137,23 +137,25 @@
       "notes_for_jax": "Kairos program: questions go to Lisl Hofer (lisl@centerforanthroposophy.org) and Karine Munk Finser (karine@centerforanthroposophy.org). The course page names Lisl as the contact for questions about the course."
     },
     {
-      "key": "mentor-training",
+      "key": "mentor-training-2027",
       "name": "Mentor Training",
       "one_line": "A ten-month, low-residency certificate program in pedagogical mentoring, coaching and professional evaluation for experienced Waldorf teachers.",
       "who_its_for": "Experienced Waldorf educators and pedagogical leaders. Prerequisites listed on the page: a Waldorf teacher training certificate from an AWSNA member institute or equivalent, at least five full-time years teaching in an independent or public Waldorf school, and a letter of recommendation from current school leadership (two letters for those not currently teaching).",
       "format": "hybrid",
-      "schedule_text": "The current cohort runs January 24 – November 14, 2026: monthly Saturday sessions online plus a week-long in-person residency (June 28 – July 3, 2026). No next cohort dates are posted.",
+      "schedule_text": "The 2027 cohort runs January 23 – November 13, 2027: eight online Saturday sessions (January 23, February 20, March 13, April 17, May 8, September 25, October 23 and November 13, 2027) plus an in-person summer residency Sunday, June 27 – Friday, July 2, 2027 in Wilton, New Hampshire. Session times are not confirmed yet. A free webinar / open house is Wednesday, October 28, 2026 at 7 PM ET. Registration opens October 28, 2026.",
       "director": {
         "name": "Karen Atkinson",
         "email": "karen@centerforanthroposophy.org"
       },
-      "page_url": "https://learn.centerforanthroposophy.org/programs/mentor-training/",
+      "page_url": "https://learn.centerforanthroposophy.org/mentor-training/",
       "register": {
-        "kind": "inquire"
+        "kind": "native",
+        "program_key": "mentor-training-2027",
+        "page": "https://learn.centerforanthroposophy.org/mentor-training/"
       },
       "kairos": false,
-      "open": false,
-      "notes_for_jax": "The page says: \"Enrollment for the current 2026 cohort is closed. Contact the program director to ask about future Mentor Training cohorts.\" For the 2026 cohort the page listed tuition as \"$2,600\" (travel and lodging for the residency not included), with 10% off when two or more people from the same school register together. Limited scholarships: contact the director."
+      "open": true,
+      "notes_for_jax": "2027 tuition is $2,650 for the whole program, which includes all online sessions and the week-long in-person residency; travel and lodging for the residency are not included. It can also be paid as 10 monthly payments of $265 (first today, then monthly to the same card). Registration opens October 28, 2026; before that the page shows the dates and the form is closed. People who attend the free October 28 webinar receive a 10% discount code good through November 1, 2026 (do not name or hand out the code). Session times for 2027 are not set yet; Karen will send them to registrants. Limited scholarships: contact the program director. The 2026 same-school group discount is not part of the 2027 offer. Enrollment questions go to Elsy Ayoub (elsy@centerforanthroposophy.org); program questions to Karen."
     },
     {
       "key": "renewal-courses",

@@ -780,3 +780,32 @@ separate switch.
   Sage's internal account holds manual `explorations-learn-preview` enrollments for both cohorts.
   `scripts/explorations-gate-check.py` checks staff, outsider and anonymous access.
 - Publishing a course is still a separate decision (`published` on `cfa_learn_courses`).
+
+## 2026-10-15 — Mentor Training 2027 gets a lander with its own checkout (preview)
+Sage approved the build and the pricing today. `/mentor-training` (a top-level lander like
+`/biografia`; `/programs/mentor-training` belongs to the `[slug]` spine page) carries the 2027
+schedule, faculty, tuition, FAQ and `MentorTrainingCheckout.astro`, split from the lander for the
+same reason as Biografía and the Bridge Lectures. Layout follows the Explorations enroll page
+Elsy pointed to, in this site's tokens. Stays noindex until CfA says go.
+- Program `mentor-training-2027` (hybrid, native) with two offers, both `amount_cents` 265000
+  (the total; cfa-register splits a plan): `tuition` once, `plan` ten monthly payments of $265.
+  No premium for paying monthly.
+- Registration opens October 28, 2026. Both offers carry `starts_at`, which cfa-register already
+  filters on for listing and for checkout, so the server will not sell early; the page also keeps
+  the form closed until then (`?preview=form` shows it early). Offers close 9:00 AM ET on
+  January 23, 2027.
+- Visible discount-code field (Starlight's), plus `?coupon=`. `MTWEBINAR` is 10% off, valid
+  October 28 – November 1, and works on both offers because the server discounts the total before
+  splitting it ($238.50 × 10). The code is never printed on the page. No same-school discount for
+  2027; CANADA20 applies as it does everywhere.
+- The checkout refuses to show offers unless cfa-register answers with the program name
+  "Mentor Training 2027": an older deploy falls back to Starlight for an unknown key.
+- `cfa-register` gains the program definition, and the ARB subscription name and description
+  now come from the program (they were hard-coded to Starlight; Starlight's text is unchanged).
+  Staff notices: secret `REGISTRATION_NOTIFY_EMAILS_MENTOR_TRAINING_2027`.
+- `WELCOME_VIDEO_YOUTUBE_ID` (Karen's welcome video, youtube-nocookie) and
+  `WEBINAR_REGISTRATION_URL` are empty constants at the top of the lander; nothing shows until set.
+- Testimonial: only the one already published with a name (Jenna Martin). Residency photos are
+  from the 2026 residency folder, WebP, metadata stripped.
+- Concierge catalog entry renamed to key `mentor-training-2027` (it looks programs up by tag) and
+  pointed at the new page; it needs a cfa-concierge redeploy to take effect.
