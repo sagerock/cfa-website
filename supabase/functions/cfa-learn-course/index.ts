@@ -7,6 +7,10 @@ const allowedOrigins = new Set([
   "http://localhost:4321",
 ]);
 
+// Staff accounts may open an unpublished course they are enrolled in, so a new
+// cohort can be checked end to end before it is published. Students cannot.
+const PREVIEW_DOMAINS = ["@sagerock.com", "@centerforanthroposophy.org"];
+
 function corsHeaders(origin: string | null) {
   const allowedOrigin = origin && allowedOrigins.has(origin)
     ? origin
@@ -53,11 +57,13 @@ Deno.serve(async (request: Request) => {
   if (authError || !authData.user) return json({ error: "invalid_session" }, 401, origin);
 
   const slug = new URL(request.url).searchParams.get("slug")?.trim() || "starlight-rays-2026-2027";
+  const viewerEmail = (authData.user.email || "").toLowerCase();
+  const canPreview = PREVIEW_DOMAINS.some((domain) => viewerEmail.endsWith(domain));
   const { data: course, error: courseError } = await admin
     .from("cfa_learn_courses")
     .select("id, program_id, slug, title, former_name, subtitle, cohort, facilitator, image_url")
     .eq("slug", slug)
-    .eq("published", true)
+    .in("published", canPreview ? [true, false] : [true])
     .maybeSingle();
 
   if (courseError) return json({ error: "course_lookup_failed" }, 500, origin);

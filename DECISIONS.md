@@ -763,3 +763,20 @@ only checked, never listed or created; no payment happens in chat. Register page
 `?offer=&coupon=&email=&first_name=&last_name=` so the assistant's links arrive filled in; a bad
 coupon fails soft to list price. Putting the widget on the WordPress home page is a later,
 separate switch.
+
+## 2026-10-15 — learn.* holds more than one course (Explorations Fall and Spring)
+
+- `/learn` lists every course the person can open, from the new `cfa-learn-courses` function
+  (published course + active, unrevoked enrollment in its program). It is no longer hard-wired
+  to Starlight.
+- Course pages share `src/components/LearnCourse.astro`; each course has a thin page in
+  `src/pages/learn/` with its slug, wording and help contact (Explorations names Deborah). Its
+  styles are global because the session list and resources are built at runtime, and Astro's
+  scoped styles never reached them (the Starlight list had been rendering unstyled).
+- Page resources other than the welcome letter open in place; addresses and links in course copy
+  are clickable (built as DOM nodes, never innerHTML).
+- Staff preview: an @sagerock.com or @centerforanthroposophy.org account enrolled in an
+  unpublished course can open it (`cfa-learn-course`, `-courses`, `-playback`). Students cannot.
+  Sage's internal account holds manual `explorations-learn-preview` enrollments for both cohorts.
+  `scripts/explorations-gate-check.py` checks staff, outsider and anonymous access.
+- Publishing a course is still a separate decision (`published` on `cfa_learn_courses`).

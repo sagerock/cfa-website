@@ -56,3 +56,44 @@ export async function getPlaybackTokens(slug, sessionId) {
   if (!response.ok) return { status: 'error', error: body.error || 'playback_request_failed' };
   return { status: 'ok', data: body };
 }
+
+export async function getMyCourses() {
+  const { data, error } = await supabase.auth.getSession();
+  if (error || !data.session) return { status: 'signed_out' };
+
+  const response = await fetch(`${SUPABASE_URL}/functions/v1/cfa-learn-courses`, {
+    headers: {
+      Authorization: `Bearer ${data.session.access_token}`,
+      apikey: SUPABASE_PUBLISHABLE_KEY,
+    },
+    cache: 'no-store',
+  });
+
+  const body = await response.json().catch(() => ({}));
+  if (response.status === 401) return { status: 'signed_out' };
+  if (!response.ok) return { status: 'error', error: body.error || 'courses_request_failed' };
+  return { status: 'ok', data: body };
+}
+
+// Builds text with clickable web addresses and email addresses, without
+// innerHTML: course copy comes from the database and is treated as plain text.
+export function appendLinkedText(parent, text) {
+  const pattern = /(https?:\/\/[^\s<>()]+[^\s<>().,;:!?'"’”]|[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})/g;
+  let last = 0;
+  for (const match of text.matchAll(pattern)) {
+    if (match.index > last) parent.append(text.slice(last, match.index));
+    const link = document.createElement('a');
+    const value = match[0];
+    if (value.includes('@') && !value.startsWith('http')) {
+      link.href = `mailto:${value}`;
+    } else {
+      link.href = value;
+      link.target = '_blank';
+      link.rel = 'noopener';
+    }
+    link.textContent = value;
+    parent.append(link);
+    last = match.index + value.length;
+  }
+  if (last < text.length) parent.append(text.slice(last));
+}
