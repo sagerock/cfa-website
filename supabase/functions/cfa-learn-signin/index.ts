@@ -11,6 +11,7 @@ const productionOrigin = "https://learn.centerforanthroposophy.org";
 const CFA_CLIENT_ID = "22500cd6-052a-42ff-a0cb-4f3ba9125dfd";
 const RATE_LIMIT_PER_WINDOW = 3;
 const RATE_WINDOW_MINUTES = 15;
+const PREVIEW_DOMAINS = ["@sagerock.com", "@centerforanthroposophy.org"];
 
 const allowedOrigins = new Set([
   "https://learn.centerforanthroposophy.org",
@@ -127,10 +128,13 @@ Deno.serve(async (request: Request) => {
     .maybeSingle();
   if (!contact) return anonymousOk;
 
+  // Staff may sign in to preview an unpublished course they are enrolled in
+  // (same rule as cfa-learn-course). Students only ever reach published ones.
+  const canPreview = PREVIEW_DOMAINS.some((domain) => email.endsWith(domain));
   const { data: courses } = await admin
     .from("cfa_learn_courses")
     .select("program_id")
-    .eq("published", true);
+    .in("published", canPreview ? [true, false] : [true]);
   const programIds = (courses || []).map((course) => course.program_id);
   if (!programIds.length) return anonymousOk;
 
