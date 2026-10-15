@@ -16,6 +16,30 @@ function json(body: unknown, status: number) {
   });
 }
 
+// Who signs the welcome and who answers course questions, per course family.
+// Starlight is the default; Explorations is Deborah's (Sage approved 2026-10-15).
+type WelcomeCopy = { signers: string; questions: string; replyTo: string; replyName: string; holds: string };
+const STARLIGHT_COPY: WelcomeCopy = {
+  signers: "David Barham and Elsy Ayoub",
+  questions: "office@centerforanthroposophy.org",
+  replyTo: "office@centerforanthroposophy.org",
+  replyName: "Center for Anthroposophy",
+  holds: "the live-seminar Zoom link, session recordings,\nand course resources",
+};
+const COURSE_COPY: Array<[string, WelcomeCopy]> = [
+  ["explorations-online-", {
+    signers: "Deborah Dornemann\nDirector of Explorations",
+    questions: "deborah@centerforanthroposophy.org",
+    replyTo: "deborah@centerforanthroposophy.org",
+    replyName: "Deborah Dornemann",
+    holds: "the Zoom link for each class, class recordings,\nyour reading assignments and the course resources",
+  }],
+];
+
+function copyFor(slug: string): WelcomeCopy {
+  return COURSE_COPY.find(([prefix]) => slug.startsWith(prefix))?.[1] ?? STARLIGHT_COPY;
+}
+
 function parseFrom(value: string) {
   const match = value.match(/^(.*)<(.+)>$/);
   return match
@@ -28,6 +52,7 @@ async function sendPortalWelcome(input: {
   firstName: string;
   courseTitle: string;
   signInLink: string;
+  copy: WelcomeCopy;
 }): Promise<{ ok: boolean; providerMessageId: string | null }> {
   const key = Deno.env.get("SENDGRID_API_KEY") || "";
   if (!key) return { ok: false, providerMessageId: null };
@@ -38,19 +63,19 @@ async function sendPortalWelcome(input: {
     "",
     `Welcome to ${input.courseTitle}.`,
     "",
-    "Your learning portal holds the live-seminar Zoom link, session recordings,",
-    "and course resources. Use this secure link to sign in — no password needed:",
+    `Your learning portal holds ${input.copy.holds}.`,
+    "Use this secure link to sign in — no password needed:",
     "",
     input.signInLink,
     "",
     "The link is personal to you. If it expires, request a fresh one any time at",
     `${productionOrigin}/learn/sign-in`,
     "",
-    "If you have questions, contact office@centerforanthroposophy.org.",
+    `If you have questions, contact ${input.copy.questions}.`,
     "Trouble signing in? Email sage@centerforanthroposophy.org",
     "",
     "Warmly,",
-    "David Barham and Elsy Ayoub",
+    input.copy.signers,
     "Center for Anthroposophy",
   ].join("\n");
   const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
@@ -62,7 +87,7 @@ async function sendPortalWelcome(input: {
     body: JSON.stringify({
       personalizations: [{ to: [{ email: input.email }] }],
       from: parseFrom(from),
-      reply_to: { email: "office@centerforanthroposophy.org", name: "Center for Anthroposophy" },
+      reply_to: { email: input.copy.replyTo, name: input.copy.replyName },
       subject: `Your ${input.courseTitle} learning portal`,
       content: [{ type: "text/plain", value: emailText }],
       tracking_settings: { click_tracking: { enable: false, enable_text: false } },
@@ -114,7 +139,7 @@ Deno.serve(async (request: Request) => {
 
   const { data: course, error: courseError } = await admin
     .from("cfa_learn_courses")
-    .select("slug, title")
+    .select("slug, title, cohort")
     .eq("program_id", enrollment.program_id)
     .eq("published", true)
     .maybeSingle();
@@ -185,8 +210,12 @@ Deno.serve(async (request: Request) => {
   const sendResult = await sendPortalWelcome({
     email: contact.email,
     firstName: contact.first_name || "colleague",
-    courseTitle: course.title,
+    // Fall and Spring Explorations share a title; the cohort tells them apart.
+    courseTitle: course.slug.startsWith("explorations-online-") && course.cohort
+      ? `${course.title}, ${course.cohort.replace(/^\d{4}-\d{4}\s*/, "")}`
+      : course.title,
     signInLink: signInUrl.toString(),
+    copy: copyFor(course.slug),
   });
 
   const { data: event, error: eventError } = await admin
