@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  discountableAmountCents,
   offerBaseAmountCents,
   recordedSeatCount,
   resolveSeatCount,
@@ -47,4 +48,21 @@ test('the group rate is exactly 20% off the individual rate', () => {
 test('seat range falls back to the offer allowance when no maximum is set', () => {
   assert.deepEqual(seatRange({ per_seat: true, min_seats: 2, seat_count: 6 }), { min: 2, max: 6 });
   assert.deepEqual(seatRange({}), { min: 1, max: 1 });
+});
+
+test('an offer without an exempt part discounts in full, as before', () => {
+  assert.equal(discountableAmountCents(individual, 85000), 85000);
+  assert.equal(discountableAmountCents({ amount_cents: 35000, discount_exempt_cents: null }, 35000), 35000);
+});
+
+test('the certificate part of a Module 7 bundle is never discounted', () => {
+  const bundle = { code: 'ep7-tuition-cert', amount_cents: 39500, discount_exempt_cents: 4500 };
+  const base = discountableAmountCents(bundle, 39500);
+  assert.equal(base, 35000);
+  // Grads25: 25% of tuition only, so $395 becomes $307.50, as on the WordPress form.
+  assert.equal(39500 - Math.round(base * 25 / 100), 30750);
+});
+
+test('an exempt part larger than the price cannot go negative', () => {
+  assert.equal(discountableAmountCents({ amount_cents: 1000, discount_exempt_cents: 4500 }, 1000), 0);
 });

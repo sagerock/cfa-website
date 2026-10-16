@@ -1,0 +1,136 @@
+---
+// Kairos Emergency Pedagogy Module 7, registered Kairos student rate ($250).
+// Unlisted: nothing on the site links here. Lisl sends it to fully registered
+// Kairos students, as she did WordPress page 44974
+// (/module-7-kairos-students-2027/), which this replaces. Not access-controlled,
+// same as the WordPress page; the public page is /kairos/emergency-pedagogy-module-7/.
+import Base from '../../layouts/Base.astro';
+import KairosModule7Checkout from '../../components/KairosModule7Checkout.astro';
+---
+
+<Base
+  title="Module 7 Registration for Kairos Students | Center for Anthroposophy"
+  portalLabel={null}
+  minimal
+>
+  <header class="registration-head">
+    <div class="wrap registration-intro">
+      <div>
+        <p class="eyebrow series-link">Kairos Institute · Registered Kairos students</p>
+        <h1>Module 7 Registration for Kairos Students</h1>
+        <p class="cohort">Emergency Pedagogy · Disaster, Healing Communities, and Animals</p>
+        <p class="intro-copy">
+          For fully registered Kairos students: $350 tuition less the $100 student
+          discount, so $250. You may add the optional $45 EPWB certificate when you register.
+        </p>
+        <p class="course-details">Friday and Saturday, January 15–16, 2027</p>
+        <p class="course-format">Online by Zoom · Tuition $250 · EPWB certificate $45 (optional)</p>
+        <a class="course-link" href="#registration-form">See registration details <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="when-card">
+        <p class="eyebrow">The two days</p>
+        <ol class="seminar-list">
+          <li>
+            <span class="seminar-no">Friday</span>
+            <strong>January 15, 2027</strong>
+            <span class="seminar-parts">3:00 – 4:30 PM EST</span>
+          </li>
+          <li>
+            <span class="seminar-no">Saturday</span>
+            <strong>January 16, 2027</strong>
+            <span class="seminar-parts">9:00 AM – 4:00 PM EST</span>
+          </li>
+        </ol>
+        <p class="when-note">All times are Eastern Standard Time.</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="wrap facilitator-welcome" aria-labelledby="speaker-title">
+    <img class="facilitator-photo" src="/images/51b35b4e70-portrait-of-bernd-ruf-300x300.jpg"
+      alt="Portrait of Bernd Ruf."
+      width="150" height="150" loading="lazy" />
+    <div>
+      <p class="eyebrow">Founder, Parzival School &amp; Emergency Pedagogy</p>
+      <h2 id="speaker-title">Bernd Ruf</h2>
+      <p>Bernd Ruf is the founder of the worldwide emergency pedagogy crisis intervention centre
+        based in Karlsruhe, Germany, from which skilled teams are sent to help traumatised
+        children in places of war and ecological disaster. He is the author of
+        <em>Educating Traumatized Children</em>.</p>
+      <p class="eyebrow" style="margin-top: 28px;">Certificates</p>
+      <p>There are two, and they are separate things.</p>
+      <ul class="cert-list">
+        <li><strong>Certificate of Completion</strong>, issued by the Center for Anthroposophy. No cost.</li>
+        <li><strong>Module 7 Certificate</strong>, issued by Emergency Pedagogy Without Borders, $45. It is
+          one of twelve modules that build toward the full EPWB Diploma in international crisis
+          intervention. Add it when you register; tuition discounts do not apply to it. The Kairos
+          team will request your date of birth separately and order the certificate from EPWB
+          after the module has been taught.</li>
+      </ul>
+      <p class="welcome-credit">Module 7 is part of the Kairos Institute’s Emergency Pedagogy series
+        with Bernd Ruf. Questions about the module, or about a certificate, can go to Lisl Hofer,
+        Manager of the Kairos Institute, at
+        <a href="mailto:lisl@centerforanthroposophy.org">lisl@centerforanthroposophy.org</a>.</p>
+    </div>
+  </section>
+
+  <KairosModule7Checkout program="kairos-ep-module-7-2027-students" />
+</Base>
+
+<style>
+  .registration-head {
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(120deg, rgba(176, 136, 16, 0.12), transparent 62%);
+    padding: 56px 0 48px;
+  }
+  .registration-intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+    gap: 48px;
+    align-items: center;
+  }
+  .registration-head h1 {
+    font-size: clamp(36px, 4.6vw, 58px);
+    letter-spacing: -0.035em;
+    margin-top: 6px;
+  }
+  .series-link { color: var(--green-ink); }
+  .cohort {
+    color: var(--gold);
+    font-family: var(--sans);
+    font-size: 18px;
+    letter-spacing: 0.035em;
+    margin-top: 14px;
+  }
+  .intro-copy { color: var(--soft); font-size: 20px; max-width: 52ch; margin-top: 24px; }
+  .course-details { font: 600 16px/1.7 var(--sans); margin-top: 24px; }
+  .course-format { color: var(--soft); font: 14px/1.7 var(--sans); margin-top: 8px; }
+  .course-link { display: inline-flex; gap: 16px; margin-top: 24px; color: var(--green-ink); font: 600 15px var(--sans); text-underline-offset: 5px; }
+  .course-link:focus-visible { outline: 2px solid var(--green); outline-offset: 6px; }
+  .when-card { border: 1px solid var(--line); border-left: 3px solid var(--gold); background: var(--raised); padding: 26px 28px; min-width: 0; }
+  .seminar-list { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 18px; }
+  .seminar-list li { display: grid; gap: 2px; }
+  .cert-list { margin: 14px 0 0; padding-left: 1.2em; }
+  .cert-list li { margin-top: 8px; max-width: 68ch; }
+  .module-section { padding-top: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--line); }
+  .module-section h2 { font-size: clamp(25px, 3vw, 34px); margin: 8px 0 16px; }
+  .module-section p { max-width: 68ch; margin-top: 12px; }
+  .seminar-no { color: var(--gold); font: 11px var(--sans); letter-spacing: 0.14em; text-transform: uppercase; }
+  .seminar-list strong { font-size: 19px; font-weight: 600; }
+  .seminar-parts { color: var(--soft); font: 14px/1.7 var(--sans); }
+  .when-note { color: var(--soft); font: 13px/1.6 var(--sans); margin-top: 16px; }
+  .facilitator-welcome { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 36px; align-items: start; padding-top: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--line); }
+  .facilitator-photo { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; }
+  .facilitator-welcome h2 { font-size: clamp(25px, 3vw, 34px); margin: 8px 0 16px; }
+  .facilitator-welcome p { max-width: 68ch; margin-top: 12px; }
+  .welcome-credit { color: var(--soft); font: 14px/1.6 var(--sans); margin-top: 20px; }
+
+  @media (max-width: 820px) {
+    .registration-intro { grid-template-columns: 1fr; gap: 22px; }
+  }
+  @media (max-width: 560px) {
+    .registration-head { padding: 38px 0 34px; }
+    .facilitator-welcome { grid-template-columns: 1fr; gap: 22px; padding-top: 32px; padding-bottom: 32px; }
+    .facilitator-photo { width: 110px; height: 110px; }
+  }
+</style>

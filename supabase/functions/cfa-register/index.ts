@@ -6,6 +6,7 @@ import { sendInstitutionRosterConfirmation } from "../_shared/institutionRosterE
 import { buildResidencyEmailText } from "../_shared/residencyEmail.js";
 import { metaCookieIds, sendMetaPurchase } from "../_shared/metaCapi.ts";
 import {
+  discountableAmountCents,
   offerBaseAmountCents,
   recordedSeatCount,
   resolveSeatCount,
@@ -125,6 +126,55 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
       "",
       "The seminars are online. The Zoom details will be sent to this email address",
       "before the first session on January 24.",
+    ],
+  },
+  // Kairos Emergency Pedagogy Module 7 (Bernd Ruf), January 15-16, 2027.
+  // Two program keys over the same module: the public price, and the
+  // registered Kairos student price ($100 less) on its own unlisted page.
+  // Kept apart because a student offer on the public page would be open to
+  // anyone; the WordPress forms 137 and 142 were split the same way. Each
+  // offer comes with or without the optional $45 EPWB certificate, which no
+  // discount reduces (program_offers.discount_exempt_cents).
+  "kairos-ep-module-7-2027": {
+    key: "kairos-ep-module-7-2027",
+    platform: "native",
+    platformId: "kairos-ep-module-7-2027",
+    title: "Emergency Pedagogy Module 7 with Bernd Ruf",
+    chargeDescription: "Kairos EP Module 7 2027",
+    emailSubject: "Your Module 7 registration",
+    portal: false,
+    locale: "en",
+    testOfferCodes: new Set(["ep7-tuition"]),
+    signedInRedirect: null,
+    details: [
+      "Emergency Pedagogy Module 7 with Bernd Ruf, online.",
+      "  Friday, January 15, 2027, 3:00 - 4:30 PM EST",
+      "  Saturday, January 16, 2027, 9:00 AM - 4:00 PM EST",
+      "",
+      "The Zoom details will be sent to this email address before the module begins.",
+      "If you added the EPWB certificate, the Kairos team will ask for your date of birth",
+      "separately and order the certificate from EPWB after the module.",
+    ],
+  },
+  "kairos-ep-module-7-2027-students": {
+    key: "kairos-ep-module-7-2027-students",
+    platform: "native",
+    platformId: "kairos-ep-module-7-2027-students",
+    title: "Emergency Pedagogy Module 7 with Bernd Ruf (Kairos student rate)",
+    chargeDescription: "Kairos EP Module 7 2027",
+    emailSubject: "Your Module 7 registration",
+    portal: false,
+    locale: "en",
+    testOfferCodes: new Set(["ep7-student"]),
+    signedInRedirect: null,
+    details: [
+      "Emergency Pedagogy Module 7 with Bernd Ruf, online.",
+      "  Friday, January 15, 2027, 3:00 - 4:30 PM EST",
+      "  Saturday, January 16, 2027, 9:00 AM - 4:00 PM EST",
+      "",
+      "The Zoom details will be sent to this email address before the module begins.",
+      "If you added the EPWB certificate, the Kairos team will ask for your date of birth",
+      "separately and order the certificate from EPWB after the module.",
     ],
   },
   // Ten-month, low-residency certificate program (Karen Atkinson). Online
@@ -1043,7 +1093,7 @@ Deno.serve(async (request: Request) => {
   const now = new Date().toISOString();
   const { data: offers, error: offerError } = await admin
     .from("program_offers")
-    .select("id, code, name, description, amount_cents, currency, seat_count, access_scope, installment_count, per_seat, min_seats, max_seats")
+    .select("id, code, name, description, amount_cents, discount_exempt_cents, currency, seat_count, access_scope, installment_count, per_seat, min_seats, max_seats")
     .eq("client_id", CFA_CLIENT_ID)
     .eq("program_id", program.id)
     .eq("active", true)
@@ -1366,13 +1416,16 @@ Deno.serve(async (request: Request) => {
   const automaticDiscount = testAuthorized
     ? null
     : automaticDiscounts.find((rule) => rule.country_code === billingAddress.country) ?? null;
+  // Percentages apply to the discountable part only (the whole list price
+  // unless the offer has a fixed, undiscounted component).
+  const discountableCents = discountableAmountCents(selectedOffer, listAmountCents);
   const couponDiscountCents = coupon
-    ? Math.min(listAmountCents, Math.round(listAmountCents * coupon.percent_off / 100))
+    ? Math.min(discountableCents, Math.round(discountableCents * coupon.percent_off / 100))
     : 0;
   const automaticDiscountCents = automaticDiscount
     ? Math.min(
-      listAmountCents,
-      Math.round(listAmountCents * automaticDiscount.percent_off / 100),
+      discountableCents,
+      Math.round(discountableCents * automaticDiscount.percent_off / 100),
     )
     : 0;
   // Discounts never stack. A manual coupon wins only when it is strictly
