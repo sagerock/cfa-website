@@ -1,0 +1,39 @@
+---
+// Kairos inquiry form. Replaces WordPress Gravity Form 94 (Kairos Inquiry) on
+// 2026-10-16. Submissions go to cfa-forms, which saves them and emails Karine and
+// Lisl with Reply-To set to the sender. Noindex, the site default.
+import Base from '../../layouts/Base.astro';
+import KairosInfoForm from '../../components/KairosInfoForm.astro';
+---
+
+<Base
+  title="Questions: Kairos Institute | Center for Anthroposophy"
+  portalLabel={null}
+  minimal
+>
+  <header class="registration-head">
+    <div class="wrap">
+      <p class="eyebrow series-link"><a href="/kairos/">Kairos Institute</a> · Questions</p>
+      <h1>Ask the Kairos Institute</h1>
+      <p class="intro-copy">Write your questions below and they will go to Karine Munk Finser and Lisl Hofer,
+        who lead the Kairos Institute.</p>
+    </div>
+  </header>
+
+  <section class="wrap form-section">
+    <KairosInfoForm formKey="kairos-inquiry" submitLabel="Send my questions" />
+  </section>
+</Base>
+
+<style>
+  .registration-head {
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(120deg, rgba(176, 136, 16, 0.12), transparent 62%);
+    padding: 56px 0 48px;
+  }
+  .registration-head h1 { font-size: clamp(36px, 4.6vw, 58px); letter-spacing: -0.035em; margin-top: 6px; }
+  .series-link, .series-link a { color: var(--green-ink); }
+  .intro-copy { color: var(--soft); font-size: 20px; max-width: 56ch; margin-top: 24px; }
+  .form-section { padding-top: 40px; padding-bottom: 64px; }
+  @media (max-width: 560px) { .registration-head { padding: 38px 0 34px; } }
+</style>

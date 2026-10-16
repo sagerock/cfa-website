@@ -1,0 +1,44 @@
+---
+// Kairos financial aid application. Replaces WordPress Gravity Forms 84 (Kairos
+// Financial Aid Application) and 125 (EP Module Financial Aid Application) on
+// 2026-10-16. Submissions go to cfa-forms, which saves them and emails Milan,
+// Karine and Lisl. Linked from the WordPress Kairos pages' "Financial Aid"
+// accordions. Noindex, the site default.
+import Base from '../../layouts/Base.astro';
+import KairosInfoForm from '../../components/KairosInfoForm.astro';
+---
+
+<Base
+  title="Financial aid application: Kairos Institute | Center for Anthroposophy"
+  portalLabel={null}
+  minimal
+>
+  <header class="registration-head">
+    <div class="wrap">
+      <p class="eyebrow series-link"><a href="/kairos/">Kairos Institute</a> · Financial aid</p>
+      <h1>Financial aid application</h1>
+      <p class="intro-copy">Limited financial aid is available for the Kairos year program, Emergency Pedagogy
+        modules and individual Kairos courses. To apply, fill out the form below.</p>
+      <p class="intro-note">Only one discount is honored at a time, usually the greater one. We are not able
+        to fund several discounts stacked on top of each other.</p>
+    </div>
+  </header>
+
+  <section class="wrap form-section">
+    <KairosInfoForm formKey="kairos-financial-aid" submitLabel="Send my application" />
+  </section>
+</Base>
+
+<style>
+  .registration-head {
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(120deg, rgba(176, 136, 16, 0.12), transparent 62%);
+    padding: 56px 0 48px;
+  }
+  .registration-head h1 { font-size: clamp(36px, 4.6vw, 58px); letter-spacing: -0.035em; margin-top: 6px; }
+  .series-link, .series-link a { color: var(--green-ink); }
+  .intro-copy { color: var(--soft); font-size: 20px; max-width: 56ch; margin-top: 24px; }
+  .intro-note { color: var(--soft); font: 14px/1.7 var(--sans); max-width: 62ch; margin-top: 14px; }
+  .form-section { padding-top: 40px; padding-bottom: 64px; }
+  @media (max-width: 560px) { .registration-head { padding: 38px 0 34px; } }
+</style>

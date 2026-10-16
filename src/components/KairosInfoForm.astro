@@ -1,0 +1,153 @@
+---
+// A no-payment Kairos form (financial aid, inquiry). Fields come from
+// supabase/functions/_shared/kairosForms.js, the same definition cfa-forms
+// validates against, and submit to the cfa-forms function.
+import { KAIROS_FORMS } from '../../supabase/functions/_shared/kairosForms.js';
+import { FN } from '../data/site.js';
+
+interface Props { formKey: keyof typeof KAIROS_FORMS; submitLabel?: string }
+const { formKey, submitLabel = 'Send' } = Astro.props;
+const form = KAIROS_FORMS[formKey];
+const endpoint = `${FN}/cfa-forms`;
+
+// Consecutive fields sharing a `row` sit side by side.
+const groups: (typeof form.fields)[] = [];
+for (const field of form.fields) {
+  const last = groups[groups.length - 1];
+  if (field.row && last && last[0].row === field.row) last.push(field);
+  else groups.push([field]);
+}
+---
+
+<div class="form-card kairos-info-form">
+  <div id="form-error" class="form-error" role="alert" hidden></div>
+  <div id="form-thanks" class="form-thanks" role="status" hidden>
+    <h2>Thank you</h2>
+    <p>{form.thanks}</p>
+  </div>
+  <form id="kairos-form" novalidate>
+    {groups.map((group) => (
+      <div class={group.length > 1 ? 'field-row' : undefined}>
+        {group.map((field) => (
+          field.type === 'radio' ? (
+            <fieldset class="field choice">
+              <legend>{field.label}{field.required && <span class="req"> *</span>}</legend>
+              {field.help && <p class="help">{field.help}</p>}
+              {field.options.map((option) => (
+                <label class="option">
+                  <input type="radio" name={field.name} value={option} required={field.required} />
+                  <span>{option}</span>
+                </label>
+              ))}
+            </fieldset>
+          ) : (
+            <div class="field">
+              <label for={`f-${field.name}`}>{field.label}{field.required && <span class="req"> *</span>}</label>
+              {field.help && <p class="help">{field.help}</p>}
+              {field.type === 'textarea'
+                ? <textarea id={`f-${field.name}`} name={field.name} required={field.required}></textarea>
+                : <input id={`f-${field.name}`} name={field.name} type={field.type} required={field.required}
+                    autocomplete={field.name === 'email' ? 'email' : field.name === 'phone' ? 'tel'
+                      : field.name === 'first_name' ? 'given-name' : field.name === 'last_name' ? 'family-name' : undefined} />}
+            </div>
+          )
+        ))}
+      </div>
+    ))}
+    <div class="hp" aria-hidden="true">
+      <label>Company<input name="company" tabindex="-1" autocomplete="off" /></label>
+    </div>
+    <div id="turnstile-widget" class="turnstile"></div>
+    <button type="submit" class="form-submit" id="submit-btn">{submitLabel}</button>
+    <p class="form-note">Your answers go only to the Kairos Institute team at the Center for Anthroposophy.</p>
+  </form>
+</div>
+
+<script is:inline define:vars={{ endpoint, formKey, submitLabel }}>
+  const form = document.getElementById('kairos-form');
+  const btn = document.getElementById('submit-btn');
+  const errBox = document.getElementById('form-error');
+  const thanks = document.getElementById('form-thanks');
+  let turnstileToken = '';
+  let widgetId;
+
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src; s.async = true; s.onload = resolve; s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  let siteKey = null;
+  (async () => {
+    try {
+      const res = await fetch(`${endpoint}?form=${encodeURIComponent(formKey)}`);
+      siteKey = (await res.json()).turnstile_site_key || null;
+      if (siteKey) {
+        await loadScript('https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit');
+        widgetId = window.turnstile.render('#turnstile-widget', {
+          sitekey: siteKey,
+          action: 'form',
+          callback: (token) => { turnstileToken = token; },
+          'expired-callback': () => { turnstileToken = ''; },
+        });
+      }
+    } catch (e) {}
+  })();
+
+  function showError(message) {
+    errBox.textContent = message;
+    errBox.hidden = false;
+    errBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errBox.hidden = true;
+    const missing = [...form.querySelectorAll('[required]')].find((el) =>
+      el.type === 'radio' ? !form.querySelector(`input[name="${el.name}"]:checked`) : !el.value.trim());
+    if (missing) {
+      const label = missing.closest('fieldset')?.querySelector('legend') || form.querySelector(`label[for="${missing.id}"]`);
+      showError(`Please fill in "${(label?.textContent || 'all required fields').replace('*', '').trim()}".`);
+      missing.focus();
+      return;
+    }
+    if (siteKey && !turnstileToken) { showError('Please wait a moment for the security check, then send again.'); return; }
+    const data = Object.fromEntries(new FormData(form).entries());
+    data.form = formKey;
+    data.turnstile_token = turnstileToken;
+    data.source_path = location.pathname;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    try {
+      const res = await fetch(endpoint, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(data) });
+      const out = await res.json();
+      if (out.ok) {
+        form.hidden = true;
+        thanks.hidden = false;
+        thanks.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      showError(out.error || 'Something went wrong. Please try again.');
+    } catch (err) {
+      showError('We could not reach the server. Please try again, or email lisl@centerforanthroposophy.org.');
+    }
+    if (window.turnstile && widgetId !== undefined) { turnstileToken = ''; window.turnstile.reset(widgetId); }
+    btn.disabled = false;
+    btn.textContent = submitLabel;
+  });
+</script>
+
+<style>
+  .kairos-info-form { max-width: 720px; }
+  .choice { border: 0; padding: 0; margin: 0 0 18px; }
+  .choice legend { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+  .option { display: flex; gap: 10px; align-items: flex-start; font-family: var(--sans); font-size: 15px; color: var(--ink); padding: 4px 0; cursor: pointer; }
+  .option input { margin-top: 4px; }
+  .help { font-family: var(--sans); font-size: 12.5px; color: var(--soft); margin: -2px 0 2px; }
+  .turnstile { margin: 6px 0 16px; }
+  .form-thanks { text-align: center; padding: 24px 8px; }
+  .form-thanks h2 { margin-bottom: 8px; }
+  .form-thanks p { font-family: var(--sans); color: var(--ink); }
+</style>
