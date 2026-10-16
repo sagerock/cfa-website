@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-11",
+  "updated": "2026-10-16",
   "policies": {
     "cancellation_url": "https://learn.centerforanthroposophy.org/policies/cancellation/",
     "cancellation": "Applies to every CfA program unless the program page says otherwise. Cancel in writing to office@centerforanthroposophy.org. At least 30 days before the start: full refund less a $75 cancellation fee. Within 30 days of the start or once in session: no refund, but the registration can be transferred to a colleague by emailing the office. Payment plans are a commitment to the full fee; the same 30-day rule applies. Access pauses if an installment is more than 30 days late and resumes when the plan is current; the balance can be paid early through the office. Single-session tickets and bundles include the recording and are not refundable, but can be transferred before the session. If CfA cancels a program, full refund.",
@@ -113,7 +113,7 @@
       },
       "kairos": true,
       "open": true,
-      "notes_for_jax": "Kairos questions go to Lisl Hofer (lisl@centerforanthroposophy.org) and Karine Munk Finser (karine@centerforanthroposophy.org). Point people to the Kairos page and to them. Don't describe course content, eligibility or schedules beyond what is listed here."
+      "notes_for_jax": "Kairos questions go to Lisl Hofer (lisl@centerforanthroposophy.org) and Karine Munk Finser (karine@centerforanthroposophy.org). Point people to the Kairos page and to them. Don't describe course content, eligibility or schedules beyond what is listed here. All Kairos public courses register on learn.*: the list of open ones is https://learn.centerforanthroposophy.org/kairos/ (the old WordPress general registration form forwards there)."
     },
     {
       "key": "kairos-gloeckler-bridge-2027",
@@ -135,6 +135,48 @@
       "kairos": true,
       "open": true,
       "notes_for_jax": "Kairos program: questions go to Lisl Hofer (lisl@centerforanthroposophy.org) and Karine Munk Finser (karine@centerforanthroposophy.org). The course page names Lisl as the contact for questions about the course."
+    },
+    {
+      "key": "kairos-dyson-mental-health-2026",
+      "name": "The Organic and Psychospiritual Basis of Mental Health with Dr. James Dyson",
+      "one_line": "A Kairos Institute public course: four Saturday seminars online with Dr. James Dyson, already under way (first seminar was September 26, 2026).",
+      "who_its_for": "Open to the public. Pitched at people who work with others: therapists, doctors, teachers, counselors and those training toward that work.",
+      "format": "online",
+      "schedule_text": "Saturdays September 26, October 24, October 31 and November 7, 2026, 3:00–5:00 PM Eastern, on Zoom. $350 covers the whole series.",
+      "director": {
+        "name": "Karine Munk Finser",
+        "email": "karine@centerforanthroposophy.org"
+      },
+      "page_url": "https://learn.centerforanthroposophy.org/kairos/dyson-mental-health/",
+      "register": {
+        "kind": "native",
+        "program_key": "kairos-dyson-mental-health-2026",
+        "page": "https://learn.centerforanthroposophy.org/kairos/dyson-mental-health/"
+      },
+      "kairos": true,
+      "open": true,
+      "notes_for_jax": "Kairos program: questions go to Lisl Hofer (lisl@centerforanthroposophy.org) and Karine Munk Finser (karine@centerforanthroposophy.org). The course page names Lisl as the contact for questions about the course. Registration closes when the last seminar starts on November 7."
+    },
+    {
+      "key": "kairos-ep-module-7-2027",
+      "name": "Emergency Pedagogy Module 7 with Bernd Ruf",
+      "one_line": "A Kairos Institute public module online with Bernd Ruf: Disaster, Healing Communities, and Animals.",
+      "who_its_for": "Open to the public. Registered Kairos students have a separate student rate that Lisl sends them directly.",
+      "format": "online",
+      "schedule_text": "Friday, January 15, 2027, 3:00–4:30 PM EST and Saturday, January 16, 2027, 9:00 AM–4:00 PM EST, on Zoom. Tuition $350; optional $45 EPWB certificate, which no discount reduces.",
+      "director": {
+        "name": "Karine Munk Finser",
+        "email": "karine@centerforanthroposophy.org"
+      },
+      "page_url": "https://learn.centerforanthroposophy.org/kairos/emergency-pedagogy-module-7/",
+      "register": {
+        "kind": "native",
+        "program_key": "kairos-ep-module-7-2027",
+        "page": "https://learn.centerforanthroposophy.org/kairos/emergency-pedagogy-module-7/"
+      },
+      "kairos": true,
+      "open": true,
+      "notes_for_jax": "Kairos program: questions go to Lisl Hofer (lisl@centerforanthroposophy.org) and Karine Munk Finser (karine@centerforanthroposophy.org). The course page names Lisl as the contact for questions about the course. Never give out the student-rate page; a student asking about it goes to Lisl."
     },
     {
       "key": "mentor-training-2027",

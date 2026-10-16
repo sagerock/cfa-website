@@ -12,7 +12,7 @@ import catalog from "../../../src/data/concierge-programs.json" with { type: "js
 // a small set of tools. Answers stream back as server-sent events.
 //
 // Hard limits live here, not in the prompt: personal tools refuse without an emailed
-// code, Kairos programs are never priced, linked or looked up, coupons are only
+// code, Kairos programs are never priced or looked up (a named open course gets its own page link, per the prompt), coupons are only
 // checked (never listed), and the only write besides the transcript is a hand-off
 // email to the registrar.
 

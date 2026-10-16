@@ -128,6 +128,27 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
       "before the first session on January 24.",
     ],
   },
+  // Kairos supervision of fieldwork: an add-on for students already
+  // registered for Kairos 2026-27, $300 per term (moved off Gravity Form 143,
+  // 2026-10-16). No sessions or Zoom; the receipt confirms the term.
+  "kairos-fieldwork-supervision-2026-27": {
+    key: "kairos-fieldwork-supervision-2026-27",
+    platform: "native",
+    platformId: "kairos-fieldwork-supervision-2026-27",
+    title: "Kairos supervision of fieldwork 2026-27",
+    chargeDescription: "Kairos Fieldwork Supervision",
+    emailSubject: "Your fieldwork supervision registration",
+    portal: false,
+    locale: "en",
+    testOfferCodes: new Set(["fw-fall"]),
+    signedInRedirect: null,
+    details: [
+      "Supervision of fieldwork, Kairos Institute 2026-27.",
+      "Fall term: September - January. Spring term: February - July.",
+      "",
+      "This is an addition to your existing Kairos 2026-27 registration, which is unchanged.",
+    ],
+  },
   // Kairos seminar series with Dr. James Dyson, four Saturdays from September
   // 26 to November 7, 2026. Moved here mid-series (2026-10-16); the whole
   // series is sold, as on WordPress. Lisl and Karine send the Zoom link.
