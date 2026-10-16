@@ -128,6 +128,31 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
       "before the first session on January 24.",
     ],
   },
+  // Kairos seminar series with Dr. James Dyson, four Saturdays from September
+  // 26 to November 7, 2026. Moved here mid-series (2026-10-16); the whole
+  // series is sold, as on WordPress. Lisl and Karine send the Zoom link.
+  "kairos-dyson-mental-health-2026": {
+    key: "kairos-dyson-mental-health-2026",
+    platform: "native",
+    platformId: "kairos-dyson-mental-health-2026",
+    title: "The Organic and Psychospiritual Basis of Mental Health with Dr. James Dyson",
+    chargeDescription: "Kairos Dyson Seminars 2026",
+    emailSubject: "Your Dyson seminars registration",
+    portal: false,
+    locale: "en",
+    testOfferCodes: new Set(["dyson-series"]),
+    signedInRedirect: null,
+    details: [
+      "Four Saturday seminars with Dr. James Dyson, 3:00 - 5:00 PM Eastern:",
+      "  Saturday, September 26, 2026",
+      "  Saturday, October 24, 2026",
+      "  Saturday, October 31, 2026",
+      "  Saturday, November 7, 2026",
+      "",
+      "The seminars are online. The Zoom details will be sent to this email address",
+      "before your next session.",
+    ],
+  },
   // Kairos Emergency Pedagogy Module 7 (Bernd Ruf), January 15-16, 2027.
   // Two program keys over the same module: the public price, and the
   // registered Kairos student price ($100 less) on its own unlisted page.
