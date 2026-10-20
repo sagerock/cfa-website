@@ -160,14 +160,17 @@ const exploring = [
           <p class="sub">
             A short greeting from Karen before you read any further — who she is, and how she likes to work.
           </p>
-          <div class="video" role="img" aria-label="Placeholder for Karen's welcome video">
-            <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" class="video__glyph">
-              <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="1.5" />
-              <path d="M26 21l19 11-19 11z" fill="currentColor" />
-            </svg>
-            <p>Karen&rsquo;s welcome video will play here.</p>
-          </div>
-          <p class="note">Placeholder for this preview. The video is coming separately and will be dropped straight in.</p>
+          <video
+            class="video video--player"
+            controls
+            playsinline
+            preload="metadata"
+            poster="/karen/karen-welcome-poster.webp"
+            aria-label="Welcome video from Karen Atkinson"
+          >
+            <source src="/karen/karen-welcome.mp4" type="video/mp4" />
+            <track kind="captions" src="/karen/karen-welcome.vtt" srclang="en" label="English" />
+          </video>
         </div>
       </section>
 
@@ -725,6 +728,7 @@ const exploring = [
         color: var(--violet-deep);
         margin-bottom: 1.1rem;
       }
+      .video--player { display: block; width: 100%; height: auto; border: 0; background: #000; object-fit: cover; box-shadow: 0 18px 40px -24px rgba(59, 36, 92, 0.45); }
       .video__glyph { width: 62px; height: 62px; opacity: 0.75; }
       .video p { margin: 0; font-family: var(--serif); font-size: 1.15rem; }
 
