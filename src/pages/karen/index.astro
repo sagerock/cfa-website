@@ -1,7 +1,7 @@
 ---
 const title = 'Karen Atkinson Consulting — mentoring, leadership and renewal for Waldorf schools';
 const description =
-  'Karen Atkinson, M.Ed. accompanies Waldorf teachers, school leaders and faculties over time: mentoring and coaching, leadership partnership, appraisal, and one-day renewal retreats.';
+  'Karen Atkinson, M.Ed. accompanies Waldorf teachers, school leaders and faculties over time: mentoring and coaching, leadership partnership, evaluation, and one-day renewal retreats.';
 
 const ways = [
   {
@@ -39,11 +39,11 @@ const ways = [
     tone: 'sky',
     addon: {
       name: 'Two days on site',
-      summary: 'An optional in-person appraisal, or a whole-school assessment and immersion.',
+      summary: 'An optional in-person evaluation, or a whole-school assessment and immersion.',
       body:
         'Karen spends two days with you — observing one faculty member teaching, or the rhythms and life of the whole school — meeting leadership and faculty, and drawing the observations together into a foundation the remote work can build on.',
       includes: [
-        'Teacher appraisal, or school assessment and immersion',
+        'Teacher evaluation, or school assessment and immersion',
         'A self-assessment completed by the teacher, or by leadership for a whole-school look',
         'Pre- and post-meetings with Karen, the teacher and school leadership',
         'A final written report of observations and recommendations, written by Karen herself',
@@ -70,7 +70,6 @@ const ways = [
 
 const questions = [
   { id: 'q1', label: 'What’s bringing you here right now?', rows: 4 },
-  { id: 'q3', label: 'What would meaningful progress look like six months from now?', rows: 4 },
   { id: 'q4', label: 'What’s your role at the school, and who else would be part of this decision?', rows: 3 },
   { id: 'q5', label: 'Anything else you’d like Karen to know before your conversation?', rows: 3 },
 ];
@@ -78,7 +77,7 @@ const questions = [
 const exploring = [
   'Support for an individual teacher (mentoring and coaching)',
   'Support for myself or my leadership team (strategic partnership)',
-  'Teacher or whole-school appraisal or evaluation',
+  'Teacher or whole-school evaluation',
   'A faculty or whole-school retreat or immersion',
   'I’m not sure yet, I’d like to talk it through',
 ];
@@ -122,7 +121,7 @@ const exploring = [
           <h1>A steady companion for the work of teaching and leading.</h1>
           <p class="lede">
             Karen Atkinson has spent more than thirty years in Waldorf classrooms, faculty rooms and board
-            meetings. She now walks alongside a small number of teachers, leaders and schools each year
+            meetings. She now walks alongside a select number of teachers, leaders and schools each year
             — one relationship at a time, shaped around what your school is actually carrying.
           </p>
           <div class="hero__actions">
@@ -179,9 +178,9 @@ const exploring = [
             <h2>What this work is</h2>
             <p>
               Karen brings together Waldorf teaching, pedagogical leadership, mentoring, coaching,
-              appraisal, faculty development and meeting facilitation. None of it arrives as a standard
-              program. Each engagement is built around the priorities, the people, the culture and the
-              developmental moment of one school.
+              evaluation, faculty development and meeting facilitation. None of it arrives as a standard
+              program. Each engagement is built around the priorities, the people, the culture, and the
+              developmental moment living in each school.
             </p>
             <p>
               Waldorf professional development runs from standardized courses and cohort training through
@@ -196,11 +195,14 @@ const exploring = [
               </div>
               <div>
                 <dt>Made for you</dt>
-                <dd>Built from your goals, your faculty, your governance, your actual difficulties.</dd>
+                <dd>Built from your goals, your faculty, your governance and the obstacles you are facing.</dd>
               </div>
               <div>
                 <dt>Carried into practice</dt>
-                <dd>Every engagement ends with something you can keep doing without her.</dd>
+                <dd>
+                  Every engagement includes practical elements that you can take hold of and make your own
+                  &mdash; so the work can continue beyond your sessions with her.
+                </dd>
               </div>
             </dl>
           </div>
@@ -331,10 +333,10 @@ const exploring = [
         <div class="wrap split split--reverse">
           <figure class="split__figure split__figure--portrait">
             <img
-              src="/karen/karen-bio.webp"
+              src="/karen/karen-bio-beach.webp"
               width="900"
               height="1350"
-              alt="Portrait of Karen Atkinson looking directly at the camera"
+              alt="Karen Atkinson smiling, arms folded, with the beach and ocean behind her"
               loading="lazy"
             />
           </figure>
@@ -374,16 +376,16 @@ const exploring = [
       <section class="band band--workbook" id="workbook">
         <div class="wrap split">
           <div class="split__text">
-            <h2>A free workbook: pathways and best practices in professional development</h2>
+            <h2>A free workbook: where does your school need space to grow?</h2>
             <p>
-              Karen&rsquo;s presentation of the same name is becoming a short, practical workbook for
-              schools. It lays out how mentoring, appraisal, faculty study and retreat work fit together
-              across one year: what to ask for, what each piece is good for, who should be in the room,
-              and how to tell whether any of it is working.
+              Karen&rsquo;s Professional Growth Workbook is a two-page reflection for Waldorf educators and
+              school leaders. It helps you move past a vague sense that &ldquo;something needs
+              attention&rdquo;: take the pulse of your school, name the pattern beneath the issue, picture
+              the shift you hope for, and find the kind of support that would actually move it forward.
             </p>
             <p>
-              It is written for the person who has been handed &ldquo;professional development&rdquo; and
-              a small budget, and wants it to actually develop people. It&rsquo;s free.
+              Fill it in on your own or with colleagues. If you then apply to work with Karen, your
+              completed reflection becomes the starting point for the conversation. It&rsquo;s free.
             </p>
             <form class="capture" id="workbook-form" novalidate>
               <label for="lead-email">Where should Karen send it?</label>
@@ -398,9 +400,10 @@ const exploring = [
                 />
                 <button class="btn btn--solid" type="submit">Send me the workbook</button>
               </div>
-              <p class="note" id="workbook-note">
-                The workbook is still in preparation. Leave your address and Karen will send it as soon as
-                it is ready.
+              <p class="note" id="workbook-download" hidden>
+                <a href="/karen/Karen-Atkinson-Professional-Growth-Workbook.pdf" download>
+                  Download the workbook (PDF, two pages)
+                </a>
               </p>
             </form>
           </div>
@@ -974,8 +977,10 @@ const exploring = [
             say(workbook, 'Please add an email address so Karen can send the workbook.', 'error');
             return;
           }
-          mailto('lead interest', 'Please send me the professional development workbook.\n\nEmail: ' + email + '\n');
-          say(workbook, 'Your email program is opening with the request ready to send.');
+          mailto('lead interest', 'Please send me the Professional Growth Workbook.\n\nEmail: ' + email + '\n');
+          const download = workbook.querySelector('#workbook-download');
+          if (download) download.hidden = false;
+          say(workbook, 'Thank you. Your workbook is ready to download below.');
         });
       }
 
@@ -1001,9 +1006,6 @@ const exploring = [
             '',
             "What I'm exploring:",
             get('q2') || '(not chosen)',
-            '',
-            'What meaningful progress would look like in six months:',
-            get('q3') || '(not answered)',
             '',
             'My role, and who else is part of this decision:',
             get('q4') || '(not answered)',
