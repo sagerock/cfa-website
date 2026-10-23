@@ -110,8 +110,11 @@ const faculty = [
     line: 'Coordinator of PITEP and former pedagogical director of Shining Mountain Waldorf School.' },
   { name: 'Malina Stoychev', role: 'Artistic engagement', photo: '/images/18f18e64b6-malina-stoychev.png',
     line: 'More than 35 years of Waldorf teaching; class teacher at the Emerson Waldorf School in Chapel Hill, NC.' },
-  { name: 'Alexandra Spadea', role: 'Eurythmy, residency', photo: null, line: null },
-  { name: 'Narsingh Khalsa', role: 'Artistic engagement, residency', photo: null, line: null },
+  // Photos and lines from their Renewal bios (Elsy 2026-10-23: pull their pictures from the Renewal/CfA site).
+  { name: 'Alexandra Spadea', role: 'Eurythmy, residency', photo: '/images/mentor-training/alexandra-spadea.webp',
+    line: 'Eurythmist trained in Dornach and Spring Valley; teaches grades 7–12 at the Rudolf Steiner School in New York City.' },
+  { name: 'Narsingh Khalsa', role: 'Artistic engagement, residency', photo: '/images/mentor-training/narsingh-khalsa.webp',
+    line: 'Waldorf educator and artist with 18 years of teaching fine arts; class teacher at the Waldorf School of Princeton.' },
 ];
 
 const initials = (name) => name.split(/[ ,]+/).filter((part) => /^[A-Z]/.test(part)).slice(0, 2).map((part) => part[0]).join('');
@@ -326,6 +329,21 @@ const impact = [
       <figure class="mt-photo-e">
         <img src="/images/mentor-training/residency-2026-cohort.webp"
           alt="Mentor Training participants and faculty gathered under a large old tree at the summer residency."
+          width="1600" height="1067" loading="lazy" />
+      </figure>
+      <figure class="mt-photo-f">
+        <img src="/images/mentor-training/residency-2026-movement-circle.webp"
+          alt="Participants standing in a wide circle for a movement exercise at the 2026 residency."
+          width="1600" height="1067" loading="lazy" />
+      </figure>
+      <figure class="mt-photo-g">
+        <img src="/images/mentor-training/residency-2026-small-group.webp"
+          alt="A small group of participants in conversation around a table at the 2026 residency."
+          width="1600" height="1067" loading="lazy" />
+      </figure>
+      <figure class="mt-photo-h">
+        <img src="/images/mentor-training/residency-2026-pastel-work.webp"
+          alt="Participants working on pastel drawings together at the 2026 residency."
           width="1600" height="1067" loading="lazy" />
       </figure>
     </div>
@@ -547,6 +565,9 @@ const impact = [
   .mt-photo-d { grid-column: 2; grid-row: 3; }
   .mt-photo-e { grid-column: 1 / -1; grid-row: 4 / 6; }
   .mt-photo-e img { object-position: center 75%; }
+  .mt-photo-f { grid-column: 1; grid-row: 6; }
+  .mt-photo-g { grid-column: 2; grid-row: 6; }
+  .mt-photo-h { grid-column: 3; grid-row: 6; }
   .mt-photo-caption { color: var(--soft); font: italic 14px var(--serif); margin-top: 10px; }
 
   .mt-schedule { list-style: none; padding: 0; margin: 28px 0 0; border-top: 1px solid var(--line); }
@@ -636,6 +657,9 @@ const impact = [
     .mt-photo-c { grid-column: 2; grid-row: 2; }
     .mt-photo-d { grid-column: 2; grid-row: 3; }
     .mt-photo-e { grid-column: 1 / -1; grid-row: 4; }
+    .mt-photo-f { grid-column: 1; grid-row: 5; }
+    .mt-photo-g { grid-column: 2; grid-row: 5; }
+    .mt-photo-h { grid-column: 1 / -1; grid-row: 6; }
     .mt-director { grid-template-columns: 1fr; gap: 18px; }
     .mt-director-photo { width: 120px; height: 120px; }
     .mt-webinar { padding: 26px 22px; }
