@@ -11,7 +11,7 @@
 //
 // Left noindex (the site default) while this is a review preview.
 //
-// Layout follows the Explorations enroll page Elsy pointed to (hero, what it
+// Layout follows the Explorations enroll page CfA pointed to (hero, what it
 // is, schedule, faculty, pricing, FAQ, enroll), in this site's own tokens.
 import Base from '../layouts/Base.astro';
 import MentorTrainingCheckout from '../components/MentorTrainingCheckout.astro';
@@ -24,7 +24,10 @@ const WELCOME_VIDEO_YOUTUBE_ID = '';
 // exists; the page says a link is coming.
 const WEBINAR_REGISTRATION_URL = 'https://mentor-open-house.centerforanthroposophy.org/';
 
-const HERO_IMAGE = 'https://sagerock-email-images.s3.us-east-2.amazonaws.com/center-for-anthroposophy/center-periphery/2026/10/7cf1f9b9adc8024a-lighthouse-image-mentor-training.webp';
+// Karen's own lighthouse photograph (Elsy 2026-10-20: replaces the earlier AI-generated image).
+const HERO_IMAGE = '/images/mentor-training/lighthouse-hero.webp';
+
+const AWSNA_REPORT_URL = '/files/mentor-training/lessons-from-the-mentoring-initiative.pdf';
 
 const schedule = [
   {
@@ -95,8 +98,8 @@ const schedule = [
 
 // Short lines drawn from each person's bio in src/data/faculty.json.
 const faculty = [
-  { name: 'Karen Atkinson, M.Ed.', role: 'Program director', photo: '/images/5e9847642b-karenatkinson-200.jpg',
-    line: 'Over 30 years as an early childhood educator, class teacher, pedagogical leader and adult educator.' },
+  { name: 'Karen Atkinson, M.Ed.', role: 'Program director', photo: '/images/mentor-training/karen-atkinson-2026.webp',
+    line: 'Over 35 years as an early childhood educator, class teacher, pedagogical leader and adult educator.' },
   { name: 'Sven Saar', role: 'February and March sessions', photo: '/images/7bea8dc34e-svensaar.png',
     line: 'Class teacher for 30 years; now works full time in teacher education in the UK, Germany, Australia and the US.' },
   { name: 'Sarah Nelson', role: 'May session', photo: '/images/4cf47a8393-nelsonsarah-3-300x300.png',
@@ -121,6 +124,7 @@ const faqs = [
   {
     q: 'What are the prerequisites?',
     a: 'A Waldorf Teacher Training Certificate from an AWSNA member institute or the equivalent; a minimum of five full-time years of teaching in an independent or public Waldorf school; and a letter of recommendation from your current school leadership. If you are not currently teaching, two letters of recommendation from schools where you have previously taught or mentored. Questions about prerequisites can go to Karen Atkinson.',
+    email: true,
   },
   {
     q: 'When do the sessions meet?',
@@ -147,6 +151,37 @@ const faqs = [
     a: 'Requests received at least 30 days before the registration deadline will result in a full refund, less a $100 cancellation fee. No refunds will be granted if cancellation is received within 30 days of the program start date or while in session.',
   },
 ];
+
+// From the residency reflection forms Elsy shared (2026-10-20). Named quotes come from the
+// form's testimonial question, which asks people to add their name for outreach use; the
+// unnamed ones were offered there without a name.
+const stats = [
+  { figure: '100%', text: 'of 2026 residency participants rated the quality of instruction 8 or higher out of 10 (average 9.6)' },
+  { figure: '95%', text: 'of 2026 participants gave their main instructor a 9 or 10 out of 10' },
+  { figure: '100%', text: 'of 2025 participants rated their overall experience 4 or 5 out of 5' },
+  { figure: '100%', text: 'of 2025 participants gave the artistic instruction top marks, 5 out of 5' },
+];
+
+const testimonials = [
+  { quote: 'The relationships I built through the summer Mentor Training are going to be a meaningful support as I move into the next school year. It is a joy to work with others who have taken on roles in pedagogical leadership at their own schools.', who: 'Liz Hartman, 2026 cohort' },
+  { quote: 'The Mentor Program is the medicine needed for our times. We were given both practical tools and insights, as well as inspiration for personal growth and introspection. This program is necessary to continue to help Waldorf education move and grow.', who: '2025 participant' },
+  { quote: 'The whole experience of the week was inspirational and uplifting. I really appreciated the generosity of our wise teachers.', who: 'Kathy Lucking, 2026 cohort' },
+  { quote: 'The enveloping of eurythmy, singing, speech, and colleagues was like a bath of good will and beauty! What an instructive balm it was!', who: '2026 participant' },
+  { quote: 'The inclusivity and caring nature of all of the staff and community filled my heart and will guide me through my upcoming year.', who: 'Jenna Martin, 2025 cohort' },
+  { quote: 'Fulfilling, restorative, inspiring!', who: '2025 participant' },
+];
+
+// Highlights from "Lessons from the Mentoring Initiative: Implications for AWSNA Institutes"
+// (Karen's 2026-10-14 brief: glean highlights from the AWSNA report; Elsy 2026-10-23: add with a download).
+const impact = [
+  'The program grew out of AWSNA Teacher Life Cycle research, including approximately 100 interviews with Waldorf schools.',
+  'The follow-up survey provides encouraging evidence that the training translated into practice.',
+  'Participants reported increased confidence and clarity in their mentoring, and most felt well or very well prepared to mentor in their schools.',
+  'Graduates mentored new and untrained teachers, experienced Waldorf teachers, educators moving into new roles, special subject teachers, and pedagogical administrators.',
+  'Participants used specific tools and frameworks from the training in their mentoring work.',
+  'One respondent described the cohort as a “true mentorship family.”',
+  'A Level II cohort followed, with participants helping shape the content around the issues they meet in their schools.',
+];
 ---
 
 <Base
@@ -159,15 +194,16 @@ const faqs = [
       <div class="mt-hero-copy">
         <p class="eyebrow mt-kicker">Mentor Training Program · 2027 cohort</p>
         <h1>Wisdom into Practice</h1>
-        <p class="mt-sub">Pedagogical Mentoring, Coaching, and Professional Development Pathways for Waldorf Teachers</p>
+        <p class="mt-sub">Pedagogical Mentoring, Coaching, and Professional Development Pathways for Waldorf Teachers and Pedagogical Leaders</p>
         <p class="mt-lede">
           Bring the wisdom of your teaching experience into a new role of service. A ten-month,
-          low-residency, certificate-earning program for experienced teachers in pedagogical
-          mentoring, coaching, and professional evaluation.
+          low-residency, certificate-earning program inviting experienced teachers and leaders to
+          deepen their capacities and learn best practices for guiding mentoring, coaching,
+          professional evaluation and pedagogical inspiration.
         </p>
         <ul class="mt-facts">
           <li><strong>January 23 – November 13, 2027</strong></li>
-          <li>Eight online Saturdays and a summer residency week in Wilton, New Hampshire</li>
+          <li>Eight online Saturday sessions and a one-week in-person residency</li>
           <li>$2,650, or ten monthly payments of $265</li>
         </ul>
         <div class="mt-actions">
@@ -176,8 +212,8 @@ const faqs = [
         </div>
       </div>
       <figure class="mt-hero-art">
-        <img src={HERO_IMAGE} alt="A lighthouse on a rocky coast at sunrise."
-          width="2120" height="1415" fetchpriority="high" />
+        <img src={HERO_IMAGE} alt="A white lighthouse with a red lantern rising above tall coastal grasses."
+          width="2000" height="1333" fetchpriority="high" />
       </figure>
     </div>
   </header>
@@ -204,7 +240,7 @@ const faqs = [
       <div><strong>10</strong><span>months</span></div>
       <div><strong>8</strong><span>online Saturdays</span></div>
       <div><strong>1</strong><span>residency week in New Hampshire</span></div>
-      <div><strong>All realms</strong><span>early childhood, grades, high school, special subjects</span></div>
+      <div><strong>All realms</strong><span>early childhood, grades, high school, special subjects, and pedagogical leaders</span></div>
     </div>
   </section>
 
@@ -212,17 +248,21 @@ const faqs = [
     <div>
       <p class="eyebrow">The program</p>
       <h2 id="about-title">Become a mentor, coach, and professional appraiser for Waldorf teachers</h2>
+      <p class="mt-about-sub">Bringing the wisdom of pedagogical leadership and inspiration to your
+        school and to a wider network of schools.</p>
     </div>
     <div class="mt-prose">
-      <p>This low-residency, certificate-earning program is designed for experienced teachers who
-        wish to deepen their skills in pedagogical mentoring, coaching, and appraisal. Over ten
+      <p>This low-residency, certificate-earning training is designed for experienced teachers who
+        wish to deepen their skills in pedagogical mentoring, coaching, and professional evaluation,
+        as well as learning best practices for leading and supporting the ongoing journey of personal
+        and professional growth through pedagogical inspiration. Over ten
         months, participants engage in a comprehensive training that strengthens personal
         capacities and prepares them to better support practicing teachers in Waldorf schools today.</p>
       <p>The program combines virtual and in-person learning. Participants meet once a month on
         Saturdays with program faculty, and for one week in person in the summer. Through a focus on
         best practices, fresh perspectives, and innovative approaches, it prepares graduates to offer
-        mentorship, professional development, guidance, and evaluative support to schools seeking
-        help for their new and developing Waldorf educators.</p>
+        mentorship, professional development guidance, evaluative support, and pedagogical
+        inspiration to schools seeking to support their new and developing Waldorf educators.</p>
     </div>
   </section>
 
@@ -243,7 +283,7 @@ const faqs = [
       <article class="mt-card">
         <h3>For schools</h3>
         <ul>
-          <li>Meet teachers’ needs through pedagogical mentoring: an economical, sustainable way to provide in-house mentoring.</li>
+          <li>Meet teachers’ needs through pedagogical mentoring, on-the-ground coaching, and pedagogical inspiration: an economical and sustainable way to build in-house mentoring and pedagogical leadership capacity.</li>
           <li>Sponsor one or more seasoned teachers and bring best practices and professional mentoring skills back to your community.</li>
           <li>Strengthen faculty retention and morale with ongoing professional support.</li>
           <li>Keep faculty mentoring grounded in anthroposophy and the shared values of Waldorf education.</li>
@@ -261,25 +301,35 @@ const faqs = [
     </div>
   </section>
 
-  <section class="mt-photos" aria-label="Photographs from the 2026 summer residency">
+  <section class="mt-photos" aria-label="Photographs from the summer residencies">
     <div class="wrap mt-photo-grid">
-      <figure class="mt-photo-wide">
+      <figure class="mt-photo-a">
+        <img src="/images/mentor-training/residency-vibrant-class.webp"
+          alt="Karen Atkinson teaching at the chalkboard to a full classroom of Mentor Training participants."
+          width="2000" height="1335" loading="lazy" />
+      </figure>
+      <figure class="mt-photo-b">
+        <img src="/images/mentor-training/residency-giraffe-pastel.webp"
+          alt="A participant's pastel drawing of a giraffe beneath a glowing moon."
+          width="1000" height="1333" loading="lazy" />
+      </figure>
+      <figure class="mt-photo-c">
+        <img src="/images/mentor-training/residency-participants-smiling.webp"
+          alt="Participants smiling and laughing together during a residency session."
+          width="1600" height="1040" loading="lazy" />
+      </figure>
+      <figure class="mt-photo-d">
+        <img src="/images/mentor-training/residency-karen-teaching.webp"
+          alt="Karen Atkinson smiling with participants in the classroom."
+          width="1600" height="1067" loading="lazy" />
+      </figure>
+      <figure class="mt-photo-e">
         <img src="/images/mentor-training/residency-2026-cohort.webp"
           alt="Mentor Training participants and faculty gathered under a large old tree at the summer residency."
           width="1600" height="1067" loading="lazy" />
       </figure>
-      <figure>
-        <img src="/images/mentor-training/residency-2026-classroom.webp"
-          alt="Participants at desks in a sunlit classroom during a residency session."
-          width="2000" height="1333" loading="lazy" />
-      </figure>
-      <figure>
-        <img src="/images/mentor-training/residency-2026-eurythmy.webp"
-          alt="Participants moving together on stage in a eurythmy session."
-          width="2000" height="1333" loading="lazy" />
-      </figure>
     </div>
-    <p class="wrap mt-photo-caption">The 2026 summer residency.</p>
+    <p class="wrap mt-photo-caption">Summer residencies in Wilton, New Hampshire.</p>
   </section>
 
   <section class="wrap mt-section" id="schedule" aria-labelledby="schedule-title">
@@ -306,16 +356,17 @@ const faqs = [
   </section>
 
   <section class="wrap mt-section mt-director" aria-labelledby="director-title">
-    <img class="mt-director-photo" src="/images/5e9847642b-karenatkinson-200.jpg"
-      alt="Portrait of Karen Atkinson." width="200" height="200" loading="lazy" />
+    <img class="mt-director-photo" src="/images/mentor-training/karen-atkinson-2026.webp"
+      alt="Portrait of Karen Atkinson." width="600" height="600" loading="lazy" />
     <div>
       <p class="eyebrow">Program director</p>
       <h2 id="director-title">Karen Atkinson, M.Ed.</h2>
-      <p>Karen is a dedicated educator and leader in Waldorf education, with over 30 years of
+      <p>Karen is a dedicated educator and leader in Waldorf education, with over 35 years of
         experience as an early childhood educator, grade school class teacher, pedagogical leader,
         and adult educator. A graduate of Antioch University New England, she holds a Master’s in
-        Education. She directs the Mentor Training Program and the Renewal Courses and coordinates
-        the Waldorf Leadership Development Program at the Center for Anthroposophy.</p>
+        Education. She directs the Mentor Training Program and the Renewal Courses and serves as the
+        Program Coordinator for the Waldorf Leadership and Community Development Program at the
+        Center for Anthroposophy.</p>
       <p class="mt-contact-line">Questions about the program:
         <a href="mailto:karen@centerforanthroposophy.org">karen@centerforanthroposophy.org</a></p>
     </div>
@@ -340,11 +391,39 @@ const faqs = [
     </ul>
   </section>
 
-  <section class="mt-quote" aria-label="From a participant">
-    <figure class="wrap">
-      <blockquote>“The inclusivity and caring nature of all of the staff and community filled my heart and will guide me through my upcoming year.”</blockquote>
-      <figcaption>Jenna Martin, Mentor Training participant</figcaption>
-    </figure>
+  <section class="mt-voices" aria-labelledby="voices-title">
+    <div class="wrap">
+      <p class="eyebrow">What our program participants are saying</p>
+      <h2 id="voices-title">In their own words</h2>
+      <ul class="mt-stats">
+        {stats.map((stat) => (
+          <li><strong>{stat.figure}</strong><span>{stat.text}</span></li>
+        ))}
+      </ul>
+      <div class="mt-quotes">
+        {testimonials.map((item) => (
+          <figure>
+            <blockquote>“{item.quote}”</blockquote>
+            <figcaption>{item.who}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <p class="mt-stats-note">Figures from the anonymous residency reflection forms: 20 responses in 2026
+        (rated out of 10) and 27 in 2025 (rated out of 5).</p>
+    </div>
+  </section>
+
+  <section class="wrap mt-section mt-two" aria-labelledby="impact-title">
+    <div>
+      <p class="eyebrow">Evidence of impact</p>
+      <h2 id="impact-title">The success of the Mentor Training Program</h2>
+      <p class="mt-impact-intro">From <em>Lessons from the Mentoring Initiative</em>, a report for AWSNA
+        institutes drawing on a follow-up survey of the 2024 and 2025 cohorts.</p>
+      <p class="mt-report"><a class="btn" href={AWSNA_REPORT_URL} download data-track="mt2027-awsna-report">Download the report</a></p>
+    </div>
+    <ul class="mt-impact">
+      {impact.map((line) => <li>{line}</li>)}
+    </ul>
   </section>
 
   <section class="wrap mt-section" id="webinar" aria-labelledby="webinar-title">
@@ -374,8 +453,8 @@ const faqs = [
         Travel and lodging for the residency are not included.</p>
       <p>Attend the open house and receive a bonus toward your enrollment. Limited scholarships are
         available; please contact Karen.</p>
-      <p>Registration opens Wednesday, October 28, 2026. Enrollment questions go to Elsy Ayoub at
-        <a href="mailto:elsy@centerforanthroposophy.org">elsy@centerforanthroposophy.org</a>.</p>
+      <p>Registration opens Wednesday, October 28, 2026. Questions go to Karen Atkinson at
+        <a href="mailto:karen@centerforanthroposophy.org">karen@centerforanthroposophy.org</a>.</p>
     </div>
   </section>
 
@@ -387,6 +466,7 @@ const faqs = [
         <details>
           <summary>{item.q}</summary>
           <p>{item.a}</p>
+          {item.email && <p><a class="mt-email-karen" href="mailto:karen@centerforanthroposophy.org?subject=Mentor%20Training%202027%20prerequisites">Email Karen</a></p>}
         </details>
       ))}
     </div>
@@ -446,7 +526,7 @@ const faqs = [
   .mt-strip-grid span { color: var(--soft); font: 14px/1.4 var(--sans); }
 
   .mt-section { padding-top: 72px; padding-bottom: 8px; }
-  .mt-section h2 { font-size: clamp(28px, 3.4vw, 42px); letter-spacing: -0.02em; margin-top: 6px; }
+  .mt-section h2, .mt-voices h2 { font-size: clamp(28px, 3.4vw, 42px); letter-spacing: -0.02em; margin-top: 6px; }
   .mt-section-note { color: var(--soft); font: 15px/1.6 var(--sans); margin-top: 12px; }
   .mt-two { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 52px; align-items: start; }
   .mt-prose p { font-size: 18px; margin-top: 0; margin-bottom: 16px; max-width: 62ch; }
@@ -458,10 +538,15 @@ const faqs = [
   .mt-card li { font-size: 16px; line-height: 1.5; }
 
   .mt-photos { padding-top: 72px; }
-  .mt-photo-grid { display: grid; grid-template-columns: 1.4fr 1fr; grid-template-rows: auto auto; gap: 14px; }
-  .mt-photo-grid figure { margin: 0; }
+  .mt-photo-grid { display: grid; grid-template-columns: 1fr 1fr 0.85fr; grid-auto-rows: 230px; gap: 14px; }
+  .mt-photo-grid figure { margin: 0; min-height: 0; }
   .mt-photo-grid img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 2px; }
-  .mt-photo-wide { grid-row: span 2; }
+  .mt-photo-a { grid-column: 1 / 3; grid-row: 1 / 3; }
+  .mt-photo-b { grid-column: 3; grid-row: 1 / 4; }
+  .mt-photo-c { grid-column: 1; grid-row: 3; }
+  .mt-photo-d { grid-column: 2; grid-row: 3; }
+  .mt-photo-e { grid-column: 1 / -1; grid-row: 4 / 6; }
+  .mt-photo-e img { object-position: center 75%; }
   .mt-photo-caption { color: var(--soft); font: italic 14px var(--serif); margin-top: 10px; }
 
   .mt-schedule { list-style: none; padding: 0; margin: 28px 0 0; border-top: 1px solid var(--line); }
@@ -488,10 +573,26 @@ const faqs = [
   .mt-role { color: var(--gold); font: 12px var(--sans); letter-spacing: 0.1em; text-transform: uppercase; }
   .mt-faculty p { color: var(--soft); font-size: 15px; line-height: 1.5; margin-top: 6px; }
 
-  .mt-quote { margin-top: 72px; padding: 56px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--raised); }
-  .mt-quote figure { margin: 0 auto; max-width: 860px; text-align: center; }
-  .mt-quote blockquote { margin: 0; font-size: clamp(22px, 2.6vw, 30px); line-height: 1.4; font-style: italic; }
-  .mt-quote figcaption { color: var(--soft); font: 14px var(--sans); letter-spacing: 0.06em; margin-top: 18px; }
+  .mt-about-sub { color: var(--green-ink); font: italic 19px/1.5 var(--serif); margin-top: 14px; max-width: 34ch; }
+
+  .mt-voices { margin-top: 72px; padding: 60px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--raised); }
+  .mt-stats { list-style: none; padding: 0; margin: 28px 0 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+  .mt-stats li { display: grid; gap: 6px; border-top: 3px solid var(--gold); padding-top: 14px; }
+  .mt-stats strong { color: var(--green-ink); font-size: 36px; font-weight: 600; line-height: 1; }
+  .mt-stats span { color: var(--soft); font: 14px/1.45 var(--sans); }
+  .mt-quotes { margin-top: 40px; columns: 2; column-gap: 40px; }
+  .mt-quotes figure { margin: 0 0 30px; break-inside: avoid; }
+  .mt-quotes blockquote { margin: 0; font-size: 20px; line-height: 1.5; font-style: italic; }
+  .mt-quotes figcaption { color: var(--gold); font: 13px var(--sans); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 10px; }
+  .mt-stats-note { color: var(--soft); font: 13px/1.5 var(--sans); margin-top: 8px; }
+
+  .mt-impact-intro { color: var(--soft); margin-top: 14px; max-width: 40ch; }
+  .mt-report { margin-top: 24px; }
+  .mt-impact { margin: 0; padding-left: 20px; display: grid; gap: 12px; }
+  .mt-impact li { line-height: 1.55; }
+  .mt-impact li::marker { color: var(--gold); }
+  .mt-email-karen { font: 600 15px var(--sans); color: var(--green-ink); }
+
 
   .mt-webinar { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr); gap: 32px; align-items: center; border: 1px solid var(--line); border-left: 4px solid var(--gold); background: var(--raised); padding: 32px 36px; }
   .mt-webinar h2 { font-size: clamp(24px, 2.8vw, 32px); }
@@ -522,13 +623,19 @@ const faqs = [
     .mt-faculty { grid-template-columns: 1fr; }
     .mt-webinar { grid-template-columns: 1fr; }
     .mt-webinar-action { text-align: left; }
-  }
+    .mt-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .mt-quotes { columns: 1; }
+    }
   @media (max-width: 560px) {
     .mt-hero { padding: 28px 0 40px; }
     .mt-lede { font-size: 18px; }
     .mt-section { padding-top: 52px; }
-    .mt-photo-grid { grid-template-columns: 1fr; }
-    .mt-photo-wide { grid-row: auto; }
+    .mt-photo-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 170px; }
+    .mt-photo-a { grid-column: 1 / -1; grid-row: 1; }
+    .mt-photo-b { grid-column: 1; grid-row: 2 / 4; }
+    .mt-photo-c { grid-column: 2; grid-row: 2; }
+    .mt-photo-d { grid-column: 2; grid-row: 3; }
+    .mt-photo-e { grid-column: 1 / -1; grid-row: 4; }
     .mt-director { grid-template-columns: 1fr; gap: 18px; }
     .mt-director-photo { width: 120px; height: 120px; }
     .mt-webinar { padding: 26px 22px; }
