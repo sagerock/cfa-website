@@ -27,7 +27,6 @@ const WEBINAR_REGISTRATION_URL = 'https://mentor-open-house.centerforanthroposop
 // Karen's own lighthouse photograph (Elsy 2026-10-20: replaces the earlier AI-generated image).
 const HERO_IMAGE = '/images/mentor-training/lighthouse-hero.webp';
 
-const AWSNA_REPORT_URL = '/files/mentor-training/lessons-from-the-mentoring-initiative.pdf';
 
 const schedule = [
   {
@@ -98,7 +97,7 @@ const schedule = [
 
 // Short lines drawn from each person's bio in src/data/faculty.json.
 const faculty = [
-  { name: 'Karen Atkinson, M.Ed.', role: 'Program director', photo: '/images/mentor-training/karen-atkinson-2026.webp',
+  { name: 'Karen Atkinson, M.Ed.', role: 'Program director', photo: '/images/mentor-training/karen-atkinson-beach.webp',
     line: 'Over 35 years as an early childhood educator, class teacher, pedagogical leader and adult educator.' },
   { name: 'Sven Saar', role: 'February and March sessions', photo: '/images/7bea8dc34e-svensaar.png',
     line: 'Class teacher for 30 years; now works full time in teacher education in the UK, Germany, Australia and the US.' },
@@ -174,17 +173,6 @@ const testimonials = [
   { quote: 'Fulfilling, restorative, inspiring!', who: '2025 participant' },
 ];
 
-// Highlights from "Lessons from the Mentoring Initiative: Implications for AWSNA Institutes"
-// (Karen's 2026-10-14 brief: glean highlights from the AWSNA report; Elsy 2026-10-23: add with a download).
-const impact = [
-  'The program grew out of AWSNA Teacher Life Cycle research, including approximately 100 interviews with Waldorf schools.',
-  'The follow-up survey provides encouraging evidence that the training translated into practice.',
-  'Participants reported increased confidence and clarity in their mentoring, and most felt well or very well prepared to mentor in their schools.',
-  'Graduates mentored new and untrained teachers, experienced Waldorf teachers, educators moving into new roles, special subject teachers, and pedagogical administrators.',
-  'Participants used specific tools and frameworks from the training in their mentoring work.',
-  'One respondent described the cohort as a “true mentorship family.”',
-  'A Level II cohort followed, with participants helping shape the content around the issues they meet in their schools.',
-];
 ---
 
 <Base
@@ -374,7 +362,7 @@ const impact = [
   </section>
 
   <section class="wrap mt-section mt-director" aria-labelledby="director-title">
-    <img class="mt-director-photo" src="/images/mentor-training/karen-atkinson-2026.webp"
+    <img class="mt-director-photo" src="/images/mentor-training/karen-atkinson-beach.webp"
       alt="Portrait of Karen Atkinson." width="600" height="600" loading="lazy" />
     <div>
       <p class="eyebrow">Program director</p>
@@ -431,18 +419,6 @@ const impact = [
     </div>
   </section>
 
-  <section class="wrap mt-section mt-two" aria-labelledby="impact-title">
-    <div>
-      <p class="eyebrow">Evidence of impact</p>
-      <h2 id="impact-title">The success of the Mentor Training Program</h2>
-      <p class="mt-impact-intro">From <em>Lessons from the Mentoring Initiative</em>, a report for AWSNA
-        institutes drawing on a follow-up survey of the 2024 and 2025 cohorts.</p>
-      <p class="mt-report"><a class="btn" href={AWSNA_REPORT_URL} download data-track="mt2027-awsna-report">Download the report</a></p>
-    </div>
-    <ul class="mt-impact">
-      {impact.map((line) => <li>{line}</li>)}
-    </ul>
-  </section>
 
   <section class="wrap mt-section" id="webinar" aria-labelledby="webinar-title">
     <div class="mt-webinar">
@@ -607,11 +583,6 @@ const impact = [
   .mt-quotes figcaption { color: var(--gold); font: 13px var(--sans); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 10px; }
   .mt-stats-note { color: var(--soft); font: 13px/1.5 var(--sans); margin-top: 8px; }
 
-  .mt-impact-intro { color: var(--soft); margin-top: 14px; max-width: 40ch; }
-  .mt-report { margin-top: 24px; }
-  .mt-impact { margin: 0; padding-left: 20px; display: grid; gap: 12px; }
-  .mt-impact li { line-height: 1.55; }
-  .mt-impact li::marker { color: var(--gold); }
   .mt-email-karen { font: 600 15px var(--sans); color: var(--green-ink); }
 
 
