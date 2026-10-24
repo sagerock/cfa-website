@@ -1237,7 +1237,7 @@ Deno.serve(async (request: Request) => {
     if (couponParam) {
       const { data: couponRow } = await admin
         .from("program_coupons")
-        .select("code, percent_off, active, starts_at, ends_at, max_uses, use_count")
+        .select("code, percent_off, offer_codes, active, starts_at, ends_at, max_uses, use_count")
         .eq("client_id", CFA_CLIENT_ID)
         .eq("program_id", program.id)
         .eq("code", couponParam)
@@ -1249,7 +1249,13 @@ Deno.serve(async (request: Request) => {
         && (!couponRow.ends_at || new Date(couponRow.ends_at).getTime() > nowMs)
         && (couponRow.max_uses === null || couponRow.use_count < couponRow.max_uses);
       couponInfo = couponUsable
-        ? { code: couponRow.code, percent_off: couponRow.percent_off, valid: true }
+        ? {
+          code: couponRow.code,
+          percent_off: couponRow.percent_off,
+          // Empty means every option; otherwise only these offer codes.
+          offer_codes: couponRow.offer_codes ?? [],
+          valid: true,
+        }
         : { code: couponParam, valid: false };
     }
     return json({
@@ -1444,7 +1450,7 @@ Deno.serve(async (request: Request) => {
   if (couponCode && !testAuthorized) {
     const { data: couponRow, error: couponError } = await admin
       .from("program_coupons")
-      .select("id, code, percent_off, active, starts_at, ends_at, max_uses, use_count")
+      .select("id, code, percent_off, offer_codes, active, starts_at, ends_at, max_uses, use_count")
       .eq("client_id", CFA_CLIENT_ID)
       .eq("program_id", program.id)
       .eq("code", couponCode)
@@ -1457,6 +1463,16 @@ Deno.serve(async (request: Request) => {
       && (!couponRow.ends_at || new Date(couponRow.ends_at).getTime() > nowMs)
       && (couponRow.max_uses === null || couponRow.use_count < couponRow.max_uses);
     if (!couponUsable) return json({ error: "coupon_invalid" }, 400, origin);
+    // A coupon limited to certain options (offer_codes) never discounts any
+    // other option, e.g. a free code for one $19 session must not make the
+    // full series free.
+    const couponOffers: string[] = couponRow.offer_codes ?? [];
+    if (couponOffers.length && !couponOffers.includes(selectedOffer.code)) {
+      return json({
+        error: "coupon_not_for_offer",
+        message: "That coupon code does not apply to the option you selected.",
+      }, 400, origin);
+    }
     coupon = { id: couponRow.id, code: couponRow.code, percent_off: couponRow.percent_off };
   }
   const automaticDiscount = testAuthorized

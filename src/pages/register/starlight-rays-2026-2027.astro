@@ -327,7 +327,9 @@ const otherCountries = ISO_COUNTRY_CODES
   function effectiveDiscount(offer) {
     if (!offer) return { amount_cents: 0, source: null };
     const automatic = selectedAutomaticDiscount();
-    const couponAmount = appliedCoupon
+    const couponFits = appliedCoupon
+      && (!appliedCoupon.offer_codes?.length || appliedCoupon.offer_codes.includes(offer.code));
+    const couponAmount = couponFits
       ? Math.min(offer.amount_cents, Math.round(offer.amount_cents * appliedCoupon.percent_off / 100))
       : 0;
     const automaticAmount = automatic
@@ -462,7 +464,12 @@ const otherCountries = ISO_COUNTRY_CODES
       if (payload.coupon?.valid) {
         appliedCoupon = payload.coupon;
         couponInput.value = payload.coupon.code;
-        couponStatus.textContent = `Coupon ${payload.coupon.code} is valid — ${payload.coupon.percent_off}% off when it is the best available discount.`;
+        const limitedTo = (payload.coupon.offer_codes || [])
+          .map((code) => config?.offers?.find((offer) => offer.code === code)?.name)
+          .filter(Boolean);
+        couponStatus.textContent = limitedTo.length
+          ? `Coupon ${payload.coupon.code} is valid — ${payload.coupon.percent_off}% off ${limitedTo.join(', ')} only.`
+          : `Coupon ${payload.coupon.code} is valid — ${payload.coupon.percent_off}% off when it is the best available discount.`;
         couponStatus.dataset.kind = 'ok';
       } else {
         couponStatus.textContent = 'That coupon code is not valid.';
@@ -624,6 +631,8 @@ const otherCountries = ISO_COUNTRY_CODES
       idempotencyKey = crypto.randomUUID();
       localStorage.setItem(checkoutKeyName, idempotencyKey);
       setStatus('This browser held a reference to an earlier checkout. It has been reset — please submit again.', 'error');
+    } else if (result.error === 'coupon_not_for_offer') {
+      setStatus('That coupon code does not apply to the option you selected. Choose the option it is for, or remove the code.', 'error');
     } else if (result.error === 'coupon_invalid') {
       setStatus('That coupon code is no longer valid. Remove it or apply a different code, then try again.', 'error');
     } else {
