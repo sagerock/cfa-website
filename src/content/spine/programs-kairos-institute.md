@@ -56,7 +56,7 @@ Presenter, Founder of Parzival School & Emergency Pedagogy
 
 Author of Educating Traumatized Children, Bernd Ruf is the founder of the worldwide Emergency Pedagogy crisis intervention center, based in Karlsruhe, Germany. Skilled teams are sent out to help traumatized children in places of the strife of war, or ecological disasters.
 
-[ Register for Online Modules 7](https://cvent.me/Ga83XR)
+[Register for Online Module 7](/kairos/emergency-pedagogy-module-7/)
 
 ### ALSO OPEN TO THE PUBLIC:
 
