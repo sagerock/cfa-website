@@ -64,11 +64,11 @@ Classes will be recorded and available for 14 days.
 
 Charles paints in the colorist style that he evolved from his initial training in England at Tobias School of Art & Therapy. His paintings can be found in private collections in North America, Europe, and New Zealand. Charles owns and operates Lazure Custom Wall Designs, a mural and decorative painting business specializing in Lazure, a unique European glazing finish that creates healing inner environments. Charles teaches fine art classes and offers Lazure and painting workshops worldwide.
 
-[REGISTER FOR THE 2026–27 PROGRAM](https://cvent.me/E0dV9m)
+[ASK KAREN ABOUT JOINING](mailto:karen@centerforanthroposophy.org?subject=Waldorf%20Leadership%20Development)
 
 [VIEW / DOWLOAD DETAILED FLIER](/files/7b93fbeb61-wlcd-2026-27-yuba-river.pdf)
 
-## Enrolling now for the 2026-27 Cycle
+## About the program
 
 This highly-regarded **online and low-residency** Educational Leadership Program is designed to support independent and public Waldorf school administrators, staff, trustees, and pedagogical leaders to develop, expand, and deepen leadership skills. With a blend of face-to-face and online professional development and training, attendees build skills, capacities, and understanding of their vital roles in Waldorf schools.
 
@@ -226,7 +226,7 @@ mentoring/evaluation
 
 *Money Can Heal* by Siegfried Finser
 
-[REGISTER HERE](https://cvent.me/E0dV9m)
+[ASK KAREN ABOUT JOINING](mailto:karen@centerforanthroposophy.org?subject=Waldorf%20Leadership%20Development)
 
 ![Portrait of Torin Finser](/images/911b9a0c34-torin-finser-cropped-1.jpg)
 
