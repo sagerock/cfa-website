@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-16",
+  "updated": "2026-10-26",
   "policies": {
     "cancellation_url": "https://learn.centerforanthroposophy.org/policies/cancellation/",
     "cancellation": "Applies to every CfA program unless the program page says otherwise. Cancel in writing to office@centerforanthroposophy.org. At least 30 days before the start: full refund less a $75 cancellation fee. Within 30 days of the start or once in session: no refund, but the registration can be transferred to a colleague by emailing the office. Payment plans are a commitment to the full fee; the same 30-day rule applies. Access pauses if an installment is more than 30 days late and resumes when the plan is current; the balance can be paid early through the office. Single-session tickets and bundles include the recording and are not refundable, but can be transferred before the session. If CfA cancels a program, full refund.",
@@ -33,7 +33,7 @@
       },
       "kairos": false,
       "open": false,
-      "notes_for_jax": "The course page says enrollment is now closed for the 2026–27 fall cycle, which began August 22, 2026. The program page mentions a spring start, but no spring registration is posted, so anyone interested now should write to Deborah. The page states tuition as \"$950\" for the nine-month course, with 20% off for schools signing up 3–5 teachers and 50% off for 6+. A certificate of completion requires attending at least 80% of live sessions with camera on; international students outside North American time zones can ask the director about a Certificate of Participation from recordings. Limited financial aid: contact the director."
+      "notes_for_jax": "The course page says enrollment is now closed for the 2026–27 fall cycle, which began August 22, 2026. The program page mentions a spring start, but no spring registration is posted, so anyone interested now should write to Deborah. The page states tuition as \"$950\" for the nine-month course, with 20% off for schools signing up 3–5 teachers and 50% off for 6+. A certificate of completion requires attending at least 80% of live sessions with camera on; international students outside North American time zones can ask the director about a Certificate of Participation from recordings. Limited financial aid: contact the director. Cancellation (from the course page, overriding the general policy): cancel up to 15 days before the program begins for a full refund; withdrawals during the session are credited toward the participant's account, minus a $75 cancellation fee."
     },
     {
       "key": "building-bridges",
@@ -41,7 +41,7 @@
       "one_line": "A 12-month foundation studies program in anthroposophy and the arts, with in-person long weekends in a host community plus some online learning.",
       "who_its_for": "Practicing teachers who want an introduction to the anthroposophical foundations of Waldorf education, often using occasional professional days. Combined with Explorations, it can lead to advanced standing (7 graduate credits) in Antioch University's Waldorf Teacher Education Program.",
       "format": "hybrid",
-      "schedule_text": "Current location: Mountain Phoenix Community School, Wheat Ridge (Denver area), Colorado; this cohort began February 12, 2026. Remaining dates listed on the page: October 8–11, 2026; two follow-up Zoom sessions in November/December 2026; February 12–14, 2027; make-up session April 30–May 1, 2027 if needed. Most in-person classes run Thursday 7–9 pm and Friday–Sunday 8:30 am–4:30 pm.",
+      "schedule_text": "Current location: Mountain Phoenix Community School, Wheat Ridge (Denver area), Colorado; this cohort began February 12, 2026. The October 8–11, 2026 weekend has taken place. Next: a follow-up Zoom with Deborah Dornemann on Friday, November 6, 2026, 4:00–6:00 pm ET (the page says two follow-up Zoom sessions in November/December 2026); February 12–14, 2027; make-up session April 30–May 1, 2027 if needed. Most in-person classes run Thursday 7–9 pm and Friday–Sunday 8:30 am–4:30 pm.",
       "director": {
         "name": "Deborah Dornemann",
         "email": "deborah@centerforanthroposophy.org"
@@ -184,7 +184,7 @@
       "one_line": "A ten-month, low-residency certificate program in pedagogical mentoring, coaching and professional evaluation for experienced Waldorf teachers.",
       "who_its_for": "Experienced Waldorf educators and pedagogical leaders. Prerequisites listed on the page: a Waldorf teacher training certificate from an AWSNA member institute or equivalent, at least five full-time years teaching in an independent or public Waldorf school, and a letter of recommendation from current school leadership (two letters for those not currently teaching).",
       "format": "hybrid",
-      "schedule_text": "The 2027 cohort runs January 23 – November 13, 2027: eight online Saturday sessions (January 23, February 20, March 13, April 17, May 8, September 25, October 23 and November 13, 2027) plus an in-person summer residency Sunday, June 27 – Friday, July 2, 2027 in Wilton, New Hampshire. Session times are not confirmed yet. A free webinar / open house is Wednesday, October 28, 2026 at 7 PM ET. Registration opens October 28, 2026.",
+      "schedule_text": "The 2027 cohort runs January 23 – November 13, 2027: eight online Saturday sessions (January 23, February 20, March 13, April 17, May 8, September 25, October 23 and November 13, 2027) plus an in-person summer residency Sunday, June 27 – Friday, July 2, 2027 in Wilton, New Hampshire. Online sessions run 12:00–2:00 PM Eastern. A free webinar / open house is Wednesday, October 28, 2026 at 7 PM ET. Registration opens October 28, 2026.",
       "director": {
         "name": "Karen Atkinson",
         "email": "karen@centerforanthroposophy.org"
@@ -197,7 +197,7 @@
       },
       "kairos": false,
       "open": true,
-      "notes_for_jax": "2027 tuition is $2,650 for the whole program, which includes all online sessions and the week-long in-person residency; travel and lodging for the residency are not included. It can also be paid as 10 monthly payments of $265 (first today, then monthly to the same card). Registration opens October 28, 2026; before that the page shows the dates and the form is closed. People who attend the free October 28 open house receive a bonus toward their enrollment; Karen shares the details at the open house (do not name a code, percentage or deadline). Open house registration: https://mentor-open-house.centerforanthroposophy.org/. Session times for 2027 are not set yet; Karen will send them to registrants. Limited scholarships: contact the program director. The 2026 same-school group discount is not part of the 2027 offer. All questions, enrollment and program, go to Karen Atkinson (karen@centerforanthroposophy.org)."
+      "notes_for_jax": "2027 tuition is $2,650 for the whole program, which includes all online sessions and the week-long in-person residency; travel and lodging for the residency are not included. It can also be paid as 10 monthly payments of $265 (first today, then monthly to the same card). Registration opens October 28, 2026; before that the page shows the dates and the form is closed. People who attend the free October 28 open house receive a bonus toward their enrollment; Karen shares the details at the open house (do not name a code, percentage or deadline). Open house registration: https://mentor-open-house.centerforanthroposophy.org/. Cancellation (from the program page, overriding the general policy): requests received at least 30 days before the registration deadline get a full refund less a $100 cancellation fee; no refunds within 30 days of the program start date or while in session. Limited scholarships: contact the program director. The 2026 same-school group discount is not part of the 2027 offer. All questions, enrollment and program, go to Karen Atkinson (karen@centerforanthroposophy.org)."
     },
     {
       "key": "renewal-courses",
@@ -216,7 +216,7 @@
       },
       "kairos": false,
       "open": false,
-      "notes_for_jax": "Grade-specific courses (grades 1–8) and special-subject courses are offered every year, both in person and online, so a teacher asking for a particular grade (for example a 5th grade refresher) can expect one; only the 2027 teachers, titles and tuition are still to be announced. Registration, courses and tuition for 2027 will be announced in the new year. People can join the interest list now through the contact form on the page; there's no obligation and nothing to pay. Financial aid questions go to Karen."
+      "notes_for_jax": "Grade-specific courses (grades 1–8) and special-subject courses are offered every year, both in person and online, so a teacher asking for a particular grade (for example a 5th grade refresher) can expect one; only the 2027 teachers, titles and tuition are still to be announced. Registration, courses and tuition for 2027 will be announced in the new year. People can join the interest list now through the contact form on the page; there's no obligation and nothing to pay. Financial aid questions go to Karen. Cancellation (from the program page, overriding the general policy): requests received at least 30 days before the registration deadline get a full refund less a $100 cancellation fee; no refunds within 30 days of the program start date or while the program is in session."
     },
     {
       "key": "starlight-rays-2026-2027",
@@ -240,24 +240,43 @@
       "notes_for_jax": "The series is under way (it began September 5). Registration includes live access, recordings and course resources, so earlier seminars are available as recordings. Registered participants get login information and links by email before each seminar. Options (individual, payment plan, institution, single sessions, bundles) come from the live registration data."
     },
     {
+      "key": "karma-of-money-2027",
+      "name": "The Karma of Money with Torin Finser",
+      "one_line": "A six-week Zoom workshop series with Torin Finser on money biography: how our relationship to money reflects intention, life experience and karmic threads.",
+      "who_its_for": "Adults with a basic familiarity with anthroposophy who want to explore their own relationship to money; by the end each participant writes a personal money biography.",
+      "format": "online",
+      "schedule_text": "Six Sundays on Zoom, 3:00–5:00 PM Eastern: January 17, 24 and 31, and February 7, 14 and 21, 2027.",
+      "director": {
+        "name": "Torin Finser",
+        "email": "torin@centerforanthroposophy.org"
+      },
+      "page_url": "https://torinfinser.com/classes/",
+      "register": {
+        "kind": "external",
+        "url": "https://torinfinser.com/classes/"
+      },
+      "kairos": false,
+      "open": true,
+      "notes_for_jax": "This is Torin Finser's own series, listed on CfA's program calendar but registered and paid through his website, not through CfA. The page lists a $95 registration fee that reserves a place and is nonrefundable; there is no tuition (gift economy), and participants are encouraged to make pay-forward donations before the series ends. Register with the short form on the page; a confirmation email follows with how to pay (Venmo, or check as a backup). Enrollment is limited and filled in order of registration. CfA's cancellation policy and Canadian discount do not apply. Questions go to Torin."
+    },
+    {
       "key": "waldorf-leadership-development",
       "name": "Waldorf Leadership and Community Development (WLD)",
       "one_line": "An online and low-residency leadership program for Waldorf school administrators, staff, trustees and pedagogical leaders.",
       "who_its_for": "Newly hired and experienced administrators and staff (admissions, HR, business, development, marketing), pedagogical leaders and chairs, trustees, lead parents, and Explorations or Building Bridges graduates who want to focus on Waldorf administration. New hires without a Waldorf background are encouraged to take Explorations at the same time.",
       "format": "hybrid",
-      "schedule_text": "2026–27 cycle (May 2026 – April 2027): began online May 9, 2026; online Saturday sessions 1–2 times a month, 12:00–1:15 pm PT; fall residency at Gathering Waters Charter School, Keene, NH, October 9–13, 2026; spring residency at Gathering Waters Charter School, Keene, NH, April 23–26, 2027.",
+      "schedule_text": "2026–27 cycle (May 2026 – April 2027): began online May 9, 2026; online Saturday sessions 1–2 times a month, 12:00–1:15 pm PT; the fall residency (Gathering Waters Charter School, Keene, NH, October 9–13, 2026) has ended; spring residency at Gathering Waters Charter School, Keene, NH, April 23–26, 2027. Next cohort: WLCD 2027–28 begins May 8, 2027; registration opens January 4, 2027.",
       "director": {
         "name": "Torin Finser",
         "email": "torin@centerforanthroposophy.org"
       },
       "page_url": "https://learn.centerforanthroposophy.org/programs/waldorf-leadership-development/",
       "register": {
-        "kind": "external",
-        "url": "https://cvent.me/E0dV9m"
+        "kind": "inquire"
       },
       "kairos": false,
       "open": true,
-      "notes_for_jax": "The program page lists 2026–27 tuition as $2,650 for the full program and $1,250 for online classes only, discounted when paid in full. The registration form currently shows $2,550 when paid in full, or a $265 deposit with a 9-month payment plan; online classes only is a $250 deposit with a 4-month plan. Group discounts for three or more from the same school. The cycle has been running since May 2026 and the fall residency is happening now, so anyone registering now joins mid-cycle; check with the program before promising what they can still complete. A WLD certificate needs full attendance at in-person residencies and at least 80% of online sessions; a Certificate of Online Participation is available for those who can't attend residencies. The page lists Karen Atkinson, Program Coordinator (karen@centerforanthroposophy.org), for program questions and group discounts. The September Yuba River (Grass Valley, CA) residency is full and closed."
+      "notes_for_jax": "The program page lists 2026–27 tuition as $2,650 for the full program and $1,250 for online classes only, discounted when paid in full. Group discounts for three or more from the same school. The 2026–27 cycle has been running since May 2026 and the fall residency ended October 13, so anyone wanting to join now joins mid-cycle: send them to Karen Atkinson before promising what they can still complete. The old Cvent registration link is retired (Cvent shuts off October 31, 2026); do not give it out. The 2027–28 cohort begins May 8, 2027, and registration opens January 4, 2027; until then, interested people can inquire through the program page or with Karen. A WLD certificate needs full attendance at in-person residencies and at least 80% of online sessions; a Certificate of Online Participation is available for those who can't attend residencies. The page lists Karen Atkinson, Program Coordinator (karen@centerforanthroposophy.org), for program questions and group discounts."
     },
     {
       "key": "wlcd-october-2026",
@@ -278,7 +297,7 @@
       },
       "kairos": false,
       "open": false,
-      "notes_for_jax": "This residency is under way now (October 9–13, 2026), and registration is closed. For the full WLD program, see the waldorf-leadership-development entry."
+      "notes_for_jax": "This residency took place October 9–13, 2026, and registration is closed. For the full WLD program, see the waldorf-leadership-development entry."
     },
     {
       "key": "biografia-y-arte-social-2026",
