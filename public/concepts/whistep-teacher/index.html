@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>WHiSTEP · The Teacher (concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1916;--paper:#f2eee6;--muted:#4a463f;--rust:#8a4b12;--accent:#e3a34a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Public Sans',system-ui,sans-serif}
+a{color:var(--ink)}a:hover{color:var(--rust)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+.serif{font-family:'Newsreader',serif}
+.label{margin:0;font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.concept{background:var(--ink);color:var(--paper);font-size:13px;letter-spacing:.06em;text-align:center;padding:8px 16px}
+nav{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;padding:22px 0;border-bottom:3px solid var(--ink)}
+nav .brand{font-family:'Newsreader',serif;font-weight:600;font-size:24px;text-decoration:none}
+nav .links{display:flex;flex-wrap:wrap;gap:26px;font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+nav .links a{text-decoration:none}
+.strip{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--ink);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+header{display:flex;flex-wrap:wrap;gap:48px;padding:56px 0 72px;align-items:stretch}
+.portrait{flex:1 1 420px;min-width:0;min-height:640px;background:#2a2723 url(david.webp) center/cover no-repeat;position:relative}
+.portrait::after{content:"";position:absolute;left:0;right:0;bottom:0;height:120px;background:linear-gradient(transparent,rgba(26,25,22,.75))}
+.portrait span{z-index:1;position:absolute;left:24px;bottom:20px;color:#e9e3d7;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.hero{flex:999 1 560px;min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+h1{margin:0;font-family:'Newsreader',serif;font-weight:400;font-size:clamp(60px,8vw,112px);line-height:.92;letter-spacing:-.02em}
+.byline{display:flex;flex-wrap:wrap;gap:32px;align-items:flex-end}
+.byline blockquote{flex:1 1 300px;margin:0;font-family:'Newsreader',serif;font-size:22px;line-height:1.5}
+section{padding:72px 0;border-top:1px solid var(--ink)}
+.cols{display:flex;flex-wrap:wrap;gap:56px}
+.letter{flex:999 1 600px;min-width:0;columns:2 300px;column-gap:44px;font-family:'Newsreader',serif;font-size:20px;line-height:1.65}
+.letter p{margin:0 0 18px}
+.drop{float:left;font-size:92px;line-height:.8;padding:8px 10px 0 0;font-weight:600;color:var(--accent)}
+.video{position:relative;flex:999 1 640px;min-width:0;aspect-ratio:16/9;background:var(--ink) center/cover no-repeat;border:0;padding:0;cursor:pointer;display:block}
+.video::after{content:"";position:absolute;inset:0;background:rgba(26,25,22,.25)}
+.video svg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:2}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));border-top:3px solid var(--ink)}
+.grid div{padding:26px 26px 30px 0;border-bottom:1px solid var(--ink)}
+.num{margin:0;font-family:'Newsreader',serif;font-size:54px;line-height:1;color:var(--rust)}
+.grid h3{margin:12px 0 0;font-weight:800;font-size:18px}
+.grid p.d{margin:8px 0 0;font-size:16px;line-height:1.6;color:var(--muted)}
+.words{display:flex;flex-wrap:wrap;gap:12px 36px;font-family:'Newsreader',serif;font-style:italic;font-size:clamp(28px,3.4vw,44px);line-height:1.15;margin-top:18px}
+.alumni .video{width:100%}
+.alumni{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:32px;margin-top:28px}
+.alumni p{margin:12px 0 0;font-weight:800}
+.alumni small{display:block;margin-top:4px;font-weight:400;color:var(--muted);font-size:15px}
+.cta{margin:40px 0 72px;padding:56px 48px;background:var(--accent);display:flex;flex-wrap:wrap;gap:40px;align-items:flex-end}
+.cta h2{margin:14px 0 0;font-family:'Newsreader',serif;font-weight:400;font-size:clamp(44px,5vw,68px);line-height:1}
+.facts{display:flex;flex-wrap:wrap;gap:32px;margin-top:28px;font-size:16px}
+.facts p{margin:0}.facts strong{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:54px;padding:0 30px;font-weight:800;font-size:15px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none}
+.btn.dark{background:var(--ink);color:var(--paper)}.btn.dark:hover{color:var(--accent)}
+.btn.line{border:2px solid var(--ink)}
+footer{padding:28px 0 48px;border-top:3px solid var(--ink);display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;font-size:14px;color:var(--muted)}
+@media (max-width:640px){.portrait{min-height:460px}.cta{padding:40px 24px}}
+</style>
+</head>
+<body>
+<div class="concept">Design concept for discussion · not the live site · Center for Anthroposophy × SageRock</div>
+<div class="wrap">
+
+<nav>
+  <a class="brand" href="#">Center for Anthroposophy</a>
+  <div class="links">
+    <a href="#">Programs</a>
+    <a href="https://learn.centerforanthroposophy.org/starlight/">Starlight Rays</a>
+    <a href="#">Faculty</a>
+    <a href="#apply" style="color:var(--rust)">Apply</a>
+  </div>
+</nav>
+<div class="strip">
+  <span>Waldorf High School Teacher Education</span>
+  <span>WHiSTEP · 25 months · Low-residency</span>
+</div>
+
+<header>
+  <div class="portrait" role="img" aria-label="David Barham, WHiSTEP Program Director, in a New Hampshire field">
+    <span>David Barham · Program Director</span>
+  </div>
+  <div class="hero">
+    <div>
+      <p class="label" style="color:var(--rust);margin-bottom:18px">A letter from the program director</p>
+      <h1>Become<br><em style="font-weight:500">ever more</em><br>human.</h1>
+    </div>
+    <div class="byline">
+      <blockquote>“We welcome seasoned teachers and those just beginning their journey to work side by side in imagining and building a pedagogy that is fresh and vital.”</blockquote>
+      <div>
+        <p style="margin:0;font-weight:800;font-size:16px">David Barham</p>
+        <p style="margin:2px 0 0;font-size:15px;color:var(--muted)">WHiSTEP Program Director</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="cols">
+    <div style="flex:1 1 260px;min-width:0">
+      <p class="label">Why now</p>
+      <p class="serif" style="margin:18px 0 0;font-style:italic;font-size:26px;line-height:1.35;color:var(--muted)">“They carry a biography shaped by a level of global turbulence few cohorts have faced so young.”</p>
+    </div>
+    <div class="letter">
+      <p><span class="drop">A</span>s I think about Adriel and his generation, I find myself reflecting deeply on the reality modern adolescents face, and on what Waldorf education is called to become for them.</p>
+      <p>In WHiSTEP and in our online seminar series, <em>Starlight Rays in Darkened Times</em>, we are wrestling with the essential questions. What must Waldorf education become to meet both the times and the young human beings before us? What must each teacher transform in themselves?</p>
+      <p>Every sincere question seems to point toward a single answer: become ever more human. Learn to read the riddle of each individual and commit our fullest strength to meeting them where they are.</p>
+      <p>It is nothing less than a sacred calling.</p>
+      <p style="font-size:15px;font-family:'Public Sans',sans-serif;color:var(--muted)">From David’s letter in <em>Center &amp; Periphery</em>, Winter 2025–2026.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="cols" style="gap:40px;align-items:center">
+    <button class="video" data-yt="kWFhyKW9-xQ" style="background-image:url(th-kWFhyKW9-xQ.webp)" aria-label="Play: Inside the Waldorf High School Teacher Education Program, with David Barham">
+      <svg aria-hidden="true" width="72" height="72" viewBox="0 0 64 64" fill="none" stroke="#f2eee6" stroke-width="2"><circle cx="32" cy="32" r="30" fill="rgba(26,25,22,.45)"></circle><path d="M26 20 L46 32 L26 44 Z" fill="#f2eee6"></path></svg>
+    </button>
+    <div style="flex:1 1 320px;min-width:0">
+      <p class="label">Hear it from him</p>
+      <p class="serif" style="margin:14px 0 0;font-size:34px;line-height:1.15">Inside WHiSTEP, in David’s own words.</p>
+      <p style="margin:16px 0 0;font-size:16px;line-height:1.6;color:var(--muted)">Every program page leads with its person: the director, on camera, talking about the work.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="label" style="margin-bottom:28px">How the program runs</p>
+  <div class="grid">
+    <div><p class="num">3</p><h3>Summer intensives</h3><p class="d">Three consecutive Julys in southern New Hampshire, studying alongside your cohort.</p></div>
+    <div><p class="num">2</p><h3>Years online between</h3><p class="d">Online subject seminars and mentoring through the school year.</p></div>
+    <div><p class="num">1</p><h3>Research project</h3><p class="d">Your own question, carried through the program.</p></div>
+    <div><p class="num">1</p><h3>Internship</h3><p class="d">Teaching in a Waldorf high school, then a Certificate in Waldorf High School Teacher Education.</p></div>
+  </div>
+</section>
+
+<section>
+  <p class="label">What David hopes every student carries</p>
+  <div class="words"><span>Make it beautiful.</span><span>Make it meaningful.</span><span>Make it in community.</span><span>Go deep.</span></div>
+</section>
+
+<section>
+  <p class="label">Hear from WHiSTEP teachers</p>
+  <div class="alumni">
+    <div>
+      <button class="video" data-yt="Py5wghZLkA" data-dash="1" style="background-image:url(th-Py5wghZLkA.webp)" aria-label="Play: Riley Poplin on Waldorf high school education">
+        <svg aria-hidden="true" width="56" height="56" viewBox="0 0 64 64" fill="none" stroke="#f2eee6" stroke-width="2"><circle cx="32" cy="32" r="30" fill="rgba(26,25,22,.45)"></circle><path d="M26 20 L46 32 L26 44 Z" fill="#f2eee6"></path></svg>
+      </button>
+      <p>Riley Poplin<small>Fresh inspiration for teaching</small></p>
+    </div>
+    <div>
+      <button class="video" data-yt="4zJx9TL64yY" style="background-image:url(th-4zJx9TL64yY.webp)" aria-label="Play: Brettany Shannon on finding community">
+        <svg aria-hidden="true" width="56" height="56" viewBox="0 0 64 64" fill="none" stroke="#f2eee6" stroke-width="2"><circle cx="32" cy="32" r="30" fill="rgba(26,25,22,.45)"></circle><path d="M26 20 L46 32 L26 44 Z" fill="#f2eee6"></path></svg>
+      </button>
+      <p>Brettany Shannon<small>Finding community in Waldorf high school teacher education</small></p>
+    </div>
+  </div>
+</section>
+
+<section id="apply" class="cta" style="border-top:0">
+  <div style="flex:999 1 520px;min-width:0">
+    <p class="label">New cohorts begin each July</p>
+    <h2>“Happy teachers change the world.”</h2>
+    <p style="margin:14px 0 0;font-size:15px;font-weight:600">Thich Nhat Hanh, as David quoted him after the World Upper School Teachers’ Conference</p>
+    <div class="facts">
+      <p><strong>Length</strong>25 months</p>
+      <p><strong>Format</strong>Low-residency</p>
+      <p><strong>To apply</strong>$100 fee, then an interview with David</p>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <a class="btn dark" href="https://centerforanthroposophy.org/application-to-the-waldorf-high-school-teacher-education-program/">Apply now</a>
+    <a class="btn line" href="mailto:david@centerforanthroposophy.org">Write to David</a>
+  </div>
+</section>
+
+<footer>
+  <span>Center for Anthroposophy · Keene, New Hampshire</span>
+  <a href="https://learn.centerforanthroposophy.org/starlight/" style="color:inherit">Also from David: Starlight Rays in Darkened Times →</a>
+</footer>
+
+</div>
+<script>
+document.querySelectorAll('.video').forEach(function(b){
+  b.addEventListener('click',function(){
+    if(b.querySelector('iframe'))return;
+    var id=b.dataset.yt; if(b.dataset.dash) id='-'+id;
+    var f=document.createElement('iframe');
+    f.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0';
+    f.allow='autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen=true; f.title=b.getAttribute('aria-label');
+    b.appendChild(f);
+  });
+});
+</script>
+</body>
+</html>
