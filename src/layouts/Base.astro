@@ -7,6 +7,7 @@ import ThirdPartyTags from '../components/ThirdPartyTags.astro';
 // site stays unreachable from the pilot until it launches.
 const {
   title = 'Center for Anthroposophy',
+  description = '',
   current = '',
   minimal = false,
   publication = false,
@@ -51,6 +52,7 @@ const year = new Date().getFullYear();
     <meta name="robots" content={!noindex && (publication || indexable) ? 'index, follow, max-image-preview:large' : 'noindex'} />
     {canonical && <link rel="canonical" href={canonical} />}
     <title>{title}</title>
+    {description && <meta name="description" content={description} />}
     <ThirdPartyTags />
     <script is:inline>
       if (location.hostname === 'learn.centerforanthroposophy.org' && location.pathname === '/') {
