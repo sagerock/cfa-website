@@ -74,7 +74,7 @@ import Base from '../../../layouts/Base.astro';
                 <th scope="col">First name</th>
                 <th scope="col">Last name</th>
                 <th scope="col">Email</th>
-                <th scope="col">Title or role</th>
+                <th scope="col">Title or role (optional)</th>
                 <th scope="col">Teacher training completed? (optional)</th>
                 <th scope="col"><span class="sr-only">Actions</span></th>
               </tr>
@@ -405,7 +405,7 @@ import Base from '../../../layouts/Base.astro';
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!form.reportValidity()) {
-      setStatus(rosterStatus, 'Please complete every field in every participant row.', 'error');
+      setStatus(rosterStatus, 'Please add a first name, last name and email for every participant.', 'error');
       return;
     }
     // Only name and email are needed to create access. The database requires the other
