@@ -75,7 +75,7 @@ import Base from '../../../layouts/Base.astro';
                 <th scope="col">Last name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Title or role</th>
-                <th scope="col">Teacher training completed?</th>
+                <th scope="col">Teacher training completed? (optional)</th>
                 <th scope="col"><span class="sr-only">Actions</span></th>
               </tr>
             </thead>
@@ -153,14 +153,14 @@ import Base from '../../../layouts/Base.astro';
     const label = document.createElement('label');
     label.className = 'mobile-label';
     const captions = {
-      first_name: 'First name', last_name: 'Last name', email: 'Email', title_role: 'Title or role',
+      first_name: 'First name', last_name: 'Last name', email: 'Email', title_role: 'Title or role (optional)',
     };
     label.textContent = captions[name];
     const input = document.createElement('input');
     input.type = type;
     input.name = name;
     input.value = member[name] || '';
-    input.required = true;
+    input.required = name !== 'title_role';
     input.maxLength = name === 'email' ? 254 : name === 'title_role' ? 120 : 100;
     if (name === 'email' && protectedMember(member)) {
       input.readOnly = true;
@@ -187,12 +187,11 @@ import Base from '../../../layouts/Base.astro';
       const trainingCell = document.createElement('td');
       const trainingLabel = document.createElement('label');
       trainingLabel.className = 'mobile-label';
-      trainingLabel.textContent = 'Teacher training completed?';
+      trainingLabel.textContent = 'Teacher training completed? (optional)';
       const training = document.createElement('select');
       training.name = 'completed_teacher_training';
-      training.required = true;
-      [
-        ['', 'Choose…'], ['yes', 'Yes'], ['no', 'No'],
+            [
+        ['', 'Not sure'], ['yes', 'Yes'], ['no', 'No'],
       ].forEach(([value, label]) => {
         const option = document.createElement('option');
         option.value = value;
@@ -289,7 +288,9 @@ import Base from '../../../layouts/Base.astro';
       positions[field] = headers.findIndex((header) => aliases.includes(header));
     });
     const missing = Object.entries(positions).filter(([, index]) => index < 0).map(([field]) => field);
-    if (missing.length) throw new Error('Use the provided template so all five required columns are present.');
+    if (missing.some((field) => ['first_name', 'last_name', 'email'].includes(field))) {
+      throw new Error('The spreadsheet needs first name, last name and email columns. You can use the provided template.');
+    }
     return grid.slice(1)
       .filter((row) => row.some((value) => String(value ?? '').trim()))
       .map((row) => ({
@@ -407,14 +408,16 @@ import Base from '../../../layouts/Base.astro';
       setStatus(rosterStatus, 'Please complete every field in every participant row.', 'error');
       return;
     }
-    const members = readRowsFromForm();
+    // Only name and email are needed to create access. The database requires the other
+    // two columns, so a blank saves as Faculty / No, the same defaults staff loads use.
+    const members = readRowsFromForm().map((member) => ({
+      ...member,
+      title_role: member.title_role || 'Faculty',
+      completed_teacher_training: member.completed_teacher_training ?? false,
+    }));
     const emails = members.map((member) => member.email);
     if (new Set(emails).size !== emails.length) {
       setStatus(rosterStatus, 'Each participant must have a unique email address.', 'error');
-      return;
-    }
-    if (members.some((member) => member.completed_teacher_training === null)) {
-      setStatus(rosterStatus, 'Choose Yes or No for teacher training on every row.', 'error');
       return;
     }
     submitButton.disabled = true;
