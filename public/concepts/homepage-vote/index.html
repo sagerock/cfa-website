@@ -29,6 +29,8 @@
   .desk { max-height:620px; overflow:hidden; position:relative; }
   .desk::after { content:"Click to see the whole page"; position:absolute; left:0; right:0; bottom:0; padding:40px 0 14px; text-align:center; font-size:14px; font-weight:600; background:linear-gradient(transparent, rgba(255,255,255,.95) 60%); }
   .cap { font-size:13px; color:#5a5f78; margin-top:8px; text-align:center; }
+  .real { margin-top:36px; padding:28px; background:#f1ebdf; border-radius:14px; }
+  .real .desk::after { content:"Click to open the full example page"; }
   .vote { margin-top:64px; padding:36px; background:#fff; border:1px solid var(--line); border-radius:14px; text-align:center; }
   @media (max-width:760px) { .shots { grid-template-columns:1fr; } .phone { max-width:260px; margin:0 auto; } h1 { font-size:36px; } }
 </style>
@@ -47,6 +49,14 @@
     <div class="shots">
       <div><a class="shot desk" href="a-full.webp" target="_blank"><img src="a-top.webp" alt="Concept A, The Teacher, desktop homepage"></a><div class="cap">On a computer</div></div>
       <div class="phone"><span class="shot"><img src="a-phone.webp" alt="Concept A on a phone"></span><div class="cap">On a phone</div></div>
+    </div>
+    <div class="real">
+      <div class="eyebrow">Hard to picture with gray boxes? Here it is with a real director</div>
+      <p class="idea">The same idea filled in for one program: WHiSTEP, with David Barham's photo, his video and his own words from his Winter 2025–26 letter.</p>
+      <div class="shots">
+        <div><a class="shot desk" href="https://concept-whistep-teacher.cfa-website-bqx.pages.dev/concepts/whistep-teacher/" target="_blank" rel="noopener"><img src="a-real-top.webp" alt="WHiSTEP page in The Teacher style, with David Barham"></a><div class="cap">Click to open the full example page</div></div>
+        <div class="phone"><span class="shot"><img src="a-real-phone.webp" alt="WHiSTEP example on a phone"></span><div class="cap">On a phone</div></div>
+      </div>
     </div>
   </section>
 
