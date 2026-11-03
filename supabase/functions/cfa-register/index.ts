@@ -4,6 +4,7 @@ import { buildWelcomeEmailText, type WelcomePlan, type WelcomeSession } from "./
 import { hasRequiredBillingAddressFields } from "../_shared/billingCountries.js";
 import { isInstitutionCode, sendInstitutionRosterConfirmation } from "../_shared/institutionRosterEmail.ts";
 import { buildResidencyEmailText } from "../_shared/residencyEmail.js";
+import { MENTOR_TRAINING_2027_WELCOME_LETTER } from "./attachments/mentorTraining2027WelcomeLetter.ts";
 import { metaCookieIds, sendMetaPurchase } from "../_shared/metaCapi.ts";
 import {
   discountableAmountCents,
@@ -41,6 +42,8 @@ type ProgramDefinition = {
   testOfferCodes: Set<string>;
   signedInRedirect: string | null;
   details: string[];
+  // Files sent with the in-person confirmation (a director's welcome letter).
+  attachments?: Array<{ filename: string; type: string; contentBase64: string }>;
 };
 
 const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
@@ -247,8 +250,10 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
       "In-person residency: Sunday, June 27 - Friday, July 2, 2027, in Wilton, NH.",
       "Travel and lodging for the residency are not included in tuition.",
       "",
-      "Karen Atkinson will write with session times, the residency details and what to prepare.",
+      "Karen Atkinson's welcome letter is attached. She will write with the link to the",
+      "virtual classroom, the residency details and what to prepare.",
     ],
+    attachments: [MENTOR_TRAINING_2027_WELCOME_LETTER],
   },
 };
 const DEFAULT_PROGRAM_KEY = "starlight-rays-2026-2027";
@@ -961,6 +966,16 @@ async function sendResidencyEmail(input: {
       reply_to: { email: "office@centerforanthroposophy.org", name: "Center for Anthroposophy" },
       subject: input.program.emailSubject,
       content: [{ type: "text/plain", value: emailText }],
+      ...(input.program.attachments?.length
+        ? {
+          attachments: input.program.attachments.map((file) => ({
+            content: file.contentBase64,
+            filename: file.filename,
+            type: file.type,
+            disposition: "attachment",
+          })),
+        }
+        : {}),
       tracking_settings: { click_tracking: { enable: false, enable_text: false } },
     }),
   });

@@ -820,3 +820,12 @@ Rays `institution-eight-session` (remaining eight sessions, 20 seats, paid in fu
 rule rather than `seat_count > 1`: it keeps the behavior explicit per offer and needs no change to
 the full-season row. SQL side: `cfa_complete_institution_registration` and
 `cfa_provision_institution_roster_member` (migration 20261103140000).
+
+## 2026-11-03 — Mentor Training 2027 confirmation carries Karen's welcome letter
+
+Karen Atkinson (program director) found that the first three registrants' confirmations went out
+without her welcome letter; Jax sent it to each by hand the same day. A program definition can
+now list `attachments`, sent with the in-person confirmation (`sendResidencyEmail`); the letter is
+embedded as base64 in `cfa-register/attachments/` (her PDF holds only public program facts). The
+confirmation text says the letter is attached. Director's own-program edit; deployed as
+cfa-register v108 through the Management API. To change the letter: regenerate that file, redeploy.
