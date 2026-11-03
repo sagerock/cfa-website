@@ -20,6 +20,11 @@ Read `README.md` first for architecture; this file is the operating rules.
   house signature law (see `/mnt/d/dev/CLAUDE.md`).
 - **Verify the build** (`npx astro build`) before pushing anything to `main` —
   a broken main takes the live site's deploys down with it.
+- **The weekly Ask Jax catalog check edits `src/data/concierge-programs.json` on its own**
+  (Mondays 6:30 PM ET, from `sagerock/jax-audit`): clear-cut staleness only, published through its
+  `catalog-publish.sh` (JSON check, `astro build`, commit of that one file, push, `cfa-concierge`
+  redeploy). It skips the week if that file has uncommitted changes, or main is behind with other
+  work in the tree, so leave the tree committed when you step away. Sage, 2026-11-02.
 - Content edits should preserve the data rules: `faculty.json` empty `programs[]`
   means archived (do NOT delete people); course entries keep their `code`/`year`
   scheme (year = first digit of the course number).
