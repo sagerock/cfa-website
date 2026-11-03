@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-26",
+  "updated": "2026-11-02",
   "policies": {
     "cancellation_url": "https://learn.centerforanthroposophy.org/policies/cancellation/",
     "cancellation": "Applies to every CfA program unless the program page says otherwise. Cancel in writing to office@centerforanthroposophy.org. At least 30 days before the start: full refund less a $75 cancellation fee. Within 30 days of the start or once in session: no refund, but the registration can be transferred to a colleague by emailing the office. Payment plans are a commitment to the full fee; the same 30-day rule applies. Access pauses if an installment is more than 30 days late and resumes when the plan is current; the balance can be paid early through the office. Single-session tickets and bundles include the recording and are not refundable, but can be transferred before the session. If CfA cancels a program, full refund.",
@@ -27,9 +27,7 @@
       },
       "page_url": "https://learn.centerforanthroposophy.org/programs/explorations-online/",
       "register": {
-        "kind": "thinkific",
-        "checkout_url": "https://courses.centerforanthroposophy.org/enroll/3734011?price_id=4686265",
-        "course_url": "https://courses.centerforanthroposophy.org/courses/explorations-online-2026-2027-fall-cohort"
+        "kind": "inquire"
       },
       "kairos": false,
       "open": false,
@@ -184,7 +182,7 @@
       "one_line": "A ten-month, low-residency certificate program in pedagogical mentoring, coaching and professional evaluation for experienced Waldorf teachers.",
       "who_its_for": "Experienced Waldorf educators and pedagogical leaders. Prerequisites listed on the page: a Waldorf teacher training certificate from an AWSNA member institute or equivalent, at least five full-time years teaching in an independent or public Waldorf school, and a letter of recommendation from current school leadership (two letters for those not currently teaching).",
       "format": "hybrid",
-      "schedule_text": "The 2027 cohort runs January 23 – November 13, 2027: eight online Saturday sessions (January 23, February 20, March 13, April 17, May 8, September 25, October 23 and November 13, 2027) plus an in-person summer residency Sunday, June 27 – Friday, July 2, 2027 in Wilton, New Hampshire. Online sessions run 12:00–2:00 PM Eastern. A free webinar / open house is Wednesday, October 28, 2026 at 7 PM ET. Registration opens October 28, 2026.",
+      "schedule_text": "The 2027 cohort runs January 23 – November 13, 2027: eight online Saturday sessions (January 23, February 20, March 13, April 17, May 8, September 25, October 23 and November 13, 2027) plus an in-person summer residency Sunday, June 27 – Friday, July 2, 2027 in Wilton, New Hampshire. Online sessions run 12:00–2:00 PM Eastern. Registration is open now and closes when the program begins on January 23, 2027.",
       "director": {
         "name": "Karen Atkinson",
         "email": "karen@centerforanthroposophy.org"
@@ -197,7 +195,7 @@
       },
       "kairos": false,
       "open": true,
-      "notes_for_jax": "2027 tuition is $2,650 for the whole program, which includes all online sessions and the week-long in-person residency; travel and lodging for the residency are not included. It can also be paid as 10 monthly payments of $265 (first today, then monthly to the same card). Registration opens October 28, 2026; before that the page shows the dates and the form is closed. People who attend the free October 28 open house receive a bonus toward their enrollment; Karen shares the details at the open house (do not name a code, percentage or deadline). Open house registration: https://mentor-open-house.centerforanthroposophy.org/. Cancellation (from the program page, overriding the general policy): requests received at least 30 days before the registration deadline get a full refund less a $100 cancellation fee; no refunds within 30 days of the program start date or while in session. Limited scholarships: contact the program director. The 2026 same-school group discount is not part of the 2027 offer. All questions, enrollment and program, go to Karen Atkinson (karen@centerforanthroposophy.org)."
+      "notes_for_jax": "2027 tuition is $2,650 for the whole program, which includes all online sessions and the week-long in-person residency; travel and lodging for the residency are not included. It can also be paid as 10 monthly payments of $265 (first today, then monthly to the same card). Registration is open now on the program page. The free open house was October 28, 2026; attendees received an enrollment bonus from Karen, so anyone asking about it goes to Karen (do not name a code, percentage or deadline). Cancellation (from the program page, overriding the general policy): requests received at least 30 days before the registration deadline get a full refund less a $100 cancellation fee; no refunds within 30 days of the program start date or while in session. Limited scholarships: contact the program director. The 2026 same-school group discount is not part of the 2027 offer. All questions, enrollment and program, go to Karen Atkinson (karen@centerforanthroposophy.org)."
     },
     {
       "key": "renewal-courses",
@@ -224,7 +222,7 @@
       "one_line": "An online series of twelve seminars on contemporary topics for Waldorf high school teachers, administrators, staff and parents.",
       "who_its_for": "High school teachers, administrators, staff members and parents who want to explore today's adolescents and the issues facing them with experienced colleagues from CfA's Waldorf High School Teacher Education Program.",
       "format": "online",
-      "schedule_text": "September 5, 2026 – February 27, 2027, Saturdays 3:00–4:30 pm Eastern. Remaining seminars: Oct 31 (Dr. Adam Blanning), Nov 7 (Carol Bärtges), Nov 21 (Sven Saar), Dec 12 (Cedar Oliver), Dec 19 (Dr. Constanza Kaliks), Jan 9 (Liz Beaven), Jan 23 (Nathan Wilcox), Feb 13 (Beverly Amico), Feb 27 (David Barham).",
+      "schedule_text": "September 5, 2026 – February 27, 2027, Saturdays 3:00–4:30 pm Eastern. Remaining seminars: Nov 7 (Carol Bärtges), Nov 21 (Sven Saar), Dec 12 (Cedar Oliver), Dec 19 (Dr. Constanza Kaliks), Jan 9 (Liz Beaven), Jan 23 (Nathan Wilcox), Feb 13 (Beverly Amico), Feb 27 (David Barham).",
       "director": {
         "name": "David Barham",
         "email": "david@centerforanthroposophy.org"
