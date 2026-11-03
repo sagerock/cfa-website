@@ -2,7 +2,7 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "@supabase/supabase-js";
 import { buildWelcomeEmailText, type WelcomePlan, type WelcomeSession } from "./email.ts";
 import { hasRequiredBillingAddressFields } from "../_shared/billingCountries.js";
-import { sendInstitutionRosterConfirmation } from "../_shared/institutionRosterEmail.ts";
+import { isInstitutionCode, sendInstitutionRosterConfirmation } from "../_shared/institutionRosterEmail.ts";
 import { buildResidencyEmailText } from "../_shared/residencyEmail.js";
 import { metaCookieIds, sendMetaPurchase } from "../_shared/metaCapi.ts";
 import {
@@ -1365,7 +1365,7 @@ Deno.serve(async (request: Request) => {
   if (!validUuid(idempotencyKey) || !offerCode || !firstName || !lastName || !validEmail(email) || !termsAccepted) {
     return json({ error: "invalid_registration_details" }, 400, origin);
   }
-  if (offerCode === "institution" && !organization) {
+  if (isInstitutionCode(offerCode) && !organization) {
     return json({ error: "organization_required" }, 400, origin);
   }
 
@@ -1520,7 +1520,7 @@ Deno.serve(async (request: Request) => {
     }
   }
 
-  if (selectedOffer.code !== "institution") {
+  if (!isInstitutionCode(selectedOffer.code)) {
     const { data: alreadyEnrolled, error: enrollmentAccessError } = await admin.rpc(
       "cfa_registration_has_offer_access",
       {
@@ -1554,7 +1554,7 @@ Deno.serve(async (request: Request) => {
     return json({ error: "idempotency_conflict" }, 409, origin);
   }
   if (existing?.status === "paid") {
-    if (selectedOffer.code === "institution") {
+    if (isInstitutionCode(selectedOffer.code)) {
       const rosterLink = await reissueInstitutionRosterLink(admin, existing.id, firstName, email);
       if (!rosterLink) {
         return json({ error: "access_pending", registration_id: existing.id }, 202, origin);
@@ -1575,8 +1575,8 @@ Deno.serve(async (request: Request) => {
       replayed: true,
       registration_id: existing.id,
       email_sent: Boolean(existing.welcome_sent_at),
-      institution: selectedOffer.code === "institution",
-      redirect: selectedOffer.code === "institution" ? null : programDefinition.signedInRedirect,
+      institution: isInstitutionCode(selectedOffer.code),
+      redirect: isInstitutionCode(selectedOffer.code) ? null : programDefinition.signedInRedirect,
     }, 200, origin);
   }
   if (existing && ["processing", "enrollment_pending"].includes(existing.status)) {
@@ -1615,7 +1615,7 @@ Deno.serve(async (request: Request) => {
     return json({ error: "registration_lookup_failed" }, 500, origin);
   }
   if (paidOfferResult.data) {
-    if (selectedOffer.code === "institution") {
+    if (isInstitutionCode(selectedOffer.code)) {
       const rosterLink = await reissueInstitutionRosterLink(
         admin,
         paidOfferResult.data.id,
@@ -2098,7 +2098,7 @@ Deno.serve(async (request: Request) => {
     }, 200, origin);
   }
 
-  if (selectedOffer.code === "institution") {
+  if (isInstitutionCode(selectedOffer.code)) {
     const rawRosterToken = crypto.randomUUID().replaceAll("-", "")
       + crypto.randomUUID().replaceAll("-", "");
     const rosterTokenHash = await sha256(rawRosterToken);

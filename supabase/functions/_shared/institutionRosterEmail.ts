@@ -107,7 +107,7 @@ export async function sendInstitutionParticipantWelcome(input: {
     "",
     `${input.organization} has included you in Starlight Rays 2026–2027.`,
     "",
-    "Your learning portal holds all 12 live-seminar Zoom links, session recordings, and course resources.",
+    "Your learning portal holds the Zoom links, session recordings, and course resources for every seminar your school registered for.",
     "",
     "Use this personal secure link to open your learning portal:",
     input.signInLink,
@@ -127,4 +127,12 @@ export async function sendInstitutionParticipantWelcome(input: {
     subject: "Your Starlight Rays learning portal",
     text,
   });
+}
+
+// An institution offer seats a whole team behind one payment and a roster link.
+// 'institution' is the full season; 'institution-<pack>' (e.g.
+// 'institution-eight-session') is a session pack sold the same way. The SQL side
+// (cfa_complete_institution_registration) matches the same rule.
+export function isInstitutionCode(code: unknown): boolean {
+  return typeof code === "string" && (code === "institution" || code.startsWith("institution-"));
 }

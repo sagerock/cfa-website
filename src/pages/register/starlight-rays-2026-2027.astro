@@ -383,7 +383,7 @@ const otherCountries = ISO_COUNTRY_CODES
 
   function updateSelection() {
     const offer = selectedOffer();
-    const isInstitution = offer?.code === 'institution';
+    const isInstitution = offer?.code === 'institution' || String(offer?.code ?? '').startsWith('institution-');
     organizationField.hidden = !isInstitution;
     organizationInput.required = isInstitution;
     detailsLegend.textContent = isInstitution ? 'School representative' : 'Participant details';
@@ -504,7 +504,7 @@ const otherCountries = ISO_COUNTRY_CODES
 
   async function submitRegistration(opaqueData) {
     paymentButton.disabled = true;
-    setStatus(selectedOffer()?.code === 'institution'
+    setStatus((selectedOffer()?.code === 'institution' || String(selectedOffer()?.code ?? '').startsWith('institution-'))
       ? 'Authorizing payment and preparing your private roster…'
       : 'Authorizing payment and preparing your course access…');
     const data = new FormData(form);

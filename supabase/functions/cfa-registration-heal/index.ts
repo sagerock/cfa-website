@@ -1,6 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "@supabase/supabase-js";
-import { sendInstitutionRosterConfirmation } from "../_shared/institutionRosterEmail.ts";
+import { isInstitutionCode, sendInstitutionRosterConfirmation } from "../_shared/institutionRosterEmail.ts";
 
 // Finds registrations the gateway has already charged but the site never
 // finished — status 'enrollment_pending' with a paid_at and a transaction id —
@@ -180,7 +180,7 @@ Deno.serve(async (request: Request) => {
       attention.push({ ...summary, reason: registration.status === "processing" ? "stuck_in_processing" : "payment_result_unknown" });
       continue;
     }
-    const result = offer?.code === "institution"
+    const result = isInstitutionCode(offer?.code)
       ? await healInstitution(admin, registration, Number(offer?.seat_count ?? 20))
       : await healIndividual(admin, registration, opsToken, supabaseUrl);
     if (result.ok) {
