@@ -809,3 +809,14 @@ Elsy pointed to, in this site's tokens. Stays noindex until CfA says go.
   from the 2026 residency folder, WebP, metadata stripped.
 - Concierge catalog entry renamed to key `mentor-training-2027` (it looks programs up by tag) and
   pointed at the new page; it needs a cfa-concierge redeploy to take effect.
+
+## 2026-11-03 — Institution session packs (`institution-<pack>` offer codes)
+
+Institution checkout used to key on the literal offer code `institution`. A school can now buy a
+session pack the same way: any offer whose code is `institution` or starts with `institution-` gets
+the organization field, roster link and roster provisioning, and roster seats inherit the offer's
+access scope (a `sessions` offer seats teachers in only its mapped sessions). First use: Starlight
+Rays `institution-eight-session` (remaining eight sessions, 20 seats, paid in full). Why a prefix
+rule rather than `seat_count > 1`: it keeps the behavior explicit per offer and needs no change to
+the full-season row. SQL side: `cfa_complete_institution_registration` and
+`cfa_provision_institution_roster_member` (migration 20261103140000).
