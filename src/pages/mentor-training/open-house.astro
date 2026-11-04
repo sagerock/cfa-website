@@ -18,15 +18,15 @@ import Base from '../../layouts/Base.astro';
 ---
 
 <Base
-  title="Mentor Training Open House, December 9 | Center for Anthroposophy"
-  description="A free Zoom introduction to the Mentor Training Program with Karen Atkinson, Wednesday, December 9, 2026, at 7:00 PM Eastern."
+  title="The Art of the Mentoring Conversation, December 9 | Center for Anthroposophy"
+  description="A free interactive workshop for experienced Waldorf educators with Karen Atkinson, Director of Mentor Training. Wednesday, December 9, 2026, online."
   minimal
 >
   <header class="oh-head">
     <div class="wrap">
-      <a class="eyebrow" href="/mentor-training/">Mentor Training · Open House →</a>
-      <h1>Mentor Training Open House</h1>
-      <p class="tagline">Discover your destiny, practice your passion.</p>
+      <a class="eyebrow" href="/mentor-training/">Mentor Training →</a>
+      <h1>The Art of the Mentoring Conversation</h1>
+      <p class="tagline">A Free Interactive Workshop for Experienced Waldorf Educators</p>
     </div>
   </header>
 
@@ -34,18 +34,23 @@ import Base from '../../layouts/Base.astro';
     <section class="oh-about">
       <dl class="oh-facts">
         <div><dt>When</dt><dd>Wednesday, December 9, 2026 · 7:00 PM ET</dd></div>
+        <div><dt>Length</dt><dd>60 minutes</dd></div>
         <div><dt>Where</dt><dd>Online on Zoom</dd></div>
         <div><dt>Cost</dt><dd>Free</dd></div>
         <div><dt>Hosted by</dt><dd>Karen Atkinson, M.Ed., Director of Mentor Training</dd></div>
       </dl>
+      <p class="lead">You know how to teach. But how do you help another teacher grow?</p>
       <p>
-        Join Karen Atkinson and the Mentor Training team for an introduction to the Mentor Training
-        Program. The program is designed for pedagogical leaders, directors of education, college
-        members and seasoned teachers.
+        Join Karen Atkinson, Director of Mentor Training at the Center for Anthroposophy, for an
+        interactive learning experience exploring the art of mentoring.
       </p>
       <p>
-        Learn what the program offers, how it works, and bring your questions. Open house participants
-        will receive an exclusive registration offer for the cohort starting in January.
+        Through a live demonstration, guided reflection, and practical exercises, discover how a
+        thoughtful mentoring conversation can transform the way we support our colleagues.
+      </p>
+      <p>
+        Experience a taste of CfA's Mentor Training approach and explore the next step in your own
+        professional development.
       </p>
     </section>
 
@@ -78,7 +83,7 @@ import Base from '../../layouts/Base.astro';
 
         <label class="check-row">
           <input type="checkbox" name="marketing_opt_in" />
-          <span>Yes, send me news about Center for Anthroposophy programs and events. You can unsubscribe at any time.</span>
+          <span>Keep me posted about CfA programs and offers.</span>
         </label>
 
         <div id="turnstile-widget" class="turnstile"></div>
@@ -183,11 +188,11 @@ import Base from '../../layouts/Base.astro';
       if (!response.ok) throw new Error('configuration');
       const config = await response.json();
       if (config.program?.name !== EXPECTED_PROGRAM_NAME) {
-        closed('Registration for this open house is not available yet. Please write to office@centerforanthroposophy.org.');
+        closed('Registration for this workshop is not available yet. Please write to office@centerforanthroposophy.org.');
         return;
       }
       if (!config.offers?.some((offer) => offer.code === OFFER_CODE)) {
-        closed('Registration for this open house has closed. Please write to office@centerforanthroposophy.org.');
+        closed('Registration for this workshop has closed. Please write to office@centerforanthroposophy.org.');
         return;
       }
       if (config.turnstile_site_key && !testToken) {
@@ -200,7 +205,7 @@ import Base from '../../layouts/Base.astro';
         });
       }
       button.disabled = false;
-      button.textContent = 'Register for the open house';
+      button.textContent = 'Reserve Your Free Workshop Seat';
     } catch {
       closed('Registration is unavailable right now. Please write to office@centerforanthroposophy.org.');
     }
@@ -283,6 +288,7 @@ import Base from '../../layouts/Base.astro';
   .oh-head .eyebrow { font-family: var(--sans); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #7a2e63; text-decoration: none; }
   .oh-head h1 { font-size: clamp(32px, 4vw, 48px); margin: 12px 0 8px; }
   .tagline { color: var(--soft); font-style: italic; margin: 0; }
+  .oh-about .lead { font-size: 20px; font-style: italic; }
   .oh-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; padding: 40px 0 72px; }
   .oh-facts { display: grid; gap: 14px; margin: 0 0 28px; }
   .oh-facts div { display: grid; grid-template-columns: 110px 1fr; gap: 12px; }

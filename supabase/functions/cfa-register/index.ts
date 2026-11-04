@@ -259,25 +259,25 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
     ],
     attachments: [MENTOR_TRAINING_2027_WELCOME_LETTER],
   },
-  // Free Mentor Training open house on Zoom (Karen Atkinson, 2026-11-03). The
+  // Free Mentor Training workshop on Zoom, December 9 (Karen Atkinson; Elsy's wording, Karen OK 2026-11-04). The
   // first $0 event on learn.*: one free offer, a confirmation with the joining
   // link, and the marketing opt-in stored on the registration.
   "mentor-training-open-house-2026-12-09": {
     key: "mentor-training-open-house-2026-12-09",
     platform: "native",
     platformId: "mentor-training-open-house-2026-12-09",
-    title: "the Mentor Training Open House",
-    chargeDescription: "Mentor Training Open House",
-    emailSubject: "You're registered: Mentor Training Open House, Wednesday, December 9",
+    title: "The Art of the Mentoring Conversation, a free Mentor Training workshop",
+    chargeDescription: "Mentor Training Workshop",
+    emailSubject: "You're registered: The Art of the Mentoring Conversation, Wednesday, December 9",
     portal: false,
     locale: "en",
     testOfferCodes: new Set(["open-house"]),
     signedInRedirect: null,
     freeEvent: true,
     details: [
-      "Mentor Training Open House",
-      "Wednesday, December 9, 2026, 7:00 PM Eastern",
-      "Online on Zoom, hosted by Karen Atkinson, M.Ed., Director of Mentor Training",
+      "The Art of the Mentoring Conversation",
+      "Wednesday, December 9, 2026, 7:00 PM Eastern (60 minutes)",
+      "Online on Zoom, with Karen Atkinson, Director of Mentor Training",
       "",
       "Join here (the same link works on the night):",
       "https://centerforanthroposophy.org/zoomroom3",
