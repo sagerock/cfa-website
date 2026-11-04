@@ -1,0 +1,313 @@
+---
+// Free registration for the Mentor Training Open House, Wednesday December 9,
+// 2026, 7:00 PM ET on Zoom (Karen Atkinson, Director of Mentor Training).
+//
+// The first $0 event registered on learn.* rather than in Constant Contact's
+// event tool. It posts to cfa-register with
+// ?program=mentor-training-open-house-2026-12-09; that program has one $0
+// offer, so the server never touches the payment gateway and needs no billing
+// address. The confirmation email carries the Zoom link.
+//
+// The opt-in box is stored on the registration. Only people who tick it are
+// added to Constant Contact; registering alone grants no list permission.
+//
+// For the next open house: copy this page, change the copy and PROGRAM_KEY,
+// and add a program row, a $0 offer and a program definition (see
+// supabase/migrations/20261104150000_mentor_training_open_house_dec_2026.sql).
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Mentor Training Open House, December 9 | Center for Anthroposophy"
+  description="A free Zoom introduction to the Mentor Training Program with Karen Atkinson, Wednesday, December 9, 2026, at 7:00 PM Eastern."
+  minimal
+>
+  <header class="oh-head">
+    <div class="wrap">
+      <a class="eyebrow" href="/mentor-training/">Mentor Training · Open House →</a>
+      <h1>Mentor Training Open House</h1>
+      <p class="tagline">Discover your destiny, practice your passion.</p>
+    </div>
+  </header>
+
+  <div class="wrap oh-layout">
+    <section class="oh-about">
+      <dl class="oh-facts">
+        <div><dt>When</dt><dd>Wednesday, December 9, 2026 · 7:00 PM ET</dd></div>
+        <div><dt>Where</dt><dd>Online on Zoom</dd></div>
+        <div><dt>Cost</dt><dd>Free</dd></div>
+        <div><dt>Hosted by</dt><dd>Karen Atkinson, M.Ed., Director of Mentor Training</dd></div>
+      </dl>
+      <p>
+        Join Karen Atkinson and the Mentor Training team for an introduction to the Mentor Training
+        Program. The program is designed for pedagogical leaders, directors of education, college
+        members and seasoned teachers.
+      </p>
+      <p>
+        Learn what the program offers, how it works, and bring your questions. Open house participants
+        will receive an exclusive registration offer for the cohort starting in January.
+      </p>
+    </section>
+
+    <main class="oh-form-wrap">
+      <h2>Register</h2>
+      <p class="oh-note">Registration is free. We'll email you the Zoom link.</p>
+
+      <form id="registration-form" novalidate>
+        <div class="honeypot" aria-hidden="true">
+          <label>Leave this field empty <input type="text" name="fax_confirm" tabindex="-1" autocomplete="off" /></label>
+        </div>
+        <div class="field-grid">
+          <label>
+            First name
+            <input type="text" name="first_name" autocomplete="given-name" maxlength="100" required />
+          </label>
+          <label>
+            Last name
+            <input type="text" name="last_name" autocomplete="family-name" maxlength="100" required />
+          </label>
+          <label class="wide">
+            Email
+            <input type="email" name="email" autocomplete="email" maxlength="254" required />
+          </label>
+          <label class="wide">
+            School or organization <small>optional</small>
+            <input type="text" name="organization" autocomplete="organization" maxlength="200" />
+          </label>
+        </div>
+
+        <label class="check-row">
+          <input type="checkbox" name="marketing_opt_in" />
+          <span>Yes, send me news about Center for Anthroposophy programs and events. You can unsubscribe at any time.</span>
+        </label>
+
+        <div id="turnstile-widget" class="turnstile"></div>
+        <button id="submit-button" class="submit-button" type="submit" disabled>Loading…</button>
+        <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+      </form>
+
+      <div id="done" class="oh-done" hidden>
+        <h2>You're registered</h2>
+        <p>We've sent the Zoom link to <strong id="done-email"></strong>. If it isn't in your inbox in a few
+        minutes, check your spam folder or write to
+        <a href="mailto:office@centerforanthroposophy.org">office@centerforanthroposophy.org</a>.</p>
+      </div>
+
+      <p class="oh-contact">Questions? <a href="mailto:office@centerforanthroposophy.org">office@centerforanthroposophy.org</a></p>
+    </main>
+  </div>
+</Base>
+
+<script>
+  const PROGRAM_KEY = 'mentor-training-open-house-2026-12-09';
+  // cfa-register falls back to another program for a key it does not know, so
+  // the page only opens when the server answers with this program's name.
+  const EXPECTED_PROGRAM_NAME = 'Mentor Training Open House (December 9, 2026)';
+  const OFFER_CODE = 'open-house';
+  const base = 'https://ckloewflialohuvixmvd.supabase.co/functions/v1/cfa-register';
+  const endpoint = `${base}?program=${PROGRAM_KEY}`;
+
+  const form = document.getElementById('registration-form');
+  const button = document.getElementById('submit-button');
+  const status = document.getElementById('form-status');
+  const done = document.getElementById('done');
+  const doneEmail = document.getElementById('done-email');
+
+  const fragment = new URLSearchParams(location.hash.slice(1));
+  const testToken = fragment.get('test_token') || '';
+  if (testToken) history.replaceState(null, '', location.pathname + location.search);
+  const keyName = 'cfa-mt-open-house-2026-12-09-id';
+  let idempotencyKey = localStorage.getItem(keyName) || crypto.randomUUID();
+  localStorage.setItem(keyName, idempotencyKey);
+  let turnstileToken = '';
+  let turnstileWidgetId;
+  const pageParams = new URLSearchParams(location.search);
+
+  function setStatus(message, kind = '') {
+    status.textContent = message;
+    status.className = `form-status ${kind}`.trim();
+  }
+
+  function safeReferrer(value) {
+    try {
+      const referrer = new URL(value);
+      return `${referrer.origin}${referrer.pathname}`.slice(0, 500);
+    } catch {
+      return '';
+    }
+  }
+
+  function captureAttribution() {
+    const storageKey = 'cfa-registration-attribution';
+    try {
+      const stored = JSON.parse(sessionStorage.getItem(storageKey) || 'null');
+      if (stored && typeof stored === 'object' && !Array.isArray(stored)) return stored;
+    } catch {}
+    const captured = {
+      captured_at: new Date().toISOString(),
+      landing_path: location.pathname.slice(0, 500),
+      referrer: safeReferrer(document.referrer),
+    };
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid', 'msclkid']
+      .forEach((key) => {
+        const value = (pageParams.get(key) || '').trim();
+        if (value) captured[key] = value.slice(0, key.startsWith('utm_') ? 300 : 500);
+      });
+    try { sessionStorage.setItem(storageKey, JSON.stringify(captured)); } catch {}
+    return captured;
+  }
+  const attribution = captureAttribution();
+
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.async = true;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.append(script);
+    });
+  }
+
+  function closed(message) {
+    button.disabled = true;
+    button.textContent = 'Registration is closed';
+    setStatus(message);
+  }
+
+  async function initialize() {
+    try {
+      const headers = new Headers({ Accept: 'application/json' });
+      if (testToken) headers.set('X-Registration-Test', testToken);
+      const response = await fetch(endpoint, { headers });
+      if (!response.ok) throw new Error('configuration');
+      const config = await response.json();
+      if (config.program?.name !== EXPECTED_PROGRAM_NAME) {
+        closed('Registration for this open house is not available yet. Please write to office@centerforanthroposophy.org.');
+        return;
+      }
+      if (!config.offers?.some((offer) => offer.code === OFFER_CODE)) {
+        closed('Registration for this open house has closed. Please write to office@centerforanthroposophy.org.');
+        return;
+      }
+      if (config.turnstile_site_key && !testToken) {
+        await loadScript('https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit');
+        turnstileWidgetId = window.turnstile.render('#turnstile-widget', {
+          sitekey: config.turnstile_site_key,
+          action: 'registration',
+          callback: (token) => { turnstileToken = token; },
+          'expired-callback': () => { turnstileToken = ''; },
+        });
+      }
+      button.disabled = false;
+      button.textContent = 'Register for the open house';
+    } catch {
+      closed('Registration is unavailable right now. Please write to office@centerforanthroposophy.org.');
+    }
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+    if (turnstileWidgetId !== undefined && !turnstileToken) {
+      setStatus('Please complete the check above the button.', 'error');
+      return;
+    }
+    button.disabled = true;
+    setStatus('Registering…');
+    const data = new FormData(form);
+    let result = {};
+    let ok = false;
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          idempotency_key: idempotencyKey,
+          test_token: testToken,
+          offer_code: OFFER_CODE,
+          seats: 1,
+          participants: [],
+          first_name: data.get('first_name'),
+          last_name: data.get('last_name'),
+          email: data.get('email'),
+          organization: data.get('organization'),
+          company: data.get('fax_confirm'),
+          billing_address: {},
+          terms_accepted: true,
+          marketing_opt_in: data.get('marketing_opt_in') === 'on',
+          attribution,
+          turnstile_token: turnstileToken,
+          opaque_data: {},
+        }),
+      });
+      result = await response.json().catch(() => ({}));
+      ok = response.ok && result.ok;
+    } catch {
+      result = {};
+    }
+    if (ok || result.error === 'already_enrolled') {
+      localStorage.removeItem(keyName);
+      form.hidden = true;
+      doneEmail.textContent = String(data.get('email') || '');
+      done.hidden = false;
+      if (result.error === 'already_enrolled') {
+        done.querySelector('h2').textContent = "You're already registered";
+      }
+      return;
+    }
+    if (result.error === 'idempotency_conflict') {
+      idempotencyKey = crypto.randomUUID();
+      localStorage.setItem(keyName, idempotencyKey);
+    }
+    if (window.turnstile && turnstileWidgetId !== undefined) {
+      turnstileToken = '';
+      window.turnstile.reset(turnstileWidgetId);
+    }
+    button.disabled = false;
+    setStatus(
+      result.error === 'invalid_registration_details'
+        ? 'Please check your name and email and try again.'
+        : result.error === 'too_many_attempts'
+        ? 'Too many attempts. Please wait a few minutes and try again.'
+        : 'Something went wrong. Please try again, or write to office@centerforanthroposophy.org.',
+      'error',
+    );
+  });
+
+  initialize();
+</script>
+
+<style>
+  .oh-head { padding: 56px 0 24px; border-bottom: 1px solid var(--line); }
+  .oh-head .eyebrow { font-family: var(--sans); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #7a2e63; text-decoration: none; }
+  .oh-head h1 { font-size: clamp(32px, 4vw, 48px); margin: 12px 0 8px; }
+  .tagline { color: var(--soft); font-style: italic; margin: 0; }
+  .oh-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; padding: 40px 0 72px; }
+  .oh-facts { display: grid; gap: 14px; margin: 0 0 28px; }
+  .oh-facts div { display: grid; grid-template-columns: 110px 1fr; gap: 12px; }
+  .oh-facts dt { font-family: var(--sans); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--soft); padding-top: 3px; }
+  .oh-facts dd { margin: 0; }
+  .oh-about p { max-width: 58ch; line-height: 1.6; }
+  .oh-form-wrap h2 { margin-top: 0; }
+  .oh-note { color: var(--soft); margin-top: 0; }
+  .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  .field-grid label { display: flex; flex-direction: column; gap: 6px; font-family: var(--sans); font-size: 13px; font-weight: 600; }
+  .field-grid label small { color: var(--soft); font-weight: 400; }
+  .field-grid .wide { grid-column: 1 / -1; }
+  .field-grid input { padding: 10px 12px; font-size: 16px; border: 1px solid var(--line); }
+  .check-row { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; line-height: 1.5; margin: 8px 0 18px; }
+  .check-row input { margin-top: 4px; }
+  .turnstile { margin: 12px 0 18px; }
+  .submit-button { padding: 14px 26px; background: #7a2e63; color: #fff; border: 0; font-family: var(--sans); font-size: 16px; font-weight: 700; cursor: pointer; }
+  .submit-button:disabled { opacity: 0.6; cursor: default; }
+  .form-status { font-family: var(--sans); font-size: 14px; margin-top: 12px; color: var(--soft); }
+  .form-status.error { color: #a33; }
+  .oh-done { border: 1px solid var(--line); padding: 24px; }
+  .oh-contact { margin-top: 32px; font-size: 14px; color: var(--soft); }
+  .honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  @media (max-width: 760px) {
+    .oh-layout { grid-template-columns: 1fr; gap: 32px; }
+    .field-grid { grid-template-columns: 1fr; }
+  }
+</style>

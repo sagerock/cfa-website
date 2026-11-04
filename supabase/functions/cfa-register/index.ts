@@ -44,6 +44,10 @@ type ProgramDefinition = {
   details: string[];
   // Files sent with the in-person confirmation (a director's welcome letter).
   attachments?: Array<{ filename: string; type: string; contentBase64: string }>;
+  // A free event (a $0 open house): the confirmation is a plain "you're
+  // registered" note with the details, never a receipt. No Meta Purchase and
+  // no per-registration staff notice; staff get the scheduled roster updates.
+  freeEvent?: boolean;
 };
 
 const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
@@ -254,6 +258,32 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
       "virtual classroom, the residency details and what to prepare.",
     ],
     attachments: [MENTOR_TRAINING_2027_WELCOME_LETTER],
+  },
+  // Free Mentor Training open house on Zoom (Karen Atkinson, 2026-11-03). The
+  // first $0 event on learn.*: one free offer, a confirmation with the joining
+  // link, and the marketing opt-in stored on the registration.
+  "mentor-training-open-house-2026-12-09": {
+    key: "mentor-training-open-house-2026-12-09",
+    platform: "native",
+    platformId: "mentor-training-open-house-2026-12-09",
+    title: "the Mentor Training Open House",
+    chargeDescription: "Mentor Training Open House",
+    emailSubject: "You're registered: Mentor Training Open House, Wednesday, December 9",
+    portal: false,
+    locale: "en",
+    testOfferCodes: new Set(["open-house"]),
+    signedInRedirect: null,
+    freeEvent: true,
+    details: [
+      "Mentor Training Open House",
+      "Wednesday, December 9, 2026, 7:00 PM Eastern",
+      "Online on Zoom, hosted by Karen Atkinson, M.Ed., Director of Mentor Training",
+      "",
+      "Join here (the same link works on the night):",
+      "https://centerforanthroposophy.org/zoomroom3",
+      "",
+      "We'll send a reminder the day before and an hour before we begin.",
+    ],
   },
 };
 const DEFAULT_PROGRAM_KEY = "starlight-rays-2026-2027";
@@ -912,6 +942,46 @@ async function sendWelcomeEmail(input: {
       from: parseFrom(from),
       reply_to: { email: "office@centerforanthroposophy.org", name: "Center for Anthroposophy" },
       subject: "Your Starlight Rays registration",
+      content: [{ type: "text/plain", value: emailText }],
+      tracking_settings: { click_tracking: { enable: false, enable_text: false } },
+    }),
+  });
+  return response.ok;
+}
+
+// Confirmation for a free event: no amount, transaction or refund policy.
+async function sendFreeEventEmail(input: {
+  email: string;
+  firstName: string;
+  program: ProgramDefinition;
+}) {
+  const key = Deno.env.get("SENDGRID_API_KEY") || "";
+  if (!key) return false;
+  const from = Deno.env.get("REGISTRATION_FROM")
+    || "Center for Anthroposophy <no-reply@centerforanthroposophy.org>";
+  const emailText = [
+    `Dear ${input.firstName},`,
+    "",
+    `You're registered for ${input.program.title}. It's free; there is nothing to pay.`,
+    "",
+    ...input.program.details,
+    "",
+    "Questions? Reply to this email or write to office@centerforanthroposophy.org.",
+    "",
+    "Warmly,",
+    "Center for Anthroposophy",
+  ].join("\n");
+  const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${key}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      personalizations: [{ to: [{ email: input.email }] }],
+      from: parseFrom(from),
+      reply_to: { email: "office@centerforanthroposophy.org", name: "Center for Anthroposophy" },
+      subject: input.program.emailSubject,
       content: [{ type: "text/plain", value: emailText }],
       tracking_settings: { click_tracking: { enable: false, enable_text: false } },
     }),
@@ -1739,7 +1809,9 @@ Deno.serve(async (request: Request) => {
   let transactionId = `comp-${registrationId.replaceAll("-", "").slice(0, 16)}`;
   let summary: JsonRecord = {
     code: "discount_comp",
-    description: selectedCoupon
+    description: chargeAmountCents === 0 && discountCents === 0
+      ? "Free registration (no payment)"
+      : selectedCoupon
       ? `Registered with ${selectedCoupon.percent_off}% coupon ${selectedCoupon.code}`
       : `Registered with ${selectedAutomaticDiscount?.percent_off ?? 100}% automatic discount ${selectedAutomaticDiscount?.code ?? ""}`.trim(),
   };
@@ -2272,7 +2344,9 @@ Deno.serve(async (request: Request) => {
       : selectedAutomaticDiscount
       ? `${selectedOffer.name} (${selectedAutomaticDiscount.label}, ${selectedAutomaticDiscount.percent_off}% off)`
       : selectedOffer.name;
-    emailSent = signInUrl
+    emailSent = programDefinition.freeEvent
+      ? await sendFreeEventEmail({ email, firstName, program: programDefinition })
+      : signInUrl
       ? await sendWelcomeEmail({
         email,
         firstName,
@@ -2303,7 +2377,7 @@ Deno.serve(async (request: Request) => {
 
   // The staff notice never affects the registrant. A failure here is logged
   // and the registration still returns ok.
-  await sendRegistrationNotice({
+  if (!programDefinition.freeEvent) await sendRegistrationNotice({
     program: programDefinition,
     offerName: selectedOffer.name,
     firstName,
@@ -2322,7 +2396,9 @@ Deno.serve(async (request: Request) => {
     registrationId,
   });
 
-  await reportMetaPurchase(registrationId, chargeAmountCents, selectedOffer.name);
+  if (!programDefinition.freeEvent) {
+    await reportMetaPurchase(registrationId, chargeAmountCents, selectedOffer.name);
+  }
 
   return json({
     ok: true,

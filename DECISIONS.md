@@ -829,3 +829,22 @@ now list `attachments`, sent with the in-person confirmation (`sendResidencyEmai
 embedded as base64 in `cfa-register/attachments/` (her PDF holds only public program facts). The
 confirmation text says the letter is attached. Director's own-program edit; deployed as
 cfa-register v108 through the Management API. To change the letter: regenerate that file, redeploy.
+
+## 2026-11-04 — Free events on learn.* (first: Mentor Training Open House, December 9)
+
+CfA's rule since 2026-10-30: Constant Contact is for promotional mail; CfA's own registration
+system is for registrants. Sage approved building free-event registration on learn.* for the
+December 9 Mentor Training Open House (7:00 PM ET, Zoom room 3, host Karen Atkinson; Karen
+confirmed the details 11/03).
+
+- Schema: `program_offers` and `registrations` amount checks relaxed to `amount_cents >= 0`
+  (migration 20261104150000). A $0 registration has no gateway transaction, so reconciliation
+  (gateway → registration) is unaffected; fully discounted registrations already used this path.
+- `cfa-register`: a program definition can set `freeEvent`. Its confirmation is a plain "you're
+  registered" note with the details and joining link (no amount, transaction or refund policy);
+  no Meta Purchase event and no per-registration staff notice. A $0 total with no discount is
+  recorded as "Free registration (no payment)".
+- Page: `/mentor-training/open-house/` (copy from the October invitation). No billing fields.
+  The opt-in box is stored as `registrations.marketing_opt_in`; only those people go to
+  Constant Contact. Registering alone grants no list permission.
+- Next open house: copy the page, add a program row, a $0 offer and a program definition.
