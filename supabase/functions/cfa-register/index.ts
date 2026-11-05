@@ -285,6 +285,32 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
       "We'll send a reminder the day before and an hour before we begin.",
     ],
   },
+  // Free WHiSTEP open house on Zoom room 4 (David Barham, 2026-11-04), right
+  // after that day's Starlight Rays talk in the same session. Held until CfA
+  // settles the host line and the talk invitation (see the migration).
+  "whistep-open-house-2026-12-12": {
+    key: "whistep-open-house-2026-12-12",
+    platform: "native",
+    platformId: "whistep-open-house-2026-12-12",
+    title: "the WHiSTEP Open House",
+    chargeDescription: "WHiSTEP Open House",
+    emailSubject: "You're registered: WHiSTEP Open House, Saturday, December 12",
+    portal: false,
+    locale: "en",
+    testOfferCodes: new Set(["open-house"]),
+    signedInRedirect: null,
+    freeEvent: true,
+    details: [
+      "WHiSTEP Open House",
+      "Saturday, December 12, 2026, 4:35 to 5:00 PM Eastern",
+      "Online on Zoom, hosted by David Barham, Director of the Waldorf High School Teacher Education Program (WHiSTEP)",
+      "",
+      "Join here at 4:35 PM Eastern:",
+      "https://centerforanthroposophy.org/zoomroom4",
+      "",
+      "We'll send a reminder the day before and an hour before we begin, and the recording afterward.",
+    ],
+  },
 };
 const DEFAULT_PROGRAM_KEY = "starlight-rays-2026-2027";
 

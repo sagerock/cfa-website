@@ -848,3 +848,13 @@ confirmed the details 11/03).
   The opt-in box is stored as `registrations.marketing_opt_in`; only those people go to
   Constant Contact. Registering alone grants no list permission.
 - Next open house: copy the page, add a program row, a $0 offer and a program definition.
+
+## 2026-11-05 — WHiSTEP Open House, December 12 (second free event), held on a branch
+
+Same pattern as the December 9 Mentor Training open house: page `/whistep/open-house/`, program
+`whistep-open-house-2026-12-12` with one $0 offer (migration 20261105120000), a `freeEvent` program
+definition in `cfa-register`. Saturday, December 12, 4:35 to 5:00 PM ET, Zoom room 4, host David
+Barham, right after that day's Starlight Rays talk. Free; registrants get the recording afterward.
+Built on branch `events/whistep-open-house-1212` and not merged: the migration is not applied and
+`cfa-register` is not redeployed until CfA settles the host line and the talk invitation. To publish:
+adjust copy, merge, apply the migration, deploy `cfa-register`, then test-register.
