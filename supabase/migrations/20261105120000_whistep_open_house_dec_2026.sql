@@ -8,8 +8,8 @@
 -- One $0 offer, open now, closing when the open house begins. The amount
 -- checks were already relaxed to >= 0 by 20261104150000.
 --
--- HELD: apply this together with the cfa-register deploy and the page merge,
--- once CfA has settled the host line and the talk invitation.
+-- Applied 2026-11-09 with the cfa-register deploy and the page merge, after
+-- David confirmed Cedar Oliver presents at 3:00 and stays for the open house.
 
 insert into public.programs (
   client_id, name, year, format, platform, platform_id, tag, instructor, start_date, end_date

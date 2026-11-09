@@ -858,3 +858,9 @@ Barham, right after that day's Starlight Rays talk. Free; registrants get the re
 Built on branch `events/whistep-open-house-1212` and not merged: the migration is not applied and
 `cfa-register` is not redeployed until CfA settles the host line and the talk invitation. To publish:
 adjust copy, merge, apply the migration, deploy `cfa-register`, then test-register.
+
+**Published 2026-11-09.** David confirmed (11/09) that Cedar Oliver presents that day's 3:00 PM Starlight
+Rays talk, "True Equality": How and Why We Sort Our Students, and stays for the open house. The page and
+confirmation email invite registrants to come early for the talk in the same Zoom room (Caitlin's 11/04
+suggestion). No enrollment bonus or Kaliks pass line on the page unless Caitlin asks. Merged, migration
+applied, `cfa-register` redeployed, test registration voided.

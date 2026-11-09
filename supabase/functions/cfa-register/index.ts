@@ -286,8 +286,8 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
     ],
   },
   // Free WHiSTEP open house on Zoom room 4 (David Barham, 2026-11-04), right
-  // after that day's Starlight Rays talk in the same session. Held until CfA
-  // settles the host line and the talk invitation (see the migration).
+  // after that day's Starlight Rays talk in the same session. Cedar Oliver
+  // presents the talk and stays for the open house (David, 2026-11-09).
   "whistep-open-house-2026-12-12": {
     key: "whistep-open-house-2026-12-12",
     platform: "native",
@@ -307,6 +307,8 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
       "",
       "Join here at 4:35 PM Eastern:",
       "https://centerforanthroposophy.org/zoomroom4",
+      "",
+      "You're welcome to come early: at 3:00 PM Eastern, in the same Zoom room, WHiSTEP faculty member Cedar Oliver presents \"True Equality\": How and Why We Sort Our Students. Cedar is staying for the open house.",
       "",
       "We'll send a reminder the day before and an hour before we begin, and the recording afterward.",
     ],
