@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-02",
+  "updated": "2026-11-09",
   "policies": {
     "cancellation_url": "https://learn.centerforanthroposophy.org/policies/cancellation/",
     "cancellation": "Applies to every CfA program unless the program page says otherwise. Cancel in writing to office@centerforanthroposophy.org. At least 30 days before the start: full refund less a $75 cancellation fee. Within 30 days of the start or once in session: no refund, but the registration can be transferred to a colleague by emailing the office. Payment plans are a commitment to the full fee; the same 30-day rule applies. Access pauses if an installment is more than 30 days late and resumes when the plan is current; the balance can be paid early through the office. Single-session tickets and bundles include the recording and are not refundable, but can be transferred before the session. If CfA cancels a program, full refund.",
@@ -39,7 +39,7 @@
       "one_line": "A 12-month foundation studies program in anthroposophy and the arts, with in-person long weekends in a host community plus some online learning.",
       "who_its_for": "Practicing teachers who want an introduction to the anthroposophical foundations of Waldorf education, often using occasional professional days. Combined with Explorations, it can lead to advanced standing (7 graduate credits) in Antioch University's Waldorf Teacher Education Program.",
       "format": "hybrid",
-      "schedule_text": "Current location: Mountain Phoenix Community School, Wheat Ridge (Denver area), Colorado; this cohort began February 12, 2026. The October 8–11, 2026 weekend has taken place. Next: a follow-up Zoom with Deborah Dornemann on Friday, November 6, 2026, 4:00–6:00 pm ET (the page says two follow-up Zoom sessions in November/December 2026); February 12–14, 2027; make-up session April 30–May 1, 2027 if needed. Most in-person classes run Thursday 7–9 pm and Friday–Sunday 8:30 am–4:30 pm.",
+      "schedule_text": "Current location: Mountain Phoenix Community School, Wheat Ridge (Denver area), Colorado; this cohort began February 12, 2026. The October 8–11, 2026 weekend has taken place. The follow-up Zoom with Deborah Dornemann on Friday, November 6, 2026 has passed (the page lists two follow-up Zoom sessions in November/December 2026, times TBA; ask Deborah about the second). Next in person: February 12–14, 2027; make-up session April 30–May 1, 2027 if needed. Most in-person classes run Thursday 7–9 pm and Friday–Sunday 8:30 am–4:30 pm.",
       "director": {
         "name": "Deborah Dornemann",
         "email": "deborah@centerforanthroposophy.org"
@@ -137,7 +137,7 @@
     {
       "key": "kairos-dyson-mental-health-2026",
       "name": "The Organic and Psychospiritual Basis of Mental Health with Dr. James Dyson",
-      "one_line": "A Kairos Institute public course: four Saturday seminars online with Dr. James Dyson, already under way (first seminar was September 26, 2026).",
+      "one_line": "A Kairos Institute public course: four Saturday seminars online with Dr. James Dyson, now finished (September 26 – November 7, 2026).",
       "who_its_for": "Open to the public. Pitched at people who work with others: therapists, doctors, teachers, counselors and those training toward that work.",
       "format": "online",
       "schedule_text": "Saturdays September 26, October 24, October 31 and November 7, 2026, 3:00–5:00 PM Eastern, on Zoom. $350 covers the whole series.",
@@ -152,8 +152,8 @@
         "page": "https://learn.centerforanthroposophy.org/kairos/dyson-mental-health/"
       },
       "kairos": true,
-      "open": true,
-      "notes_for_jax": "Kairos program: questions go to Lisl Hofer (lisl@centerforanthroposophy.org) and Karine Munk Finser (karine@centerforanthroposophy.org). The course page names Lisl as the contact for questions about the course. Registration closes when the last seminar starts on November 7."
+      "open": false,
+      "notes_for_jax": "Kairos program: questions go to Lisl Hofer (lisl@centerforanthroposophy.org) and Karine Munk Finser (karine@centerforanthroposophy.org). The course page names Lisl as the contact for questions about the course. The series ended with the last seminar on November 7, 2026, and registration is closed; anyone asking goes to the course page and Lisl."
     },
     {
       "key": "kairos-ep-module-7-2027",
@@ -222,7 +222,7 @@
       "one_line": "An online series of twelve seminars on contemporary topics for Waldorf high school teachers, administrators, staff and parents.",
       "who_its_for": "High school teachers, administrators, staff members and parents who want to explore today's adolescents and the issues facing them with experienced colleagues from CfA's Waldorf High School Teacher Education Program.",
       "format": "online",
-      "schedule_text": "September 5, 2026 – February 27, 2027, Saturdays 3:00–4:30 pm Eastern. Remaining seminars: Nov 7 (Carol Bärtges), Nov 21 (Sven Saar), Dec 12 (Cedar Oliver), Dec 19 (Dr. Constanza Kaliks), Jan 9 (Liz Beaven), Jan 23 (Nathan Wilcox), Feb 13 (Beverly Amico), Feb 27 (David Barham).",
+      "schedule_text": "September 5, 2026 – February 27, 2027, Saturdays 3:00–4:30 pm Eastern. Remaining seminars: Nov 21 (Sven Saar), Dec 12 (Cedar Oliver), Dec 19 (Dr. Constanza Kaliks), Jan 9 (Liz Beaven), Jan 23 (Nathan Wilcox), Feb 13 (Beverly Amico), Feb 27 (David Barham).",
       "director": {
         "name": "David Barham",
         "email": "david@centerforanthroposophy.org"
