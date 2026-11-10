@@ -866,3 +866,23 @@ suggestion). No enrollment bonus or Kaliks pass line on the page unless Caitlin 
 applied, `cfa-register` v111 deployed; every program's GET checked after. No end-to-end test
 registration: Turnstile needs a human click, and the one-time test token path requires a card payment,
 so it can't run on a $0 offer. The freeEvent confirmation path is the same one Dec 9 registrants use.
+
+## 2026-11-10 — Free-event reminders: one generic sender, once per registrant
+
+The $0 events on learn.* (Mentor Training workshop Dec 9, WHiSTEP open house Dec 12) promise a reminder
+the day before and an hour before. `cfa-learn-remind` can't send them: it needs a cfa_learn course and
+session, and free events have neither. So migration `20261110120000_cfa_event_reminders.sql` adds
+`cfa_event_reminders` (one row per event + timing: subject, body with `{first_name}`, send window, cc and
+skip lists, `enabled`) and `cfa_event_reminder_sends` (unique per reminder + registration), and the
+ops-only edge function `cfa-event-remind` sends one reminder to one registrant. Why this shape:
+
+- **Never twice.** The function reserves the send row before calling SendGrid; any later call for the same
+  pair returns `already_sent` / `in_flight`. Only a SendGrid refusal is retried; unknown delivery is not.
+- **Eligibility in one place.** `cfa_event_reminder_recipients()` (paid, not `is_test`, not voided,
+  enrollment active, not on the row's skip list, one per address) is used by both the runner and the
+  function, so no caller can reach anyone else. Staff test sign-ups that aren't flagged `is_test` go on
+  the row's skip list, or get the test copy first so the real run finds them already sent.
+- **Wording is data, schedule is a switch.** Rows start disabled. CfA (Caitlin) decides wording and timing;
+  enabling a row after she OKs a test copy is the scheduling step. The runner is the sagerock-jobs job
+  `cfa-event-reminders` (every 10 minutes, sends rows with `send_at <= now < stop_at`).
+- Applied and deployed 2026-11-10 with both Dec 9 rows disabled. WHiSTEP Dec 12 reuses it by adding its rows.
