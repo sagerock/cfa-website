@@ -186,8 +186,8 @@ const testimonials = [
   <header class="mt-hero">
     <div class="wrap mt-hero-grid">
       <div class="mt-hero-copy">
-        <p class="eyebrow mt-kicker">Mentor Training Program · 2027 cohort</p>
-        <h1>Wisdom into Practice</h1>
+        <p class="eyebrow mt-kicker">2027 cohort</p>
+        <h1><span class="mt-program">Mentor Training Program</span> Wisdom into Practice</h1>
         <p class="mt-sub">Pedagogical Mentoring, Coaching, and Professional Development Pathways for Waldorf Teachers and Pedagogical Leaders</p>
         <p class="mt-lede">
           Bring the wisdom of your teaching experience into a new role of service. A ten-month,
@@ -500,6 +500,8 @@ const testimonials = [
     align-items: center;
   }
   .mt-kicker { color: var(--green-ink); }
+  /* Program name given more presence (Vern/Milan feedback, Sage 2026-11-11). */
+  .mt-program { display: block; color: var(--green-ink); font-size: clamp(24px, 2.6vw, 34px); letter-spacing: -0.01em; line-height: 1.15; font-weight: 600; margin-bottom: 10px; }
   .mt-hero h1 { font-size: clamp(40px, 5.2vw, 66px); letter-spacing: -0.035em; margin-top: 6px; line-height: 1.02; }
   .mt-sub { color: var(--gold); font-family: var(--sans); font-size: 18px; letter-spacing: 0.02em; margin-top: 16px; max-width: 46ch; }
   .mt-lede { color: var(--soft); font-size: 20px; max-width: 52ch; margin-top: 22px; }
@@ -513,7 +515,7 @@ const testimonials = [
 
   .mt-video { padding-top: 56px; padding-bottom: 8px; }
   .mt-video h2 { font-size: clamp(26px, 3vw, 36px); margin: 6px 0 22px; }
-  .mt-video-frame { position: relative; aspect-ratio: 16 / 9; max-width: 920px; background: var(--raised); border: 1px solid var(--line); }
+  .mt-video-frame { position: relative; aspect-ratio: 16 / 9; max-width: 920px; background: var(--raised); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
   .mt-video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
   .mt-strip { border-bottom: 1px solid var(--line); background: var(--raised); }
@@ -529,7 +531,7 @@ const testimonials = [
   .mt-prose p { font-size: 18px; margin-top: 0; margin-bottom: 16px; max-width: 62ch; }
 
   .mt-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 30px; }
-  .mt-card { border: 1px solid var(--line); border-top: 3px solid var(--green); background: var(--raised); padding: 26px 26px 18px; }
+  .mt-card { border: 1px solid var(--line); border-top: 3px solid var(--green); background: var(--raised); padding: 26px 26px 18px; border-radius: 14px; }
   .mt-card h3 { font-size: 22px; margin: 0 0 12px; }
   .mt-card ul { margin: 0; padding-left: 18px; display: grid; gap: 10px; }
   .mt-card li { font-size: 16px; line-height: 1.5; }
@@ -537,7 +539,7 @@ const testimonials = [
   .mt-photos { padding-top: 72px; }
   .mt-photo-grid { display: grid; grid-template-columns: 1fr 1fr 0.85fr; grid-auto-rows: 230px; gap: 14px; }
   .mt-photo-grid figure { margin: 0; min-height: 0; }
-  .mt-photo-grid img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 2px; }
+  .mt-photo-grid img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 12px; }
   .mt-photo-a { grid-column: 1 / 3; grid-row: 1 / 3; }
   .mt-photo-b { grid-column: 3; grid-row: 1 / 4; }
   .mt-photo-c { grid-column: 1; grid-row: 3; }
@@ -551,7 +553,7 @@ const testimonials = [
 
   .mt-schedule { list-style: none; padding: 0; margin: 28px 0 0; border-top: 1px solid var(--line); }
   .mt-schedule li { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 32px; padding: 24px 0; border-bottom: 1px solid var(--line); }
-  .mt-schedule li.is-residency { background: color-mix(in srgb, var(--gold) 9%, transparent); padding-left: 18px; padding-right: 18px; border-left: 3px solid var(--gold); }
+  .mt-schedule li.is-residency { background: color-mix(in srgb, var(--gold) 9%, transparent); padding-left: 18px; padding-right: 18px; border-left: 3px solid var(--gold); border-radius: 0 12px 12px 0; }
   .mt-when { display: grid; gap: 3px; align-content: start; }
   .mt-no { color: var(--gold); font: 12px var(--sans); letter-spacing: 0.16em; }
   .mt-when strong { font-size: 18px; font-weight: 600; line-height: 1.3; }
@@ -575,7 +577,7 @@ const testimonials = [
 
   .mt-about-sub { color: var(--green-ink); font: italic 19px/1.5 var(--serif); margin-top: 14px; max-width: 34ch; }
 
-  .mt-voices { margin-top: 72px; padding: 60px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--raised); }
+  .mt-voices { margin-top: 72px; padding: 60px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--gold) 7%, var(--raised)); }
   .mt-stats { list-style: none; padding: 0; margin: 28px 0 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
   .mt-stats li { display: grid; gap: 6px; border-top: 3px solid var(--gold); padding-top: 14px; }
   .mt-stats strong { color: var(--green-ink); font-size: 36px; font-weight: 600; line-height: 1; }
@@ -589,7 +591,7 @@ const testimonials = [
   .mt-email-karen { font: 600 15px var(--sans); color: var(--green-ink); }
 
 
-  .mt-webinar { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr); gap: 32px; align-items: center; border: 1px solid var(--line); border-left: 4px solid var(--gold); background: var(--raised); padding: 32px 36px; }
+  .mt-webinar { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr); gap: 32px; align-items: center; border: 1px solid var(--line); border-left: 4px solid var(--gold); background: var(--raised); padding: 32px 36px; border-radius: 14px; }
   .mt-webinar h2 { font-size: clamp(24px, 2.8vw, 32px); }
   .mt-webinar p { color: var(--soft); max-width: 58ch; margin-top: 12px; }
   .mt-webinar-action { text-align: right; }
