@@ -282,9 +282,6 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
       "Join here (the same link works on the night):",
       "https://centerforanthroposophy.org/zoomroom3",
       "",
-      // Karen chose option 1 on the question form (2026-11-09).
-      "Is there a question you'd like to bring? Share it here: https://docs.google.com/forms/d/e/1FAIpQLScPO7pR40e0DYFSSPNCfcepDLxjLMU1xUUWZU45zRGTw0SW-A/viewform",
-      "",
       "We'll send a reminder the day before and an hour before we begin.",
     ],
   },

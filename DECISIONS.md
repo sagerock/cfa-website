@@ -886,3 +886,8 @@ ops-only edge function `cfa-event-remind` sends one reminder to one registrant. 
   enabling a row after she OKs a test copy is the scheduling step. The runner is the sagerock-jobs job
   `cfa-event-reminders` (every 10 minutes, sends rows with `send_at <= now < stop_at`).
 - Applied and deployed 2026-11-10 with both Dec 9 rows disabled. WHiSTEP Dec 12 reuses it by adding its rows.
+
+**2026-11-11 — December 9 question-form line removed.** Karen asked (via Caitlin, 11/10) to take the
+"Is there a question you'd like to bring?" line out of the confirmation. Removed from the
+`mentor-training-open-house-2026-12-09` details; deployed as `cfa-register` v113, live `index.ts` diffed
+equal to the repo, every program's GET returned 200.
