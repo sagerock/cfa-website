@@ -1,0 +1,134 @@
+---
+// WHiSTEP cost estimator (preview, 2026-11-12). A simplified public version of the
+// office's WHiSTEP Payment Schedule Calculator. Figures come from the draft fee schedule
+// (Nov 2026), pending Finance Committee and Executive Committee approval; keep them in
+// sync with that schedule. Nothing entered here is saved or sent anywhere.
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+
+const FEES = {
+  tuition: 22250,
+  applicationFee: 100,
+  enrollmentDeposit: 400,
+  earlyDiscount: 0.045,
+  quarterlyFee: 0.03,
+  quarterlyCount: 8,
+  monthlyFee: 0.05,
+  monthlyCount: 25,
+  annualCount: 3,
+};
+---
+
+<Base title="WHiSTEP Cost Estimator — Center for Anthroposophy" current="/whistep/cost">
+  <PageHeader
+    eyebrow="WHiSTEP · Waldorf High School Teacher Education Program"
+    title="What would WHiSTEP cost me?"
+    lede="Enter any scholarships, grants or school support you expect. You'll see your balance and what each payment option would look like. Nothing you type here is saved or sent."
+  />
+
+  <section class="band">
+    <div class="wrap calc-grid">
+      <form class="form-card calc-form" id="calc" onsubmit="return false">
+        <p class="calc-line"><span>Tuition, full program (25 months)</span><strong>${FEES.tuition.toLocaleString('en-US')}</strong></p>
+        <p class="calc-line"><span>Enrollment deposit, credited toward tuition</span><strong>−${FEES.enrollmentDeposit}</strong></p>
+
+        <div class="field">
+          <label for="scholarship">Scholarships and grants you expect</label>
+          <p class="hint">For example, a Waldorf Fellowship scholarship or an AWSNA loan or grant.</p>
+          <input id="scholarship" type="number" min="0" step="50" inputmode="decimal" placeholder="0" />
+        </div>
+        <div class="field">
+          <label for="school">Support from your school</label>
+          <p class="hint">If the school you teach at is contributing.</p>
+          <input id="school" type="number" min="0" step="50" inputmode="decimal" placeholder="0" />
+        </div>
+        <div class="field">
+          <label for="aid">CfA financial aid, if awarded</label>
+          <input id="aid" type="number" min="0" step="50" inputmode="decimal" placeholder="0" />
+        </div>
+
+        <p class="calc-line calc-total"><span>Your balance</span><strong id="balance">—</strong></p>
+        <p class="hint">Plus a ${FEES.applicationFee} application fee, paid when you apply and not counted toward tuition.</p>
+      </form>
+
+      <div class="calc-options" aria-live="polite">
+        <article class="opt">
+          <h3>Pay in full</h3>
+          <p class="big" id="a-disc">—</p>
+          <p class="hint">With the {FEES.earlyDiscount * 100}% early-payment discount, if paid by June 1 of your first year. <span id="a-full"></span></p>
+        </article>
+        <article class="opt">
+          <h3>3 annual payments</h3>
+          <p class="big" id="b-each">—</p>
+          <p class="hint">No plan fee. <span id="b-total"></span></p>
+        </article>
+        <article class="opt">
+          <h3>8 quarterly payments</h3>
+          <p class="big" id="c-each">—</p>
+          <p class="hint">Includes a {FEES.quarterlyFee * 100}% plan fee. <span id="c-total"></span></p>
+        </article>
+        <article class="opt">
+          <h3>25 monthly payments</h3>
+          <p class="big" id="d-each">—</p>
+          <p class="hint">Includes a {FEES.monthlyFee * 100}% plan fee. <span id="d-total"></span></p>
+        </article>
+        <p class="hint calc-note">
+          This is an estimate to help you plan. Your actual payment schedule is set with our office
+          when you enroll. Payments begin July 1, 2027. Questions? Write to
+          <a href="mailto:office@centerforanthroposophy.org">office@centerforanthroposophy.org</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script define:vars={{ FEES }}>
+  const $ = (id) => document.getElementById(id);
+  const money = (n) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const val = (id) => Math.max(0, parseFloat($(id).value) || 0);
+  // Same rule as the office sheet: whole dollars unless it divides evenly in cents; the last payment takes the difference.
+  function plan(total, n) {
+    const raw = total / n;
+    const each = Math.abs(raw * 100 - Math.round(raw * 100)) < 1e-6 ? Math.round(raw * 100) / 100 : Math.round(raw);
+    const last = Math.round((total - each * (n - 1)) * 100) / 100;
+    return { each, last };
+  }
+  function line(p, n, total) {
+    const lastNote = p.last !== p.each ? ` (last payment ${money(p.last)})` : '';
+    return `${n} × ${money(p.each)}${lastNote}, ${money(total)} in all.`;
+  }
+  function update() {
+    const credits = FEES.enrollmentDeposit + val('scholarship') + val('school') + val('aid');
+    const bal = Math.max(0, Math.round((FEES.tuition - credits) * 100) / 100);
+    $('balance').textContent = money(bal);
+    $('a-disc').textContent = money(Math.round(bal * (1 - FEES.earlyDiscount) * 100) / 100);
+    $('a-full').textContent = `${money(bal)} if paid by July 1, 2027.`;
+    const b = plan(bal, FEES.annualCount);
+    $('b-each').textContent = money(b.each) + ' each';
+    $('b-total').textContent = line(b, FEES.annualCount, bal);
+    const cT = Math.round(bal * (1 + FEES.quarterlyFee) * 100) / 100, c = plan(cT, FEES.quarterlyCount);
+    $('c-each').textContent = money(c.each) + ' each';
+    $('c-total').textContent = line(c, FEES.quarterlyCount, cT);
+    const dT = Math.round(bal * (1 + FEES.monthlyFee) * 100) / 100, d = plan(dT, FEES.monthlyCount);
+    $('d-each').textContent = money(d.each) + ' a month';
+    $('d-total').textContent = line(d, FEES.monthlyCount, dT);
+  }
+  $('calc').addEventListener('input', update);
+  update();
+</script>
+
+<style>
+  .calc-grid { display: grid; gap: 2rem; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: start; }
+  @media (max-width: 820px) { .calc-grid { grid-template-columns: 1fr; } }
+  .calc-line { display: flex; justify-content: space-between; gap: 1rem; margin: 0 0 0.75rem; }
+  .calc-total { border-top: 1px solid var(--line); padding-top: 0.75rem; margin-top: 1.25rem; font-size: 1.15rem; }
+  .hint { color: var(--soft); font-size: 0.92rem; margin: 0.2rem 0 0.5rem; }
+  .calc-form .field { margin-bottom: 1rem; }
+  .calc-form input { width: 100%; }
+  .calc-options { display: grid; gap: 1rem; grid-template-columns: 1fr 1fr; }
+  @media (max-width: 520px) { .calc-options { grid-template-columns: 1fr; } }
+  .opt { background: var(--raised); border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.1rem; }
+  .opt h3 { margin: 0 0 0.35rem; font-size: 1rem; }
+  .opt .big { font-family: var(--serif); font-size: 1.6rem; color: var(--green-ink); margin: 0 0 0.25rem; }
+  .calc-note { grid-column: 1 / -1; }
+</style>
