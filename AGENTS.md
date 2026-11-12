@@ -12,3 +12,10 @@ contents into this public repository. If it is unavailable, use this repository'
 public instructions and request any missing client context required for the task.
 
 This entry point changes no publishing gates, deployment settings, or permissions.
+
+## Local client browser
+
+The project Playwright configuration uses this client’s separate browser profile.
+It selects `client-chrome` when installed and a portable Playwright profile otherwise.
+Use the project configuration in both Claude and Codex; reconnect existing sessions
+after configuration changes. This grants no new live-system or data access authority.
