@@ -62,3 +62,10 @@ contents into this public repository. If it is unavailable, use this repository'
 public instructions and request any missing client context required for the task.
 README.md contains architecture history; its old PoC/banner descriptions must be
 read alongside the later corrections in this file and DECISIONS.md.
+
+## Local client browser
+
+The project Playwright configuration uses this client’s separate browser profile.
+It selects `client-chrome` when installed and a portable Playwright profile otherwise.
+Use the project configuration in both Claude and Codex; reconnect existing sessions
+after configuration changes. This grants no new live-system or data access authority.
