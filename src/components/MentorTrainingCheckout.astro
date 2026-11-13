@@ -48,9 +48,8 @@ const sessions = [
     <div class="registration-main">
       <div id="opens-note" class="opens-note">
         <p class="eyebrow">Registration</p>
-        <h2>Registration opens October 28, 2026</h2>
-        <p>The form will appear here on Wednesday, October 28, the day of the free webinar. Tuition is
-          $2,650, or ten monthly payments of $265.</p>
+        <h2>Registration is open</h2>
+        <p>The registration form is loading. Tuition is $2,650, or ten monthly payments of $265.</p>
         <p>Questions about enrolling? Write to Karen Atkinson at
           <a href="mailto:karen@centerforanthroposophy.org">karen@centerforanthroposophy.org</a>.</p>
       </div>
@@ -717,7 +716,7 @@ const sessions = [
       config = await response.json();
       if (config.program?.name !== EXPECTED_PROGRAM_NAME) {
         config = null;
-        showNotOpen('Registration options for Mentor Training 2027 are not available yet. Registration opens October 28, 2026.');
+        showNotOpen('Registration options for Mentor Training 2027 could not be loaded. Please contact Karen Atkinson at karen@centerforanthroposophy.org.');
         return;
       }
       if (!config.offers?.length) {
