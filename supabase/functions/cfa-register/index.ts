@@ -48,6 +48,9 @@ type ProgramDefinition = {
   // registered" note with the details, never a receipt. No Meta Purchase and
   // no per-registration staff notice; staff get the scheduled roster updates.
   freeEvent?: boolean;
+  // Receipt details for particular offers (by code) in place of `details`,
+  // e.g. a link-only "online sessions only" place that has no residency.
+  offerDetails?: Record<string, string[]>;
 };
 
 const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
@@ -258,6 +261,33 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
       "virtual classroom, the residency details and what to prepare.",
     ],
     attachments: [MENTOR_TRAINING_2027_WELCOME_LETTER],
+    // Link-only, arranged one to one by Karen (2026-11-12): no residency.
+    offerDetails: {
+      "online-only": [
+      "Mentor Training Program, online sessions only, January 23 - November 13, 2027.",
+      "",
+      "Online Saturdays: January 23, February 20, March 13, April 17, May 8,",
+      "September 25, October 23 and November 13, 2027.",
+      "",
+      "This place covers the online sessions and comes with a Letter of Participation.",
+      "A summer residency can be added in a later year to complete the Certification.",
+      "",
+      "Karen Atkinson's welcome letter is attached. She will write with the link to the",
+      "virtual classroom and what to prepare.",
+    ],
+      "online-only-plan": [
+      "Mentor Training Program, online sessions only, January 23 - November 13, 2027.",
+      "",
+      "Online Saturdays: January 23, February 20, March 13, April 17, May 8,",
+      "September 25, October 23 and November 13, 2027.",
+      "",
+      "This place covers the online sessions and comes with a Letter of Participation.",
+      "A summer residency can be added in a later year to complete the Certification.",
+      "",
+      "Karen Atkinson's welcome letter is attached. She will write with the link to the",
+      "virtual classroom and what to prepare.",
+    ],
+    },
   },
   // Free Mentor Training workshop on Zoom, December 9 (Karen Atkinson; Elsy's wording, Karen OK 2026-11-04). The
   // first $0 event on learn.*: one free offer, a confirmation with the joining
@@ -2388,7 +2418,9 @@ Deno.serve(async (request: Request) => {
       : await sendResidencyEmail({
         email,
         firstName,
-        program: programDefinition,
+        program: programDefinition.offerDetails?.[selectedOffer.code]
+          ? { ...programDefinition, details: programDefinition.offerDetails[selectedOffer.code] }
+          : programDefinition,
         offerName,
         amountCents: chargeAmountCents,
         transactionId,

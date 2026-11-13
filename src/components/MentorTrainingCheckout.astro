@@ -726,9 +726,24 @@ const sessions = [
           : 'Registration is not open right now. Please contact Karen Atkinson at karen@centerforanthroposophy.org.');
         return;
       }
+      // Public checkout: full tuition, at once or in ten payments. Any other
+      // offer is link-only (?offer=<code>), like Starlight's single sessions;
+      // a link to <code> also shows <code>-plan, its monthly version. First
+      // case: online sessions only, arranged one to one by Karen (2026-11-12).
+      const publicOfferCodes = new Set(['tuition', 'plan']);
+      const linkedOffers = requestedOfferCode && !publicOfferCodes.has(requestedOfferCode)
+        ? config.offers.filter((offer) => offer.code === requestedOfferCode || offer.code === `${requestedOfferCode}-plan`)
+        : [];
+      const visibleOffers = linkedOffers.length
+        ? linkedOffers
+        : config.offers.filter((offer) => publicOfferCodes.has(offer.code));
+      if (!visibleOffers.length) {
+        showNotOpen('Registration is not open right now. Please contact Karen Atkinson at karen@centerforanthroposophy.org.');
+        return;
+      }
       offerList.replaceChildren();
-      const preselectedIndex = Math.max(0, config.offers.findIndex((offer) => offer.code === requestedOfferCode));
-      config.offers.forEach((offer, index) => {
+      const preselectedIndex = Math.max(0, visibleOffers.findIndex((offer) => offer.code === requestedOfferCode));
+      visibleOffers.forEach((offer, index) => {
         const label = document.createElement('label');
         label.className = 'offer-option';
         const input = document.createElement('input');
