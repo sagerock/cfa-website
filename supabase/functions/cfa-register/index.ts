@@ -48,6 +48,10 @@ type ProgramDefinition = {
   // registered" note with the details, never a receipt. No Meta Purchase and
   // no per-registration staff notice; staff get the scheduled roster updates.
   freeEvent?: boolean;
+  // A free event that keeps taking sign-ups after it has happened: from
+  // `endsAt` on, the confirmation uses this subject and these details (the
+  // recording, no Zoom link) in place of the live-event ones.
+  afterEvent?: { endsAt: string; emailSubject: string; details: string[] };
   // Receipt details for particular offers (by code) in place of `details`,
   // e.g. a link-only "online sessions only" place that has no residency.
   offerDetails?: Record<string, string[]>;
@@ -342,6 +346,18 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
       "",
       "We'll send a reminder the day before and an hour before we begin, and the recording afterward.",
     ],
+    // Sign-ups stay open after the event (Caitlin 11/12: social post 62 on Dec 16
+    // sends people here for the recording). Late registrants get no Zoom link.
+    afterEvent: {
+      endsAt: "2026-12-12T17:00:00-05:00",
+      emailSubject: "You're registered: WHiSTEP Open House recording",
+      details: [
+        "WHiSTEP Open House",
+        "Held Saturday, December 12, 2026, on Zoom, hosted by David Barham, Director of the Waldorf High School Teacher Education Program (WHiSTEP)",
+        "",
+        "The open house has already taken place, so there's nothing to join. We'll email you the recording.",
+      ],
+    },
   },
 };
 const DEFAULT_PROGRAM_KEY = "starlight-rays-2026-2027";
@@ -1017,12 +1033,16 @@ async function sendFreeEventEmail(input: {
   if (!key) return false;
   const from = Deno.env.get("REGISTRATION_FROM")
     || "Center for Anthroposophy <no-reply@centerforanthroposophy.org>";
+  const after = input.program.afterEvent;
+  const isAfter = Boolean(after && Date.now() >= Date.parse(after.endsAt));
+  const details = isAfter ? after!.details : input.program.details;
+  const subject = isAfter ? after!.emailSubject : input.program.emailSubject;
   const emailText = [
     `Dear ${input.firstName},`,
     "",
     `You're registered for ${input.program.title}. It's free; there is nothing to pay.`,
     "",
-    ...input.program.details,
+    ...details,
     "",
     "Questions? Reply to this email or write to office@centerforanthroposophy.org.",
     "",
@@ -1039,7 +1059,7 @@ async function sendFreeEventEmail(input: {
       personalizations: [{ to: [{ email: input.email }] }],
       from: parseFrom(from),
       reply_to: { email: "office@centerforanthroposophy.org", name: "Center for Anthroposophy" },
-      subject: input.program.emailSubject,
+      subject,
       content: [{ type: "text/plain", value: emailText }],
       tracking_settings: { click_tracking: { enable: false, enable_text: false } },
     }),
