@@ -603,6 +603,14 @@ const workshopThemes = [
         }
       }
       offerList.replaceChildren();
+      // Offers whose code starts with "enlace-" are link-only: shown only when the
+      // page was opened with ?offer=<that code> (a director's one-off price, such as
+      // the late-join place for 2026-11-18/25). Everyone else never sees them.
+      if (config.offers) {
+        config.offers = config.offers.filter(
+          (offer) => !offer.code.startsWith('enlace-') || offer.code === requestedOfferCode,
+        );
+      }
       if (!config.offers?.length) throw new Error('offers');
       // ?offer=<code> preselects that option when it exists; otherwise the first stays selected.
       const preselectedIndex = Math.max(0, config.offers.findIndex((offer) => offer.code === requestedOfferCode));
