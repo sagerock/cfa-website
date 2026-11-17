@@ -360,6 +360,7 @@ const otherCountries = ISO_COUNTRY_CODES
   }
 
   const billingSection = document.getElementById('billing-section');
+  const billingStreetLabel = document.getElementById('billing-address1')?.closest('label');
   const baseBillingInputs = ['address1', 'city', 'country']
     .map((name) => form.elements.namedItem(name));
   const termsCopy = document.getElementById('terms-copy');
@@ -371,10 +372,14 @@ const otherCountries = ISO_COUNTRY_CODES
     billingZipLabel.textContent = rule.postalLabel;
     billingStateInput.placeholder = rule.regionPlaceholder;
     billingZipInput.placeholder = rule.postalPlaceholder;
-    baseBillingInputs.forEach((input) => { input.required = !free; });
-    billingStateInput.required = !free && rule.regionRequired;
+    // A $0 order still asks where the person lives (Milan, 11/17 "Re: names"):
+    // city, state/province and country stay required; street and postal code drop out.
+    baseBillingInputs.forEach((input) => { input.required = !free || input.name !== 'address1'; });
+    billingStreetLabel?.toggleAttribute('hidden', Boolean(free));
+    billingZipLabel?.closest('label')?.toggleAttribute('hidden', Boolean(free));
+    billingStateInput.required = rule.regionRequired;
     billingZipInput.required = !free && rule.postalRequired;
-    billingStateOptional.hidden = free || rule.regionRequired;
+    billingStateOptional.hidden = rule.regionRequired;
     billingZipOptional.hidden = free || rule.postalRequired;
     billingCountryInput.setCustomValidity(
       free || isSupportedBillingCountry(country) ? '' : 'Choose a valid billing country.',
@@ -418,7 +423,7 @@ const otherCountries = ISO_COUNTRY_CODES
       : '';
     const free = offer && total === 0;
     if (config?.payment?.available) paymentButton.classList.toggle('AcceptUI', !free);
-    billingSection.hidden = Boolean(free);
+    billingSection.hidden = false;
     updateBillingAddressFields(free);
     const plan = planOf(offer);
     summaryPlan.hidden = !plan;
@@ -868,6 +873,8 @@ const otherCountries = ISO_COUNTRY_CODES
   #organization-field[hidden] { display: none; }
   .field-grid label { display: grid; gap: 7px; font-family: var(--sans); font-size: 14px; font-weight: 600; }
   .section-note { margin: -4px 0 18px; color: var(--soft); font-size: 15px; }
+  /* Street and postal code drop out on a $0 order; city, region, country stay. */
+  #billing-section label[hidden] { display: none !important; }
   .field-grid label small { color: var(--soft); font-weight: 400; }
   .field-grid label > span { color: var(--soft); font-family: var(--serif); font-size: 14px; font-weight: 400; }
   .field-grid label > .field-heading { color: inherit; font-family: inherit; font-size: inherit; font-weight: inherit; }
