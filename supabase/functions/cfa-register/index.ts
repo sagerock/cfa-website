@@ -188,6 +188,30 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
       "before your next session.",
     ],
   },
+  // Kairos Emergency Pedagogy Module 2 (Bernd Ruf), in person, Wilton NH,
+  // July 2-4, 2027 (Caitlin 2026-11-14). One public program; the optional $45
+  // EPWB certificate is its own offer and no discount reduces it
+  // (program_offers.discount_exempt_cents). Group code EP2GROUP20 goes by link.
+  "kairos-ep-module-2-2027": {
+    key: "kairos-ep-module-2-2027",
+    platform: "native",
+    platformId: "kairos-ep-module-2-2027",
+    title: "Emergency Pedagogy Module 2 with Bernd Ruf",
+    chargeDescription: "Kairos EP Module 2 2027",
+    emailSubject: "Your Module 2 registration",
+    portal: false,
+    locale: "en",
+    testOfferCodes: new Set(["ep2-tuition"]),
+    signedInRedirect: null,
+    details: [
+      "Emergency Pedagogy Module 2 with Bernd Ruf, in person in Wilton, New Hampshire.",
+      "  Friday, July 2 - Sunday, July 4, 2027",
+      "",
+      "The daily schedule and logistics will be sent to this email address before the module.",
+      "If you added the EPWB certificate, the Kairos team will ask for your date of birth",
+      "separately and arrange the certificate through EPWB after the module.",
+    ],
+  },
   // Kairos Emergency Pedagogy Module 7 (Bernd Ruf), January 15-16, 2027.
   // Two program keys over the same module: the public price, and the
   // registered Kairos student price ($100 less) on its own unlisted page.
