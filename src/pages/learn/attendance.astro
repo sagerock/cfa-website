@@ -1,0 +1,77 @@
+---
+// Student self-view attendance: own class dates, minutes and % vs the 80% certificate line.
+import Learn from '../../layouts/Learn.astro';
+---
+
+<Learn current="/learn/attendance">
+  <div id="att-loading" class="wrap learn-state" role="status">Loading your attendance…</div>
+  <div id="att-none" class="wrap learn-state" hidden>
+    <h1>Attendance not yet available</h1>
+    <p>We don’t have an attendance record for this email yet. Records are updated each night after class. If you signed in with a different email than you registered under, sign out and use your registration email.</p>
+  </div>
+  <div id="att-error" class="wrap learn-state" hidden>
+    <h1>We couldn’t load your attendance</h1>
+    <p>Please refresh the page or try again in a few minutes.</p>
+  </div>
+  <div id="att-content" class="wrap learn-home" hidden>
+    <header class="learn-intro">
+      <p class="eyebrow">Student home</p>
+      <h1>Your attendance</h1>
+      <p>Your own class dates and minutes from Zoom. A certificate needs at least 80% of classes. An absence counts as excused only when your program director marks it.</p>
+    </header>
+    <div id="att-cohorts"></div>
+  </div>
+</Learn>
+
+<script>
+  import { getMyAttendance } from '../../lib/learnClient.js';
+
+  const show = (id) => {
+    for (const el of ['att-loading', 'att-none', 'att-error', 'att-content']) {
+      document.getElementById(el).hidden = el !== id;
+    }
+  };
+  const dateFormat = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+  const statusLabel = { present: 'Present', partial: 'Partial', absent: 'Not seen', excused: 'Excused' };
+
+  function el(tag, text, cls) {
+    const node = document.createElement(tag);
+    if (text != null) node.textContent = text;
+    if (cls) node.className = cls;
+    return node;
+  }
+
+  const result = await getMyAttendance();
+  if (result.status === 'signed_out') {
+    location.replace('/learn/sign-in');
+  } else if (result.status === 'error') {
+    show('att-error');
+  } else if (result.status === 'not_yet_available') {
+    show('att-none');
+  } else {
+    const root = document.getElementById('att-cohorts');
+    for (const c of result.data.cohorts) {
+      const section = el('section', null, 'course-section');
+      section.append(el('h2', c.title));
+      section.append(el('p',
+        `${c.percent}% of ${c.held} classes (present ${c.present}${c.excused ? `, excused ${c.excused}` : ''}). ` +
+        (c.on_track ? `At or above the ${c.certificate_line}% certificate line.` : `Below the ${c.certificate_line}% certificate line.`),
+        c.on_track ? 'att-ok' : 'att-below'));
+      const table = el('table', null, 'att-table');
+      const head = el('tr');
+      for (const h of ['Class date', 'Minutes', 'Status']) head.append(el('th', h));
+      table.append(head);
+      for (const s of c.sessions) {
+        const tr = el('tr');
+        tr.append(el('td', dateFormat.format(new Date(`${s.date}T00:00:00Z`))));
+        tr.append(el('td', s.minutes ? String(s.minutes) : '—'));
+        tr.append(el('td', statusLabel[s.status] || s.status));
+        table.append(tr);
+      }
+      section.append(table);
+      section.append(el('p', `Updated ${new Date(c.updated_at).toLocaleDateString('en-US')}.`, 'hint'));
+      root.append(section);
+    }
+    show('att-content');
+  }
+</script>

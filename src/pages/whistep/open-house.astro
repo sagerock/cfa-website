@@ -112,6 +112,11 @@ import Base from '../../layouts/Base.astro';
   // the page only opens when the server answers with this program's name.
   const EXPECTED_PROGRAM_NAME = 'WHiSTEP Open House (December 12, 2026)';
   const OFFER_CODE = 'open-house';
+  // After the open house, sign-ups stay open for the recording (social post 62, Dec 16).
+  if (Date.now() >= Date.parse('2026-12-12T17:00:00-05:00')) {
+    const note = document.querySelector('.oh-note');
+    if (note) note.textContent = "The open house has taken place. Register free and we'll email you the recording.";
+  }
   const base = 'https://ckloewflialohuvixmvd.supabase.co/functions/v1/cfa-register';
   const endpoint = `${base}?program=${PROGRAM_KEY}`;
 

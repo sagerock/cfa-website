@@ -48,9 +48,8 @@ const sessions = [
     <div class="registration-main">
       <div id="opens-note" class="opens-note">
         <p class="eyebrow">Registration</p>
-        <h2>Registration opens October 28, 2026</h2>
-        <p>The form will appear here on Wednesday, October 28, the day of the free webinar. Tuition is
-          $2,650, or ten monthly payments of $265.</p>
+        <h2>Registration is open</h2>
+        <p>The registration form is loading. Tuition is $2,650, or ten monthly payments of $265.</p>
         <p>Questions about enrolling? Write to Karen Atkinson at
           <a href="mailto:karen@centerforanthroposophy.org">karen@centerforanthroposophy.org</a>.</p>
       </div>
@@ -261,6 +260,7 @@ const sessions = [
   const summaryPlanCopy = document.getElementById('summary-plan-copy');
   const countryDiscountNote = document.getElementById('country-discount-note');
   const billingSection = document.getElementById('billing-section');
+  const billingStreetLabel = document.getElementById('billing-address1')?.closest('label');
   const billingCountryInput = form.elements.namedItem('country');
   const billingStateInput = form.elements.namedItem('state');
   const billingZipInput = form.elements.namedItem('zip');
@@ -412,10 +412,14 @@ const sessions = [
     billingZipLabel.textContent = rule.postalLabel;
     billingStateInput.placeholder = rule.regionPlaceholder;
     billingZipInput.placeholder = rule.postalPlaceholder;
-    baseBillingInputs.forEach((input) => { input.required = !free; });
-    billingStateInput.required = !free && rule.regionRequired;
+    // A $0 order still asks where the person lives (Milan, 11/17 "Re: names"):
+    // city, state/province and country stay required; street and postal code drop out.
+    baseBillingInputs.forEach((input) => { input.required = !free || input.name !== 'address1'; });
+    billingStreetLabel?.toggleAttribute('hidden', Boolean(free));
+    billingZipLabel?.closest('label')?.toggleAttribute('hidden', Boolean(free));
+    billingStateInput.required = rule.regionRequired;
     billingZipInput.required = !free && rule.postalRequired;
-    billingStateOptional.hidden = free || rule.regionRequired;
+    billingStateOptional.hidden = rule.regionRequired;
     billingZipOptional.hidden = free || rule.postalRequired;
     billingCountryInput.setCustomValidity(
       free || isSupportedBillingCountry(country) ? '' : 'Choose a supported billing country.',
@@ -439,9 +443,9 @@ const sessions = [
       : '';
     const free = offer && total === 0;
     if (config?.payment?.available) paymentButton.classList.toggle('AcceptUI', !free);
-    setHidden(billingSection, Boolean(free));
+    setHidden(billingSection, false);
     // Skipping the billing step must not leave the form counting 01, 02, 04.
-    finalStepNumber.textContent = free ? '03' : '04';
+    finalStepNumber.textContent = '04';
     updateBillingAddressFields(free);
     const plan = planOf(offer);
     setHidden(summaryPlan, !plan);
@@ -717,7 +721,7 @@ const sessions = [
       config = await response.json();
       if (config.program?.name !== EXPECTED_PROGRAM_NAME) {
         config = null;
-        showNotOpen('Registration options for Mentor Training 2027 are not available yet. Registration opens October 28, 2026.');
+        showNotOpen('Registration options for Mentor Training 2027 could not be loaded. Please contact Karen Atkinson at karen@centerforanthroposophy.org.');
         return;
       }
       if (!config.offers?.length) {
@@ -726,9 +730,24 @@ const sessions = [
           : 'Registration is not open right now. Please contact Karen Atkinson at karen@centerforanthroposophy.org.');
         return;
       }
+      // Public checkout: full tuition, at once or in ten payments. Any other
+      // offer is link-only (?offer=<code>), like Starlight's single sessions;
+      // a link to <code> also shows <code>-plan, its monthly version. First
+      // case: online sessions only, arranged one to one by Karen (2026-11-12).
+      const publicOfferCodes = new Set(['tuition', 'plan']);
+      const linkedOffers = requestedOfferCode && !publicOfferCodes.has(requestedOfferCode)
+        ? config.offers.filter((offer) => offer.code === requestedOfferCode || offer.code === `${requestedOfferCode}-plan`)
+        : [];
+      const visibleOffers = linkedOffers.length
+        ? linkedOffers
+        : config.offers.filter((offer) => publicOfferCodes.has(offer.code));
+      if (!visibleOffers.length) {
+        showNotOpen('Registration is not open right now. Please contact Karen Atkinson at karen@centerforanthroposophy.org.');
+        return;
+      }
       offerList.replaceChildren();
-      const preselectedIndex = Math.max(0, config.offers.findIndex((offer) => offer.code === requestedOfferCode));
-      config.offers.forEach((offer, index) => {
+      const preselectedIndex = Math.max(0, visibleOffers.findIndex((offer) => offer.code === requestedOfferCode));
+      visibleOffers.forEach((offer, index) => {
         const label = document.createElement('label');
         label.className = 'offer-option';
         const input = document.createElement('input');
@@ -879,6 +898,8 @@ const sessions = [
   .field-grid label > span { color: var(--soft); font-family: var(--serif); font-size: 14px; font-weight: 400; }
   .field-grid label > .field-heading { color: inherit; font-family: inherit; font-size: inherit; font-weight: inherit; }
   .section-note { margin: -4px 0 18px; color: var(--soft); font-size: 15px; }
+  /* Street and postal code drop out on a $0 order; city, region, country stay. */
+  #billing-section label[hidden] { display: none !important; }
   .field-grid .wide { grid-column: 1 / -1; }
   input, select {
     width: 100%;

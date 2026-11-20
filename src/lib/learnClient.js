@@ -97,3 +97,19 @@ export function appendLinkedText(parent, text) {
   }
   if (last < text.length) parent.append(text.slice(last));
 }
+
+export async function getMyAttendance() {
+  const { data, error } = await supabase.auth.getSession();
+  if (error || !data.session) return { status: 'signed_out' };
+  const response = await fetch(`${SUPABASE_URL}/functions/v1/cfa-learn-attendance`, {
+    headers: {
+      Authorization: `Bearer ${data.session.access_token}`,
+      apikey: SUPABASE_PUBLISHABLE_KEY,
+    },
+    cache: 'no-store',
+  });
+  const body = await response.json().catch(() => ({}));
+  if (response.status === 401) return { status: 'signed_out' };
+  if (!response.ok) return { status: 'error', error: body.error || 'attendance_request_failed' };
+  return { status: body.status === 'ok' ? 'ok' : 'not_yet_available', data: body };
+}

@@ -23,7 +23,7 @@ const WELCOME_VIDEO_YOUTUBE_ID = '';
 
 // The free webinar / open house registration link. Leave empty until it
 // exists; the page says a link is coming.
-const WEBINAR_REGISTRATION_URL = 'https://mentor-open-house.centerforanthroposophy.org/';
+const WEBINAR_REGISTRATION_URL = 'https://learn.centerforanthroposophy.org/mentor-training/open-house/';
 
 // Karen's own lighthouse photograph (Elsy 2026-10-20: replaces the earlier AI-generated image).
 const HERO_IMAGE = '/images/mentor-training/lighthouse-hero.webp';
@@ -143,7 +143,7 @@ const faqs = [
   },
   {
     q: 'Is there a discount?',
-    a: 'Attend the free open house on Wednesday, October 28, 2026 and receive a bonus toward your enrollment. Canadian participants receive 20% off automatically at checkout. Discounts do not combine; the better one applies.',
+    a: 'Canadian participants receive 20% off automatically at checkout.',
   },
   {
     q: 'Is financial aid available?',
@@ -201,8 +201,8 @@ const testimonials = [
           <li>$2,650, or ten monthly payments of $265</li>
         </ul>
         <div class="mt-actions">
-          <a class="btn" id="hero-register" href="#registration" data-track="mt2027-hero-register">Registration opens October 28</a>
-          <a class="mt-text-link" href="#webinar" data-track="mt2027-hero-webinar">Free webinar, October 28 <span aria-hidden="true">↓</span></a>
+          <a class="btn" id="hero-register" href="#registration" data-track="mt2027-hero-register">Register now</a>
+          <a class="mt-text-link" href={WEBINAR_REGISTRATION_URL} data-track="mt2027-hero-webinar">Free workshop, December 9 <span aria-hidden="true">→</span></a>
         </div>
       </div>
       <figure class="mt-hero-art">
@@ -426,10 +426,10 @@ const testimonials = [
   <section class="wrap mt-section" id="webinar" aria-labelledby="webinar-title">
     <div class="mt-webinar">
       <div>
-        <p class="eyebrow">Free webinar and open house</p>
-        <h2 id="webinar-title">Wednesday, October 28, 2026 · 7:00 PM ET</h2>
-        <p>Meet Karen Atkinson, hear how the year unfolds, and bring your questions. Attend the open
-          house and receive a bonus toward your enrollment.</p>
+        <p class="eyebrow">Free workshop: The Art of the Mentoring Conversation</p>
+        <h2 id="webinar-title">Wednesday, December 9, 2026 · 7:00 PM ET</h2>
+        <p>A free online workshop with Karen Atkinson, Director of Mentor Training. Hear how the year
+          unfolds and bring your questions.</p>
       </div>
       <div class="mt-webinar-action">
         {WEBINAR_REGISTRATION_URL
@@ -448,9 +448,8 @@ const testimonials = [
     <div class="mt-prose">
       <p>Tuition includes all online sessions, workshops, and the week-long in-person residency.
         Travel and lodging for the residency are not included.</p>
-      <p>Attend the open house and receive a bonus toward your enrollment. Limited scholarships are
-        available; please contact Karen.</p>
-      <p>Registration opens Wednesday, October 28, 2026. Questions go to Karen Atkinson at
+      <p>Limited scholarships are available; please contact Karen.</p>
+      <p>Registration is open now. Questions go to Karen Atkinson at
         <a href="mailto:karen@centerforanthroposophy.org">karen@centerforanthroposophy.org</a>.</p>
     </div>
   </section>
@@ -477,15 +476,6 @@ const testimonials = [
     <MentorTrainingCheckout />
   </section>
 </Base>
-
-<script>
-  // The page is static; once registration opens (October 28, 2026, 00:00 ET)
-  // the hero button should say so without a rebuild.
-  if (Date.now() >= Date.parse('2026-10-28T04:00:00Z')) {
-    const heroRegister = document.getElementById('hero-register');
-    if (heroRegister) heroRegister.textContent = 'Register now';
-  }
-</script>
 
 <style>
   .mt-hero {

@@ -240,6 +240,7 @@ const workshopThemes = [
   const summaryDiscountCopy = document.getElementById('summary-discount-copy');
   const countryDiscountNote = document.getElementById('country-discount-note');
   const billingSection = document.getElementById('billing-section');
+  const billingStreetLabel = document.getElementById('billing-address1')?.closest('label');
   const billingCountryInput = form.elements.namedItem('country');
   const billingStateInput = form.elements.namedItem('state');
   const billingZipInput = form.elements.namedItem('zip');
@@ -369,10 +370,14 @@ const workshopThemes = [
     billingZipLabel.textContent = rule.postalLabel;
     billingStateInput.placeholder = rule.regionPlaceholder;
     billingZipInput.placeholder = rule.postalPlaceholder;
-    baseBillingInputs.forEach((input) => { input.required = !free; });
-    billingStateInput.required = !free && rule.regionRequired;
+    // A $0 order still asks where the person lives (Milan, 11/17 "Re: names"):
+    // city, state/province and country stay required; street and postal code drop out.
+    baseBillingInputs.forEach((input) => { input.required = !free || input.name !== 'address1'; });
+    billingStreetLabel?.toggleAttribute('hidden', Boolean(free));
+    billingZipLabel?.closest('label')?.toggleAttribute('hidden', Boolean(free));
+    billingStateInput.required = rule.regionRequired;
     billingZipInput.required = !free && rule.postalRequired;
-    billingStateOptional.hidden = free || rule.regionRequired;
+    billingStateOptional.hidden = rule.regionRequired;
     billingZipOptional.hidden = free || rule.postalRequired;
     billingCountryInput.setCustomValidity(
       free || isSupportedBillingCountry(country) ? '' : 'Elige un país de facturación válido.',
@@ -396,9 +401,9 @@ const workshopThemes = [
       : '';
     const free = offer && total === 0;
     if (config?.payment?.available) paymentButton.classList.toggle('AcceptUI', !free);
-    setHidden(billingSection, Boolean(free));
+    setHidden(billingSection, false);
     // Saltarse la facturación no debe dejar el formulario numerado 01, 02, 04.
-    finalStepNumber.textContent = free ? '03' : '04';
+    finalStepNumber.textContent = '04';
     updateBillingAddressFields(free);
     termsCopy.textContent = free
       ? 'Entiendo que la inscripción está sujeta a la política de cancelación del Center for Anthroposophy.'
@@ -603,6 +608,14 @@ const workshopThemes = [
         }
       }
       offerList.replaceChildren();
+      // Offers whose code starts with "enlace-" are link-only: shown only when the
+      // page was opened with ?offer=<that code> (a director's one-off price, such as
+      // the late-join place for 2026-11-18/25). Everyone else never sees them.
+      if (config.offers) {
+        config.offers = config.offers.filter(
+          (offer) => !offer.code.startsWith('enlace-') || offer.code === requestedOfferCode,
+        );
+      }
       if (!config.offers?.length) throw new Error('offers');
       // ?offer=<code> preselects that option when it exists; otherwise the first stays selected.
       const preselectedIndex = Math.max(0, config.offers.findIndex((offer) => offer.code === requestedOfferCode));
@@ -728,6 +741,8 @@ const workshopThemes = [
   .field-grid label > span { color: var(--soft); font-family: var(--serif); font-size: 14px; font-weight: 400; }
   .field-grid label > .field-heading { color: inherit; font-family: inherit; font-size: inherit; font-weight: inherit; }
   .section-note { margin: -4px 0 18px; color: var(--soft); font-size: 15px; }
+  /* Street and postal code drop out on a $0 order; city, region, country stay. */
+  #billing-section label[hidden] { display: none !important; }
   .field-grid .wide { grid-column: 1 / -1; }
   input, select {
     width: 100%;

@@ -48,6 +48,13 @@ type ProgramDefinition = {
   // registered" note with the details, never a receipt. No Meta Purchase and
   // no per-registration staff notice; staff get the scheduled roster updates.
   freeEvent?: boolean;
+  // A free event that keeps taking sign-ups after it has happened: from
+  // `endsAt` on, the confirmation uses this subject and these details (the
+  // recording, no Zoom link) in place of the live-event ones.
+  afterEvent?: { endsAt: string; emailSubject: string; details: string[] };
+  // Receipt details for particular offers (by code) in place of `details`,
+  // e.g. a link-only "online sessions only" place that has no residency.
+  offerDetails?: Record<string, string[]>;
 };
 
 const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
@@ -181,6 +188,30 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
       "before your next session.",
     ],
   },
+  // Kairos Emergency Pedagogy Module 2 (Bernd Ruf), in person, Wilton NH,
+  // July 2-4, 2027 (Caitlin 2026-11-14). One public program; the optional $45
+  // EPWB certificate is its own offer and no discount reduces it
+  // (program_offers.discount_exempt_cents). Group code EP2GROUP20 goes by link.
+  "kairos-ep-module-2-2027": {
+    key: "kairos-ep-module-2-2027",
+    platform: "native",
+    platformId: "kairos-ep-module-2-2027",
+    title: "Emergency Pedagogy Module 2 with Bernd Ruf",
+    chargeDescription: "Kairos EP Module 2 2027",
+    emailSubject: "Your Module 2 registration",
+    portal: false,
+    locale: "en",
+    testOfferCodes: new Set(["ep2-tuition"]),
+    signedInRedirect: null,
+    details: [
+      "Emergency Pedagogy Module 2 with Bernd Ruf, in person in Wilton, New Hampshire.",
+      "  Friday, July 2 - Sunday, July 4, 2027",
+      "",
+      "The daily schedule and logistics will be sent to this email address before the module.",
+      "If you added the EPWB certificate, the Kairos team will ask for your date of birth",
+      "separately and arrange the certificate through EPWB after the module.",
+    ],
+  },
   // Kairos Emergency Pedagogy Module 7 (Bernd Ruf), January 15-16, 2027.
   // Two program keys over the same module: the public price, and the
   // registered Kairos student price ($100 less) on its own unlisted page.
@@ -258,6 +289,33 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
       "virtual classroom, the residency details and what to prepare.",
     ],
     attachments: [MENTOR_TRAINING_2027_WELCOME_LETTER],
+    // Link-only, arranged one to one by Karen (2026-11-12): no residency.
+    offerDetails: {
+      "online-only": [
+      "Mentor Training Program, online sessions only, January 23 - November 13, 2027.",
+      "",
+      "Online Saturdays: January 23, February 20, March 13, April 17, May 8,",
+      "September 25, October 23 and November 13, 2027.",
+      "",
+      "This place covers the online sessions and comes with a Letter of Participation.",
+      "A summer residency can be added in a later year to complete the Certification.",
+      "",
+      "Karen Atkinson's welcome letter is attached. She will write with the link to the",
+      "virtual classroom and what to prepare.",
+    ],
+      "online-only-plan": [
+      "Mentor Training Program, online sessions only, January 23 - November 13, 2027.",
+      "",
+      "Online Saturdays: January 23, February 20, March 13, April 17, May 8,",
+      "September 25, October 23 and November 13, 2027.",
+      "",
+      "This place covers the online sessions and comes with a Letter of Participation.",
+      "A summer residency can be added in a later year to complete the Certification.",
+      "",
+      "Karen Atkinson's welcome letter is attached. She will write with the link to the",
+      "virtual classroom and what to prepare.",
+    ],
+    },
   },
   // Free Mentor Training workshop on Zoom, December 9 (Karen Atkinson; Elsy's wording, Karen OK 2026-11-04). The
   // first $0 event on learn.*: one free offer, a confirmation with the joining
@@ -312,6 +370,18 @@ const PROGRAM_DEFINITIONS: Record<string, ProgramDefinition> = {
       "",
       "We'll send a reminder the day before and an hour before we begin, and the recording afterward.",
     ],
+    // Sign-ups stay open after the event (Caitlin 11/12: social post 62 on Dec 16
+    // sends people here for the recording). Late registrants get no Zoom link.
+    afterEvent: {
+      endsAt: "2026-12-12T17:00:00-05:00",
+      emailSubject: "You're registered: WHiSTEP Open House recording",
+      details: [
+        "WHiSTEP Open House",
+        "Held Saturday, December 12, 2026, on Zoom, hosted by David Barham, Director of the Waldorf High School Teacher Education Program (WHiSTEP)",
+        "",
+        "The open house has already taken place, so there's nothing to join. We'll email you the recording.",
+      ],
+    },
   },
 };
 const DEFAULT_PROGRAM_KEY = "starlight-rays-2026-2027";
@@ -987,12 +1057,16 @@ async function sendFreeEventEmail(input: {
   if (!key) return false;
   const from = Deno.env.get("REGISTRATION_FROM")
     || "Center for Anthroposophy <no-reply@centerforanthroposophy.org>";
+  const after = input.program.afterEvent;
+  const isAfter = Boolean(after && Date.now() >= Date.parse(after.endsAt));
+  const details = isAfter ? after!.details : input.program.details;
+  const subject = isAfter ? after!.emailSubject : input.program.emailSubject;
   const emailText = [
     `Dear ${input.firstName},`,
     "",
     `You're registered for ${input.program.title}. It's free; there is nothing to pay.`,
     "",
-    ...input.program.details,
+    ...details,
     "",
     "Questions? Reply to this email or write to office@centerforanthroposophy.org.",
     "",
@@ -1009,7 +1083,7 @@ async function sendFreeEventEmail(input: {
       personalizations: [{ to: [{ email: input.email }] }],
       from: parseFrom(from),
       reply_to: { email: "office@centerforanthroposophy.org", name: "Center for Anthroposophy" },
-      subject: input.program.emailSubject,
+      subject,
       content: [{ type: "text/plain", value: emailText }],
       tracking_settings: { click_tracking: { enable: false, enable_text: false } },
     }),
@@ -2388,7 +2462,9 @@ Deno.serve(async (request: Request) => {
       : await sendResidencyEmail({
         email,
         firstName,
-        program: programDefinition,
+        program: programDefinition.offerDetails?.[selectedOffer.code]
+          ? { ...programDefinition, details: programDefinition.offerDetails[selectedOffer.code] }
+          : programDefinition,
         offerName,
         amountCents: chargeAmountCents,
         transactionId,
