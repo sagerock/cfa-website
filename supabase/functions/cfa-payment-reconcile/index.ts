@@ -230,10 +230,14 @@ async function saveTransaction(
   const refTransactionId = text(detail.refTransId, 80);
   const gatewaySubscriptionId = subscriptionId(detail);
   let match = matches.byTransaction.get(transactionId) || null;
+  let originalAmountCents: number | null = null;
   if (!match && gatewaySubscriptionId) match = matches.bySubscription.get(gatewaySubscriptionId) || null;
   if (!match && refTransactionId) {
     const original = matches.byTransaction.get(refTransactionId);
-    if (original) match = { ...original, expectedAmountCents: null, source: "refund" };
+    if (original) {
+      match = { ...original, expectedAmountCents: null, source: "refund" };
+      originalAmountCents = original.expectedAmountCents;
+    }
   }
   const transactionType = text(detail.transactionType, 100);
   const transactionStatus = text(detail.transactionStatus || summary.transactionStatus, 100) || "unknown";
@@ -293,6 +297,8 @@ async function saveTransaction(
     matched: Boolean(match),
     nativeInvoice,
     localStatus: match?.registrationStatus || "",
+    amountCents: comparedAmount,
+    originalAmountCents,
   };
 }
 

@@ -131,3 +131,16 @@ test("unmatched account activity is reviewable but not called an application err
     expectedAmountCents: null,
   }), "gateway_only");
 });
+
+test("a partial refund on a paid registration is not an exception; a full one still is", () => {
+  const base = { status: "refunded", matched: true, nativeInvoice: true, localStatus: "paid" };
+  // 2026-11-22: $11.00 overpayment refunded on a $44.00 Starlight charge.
+  assert.equal(isException({ ...base, amountCents: 1100, originalAmountCents: 4400 }), false);
+  // 2026-10-31 shape: the whole $19.00 duplicate charge refunded, registration still paid.
+  assert.equal(isException({ ...base, amountCents: 1900, originalAmountCents: 1900 }), true);
+  // Unknown original amount keeps the old, cautious behaviour.
+  assert.equal(isException({ ...base, amountCents: 1100, originalAmountCents: null }), true);
+  assert.equal(isException({ ...base, localStatus: "refunded", amountCents: 1900, originalAmountCents: 1900 }), false);
+  // A partial refund against a registration that is not paid still pages.
+  assert.equal(isException({ ...base, localStatus: "failed", amountCents: 1100, originalAmountCents: 4400 }), true);
+});

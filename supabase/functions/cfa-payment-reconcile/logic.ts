@@ -126,6 +126,8 @@ export function isException(result: {
   matched: boolean;
   nativeInvoice: boolean;
   localStatus: string;
+  amountCents?: number | null;
+  originalAmountCents?: number | null;
 }) {
   const localStatus = result.localStatus.toLowerCase();
   if (result.status === "amount_mismatch" && result.matched) return true;
@@ -133,6 +135,15 @@ export function isException(result: {
     return !LOCAL_NOT_COLLECTED.includes(localStatus);
   }
   if (["refunded", "voided"].includes(result.status) && result.matched) {
+    // A partial refund (e.g. an overpayment returned) leaves the registration
+    // paid for the rest, so "paid" is the correct local status, not a lag.
+    // Only a refund of the whole original charge should move the registration.
+    const partialRefund = result.status === "refunded"
+      && result.amountCents != null
+      && result.originalAmountCents != null
+      && result.amountCents > 0
+      && result.amountCents < result.originalAmountCents;
+    if (partialRefund && localStatus === "paid") return false;
     return !["refunded", "cancelled"].includes(localStatus);
   }
   return !result.matched && result.nativeInvoice;
