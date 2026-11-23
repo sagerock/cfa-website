@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-17",
+  "updated": "2026-11-23",
   "policies": {
     "cancellation_url": "https://learn.centerforanthroposophy.org/policies/cancellation/",
     "cancellation": "Applies to every CfA program unless the program page says otherwise. Cancel in writing to office@centerforanthroposophy.org. At least 30 days before the start: full refund less a $75 cancellation fee. Within 30 days of the start or once in session: no refund, but the registration can be transferred to a colleague by emailing the office. Payment plans are a commitment to the full fee; the same 30-day rule applies. Access pauses if an installment is more than 30 days late and resumes when the plan is current; the balance can be paid early through the office. Single-session tickets and bundles include the recording and are not refundable, but can be transferred before the session. If CfA cancels a program, full refund.",
@@ -177,6 +177,27 @@
       "notes_for_jax": "Kairos program: questions go to Lisl Hofer (lisl@centerforanthroposophy.org) and Karine Munk Finser (karine@centerforanthroposophy.org). The course page names Lisl as the contact for questions about the course. Never give out the student-rate page; a student asking about it goes to Lisl."
     },
     {
+      "key": "kairos-ep-module-2-2027",
+      "name": "Emergency Pedagogy Module 2 with Bernd Ruf",
+      "one_line": "A Kairos Institute module in person with Bernd Ruf: Psychotraumatology of Childhood and Adolescence.",
+      "who_its_for": "Open to the public. Modules 1 and 2 provide the foundation of the twelve-module Emergency Pedagogy training; modules may be taken individually.",
+      "format": "residency",
+      "schedule_text": "Friday to Sunday, July 2–4, 2027, in person in Wilton, New Hampshire. The daily schedule is sent to registrants. Tuition $350; optional $45 EPWB Module 2 certificate, which no discount reduces. Travel and accommodation are not included.",
+      "director": {
+        "name": "Karine Munk Finser",
+        "email": "karine@centerforanthroposophy.org"
+      },
+      "page_url": "https://learn.centerforanthroposophy.org/kairos/emergency-pedagogy-module-2/",
+      "register": {
+        "kind": "native",
+        "program_key": "kairos-ep-module-2-2027",
+        "page": "https://learn.centerforanthroposophy.org/kairos/emergency-pedagogy-module-2/"
+      },
+      "kairos": true,
+      "open": true,
+      "notes_for_jax": "Kairos program: questions go to Lisl Hofer (lisl@centerforanthroposophy.org) and Karine Munk Finser (karine@centerforanthroposophy.org). The course page names Lisl as the contact for questions about the module or the certificate. For a group discount, the page says to write to the office for the group link."
+    },
+    {
       "key": "mentor-training-2027",
       "name": "Mentor Training",
       "one_line": "A ten-month, low-residency certificate program in pedagogical mentoring, coaching and professional evaluation for experienced Waldorf teachers.",
@@ -222,7 +243,7 @@
       "one_line": "An online series of twelve seminars on contemporary topics for Waldorf high school teachers, administrators, staff and parents.",
       "who_its_for": "High school teachers, administrators, staff members and parents who want to explore today's adolescents and the issues facing them with experienced colleagues from CfA's Waldorf High School Teacher Education Program.",
       "format": "online",
-      "schedule_text": "September 5, 2026 – February 27, 2027, Saturdays 3:00–4:30 pm Eastern. Remaining seminars: Nov 21 (Sven Saar), Dec 12 (Cedar Oliver), Dec 19 (Dr. Constanza Kaliks), Jan 9 (Liz Beaven), Jan 23 (Nathan Wilcox), Feb 13 (Beverly Amico), Feb 27 (David Barham).",
+      "schedule_text": "September 5, 2026 – February 27, 2027, Saturdays 3:00–4:30 pm Eastern. Remaining seminars: Dec 12 (Cedar Oliver), Dec 19 (Dr. Constanza Kaliks), Jan 9 (Liz Beaven), Jan 23 (Nathan Wilcox), Feb 13 (Beverly Amico), Feb 27 (David Barham).",
       "director": {
         "name": "David Barham",
         "email": "david@centerforanthroposophy.org"
