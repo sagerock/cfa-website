@@ -122,7 +122,7 @@
   panel.innerHTML =
     '<div class="cfa-cc-head"><h2 class="cfa-cc-title" id="cfa-cc-title">Jax, CfA’s AI Assistant<span class="cfa-cc-sub">Registrations &amp; Payments</span></h2>' +
     '<button type="button" class="cfa-cc-close" aria-label="Close chat">×</button></div>' +
-    '<span class="cfa-cc-person">Talk to a person: <a href="mailto:jax@centerforanthroposophy.org,office@centerforanthroposophy.org">email us</a> or call <a href="tel:+16036542566">603-654-2566</a></span>' +
+    '<span class="cfa-cc-person">Talk to a person: <a href="mailto:jax@centerforanthroposophy.org,office@centerforanthroposophy.org">email us</a> or call <a href="tel:+16033543115">603-354-3115</a></span>' +
     '<div class="cfa-cc-log" role="log" aria-live="polite" aria-relevant="additions" tabindex="0"></div>' +
     '<div class="cfa-cc-chips" role="group" aria-label="Suggested questions"></div>' +
     '<form class="cfa-cc-form"><label class="cfa-cc-sr" for="cfa-cc-input">Message Jax</label>' +

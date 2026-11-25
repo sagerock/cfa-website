@@ -7,8 +7,8 @@ export const TRACK_ENDPOINT = `${FN}/cfa-track`;
 export const DONATION_CHECKOUT_URL = 'https://centerforanthroposophy.org/make-a-donation/';
 
 export const CONTACT = {
-  phone: '603-654-2566',
-  phoneHref: '+16036542566',
+  phone: '603-354-3115',
+  phoneHref: '+16033543115',
   email: 'office@centerforanthroposophy.org',
 };
 

@@ -288,7 +288,7 @@ Milan Daler, Administrator
 
 [email Milan](mailto:milan@centerforanthroposophy.org)
 
-or call (603) 654-2566
+or call (603) 354-3115
 
 Limited Financial Aid is available upon request. To inquire, please fill out and submit the form below.
 
