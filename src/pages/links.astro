@@ -1,0 +1,154 @@
+---
+// Programs & registration hub for the social media bio link (Caitlin, 2026-11-27).
+// Reachable only by direct link: nothing in the site navigation points here, it
+// uses the minimal chrome, and it stays noindex like the rest of the site.
+//
+// Keeping it current: the program tiles are read from src/data/concierge-programs.json,
+// the Ask Jax catalog the weekly check already keeps up to date. Open programs show
+// first; standing programs that register by inquiry or elsewhere follow. One-off
+// native courses that have closed (open: false) drop off by themselves.
+// The dated free events below are the only hand-kept part: each hides after its
+// `until` time, at build and again in the visitor's browser.
+import Base from '../layouts/Base.astro';
+import catalog from '../data/concierge-programs.json';
+
+const events = [
+  {
+    title: 'The Art of the Mentoring Conversation',
+    detail: 'Free online workshop with Karen Atkinson, Director of Mentor Training.',
+    when: 'Wednesday, December 9, 2026 · 7:00 PM ET',
+    href: '/mentor-training/open-house/',
+    cta: 'Save your seat',
+    until: '2026-12-09T20:00:00-05:00',
+  },
+  {
+    title: 'WHiSTEP Open House',
+    detail: 'A free introduction to the Waldorf High School Teacher Education Program with David Barham and Cedar Oliver.',
+    when: 'Saturday, December 12, 2026 · 4:35 to 5:00 PM ET',
+    href: '/whistep/open-house/',
+    cta: 'Register free',
+    until: '2026-12-12T17:00:00-05:00',
+  },
+  {
+    title: 'Starlight Rays: Dr. Constanza Kaliks',
+    detail: "Citizenship and the Search for Knowledge on the Human Being as Fundamentals for the Teachers' Work. Single-session tickets available.",
+    when: 'Saturday, December 19, 2026 · 3:00–4:30 PM ET',
+    href: '/register/starlight-rays-2026-2027/',
+    cta: 'Register',
+    until: '2026-12-19T16:30:00-05:00',
+  },
+];
+const now = Date.now();
+const upcoming = events.filter((event) => Date.parse(event.until) > now);
+
+const tile = (program) => {
+  const native = program.register?.kind === 'native';
+  return {
+    key: program.key,
+    name: program.name,
+    line: program.one_line,
+    href: native ? program.register.page : program.page_url,
+    cta: native ? 'Register' : 'Learn more',
+  };
+};
+const open = catalog.programs.filter((program) => program.open).map(tile);
+const more = catalog.programs
+  .filter((program) => !program.open && program.register?.kind !== 'native')
+  .map(tile);
+---
+
+<Base
+  title="Programs & Registration | Center for Anthroposophy"
+  description="Current programs, events and registration pages at the Center for Anthroposophy."
+  minimal
+  portalLabel={null}
+>
+  <div class="wrap links">
+    <header class="links-head">
+      <h1>Programs &amp; Registration</h1>
+      <p>Everything open now at the Center for Anthroposophy, in one place.</p>
+    </header>
+
+    {upcoming.length > 0 && (
+      <section>
+        <h2>Upcoming events</h2>
+        <ul class="tiles">
+          {upcoming.map((event) => (
+            <li class="tile event" data-until={event.until}>
+              <a href={event.href}>
+                <span class="when">{event.when}</span>
+                <strong>{event.title}</strong>
+                <span class="line">{event.detail}</span>
+                <span class="cta">{event.cta} →</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section>
+      <h2>Open for registration</h2>
+      <ul class="tiles">
+        {open.map((program) => (
+          <li class="tile">
+            <a href={program.href}>
+              <strong>{program.name}</strong>
+              <span class="line">{program.line}</span>
+              <span class="cta">{program.cta} →</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    {more.length > 0 && (
+      <section>
+        <h2>More programs</h2>
+        <ul class="tiles">
+          {more.map((program) => (
+            <li class="tile">
+              <a href={program.href}>
+                <strong>{program.name}</strong>
+                <span class="line">{program.line}</span>
+                <span class="cta">{program.cta} →</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <p class="links-contact">
+      Questions? <a href={`mailto:${catalog.policies.contacts.office}`}>{catalog.policies.contacts.office}</a>
+      · {catalog.policies.contacts.phone}
+    </p>
+  </div>
+</Base>
+
+<script>
+  // Static pages are built ahead of time; hide any event whose time has passed.
+  document.querySelectorAll<HTMLElement>('[data-until]').forEach((el) => {
+    if (Date.now() >= Date.parse(el.dataset.until || '')) el.remove();
+  });
+  document.querySelectorAll('.links section').forEach((section) => {
+    if (!section.querySelector('.tile')) section.remove();
+  });
+</script>
+
+<style>
+  .links { max-width: 760px; padding: 48px 0 72px; }
+  .links-head { text-align: center; margin-bottom: 32px; }
+  .links-head h1 { font-size: clamp(30px, 4vw, 44px); margin: 0 0 8px; }
+  .links-head p { color: var(--soft); font-style: italic; margin: 0; }
+  .links h2 { font-family: var(--sans); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--soft); margin: 36px 0 14px; }
+  .tiles { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .tile a { display: grid; gap: 6px; padding: 18px 22px; background: var(--raised); border: 1px solid var(--line); border-radius: 6px; color: var(--ink); text-decoration: none; transition: border-color .15s, transform .15s; }
+  .tile a:hover, .tile a:focus-visible { border-color: var(--green); transform: translateY(-1px); }
+  .tile strong { font-family: var(--serif); font-size: 20px; line-height: 1.3; }
+  .tile .when { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--gold); }
+  .tile .line { color: var(--soft); line-height: 1.5; font-size: 15px; }
+  .tile .cta { font-family: var(--sans); font-size: 14px; font-weight: 700; color: var(--green-ink); }
+  .event a { border-left: 4px solid var(--gold); }
+  .links-contact { margin-top: 40px; text-align: center; font-size: 14px; color: var(--soft); }
+</style>
