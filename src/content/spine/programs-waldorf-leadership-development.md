@@ -30,8 +30,6 @@ A second residency may be offered in 2027
 
 Starts May 9, 2026: 12- 1:15 pm Pacific Time
 
-Followed by a virtual residency June 30, July 1 and 2: 10 am – 2 pm PT
-
 Also 1- 2 Saturdays per month between September and March: 12 pm-1:15 pm PT
 
 **Tuition:**
@@ -78,15 +76,11 @@ The next cycle begins May 8, 2027, with registration opening January 4, 2027.
 
 The 2027-28 cohort begins May 8, 2027. Registration opens January 4, 2027, giving four months to plan before the cycle begins.
 
-## Fall 2026 Residency
-
-- Gathering Waters Charter School in Keene, NH: Friday, October 9 – Tuesday, October 13, 2026
-
-(Additional residency locations possible with a cohort of 15+)
-
 ## Spring 2027 Residency
 
-- Gathering Waters Charter School in Keene, NH: Friday, April 23 – Monday, April 26, 2027
+- Gathering Waters Charter School in Keene, NH: Friday, April 23 – Monday, April 26, 2027, with Susan Eggers
+
+(Additional residency locations possible with a cohort of 15+)
 
 **Please select your preferred location at registration.**
 
@@ -108,13 +102,13 @@ For new hires in schools who do not have a Waldorf background, we strongly encou
 
 - **Full Attendance** at all in-person residencies, along with a minimum of 80% participation in online sessions, is required to receive a**WLD Certificate** of Completion at the conclusion of the program.
 
-- **Certification for International Students:** Participants attending 80% or more of online sessions – including Saturday seminars and the July three-day intensive – will receive a
+- **Certification for International Students:** Participants attending 80% or more of online sessions – including Saturday seminars – will receive a
 
 - **Certificate of Online Participation** from Center for Anthroposophy. Other participants, such as Board Members who are unable to attend in-person residencies, may request this certificate through our program leadership.
 
 **Our next WLD cohort begins virtually May 9, 2026, 3-4:15 ET.**
 
-We do two Keene, NH residencies for each cohort, traditionally on Indigenous Weekend early October and then again at the end of April, both long weekends Friday eve to Tues noon.
+We do a Keene, NH residency for each cohort at the end of April, a long weekend.
 
 However, in the past two years we have started doing residencies at other sites as well: New Zealand, Mountain Phoenix in Wheat Ridge, CO, and in March 27-30, 2026 at the Ocean School in Los Angeles.
 
