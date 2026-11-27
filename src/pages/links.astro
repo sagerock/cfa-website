@@ -137,18 +137,29 @@ const more = catalog.programs
 </script>
 
 <style>
-  .links { max-width: 760px; padding: 48px 0 72px; }
+  .links { max-width: 1000px; padding: 48px 0 72px; }
   .links-head { text-align: center; margin-bottom: 32px; }
   .links-head h1 { font-size: clamp(30px, 4vw, 44px); margin: 0 0 8px; }
   .links-head p { color: var(--soft); font-style: italic; margin: 0; }
   .links h2 { font-family: var(--sans); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--soft); margin: 36px 0 14px; }
-  .tiles { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-  .tile a { display: grid; gap: 6px; padding: 18px 22px; background: var(--raised); border: 1px solid var(--line); border-radius: 6px; color: var(--ink); text-decoration: none; transition: border-color .15s, transform .15s; }
+  /* Square tiles in a feed-style grid: 3 across on wide screens, 2 on phones.
+     aspect-ratio keeps them square; a tile only grows taller if its text needs it. */
+  .tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .tile { display: flex; }
+  .tile a { flex: 1; aspect-ratio: 1 / 1; display: flex; flex-direction: column; gap: 8px; padding: 20px; background: var(--raised); border: 1px solid var(--line); border-radius: 6px; color: var(--ink); text-decoration: none; transition: border-color .15s, transform .15s; }
   .tile a:hover, .tile a:focus-visible { border-color: var(--green); transform: translateY(-1px); }
-  .tile strong { font-family: var(--serif); font-size: 20px; line-height: 1.3; }
+  .tile strong { font-family: var(--serif); font-size: 20px; line-height: 1.25; }
   .tile .when { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--gold); }
-  .tile .line { color: var(--soft); line-height: 1.5; font-size: 15px; }
-  .tile .cta { font-family: var(--sans); font-size: 14px; font-weight: 700; color: var(--green-ink); }
-  .event a { border-left: 4px solid var(--gold); }
+  .tile .line { color: var(--soft); line-height: 1.45; font-size: 15px; }
+  .tile .cta { margin-top: auto; font-family: var(--sans); font-size: 14px; font-weight: 700; color: var(--green-ink); }
+  .event a { border-top: 4px solid var(--gold); }
+  @media (max-width: 720px) {
+    .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .tile a { padding: 14px; gap: 6px; }
+    .tile strong { font-size: 16px; }
+    .tile .when { font-size: 12px; }
+    .tile .line { font-size: 13px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+    .tile .cta { font-size: 13px; }
+  }
   .links-contact { margin-top: 40px; text-align: center; font-size: 14px; color: var(--soft); }
 </style>
